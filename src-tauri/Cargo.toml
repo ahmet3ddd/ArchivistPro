@@ -1,0 +1,54 @@
+[package]
+name = "app"
+version = "2.4.5"
+description = "ArchivistPro — Mimari Dosya Arşiv & Akıllı Arama"
+authors = ["ArchivistPro"]
+license = "MIT"
+repository = "https://github.com/ahmet3ddd/ArchivistPro"
+edition = "2021"
+rust-version = "1.77.2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[features]
+default = ["admin"]
+admin = []
+viewer = []
+
+[build-dependencies]
+tauri-build = { version = "2.5.6", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.10.3", features = ["protocol-asset", "devtools"] }
+tauri-plugin-notification = "2"
+tauri-plugin-log = "2"
+cfb = "0.14.0"
+chrono = "0.4.44"
+tauri-plugin-dialog = "2.7"
+tauri-plugin-fs = "2.5"
+tauri-plugin-shell = "2.2"
+image = { version = "0.24", default-features = false, features = ["jpeg", "png", "bmp", "tiff", "tga", "pnm"] }
+kamadak-exif = "0.5"
+base64 = "0.22"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+ureq = { version = "2", features = ["json"] }
+quick-xml = "0.39.2"
+pdf-extract = "0.10.0"
+opener = "0.7"
+url = "2"
+winreg = "0.55"
+tiny_http = "0.12"
+getrandom = "0.2"
+tauri-plugin-http = "2"
+sha2 = "0.10"
+fs2 = "0.4"
+encoding_rs = "0.8"
+rusqlite = { version = "0.31", features = ["bundled"] }
+notify = "6"

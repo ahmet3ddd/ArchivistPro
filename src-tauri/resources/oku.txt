@@ -1,0 +1,116 @@
+═══════════════════════════════════════════════════════════════════════════════
+ArchivistPro — İLK KURULUM REHBERİ (Bağımlılıklar)
+═══════════════════════════════════════════════════════════════════════════════
+
+ArchivistPro tamamen offline çalışan bir mimari arşiv uygulamasıdır. Aşağıdaki
+listede hangi bileşenin zaten içinde olduğu, hangisini sizin kurmanız gerektiği
+ve kurulmadığında neyin devre dışı kalacağı açıklanmıştır.
+
+───────────────────────────────────────────────────────────────────────────────
+1. PAKETLENMİŞ BİLEŞENLER (Ekstra Kurulum Gerekmez)
+───────────────────────────────────────────────────────────────────────────────
+
+MSI kurulumuyla birlikte gelenler — ayrı bir şey indirmeniz gerekmez:
+
+  • MiniLM-L12-v2 modeli (~50 MB)
+      Metin embedding — semantik arama
+      50+ dil desteği (Türkçe, İngilizce, Arapça, Japonca, Çince)
+
+  • CLIP ViT-base-patch32 modeli (~150 MB)
+      Görsel embedding — resim araması
+      Metin ile görsel arama (text → image cross-modal)
+
+  • ONNX Runtime WASM
+      Embedding modellerini çalıştıran yerel motor
+
+  • SQLite (sql.js WASM)
+      Veritabanı. İlk açılışta 19 tablolu şema otomatik oluşturulur.
+
+───────────────────────────────────────────────────────────────────────────────
+2. OPSİYONEL BİLEŞENLER (Manuel Kurulum — Önerilir)
+───────────────────────────────────────────────────────────────────────────────
+
+Aşağıdakileri kurmazsanız uygulama çalışır, ama ilgili özellikler devre dışı
+kalır.
+
+┌──────────────────┬─────────────────────────┬─────────────────────────────┐
+│ Bileşen          │ Ne İçin                 │ Yoksa Ne Olur               │
+├──────────────────┼─────────────────────────┼─────────────────────────────┤
+│ Ollama daemon    │ Chat, RAG, query        │ RAG/chat tamamen kapalı —   │
+│                  │ rewrite, rerank, OCR,   │ semantik arama çalışır ama  │
+│                  │ vision                  │ "AI cevabı" üretilmez       │
+├──────────────────┼─────────────────────────┼─────────────────────────────┤
+│ LLaVA /          │ Görsel anlama —         │ Vision özellikleri devre    │
+│ Moondream /      │ "resimde ne var?",      │ dışı — OCR, görsel          │
+│ Qwen2-VL         │ OCR                     │ açıklama yapılmaz           │
+├──────────────────┼─────────────────────────┼─────────────────────────────┤
+│ Qwen3:4b veya    │ Chat cevabı, RAG        │ Text arama sonuçları ham    │
+│ benzeri chat LLM │ sentezi, query rewrite  │ döner (rerank, özet yok)    │
+├──────────────────┼─────────────────────────┼─────────────────────────────┤
+│ ODA File         │ DWG → DXF dönüşümü,     │ Raw binary scan fallback    │
+│ Converter        │ detaylı DWG metadata    │ çalışır — daha az detay,    │
+│                  │ (katman, blok, metin,   │ yine temel katman/metin     │
+│                  │ xref, OLE objesi)       │ bulunur                     │
+└──────────────────┴─────────────────────────┴─────────────────────────────┘
+
+───────────────────────────────────────────────────────────────────────────────
+3. ÖNERİLEN KURULUM SIRASI
+───────────────────────────────────────────────────────────────────────────────
+
+1) ArchivistPro MSI'yı kurun
+     → Embedding modelleri + CLIP zaten içinde gelir
+
+2) Ollama'yı kurun ve başlatın
+     → https://ollama.com/download adresinden Windows .exe'yi indirin
+     → Kurulum sonrası "ollama serve" ile servis arka planda çalışır
+
+3) Uygulama içinden LLM modellerini indirin
+     → Settings → AI → Model seçip "İndir" butonuna basın
+     → Uygulama arka planda "ollama pull" komutunu çalıştırır
+     → CORS ayarı otomatik yapılır (Windows OLLAMA_ORIGINS)
+
+     Önerilen modeller:
+       • llava          (görsel anlama — orta boyut)
+       • moondream      (görsel, çok hafif — zayıf donanım için)
+       • qwen3:4b       (chat/RAG — dengeli)
+
+4) ODA File Converter'ı kurun (DWG arşiviyle çalışacaksanız)
+     → Uygulama otomatik algılar. Bulmazsa:
+     → Seçenek A: winget install OpenDesignAlliance.ODAFileConverter
+     → Seçenek B: Settings → ODA Path → manuel yol seçin
+     → Seçenek C: MSI installer paketliyse uygulama içinden kurulum
+
+5) Arşiv klasörlerini tarayın
+     → Sidebar → "Kaynak Klasör Ekle" → klasörü seçin
+     → Tarama tamamlanınca semantik, görsel ve RAG arama hepsi aktif
+
+───────────────────────────────────────────────────────────────────────────────
+4. VERSİYON NOTLARI
+───────────────────────────────────────────────────────────────────────────────
+
+  • Ollama minimum sürüm: 0.1.30+ (eski sürümlerde GPU desteği eksik)
+  • ODA File Converter: güncel herhangi bir sürüm (registry üzerinden algılanır)
+  • Windows 10/11 (64-bit)
+
+───────────────────────────────────────────────────────────────────────────────
+5. HİÇBİR OPSİYONEL BİLEŞEN KURMAZSAM?
+───────────────────────────────────────────────────────────────────────────────
+
+Minimum kurulumla kullanılabilir özellikler:
+  ✓ Klasör tarama ve indeksleme
+  ✓ Dosya formatı tespiti (80+ format)
+  ✓ Metin semantik arama (MiniLM)
+  ✓ Görsel semantik arama (CLIP)
+  ✓ Temel DWG metadata (raw binary scan)
+  ✓ Etiketleme, favoriler, koleksiyonlar
+  ✓ LAN paylaşımı (port 9471)
+
+Devre dışı kalacak özellikler:
+  ✗ AI cevap üretimi (chat, RAG)
+  ✗ Query rewrite / reranking
+  ✗ Görsel içerik açıklaması (OCR, "resimde ne var")
+  ✗ Detaylı DWG metadata (katman/blok/metin tam liste)
+
+═══════════════════════════════════════════════════════════════════════════════
+Sürüm: 2.2.3 — Build tarihi: 2026-04-16
+═══════════════════════════════════════════════════════════════════════════════

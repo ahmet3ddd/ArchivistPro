@@ -1,0 +1,2675 @@
+{
+  "reload": {
+    "disabled": "Reload disabled — F5/Ctrl+R is blocked to protect your session and unsaved data."
+  },
+  "folderWatcher": {
+    "toast": {
+      "title": "Folder Change",
+      "message": "Changes detected in {{path}}. Would you like to rescan?"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "reload": "Reload",
+    "search": "Search",
+    "open": "Open",
+    "exitConfirm": "Are you sure you want to exit the application?",
+    "exitConfirmDetail": "Any open operations will be terminated.",
+    "exitConfirmLabel": "Exit",
+    "savingBeforeExit": "Saving data, please wait...",
+    "role": {
+      "admin": "Admin",
+      "viewer": "User",
+      "developer": "Developer"
+    },
+    "unknown": "Unknown",
+    "active": "ACTIVE",
+    "aria": {
+      "close": "Close",
+      "dismiss": "Dismiss notification",
+      "back": "Back"
+    },
+    "refresh": "Refresh",
+    "back": "Back",
+    "button": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "saving": "Saving..."
+    },
+    "error": {
+      "unknown": "Unknown error",
+      "prefix": "Error",
+      "fileNotFound": "File not found",
+      "permissionDenied": "You don't have permission for this action",
+      "diskFull": "Not enough disk space",
+      "networkError": "Network connection failed",
+      "unauthorized": "You need to be logged in for this action",
+      "fileAlreadyExists": "File already exists",
+      "invalidPath": "Invalid file path"
+    },
+    "archive": {
+      "main": "Main Archive",
+      "local": "Local Archive"
+    }
+  },
+  "login": {
+    "subtitle": "Architectural File Archive System",
+    "label": {
+      "username": "Username",
+      "password": "Password"
+    },
+    "button": {
+      "submit": "Sign In",
+      "loggingIn": "Signing in...",
+      "preparing": "Preparing...",
+      "exit": "Exit",
+      "cancel": "Cancel"
+    },
+    "dbLoadingHint": "Loading: {{size}} MB",
+    "error": {
+      "fieldsRequired": "Username and password are required",
+      "invalidCredentials": "Invalid username or password",
+      "lockedOut": "Too many failed attempts. Try again in {{minutes}} minutes.",
+      "viewerModeAdminBlocked": "This app runs in Viewer mode. Admin login is not allowed.",
+      "loginFailed": "An error occurred during login"
+    },
+    "aria": {
+      "hidePassword": "Hide password",
+      "showPassword": "Show password"
+    },
+    "toast": {
+      "success": "Login successful",
+      "successBody": "Logged in as {{username}} ({{role}})"
+    },
+    "forgotPassword": {
+      "link": "Forgot password",
+      "title": "Password Reset",
+      "step1Title": "Enter Recovery Code",
+      "step1Desc": "Enter the code from the recovery.key file in the app's AppData folder.",
+      "step1Label": "Recovery Code",
+      "step1Submit": "Verify",
+      "step1Error": "Incorrect recovery code",
+      "step2Title": "Set New Password",
+      "step2UserLabel": "User",
+      "step2PassLabel": "New Password",
+      "step2ConfirmLabel": "Confirm Password",
+      "step2Submit": "Reset Password",
+      "step2PasswordMismatch": "Passwords do not match",
+      "step2Success": "Password successfully reset",
+      "backToLogin": "Back to login",
+      "noAdmins": "No admin users found in the system"
+    },
+    "firstRun": {
+      "title": "First Time Setup",
+      "subtitle": "Create your administrator account",
+      "usernameLabel": "Username",
+      "passwordLabel": "Password",
+      "confirmLabel": "Confirm Password",
+      "submit": "Create Account",
+      "creating": "Creating...",
+      "passwordMismatch": "Passwords do not match",
+      "minLength": "Password must be at least 6 characters",
+      "success": "Admin account created"
+    }
+  },
+  "topbar": {
+    "viewMode": {
+      "folders": "Folders",
+      "explorer": "Explorer",
+      "technical": "Technical",
+      "dashboard": "Dashboard"
+    },
+    "backToFolders": "Back to Folders",
+    "resultCount": "{{count}} assets",
+    "folderCount": "{{count}} folders",
+    "filters": {
+      "clearAll": "Clear All"
+    },
+    "tooltip": {
+      "cardSize": "Card size: {{size}}px",
+      "undo": "Undo (Ctrl+Z)",
+      "redo": "Redo (Ctrl+Y)",
+      "deleteFromArchive": "Remove from Archive (Delete)",
+      "trash": "Trash",
+      "organize": "Organize",
+      "aiSettings": "AI & Vision Settings",
+      "export": "Export / Report",
+      "feedback": "Messages",
+      "help": "Help (F1)",
+      "settings": "Settings",
+      "auditLog": "Audit Log"
+    },
+    "aria": {
+      "openMenu": "Open menu",
+      "removeFilter": "Remove {{value}} filter",
+      "cardSize": "Card size",
+      "feedbackUnread": "Messages ({{count}} unread)"
+    },
+    "indexing": {
+      "progress": "Indexing... {{progress}}%",
+      "upToDate": "Indexes up to date"
+    },
+    "aiChat": {
+      "label": "AI Chat",
+      "tooltip": "AI Chat — Ask your archive",
+      "noGpu": "No GPU detected — AI chat is not available on this machine",
+      "text": "AI"
+    },
+    "visualSearch": {
+      "label": "Visual Search",
+      "tooltip": "Visual Search — Search by image (CLIP)",
+      "text": "Visual"
+    },
+    "shapeSearch": {
+      "label": "Search Shapes",
+      "tooltip": "Geometric shape search in DWG drawings",
+      "text": "Shape"
+    },
+    "advancedSearch": {
+      "title": "Advanced Search",
+      "aiChat": "AI Chat — Ask the Archive",
+      "visualSearch": "Visual Search (CLIP)",
+      "duplicateFinder": "Find Similar / Duplicates",
+      "shapeSearch": "Shape Search (DWG)"
+    }
+  },
+  "filterPreset": {
+    "label": "Filter Presets",
+    "empty": "No saved presets yet",
+    "saveCurrentFilters": "Save Current Filters",
+    "namePlaceholder": "Preset name..."
+  },
+  "sidebar": {
+    "ragExcludeFolder": "Exclude from AI",
+    "ragIncludeFolder": "Include in AI",
+    "section": {
+      "archive": "Archive"
+    },
+    "archive": {
+      "main": "Main Archive",
+      "local": "Local Archive",
+      "blocked": "Your access to the main archive has been restricted by the administrator"
+    },
+    "button": {
+      "scanAndIndex": "Scan Folder & Index",
+      "scanOnly": "Scan Folder"
+    },
+    "lastScan": {
+      "label": "Last scan:",
+      "files": "files"
+    },
+    "search": {
+      "placeholderSemantic": "Natural/Visual search...",
+      "placeholderText": "Search...",
+      "recentSearches": "Recent Searches",
+      "clearAll": "Clear All",
+      "removeItem": "Remove",
+      "clear": "Clear search",
+      "minCharsHint": "Enter at least 3 characters"
+    },
+    "tooltip": {
+      "editPanel": "Edit Panel",
+      "imageSearch": "Search by Image",
+      "clearImage": "Clear image"
+    },
+    "aria": {
+      "searchAssets": "Search assets",
+      "imageSearch": "Search by image",
+      "searchSensitivity": "Search sensitivity"
+    },
+    "imageSearch": {
+      "analyzing": "Analyzing…"
+    },
+    "contentSearch": {
+      "loading": "Loading AI search engine...",
+      "preparing": "AI model preparing...",
+      "error": "AI search engine failed to load — content search unavailable",
+      "retry": "Retry",
+      "notIndexed": "Files are not indexed for content search",
+      "rescan": "Re-scan",
+      "notReady": "Content search unavailable",
+      "configure": "Settings"
+    },
+    "sensitivity": {
+      "label": "Visual Search Sensitivity",
+      "description": "Visual and semantic threshold"
+    },
+    "ai": {
+      "semanticActive": "Semantic search active",
+      "textBased": "Text-based search",
+      "loading": "AI loading...",
+      "chunkCount": "{{count}} chunks",
+      "noIndex": "no index",
+      "embeddingCountTooltip": "{{count}} content chunks indexed"
+    },
+    "embedding": {
+      "coverage": "AI index coverage",
+      "coverageLabel": "AI indexing progress bar"
+    },
+    "footer": {
+      "totalAssets": "Total Assets",
+      "indexed": "Indexed"
+    },
+    "favorites": {
+      "label": "Favorites"
+    },
+    "sourceFolders": {
+      "title": "Source Folders",
+      "empty": "No folders scanned yet",
+      "clearFilters": "Clear Filters",
+      "renameLabel": "Enter new name:",
+      "confirmRemove": "Are you sure you want to remove this source folder from the archive? (Assets will not be deleted)",
+      "confirmDelete": "This source folder and all its assets will be moved to Trash (auto-deleted after 30 days).",
+      "confirmDeleteCount": "{{count}} files will be moved to Trash.",
+      "deleted": "Moved to Trash",
+      "deletedUndo": "Press Ctrl+Z to undo or restore from Trash",
+      "menu": {
+        "open": "Manage",
+        "rename": "Rename",
+        "rescan": "Re-scan",
+        "scanReports": "Scan Reports",
+        "scanRelations": "Scan Relations",
+        "scanRelationsDone": "{{count}} new relation(s) detected",
+        "scanRelationsNone": "No new relations found",
+        "remove": "Remove from Archive",
+        "deleteWithAssets": "Delete (with assets)",
+        "setTags": "Tags...",
+        "moveTo": "Move to Group"
+      },
+      "groups": {
+        "add": "+Group",
+        "promptName": "Enter group name:",
+        "promptRename": "Enter new group name:",
+        "confirmDelete": "Delete this group? Folders will become ungrouped.",
+        "noGroup": "Remove from Group",
+        "rename": "Rename",
+        "changeColor": "Change Color",
+        "delete": "Delete Group"
+      },
+      "favorites": {
+        "section": "Favorites",
+        "add": "Add to Favorites",
+        "remove": "Remove from Favorites"
+      },
+      "tags": {
+        "noTags": "No tags",
+        "newTag": "New tag..."
+      }
+    }
+  },
+  "explorer": {
+    "empty": {
+      "title": "Archive is empty",
+      "description": "Scan your files to build your archive.",
+      "scanButton": "Scan Folder & Index",
+      "scanButtonOnly": "Scan Folder"
+    },
+    "noResults": {
+      "title": "No results found",
+      "description": "No files match the current search and filters.",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "merge": {
+    "title": "Merge Archives",
+    "source": "Source Archive",
+    "target": "Target Archive",
+    "strategy": {
+      "title": "Conflict Strategy",
+      "keepNewer": "Keep Newer (default)",
+      "keepBoth": "Keep Both (create copy)",
+      "skipExisting": "Skip Existing"
+    },
+    "include": {
+      "title": "Data to Copy",
+      "tags": "Tags",
+      "embeddings": "AI Vectors",
+      "textChunks": "Text Chunks",
+      "summaries": "Summaries",
+      "favorites": "Favorites"
+    },
+    "preview": {
+      "button": "Preview",
+      "sourceAssets": "Source asset count",
+      "targetAssets": "Target asset count",
+      "conflicts": "Conflict count",
+      "tags": "Source tag count",
+      "embeddings": "Source vector count",
+      "strategyNote": "Conflicts will be handled with: {{strategy}}",
+      "toggleDetails": "Detailed list",
+      "truncated": "showing first {{limit}} entries"
+    },
+    "disposition": {
+      "merge": "Will add",
+      "overwrite": "Will overwrite",
+      "skip": "Will skip",
+      "rename": "Will rename"
+    },
+    "confirm": {
+      "button": "Merge",
+      "warning": "This operation cannot be undone. Continue?"
+    },
+    "progress": {
+      "phase": {
+        "assets": "Copying assets...",
+        "tags": "Copying tags...",
+        "embeddings": "Copying AI vectors...",
+        "chunks": "Copying text chunks...",
+        "summaries": "Copying summaries...",
+        "favorites": "Copying favorites...",
+        "saving": "Saving..."
+      }
+    },
+    "result": {
+      "title": "Merge Completed",
+      "merged": "Added",
+      "overwritten": "Overwritten",
+      "skipped": "Skipped",
+      "renamed": "Renamed",
+      "errors": "Errors"
+    },
+    "error": {
+      "sameArchive": "Source and target must differ",
+      "targetNotLoaded": "Target archive could not be loaded",
+      "alreadyRunning": "Another merge operation is in progress. Please wait for it to finish.",
+      "rollbackFailed": "Merge failed and rollback also failed. Target archive may be corrupted — please restore from backup."
+    }
+  },
+  "extract": {
+    "title": "Extract from Archive",
+    "source": "Source Archive",
+    "filter": {
+      "title": "Filter Criteria",
+      "folders": "Source Folders",
+      "fileTypes": "File Types",
+      "projectPhases": "Project Phase",
+      "dateRange": "Date Range",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "tags": "Tags",
+      "noneSelected": "None selected",
+      "noActiveWarning": "No filters selected — all assets will be extracted"
+    },
+    "target": {
+      "title": "Target",
+      "new": "Create New Archive",
+      "existing": "Add to Existing Archive",
+      "newName": "New archive name",
+      "newType": "Archive type",
+      "typeShared": "Shared",
+      "typePersonal": "Personal"
+    },
+    "mode": {
+      "title": "Mode",
+      "copy": "Copy (source preserved)",
+      "move": "Move (deleted from source)",
+      "moveWarning": "WARNING: Move cannot be undone. Matched assets will be permanently deleted from source archive."
+    },
+    "include": {
+      "title": "Data to Copy",
+      "tags": "Tags",
+      "embeddings": "AI Vectors",
+      "textChunks": "Text Chunks",
+      "summaries": "Summaries",
+      "favorites": "Favorites"
+    },
+    "preview": {
+      "button": "Preview",
+      "matched": "Matched asset count",
+      "totalSize": "Total size",
+      "byType": "By type",
+      "noMatch": "No assets matched",
+      "toggleDetails": "Detailed list",
+      "truncated": "showing first {{limit}} entries"
+    },
+    "presets": {
+      "label": "Preset:",
+      "choose": "— select —",
+      "apply": "Apply",
+      "delete": "Delete",
+      "namePlaceholder": "New preset name",
+      "save": "Save"
+    },
+    "confirm": {
+      "button": "Extract",
+      "warning": "This operation cannot be undone. Continue?",
+      "moveWarning": "Move mode — matched assets will be deleted from source!"
+    },
+    "progress": {
+      "phase": {
+        "filtering": "Filtering...",
+        "creating_target": "Creating new archive...",
+        "assets": "Copying assets...",
+        "tags": "Copying tags...",
+        "embeddings": "Copying AI vectors...",
+        "chunks": "Copying text chunks...",
+        "summaries": "Copying summaries...",
+        "favorites": "Copying favorites...",
+        "deleting_source": "Deleting from source...",
+        "saving": "Saving..."
+      }
+    },
+    "result": {
+      "title": "Extract Completed",
+      "matched": "Matched",
+      "extracted": "Extracted",
+      "deletedFromSource": "Deleted from source",
+      "errors": "Errors",
+      "goToTarget": "Go to new archive"
+    },
+    "error": {
+      "noSource": "Source archive not selected",
+      "noTargetName": "New archive name cannot be empty",
+      "targetExists": "An archive with this name already exists",
+      "sameTarget": "Target must differ from source",
+      "targetNotLoaded": "Target archive could not be loaded",
+      "alreadyRunning": "Another extract operation is in progress",
+      "rollbackFailed": "Extract failed and rollback also failed. Target/source archive may be corrupted — please restore from backup."
+    }
+  },
+  "storageWarning": {
+    "message": "⚠️ Storage space is low. Some data may not be saved. Check your disk space or try clearing old scans.",
+    "aria": {
+      "dismiss": "Dismiss warning"
+    }
+  },
+  "app": {
+    "db": {
+      "loading": "Loading database..."
+    },
+    "toast": {
+      "reportDownloaded": "Report downloaded",
+      "reportDownloadedBody": "{{count}} files reported"
+    }
+  },
+  "modals": {
+    "settings": "Settings",
+    "help": "Help",
+    "trash": "Trash",
+    "feedback": "Messages",
+    "feedbackAdmin": "Messages",
+    "logViewer": "Audit Log",
+    "scan": "Scan Files & Index",
+    "scanOnly": "Scan Files",
+    "refile": "Reorganize Files",
+    "aiSettings": "AI Vision Settings",
+    "userProfile": "Profile",
+    "userManagement": "User Management"
+  },
+  "settings": {
+    "tab": {
+      "general": "General",
+      "storage": "Storage",
+      "network": "Network",
+      "security": "Security",
+      "about": "About"
+    },
+    "language": {
+      "label": "Language",
+      "description": "Change the interface language"
+    },
+    "section": {
+      "userInfo": "User Information",
+      "appearance": "Appearance",
+      "archives": "Archives",
+      "archiveMerge": "Archive Merge",
+      "archiveExtract": "Archive Extract",
+      "pathRemap": "Path Remapping",
+      "backup": "Backup",
+      "trash": "Trash",
+      "lan": "LAN Sharing",
+      "aiConnections": "AI Connections",
+      "about": "About",
+      "odaConverter": "DWG Converter (ODA)",
+      "help": "Help & Guide",
+      "developerMode": "Developer Mode",
+      "healthCheck": "Health Check",
+      "scanning": "Scanning"
+    },
+    "card": {
+      "userInfoSub": "Session and authorization details",
+      "appearanceSub": "Theme, color and language preferences",
+      "scanningSub": "AI indexing and folder watch settings",
+      "odaSub": "ODA FileConverter for DWG/DXF files",
+      "helpSub": "Replay the onboarding tour",
+      "archivesSub": "Main and personal archive locations",
+      "archiveOpsSub": "Path remapping, merge and extract operations",
+      "backupSub": "Auto backup, snapshots and portable archive",
+      "performanceSub": "Scan checkpoint and worker count settings",
+      "maintenanceSub": "Orphaned file detection and trash",
+      "lanSub": "Share or download archives over local network",
+      "devModeSub": "Set up as a developer device",
+      "updateServerSub": "Custom update server configuration",
+      "aiConnectionsSub": "AI service connection details",
+      "sessionSub": "Session timeout settings",
+      "auditSub": "Audit log retention period",
+      "loginSecSub": "Login attempt and lockout settings",
+      "appInfoSub": "Version and platform information",
+      "updatesSub": "Check for updates",
+      "extractorsSub": "Supported file formats and extractors",
+      "crashLogsSub": "View crash reports",
+      "archiveOps": "Archive Operations",
+      "performance": "Performance",
+      "maintenance": "Maintenance"
+    },
+    "autoRagIndex": {
+      "toggle": "Auto AI indexing after scan",
+      "description": "After scanning, new/changed files are processed in the background to be queryable by AI chat. This is CPU-intensive; if disabled, indexing must be started manually from the RAG panel."
+    },
+    "folderWatch": {
+      "enabledToggle": "Watch folders for changes",
+      "enabledDescription": "Detects added/removed/modified files inside scanned root folders and shows a toast notification in the bottom-right corner. When disabled, changes go unnoticed until you scan manually.",
+      "autoRescanToggle": "Auto re-scan when changes are detected",
+      "autoRescanDescription": "If no further change arrives for 60 seconds, that folder is re-scanned automatically. Skipped if a scan is already running. Default: off."
+    },
+    "healthCheck": {
+      "description": "Check whether file records in the archive still exist on disk. You can bulk-clean orphaned records whose files are missing.",
+      "button": "Run Health Check",
+      "scanning": "Checking...",
+      "noOrphans": "All files are in place — no issues found.",
+      "found": "{{count}} orphaned record(s) found (file missing on disk).",
+      "deleteButton": "Delete {{count}} orphaned record(s)",
+      "deleted": "{{count}} orphaned record(s) cleaned up.",
+      "error": "An error occurred during the health check."
+    },
+    "merge": {
+      "description": "Merge assets and related data from two archives into a single target archive.",
+      "openButton": "Merge Archives..."
+    },
+    "extract": {
+      "description": "Copy or move assets matching filter criteria from an archive to a new or existing archive.",
+      "openButton": "Extract from Archive..."
+    },
+    "developerMode": {
+      "description": "Set this device as the developer machine to receive user feedback directly over LAN. The LAN server must be running to receive messages.",
+      "enable": "Set this device as developer",
+      "disable": "Disable",
+      "enabled": "Developer mode enabled.",
+      "disabled": "Developer mode disabled.",
+      "enableError": "Could not retrieve IP address.",
+      "currentIp": "Developer IP",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "serverStarted": "LAN server started automatically.",
+      "serverWarning": "LAN server could not be started — messages may not be received."
+    },
+    "user": {
+      "username": "User",
+      "role": "Role",
+      "activeArchive": "Active Archive"
+    },
+    "appearance": {
+      "theme": "Theme",
+      "accentColor": "Accent Color"
+    },
+    "theme": {
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "accent": {
+      "default": "Default",
+      "amber": "Amber",
+      "lime": "Lime",
+      "teal": "Teal"
+    },
+    "archive": {
+      "location": "Location",
+      "size": "Size",
+      "readOnly": "Read-only — admin permission required",
+      "changePath": "Change location",
+      "active": "ACTIVE",
+      "managedByAdmin": "Managed by administrator",
+      "readOnlyAccess": "Read-only access",
+      "localStoragePath": "localStorage (browser)",
+      "personalFullAccess": "Personal archive — full control",
+      "mainDescAdmin": "Managed by administrator",
+      "mainDescViewer": "Read-only access",
+      "localDesc": "Personal archive — full control"
+    },
+    "storage": {
+      "loading": "Loading...",
+      "browserMode": "localStorage (browser mode)",
+      "browserModeShort": "localStorage (browser)",
+      "notCreated": "Not created",
+      "selectFolder": "Select database folder",
+      "locationUpdated": "Database location updated. This location will be used on next restart.",
+      "locationUpdateError": "An error occurred while updating the database location.",
+      "remapOldRequired": "You must enter the old root path.",
+      "remapSuccess": "File paths have been remapped."
+    },
+    "remap": {
+      "description": "If you have moved the project folder to a different drive, you can bulk-update all file paths.",
+      "oldPlaceholder": "Old root path (e.g. C:\\Projects\\Office\\)",
+      "newPlaceholder": "New root path (e.g. D:\\Archive\\Office\\)",
+      "button": "Remap file paths"
+    },
+    "backup": {
+      "description": "You can back up your archive in different ways.",
+      "autoTitle": "Automatic Backup (Snapshot)",
+      "autoDescription": "Creates hourly or manual backups on this device. You can revert to an earlier state after accidental deletes or changes. Up to 5 backups are kept; the oldest is auto-removed.",
+      "portableTitle": "Portable Backup File (.archivistpro)",
+      "portableDescription": "Export your entire archive to a single .archivistpro file or restore from a backup. Use it to move to another computer or to store on a USB drive.",
+      "scheduleOff": "Disabled",
+      "hours": "hours",
+      "schedule": "Automatic Backup"
+    },
+    "snapshot": {
+      "maxTitle": "Maximum Snapshots",
+      "maxDescription": "Oldest snapshots beyond this limit are pruned automatically.",
+      "create": "Create Backup",
+      "creating": "Creating backup...",
+      "restore": "Restore",
+      "delete": "Delete",
+      "empty": "No backups yet.",
+      "confirmRestore": "This will overwrite the current database with the selected backup.",
+      "confirmRestoreDetail": "Backup date: {{date}}",
+      "confirmDelete": "This backup will be permanently deleted.",
+      "createSuccess": "Backup created successfully.",
+      "createError": "Failed to create backup.",
+      "restoreSuccess": "Database restored from backup.",
+      "restoreError": "Restore failed.",
+      "deleteSuccess": "Backup deleted.",
+      "deleteError": "Failed to delete backup.",
+      "schedule": "Auto Backup",
+      "scheduleOff": "Off",
+      "hours": "hours"
+    },
+    "scan": {
+      "checkpointTitle": "Scan Checkpoint Interval",
+      "checkpointDescription": "How often to save the database to disk during scanning. Lower = safer (less data loss risk), higher = faster scanning.",
+      "prepareWorkersTitle": "Parallel Prepare Workers",
+      "prepareWorkersDescription": "How many files to extract hash + metadata + thumbnail for in parallel during scanning. HDD: 1-2 (seek thrash risk), SSD: 3-4, NVMe + 8 threads: 6-8, NVMe + 16+ threads (Ryzen 9, Threadripper, Xeon): 10-16. Higher values do not help on systems with few CPU cores.",
+      "prepareWorkersDetected": "{{cores}} cores detected · Recommended: {{recommended}}",
+      "prepareWorkersAutoApply": "Apply Auto"
+    },
+    "trash": {
+      "description": "Deleted files are moved to the .archivistpro-trash/ folder. They can be restored with Undo.",
+      "descriptionPart1": "Deleted files are moved to the",
+      "descriptionPart2": "folder. They can be restored with Undo."
+    },
+    "lan": {
+      "description": "You can download an archive from another device over LAN or share your archive on the network.",
+      "shareMode": "Share Mode",
+      "shareModeValue": "Export/Import (Phase 1)"
+    },
+    "archiveBackup": {
+      "exportButton": "Create Backup File",
+      "importButton": "Restore from Backup (.archivistpro)",
+      "exportLabel": "Exporting",
+      "importLabel": "Restoring",
+      "import": {
+        "title": "Restore Archive from Backup",
+        "dbSize": "DB to restore: {{size}} MB",
+        "unknownSize": "Entire archive will be restored",
+        "warning": "This replaces your current archive.",
+        "remapToggle": "Remap file paths",
+        "remapHint": "If the backup comes from another computer, replace the source root path with this machine's path.",
+        "oldRootLabel": "Old root path (in backup)",
+        "oldRootPlaceholder": "e.g. C:\\Old_PC\\Projects\\",
+        "newRootLabel": "New root path (this machine)",
+        "newRootPlaceholder": "e.g. D:\\Projects\\",
+        "browse": "Browse...",
+        "confirmButton": "Restore",
+        "cancelButton": "Cancel",
+        "remapHintMulti": "{{count}} source folders detected in the backup. Pick the new path on this machine for each.",
+        "fileCount": "{{count}} files",
+        "skipHint": "Rows with empty new path are skipped.",
+        "allUnderOne": "Place all under one folder"
+      }
+    },
+    "oda": {
+      "description": "ODA FileConverter is used to extract layer/block/text information from DWG files with full accuracy. If not installed, raw binary scanning will be used as fallback.",
+      "pathLabel": "ODA FileConverter Path",
+      "pathPlaceholder": "Enter path to ODAFileConverter (.exe or .msi)",
+      "autoDetect": "Auto Detect",
+      "found": "Found",
+      "notFound": "Not Found",
+      "browse": "Browse",
+      "cleared": "ODA path cleared",
+      "saved": "ODA path saved",
+      "fileNotFound": "File not found",
+      "detecting": "Detecting...",
+      "install": "Download & Install",
+      "installBundled": "Install from Package",
+      "installingBundled": "Installing from package...",
+      "installedBundled": "Installed from package successfully",
+      "bundledNotAvailable": "Bundled installer not available, trying online methods...",
+      "installing": "Installing...",
+      "installed": "Installation complete",
+      "installedButNotDetected": "Installation complete but ODA path could not be detected automatically. Please click 'Auto Detect' or enter the path manually.",
+      "downloadPageOpened": "Download page opened. Click 'Auto Detect' after installation.",
+      "installFailed": "Auto install failed, download page opened",
+      "noInstallerFound": "Auto install failed. Please select the ODA installer from your computer.",
+      "selectInstallerTitle": "Select ODA FileConverter Installer",
+      "installerFilter": "Installer"
+    },
+    "ai": {
+      "hint": "Use the brain icon in the top bar for AI Vision settings.",
+      "saved": "AI settings saved"
+    },
+    "security": {
+      "title": "Security",
+      "sessionTimeout": "Session Timeout",
+      "sessionTimeoutDesc": "Screen locks after the specified period of inactivity.",
+      "minutes": "minutes",
+      "never": "Never lock",
+      "currentStateLabel": "Current state",
+      "currentStateActive": "Screen locks after {{duration}}",
+      "currentStateNever": "Auto-lock disabled",
+      "hint": "When timed out, the screen locks but your session stays open. Enter your password to continue.",
+      "auditRetentionSection": "Audit Log Retention",
+      "auditRetentionTitle": "Retention Period",
+      "auditRetentionDesc": "Audit log entries older than this are cleaned up at app startup. Choose ∞ to keep everything.",
+      "daysSuffix": "days",
+      "loginSection": "Login Security",
+      "loginMaxAttemptsTitle": "Max Failed Attempts",
+      "loginMaxAttemptsDesc": "Users exceeding this count are locked out. Window equals the lockout duration.",
+      "attemptsSuffix": "attempts",
+      "loginLockoutTitle": "Lockout Duration",
+      "loginLockoutDesc": "When max attempts is exceeded, the account stays locked for this long.",
+      "minutesSuffix": "min"
+    },
+    "about": {
+      "version": "Version",
+      "buildDate": "Build Date",
+      "platform": "Platform",
+      "database": "Database",
+      "aiml": "AI/ML",
+      "aiMlValue": "Xenova Transformers (local WASM)",
+      "description": "All AI processing runs on your local machine. Your files are never sent to any server.",
+      "extractorsTitle": "File Type Extractors",
+      "extractorsDesc": "Metadata fields extracted from each file format. Click a row to see details.",
+      "extractorCol": {
+        "type": "Format",
+        "extractors": "Extractors",
+        "fields": "Fields"
+      }
+    }
+  },
+  "help": {
+    "aria": {
+      "close": "Close help panel"
+    },
+    "tab": {
+      "adminGuide": "Admin Guide",
+      "userGuide": "User Guide",
+      "shortcuts": "Shortcuts",
+      "techRef": "Technical Reference",
+      "scenarios": "What Can I Do?"
+    },
+    "role": {
+      "admin": "Admin — all features active",
+      "viewer": "User — archive is read-only"
+    },
+    "search": "Search...",
+    "guide": {
+      "loading": "Loading guide..."
+    },
+    "error": {
+      "loadFailed": "Failed to load guide: {{message}}"
+    }
+  },
+  "trash": {
+    "title": "Trash",
+    "hint": {
+      "undoWithCtrlZ": "You can undo the last deleted file with Ctrl+Z."
+    },
+    "lastOperation": "Last operation: ",
+    "undone": "Undone",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "restored": "{{count}} file(s) restored",
+    "restoredSingle": "\"{{fileName}}\" restored",
+    "permanentDeleted": "{{count}} file(s) permanently deleted",
+    "trashEmptied": "Trash emptied ({{count}} files)",
+    "confirmPermanentDelete": "This action cannot be undone. {{count}} selected file(s) will be permanently deleted.",
+    "confirmEmptyTrash": "All files in trash will be permanently deleted. This action cannot be undone.",
+    "autoRestore": {
+      "title": "Folder restored from trash",
+      "message": "\"{{label}}\" was automatically restored from trash because it was scanned again."
+    },
+    "button": {
+      "undoLastDelete": "Undo Last Delete",
+      "restore": "Restore",
+      "permanentDelete": "Permanently Delete",
+      "emptyTrash": "Empty Trash"
+    },
+    "column": {
+      "label": "Folder Name",
+      "path": "Path"
+    },
+    "empty": {
+      "title": "Trash is empty",
+      "description": "Files removed from the archive will appear here."
+    },
+    "footer": {
+      "note": "Deleting removes the file from the archive. The physical file remains in place.",
+      "count": "{{count}} file(s) in trash"
+    },
+    "tab": {
+      "files": "Files",
+      "folders": "Folders"
+    },
+    "folder": {
+      "restoredSingle": "\"{{label}}\" restored",
+      "permanentDeleted": "{{count}} folder(s) permanently deleted",
+      "confirmPermanentDelete": "\"{{label}}\" and all its files will be permanently deleted. This cannot be undone.",
+      "emptyTitle": "No deleted folders",
+      "emptyDescription": "Folders deleted from the sidebar are kept here for 30 days.",
+      "footerCount": "{{count}} folder(s) in trash"
+    }
+  },
+  "feedback": {
+    "error": {
+      "bodyEmpty": "Message body cannot be empty.",
+      "dailyLimit": "You have reached the daily message limit (max {{limit}}). Please try again tomorrow.",
+      "recipientRequired": "Please select a recipient"
+    },
+    "success": {
+      "sent": "Your message has been sent. (Remaining: {{remaining}})"
+    },
+    "tab": {
+      "compose": "New Message",
+      "messages": "Messages ({{count}})",
+      "developer": "To Developer",
+      "inbox": "Inbox",
+      "sent": "Sent ({{count}})",
+      "broadcast": "Announcement"
+    },
+    "developer": {
+      "description": "Send your requests, opinions and suggestions to the development team. You can track replies in this tab.",
+      "subjectPlaceholder": "e.g. Feature request, Bug report...",
+      "bodyPlaceholder": "Write your detailed message here...",
+      "send": "Send to Developer",
+      "sent": "Your feedback has been submitted.",
+      "sentLan": "Your feedback was delivered to the developer ✓",
+      "sentOffline": "Developer is currently offline — your message has been saved.",
+      "empty": "No developer feedback yet.",
+      "export": "Export (.txt)"
+    },
+    "label": {
+      "recipient": "Recipient",
+      "to": "To:",
+      "from": "From:",
+      "messageType": "Message Type",
+      "priority": "Priority",
+      "subject": "Subject (optional)",
+      "message": "Message"
+    },
+    "type": {
+      "suggestion": "Improvement Suggestion",
+      "private": "Private Message",
+      "request": "Request",
+      "suggestionBadge": "Suggestion",
+      "privateBadge": "Private",
+      "requestBadge": "Request"
+    },
+    "request": {
+      "allAdminsNote": "This request will be sent to all administrators. Whoever is available will claim and respond.",
+      "allAdminsBadge": "All admins"
+    },
+    "claim": {
+      "unclaimed": "Pending",
+      "claimedByYou": "Claimed by you",
+      "claimedBy": "Claimed: {{admin}}"
+    },
+    "priority": {
+      "normal": "Normal",
+      "important": "Important",
+      "importantBadge": "Important"
+    },
+    "placeholder": {
+      "selectRecipient": "Select user...",
+      "subject": "A short title...",
+      "body": "Write your message...",
+      "reply": "Write a reply..."
+    },
+    "button": {
+      "send": "Send",
+      "filter": "Filter",
+      "newMessage": "New Message",
+      "resolve": "Resolve",
+      "claim": "Claim",
+      "release": "Release",
+      "delete": "Delete",
+      "deleteSelected": "Delete Selected ({{count}})",
+      "selectAll": "Select All"
+    },
+    "sent": {
+      "empty": "You have not sent any messages yet."
+    },
+    "reply": {
+      "success": "Reply sent."
+    },
+    "delete": {
+      "confirm": "Delete this message?",
+      "confirmDetail": "The message and all its replies will be permanently deleted."
+    },
+    "badge": {
+      "newCount": "{{count}} new"
+    },
+    "filter": {
+      "allTypes": "All Types",
+      "allStatuses": "All Statuses",
+      "allSenders": "All Senders"
+    },
+    "status": {
+      "unread": "Unread",
+      "read": "Read",
+      "resolved": "Resolved"
+    },
+    "inbox": {
+      "empty": "Inbox is empty."
+    },
+    "replyCount": "({{count}} replies)"
+  },
+  "scan": {
+    "preparing": "Preparing...",
+    "preparingDetail": "Loading AI models, please wait.",
+    "description": "Select an architectural project folder. The system will scan all supported files and add them to the archive.",
+    "section": {
+      "scanMode": "Scan mode",
+      "aiVectors": "AI Semantic Vectors",
+      "colorPalette": "Color Palette Analysis"
+    },
+    "mode": {
+      "merge": "Add to existing list",
+      "mergeDesc": "New files will be added to the existing {{count}} records.",
+      "replaceUnderPath": "Rescan selected folder",
+      "replaceUnderPathDesc": "Only records under the selected folder are cleared; other source folders are preserved.",
+      "fullReset": "Reset entire archive and scan fresh",
+      "fullResetDesc": "ALL records (including other folders) will be deleted and the selected folder will be scanned from scratch."
+    },
+    "badge": {
+      "alwaysActive": "ALWAYS ACTIVE"
+    },
+    "ai": {
+      "description": "A semantic vector is generated for each file using the MiniLM-L6-v2 model.",
+      "lowHardwareWarning": "Scanning may take longer on low-performance hardware.",
+      "modelReady": "AI model ready",
+      "modelLoading": "Loading model... {{progress}}%",
+      "modelWillLoad": "Model will load automatically on first scan (~23MB)"
+    },
+    "color": {
+      "enabledDesc": "Dominant colors are extracted for each image.",
+      "disabledDesc": "Color analysis is disabled."
+    },
+    "button": {
+      "selectFolder": "Select Folder & Scan",
+      "selectFiles": "Select Files & Add",
+      "resume": "Resume",
+      "pause": "Pause",
+      "cancel": "Cancel",
+      "closeAndView": "Close & View Results"
+    },
+    "progress": {
+      "filesProcessed": "{{processed}} / {{total}} files processed"
+    },
+    "eta": {
+      "elapsed": "⏱ Elapsed:",
+      "remaining": "⏳ Remaining:",
+      "calculating": "Calculating…"
+    },
+    "status": {
+      "paused": "⏸ Paused"
+    },
+    "errors": {
+      "count": "{{count}} errors",
+      "occurred": "{{count}} error(s) occurred."
+    },
+    "complete": {
+      "cancelled": "Scan Cancelled",
+      "cancelledDesc": "{{count}} files completed",
+      "success": "Scan Complete!",
+      "fileFormats": "File Formats",
+      "cacheDetail": "files loaded from cache (unchanged),",
+      "indexedDetail": "files successfully indexed.",
+      "scannedDetail": "files successfully scanned.",
+      "rescannedDetail": "files re-scanned.",
+      "rescannedIndexedDetail": "files re-indexed.",
+      "durationSuffix": "elapsed",
+      "autoRagActive": "AI indexing continues in the background",
+      "autoRagDesc": "Processing {{current}}/{{total}} files. Use the Stop button on the top banner to halt; this is CPU-intensive."
+    },
+    "duration": {
+      "hours": "{{h}}h {{m}}m {{s}}s",
+      "minutes": "{{m}}m {{s}}s",
+      "seconds": "{{s}}s"
+    },
+    "cache": "{{count}} cached",
+    "cacheLoaded": "{{count}} from cache",
+    "pendingRescanTitle": "{{count}} files pending re-scan",
+    "pendingRescanStart": "Scan These Files",
+    "largeScan": {
+      "title": "Large Folder Detected",
+      "detail": "This folder contains {{fileCount}} supported files and {{folderCount}} subfolders. Scanning may take a while. You can add folders incrementally for faster scans.",
+      "confirm": "Scan Anyway"
+    }
+  },
+  "refile": {
+    "structure": {
+      "byProject": "By Project",
+      "byProjectDesc": "Group files by project name",
+      "byCategory": "By Category",
+      "byCategoryDesc": "Group files by category",
+      "byType": "By File Type",
+      "byTypeDesc": "Group files by extension",
+      "byDate": "By Date",
+      "byDateDesc": "Group files by date"
+    },
+    "action": {
+      "copied": "copied",
+      "moved": "moved"
+    },
+    "dialog": {
+      "selectDest": "Select destination folder (files will be organized here)"
+    },
+    "result": {
+      "success": "{{processed}} files successfully {{action}}. {{folders}} folder(s) created.",
+      "browserMode": "{{count}} reference (.ref) file(s) created.",
+      "error": "Error: {{message}}"
+    },
+    "summary": "{{fileCount}} file(s) selected. They will be organized into the following structure:",
+    "preview": {
+      "title": "Preview ({{count}} folders)"
+    },
+    "button": {
+      "copy": "Copy / Organize",
+      "move": "Move / Organize"
+    },
+    "backupFiles": "backup files",
+    "browser": {
+      "note": "In browser mode, only .ref reference files are created."
+    },
+    "processing": {
+      "title": "Organizing files...",
+      "progress": "{{current}} / {{total}} files"
+    },
+    "done": {
+      "error": "Operation Failed",
+      "success": "Operation Complete!"
+    },
+    "confirm": {
+      "moveTitle": "Move Files",
+      "copyTitle": "Copy Files",
+      "body": "{{count}} file(s) will be organized.",
+      "moveWarning": "Warning: Moving will delete the original files. This action cannot be undone.",
+      "confirmMove": "Confirm Move",
+      "confirmCopy": "Confirm Copy"
+    }
+  },
+  "logViewer": {
+    "delete": {
+      "noneFound": "No records found to delete.",
+      "failed": "Delete failed",
+      "confirm": "Delete {{count}} log record(s)?",
+      "confirmDetail": "The selected records will be permanently removed.",
+      "success": "Records deleted",
+      "successDetail": "{{count}} record(s) removed"
+    },
+    "clearAll": {
+      "confirm": "Delete all logs?",
+      "confirmDetail": "This action cannot be undone.",
+      "success": "Logs cleared"
+    },
+    "clearByDate": {
+      "confirm": "Delete logs older than {{days}} days?",
+      "confirmDetail": "Records before this date will be deleted.",
+      "success": "Old logs cleared",
+      "successDetail": "{{count}} record(s) deleted"
+    },
+    "header": {
+      "totalRecords": "{{count}} records",
+      "selected": "{{count}} selected"
+    },
+    "tooltip": {
+      "deleteSelected": "Delete {{count}} selected record(s) (Delete)",
+      "refresh": "Refresh",
+      "clearByDate": "Clear by date",
+      "clearAll": "Clear All",
+      "deselectAll": "Deselect all",
+      "selectAll": "Select all",
+      "verifyIntegrity": "Verify log integrity (hash chain)"
+    },
+    "integrity": {
+      "valid": "Log integrity verified — {{count}} records form a consistent chain.",
+      "invalid": "Log integrity broken — {{broken}}/{{total}} records are inconsistent.",
+      "firstBroken": "First broken record id: {{id}}",
+      "missingHash": "{{count}} records are missing hashes (pending old migration).",
+      "hint": "If there is no nearby LOG_DELETED / LOG_CLEARED marker, external tampering is suspected. The DB file may have been edited outside the app.",
+      "error": "Verification failed: {{error}}"
+    },
+    "button": {
+      "deleteSelected": "Delete Selected",
+      "clearByDate": "Clear"
+    },
+    "dateBar": {
+      "label": "Clear old records:",
+      "daysOld": "Older than {{days}} days"
+    },
+    "filter": {
+      "allActions": "All Actions"
+    },
+    "action": {
+      "scanStarted": "Scan Started",
+      "scanCompleted": "Scan Completed",
+      "scanCancelled": "Scan Cancelled",
+      "fileAdded": "File Added",
+      "fileDeleted": "File Deleted",
+      "fileRestored": "File Restored",
+      "settingsChanged": "Settings Changed",
+      "userLogin": "User Login",
+      "userLogout": "User Logout",
+      "dbExport": "DB Export",
+      "dbImport": "DB Import",
+      "refileCompleted": "Organize Completed",
+      "versionConvert": "Version Convert",
+      "messageSent": "Message Sent",
+      "messageReplied": "Message Replied",
+      "messageDelete": "Message Deletion"
+    },
+    "table": {
+      "empty": "No log records found"
+    },
+    "col": {
+      "time": "Time",
+      "role": "Role",
+      "action": "Action",
+      "target": "Target",
+      "result": "Result"
+    },
+    "detail": {
+      "title": "Details",
+      "extraInfo": "Additional Info",
+      "noExtra": "No additional info for this entry.",
+      "tooltip": "Show details (double-click)"
+    },
+    "footer": {
+      "selectedOf": "{{selected}} / {{total}} selected",
+      "showing": "Showing {{count}} records",
+      "hint": "Click: select | Ctrl+Click: multi | Shift+Click: range | Double-click: details"
+    }
+  },
+  "audit": {
+    "scanInterrupted": {
+      "noteUserClose": "The app was closed gracefully while the scan was in progress. The scan was interrupted.",
+      "noteUnexpected": "The app terminated unexpectedly before the scan finished (no graceful shutdown marker).",
+      "possibleCauses": "Possible causes: app crash · system shutdown · terminated from Task Manager · antivirus/security software · power outage",
+      "cause": {
+        "app_crash": "Application crashed (Windows: Application Error / Event 1000).",
+        "app_hang": "Application stopped responding and was force-terminated (Windows: Application Hang / Event 1002).",
+        "system_shutdown": "System was shut down or restarted (Windows: Event 1074 / 6006).",
+        "system_unexpected_reboot": "System rebooted unexpectedly: power loss, kernel panic or BSOD (Windows: Event 6008 / 41)."
+      }
+    }
+  },
+  "aiSettings": {
+    "description": "Select and configure an AI provider to enable visual search.",
+    "label": {
+      "provider": "Provider",
+      "ollamaUrl": "Ollama Server Address",
+      "visionModel": "Vision Model",
+      "apiKey": "API Key"
+    },
+    "badge": {
+      "local": "🔒 Local / Private",
+      "cloud": "Cloud API"
+    },
+    "guide": {
+      "title": "Setup Guide — First time?"
+    },
+    "hint": {
+      "defaultUrl": "You do not need to change the default address.",
+      "modelRecommendation": "llava is recommended if you have a GPU."
+    },
+    "model": {
+      "llavaDesc": "(recommended — fast with GPU, ~4.7 GB)",
+      "moondreamDesc": "(lightweight alternative, ~1.7 GB)"
+    },
+    "button": {
+      "testing": "Testing…",
+      "test": "Test Connection"
+    },
+    "test": {
+      "ollamaOk": "Ollama is running, connection successful!",
+      "cloudOk": "API connection successful!"
+    },
+    "placeholder": {
+      "apiKey": "Enter your {{provider}} API key"
+    },
+    "section": {
+      "clip": "Advanced Visual Indexing (CLIP)"
+    },
+    "clip": {
+      "on": "On",
+      "off": "Off",
+      "description": "When enabled, the system indexes your images with CLIP."
+    },
+    "guide_note": {
+      "llavaNote": "The LLaVA model requires approximately 4.7 GB of disk space."
+    },
+    "ollamaSteps": {
+      "step1Title": "Download and install Ollama",
+      "step1Body": "Go to ollama.com, download for Windows and install. After installation it runs in the system tray.",
+      "step2Title": "Download the vision model",
+      "step2Body": "Type \"cmd\" in the Start menu and press Enter. Paste the following command in the window:",
+      "step3Title": "Grant app access (CORS)",
+      "step3Body": "By default Ollama rejects requests from this app. To allow access:",
+      "step4Title": "Test the connection",
+      "step4Body": "If Ollama is running in the system tray, click the 'Test Connection' button below."
+    },
+    "error": {
+      "invalidJson": "Ollama response is in invalid JSON format.",
+      "noVisionModel": "Ollama is running but no vision model is installed. Follow step 2 in the setup guide.",
+      "oldVersion": "Your Ollama version ({{version}}) is too old. GPU support may be incomplete. Update from ollama.com.",
+      "notRunning": "Ollama is not running or the address is wrong. Check the setup guide.",
+      "noApiKey": "No API key entered.",
+      "timeout": "Connection timed out (15s). Check your API key and internet connection.",
+      "invalidApiKey": "Invalid API key. Please make sure you entered the correct key."
+    },
+    "copied": "✓ Copied",
+    "copy": "Copy",
+    "newModelHint": "To add a new model:",
+    "pullModel": "Download Model",
+    "pullModelLoading": "Downloading...",
+    "pullModelSuccess": "Model downloaded successfully!",
+    "pullModelError": "Failed to download model",
+    "pullModelHint": "llava ~4.7 GB — download may take a while",
+    "setCors": "Set CORS",
+    "setCorsLoading": "Setting...",
+    "setCorsSuccess": "CORS set! Restart Ollama.",
+    "setCorsError": "Failed to set CORS",
+    "setCorsHint": "Don't forget to restart Ollama",
+    "openSetupWizard": "AI Setup Wizard",
+    "status": {
+      "title": "AI Status",
+      "refresh": "Refresh",
+      "ollamaServer": "Ollama Server",
+      "chatModel": "Text Model",
+      "visionModel": "Vision Model",
+      "ready": "Ready",
+      "missing": "Missing",
+      "chatMissing": "{{model}} missing",
+      "visionMissing": "{{model}} missing",
+      "chatAltHint": "Or you can select one of the installed models: {{models}}",
+      "notRunning": "Offline",
+      "pulling": "Downloading...",
+      "configured": "Configured",
+      "downloadChat": "Download",
+      "downloadVision": "Download",
+      "installHint": "If Ollama is installed, use the \"Start\" button above. Otherwise, download from ollama.com/download.",
+      "advanced": "Advanced Model Settings",
+      "chatModelHint": "For RAG chat, tag generation, query enrichment. Recommended: qwen3:8b · Minimum: qwen3:4b",
+      "visionModelHint": "For visual analysis and OCR. Default: llava",
+      "installedModels": "Installed models:",
+      "start": "Start",
+      "stop": "Stop",
+      "startOllama": "Start Ollama",
+      "stopOllama": "Stop Ollama",
+      "starting": "Starting...",
+      "stopping": "Stopping..."
+    }
+  },
+  "profile": {
+    "error": {
+      "imageOnly": "Only image files can be uploaded",
+      "fileTooLarge": "File size is too large ({{size}} MB). Maximum is 2 MB.",
+      "uploadFailed": "An error occurred while uploading the image",
+      "currentPasswordRequired": "Please enter your current password",
+      "newPasswordTooShort": "New password must be at least 3 characters",
+      "passwordMismatch": "New passwords do not match",
+      "wrongPassword": "Current password is incorrect",
+      "updateFailed": "Update failed",
+      "saveFailed": "An error occurred while saving"
+    },
+    "success": {
+      "updated": "Profile updated",
+      "passwordChanged": "Password changed"
+    },
+    "avatar": {
+      "uploading": "Uploading...",
+      "hint": "Max 2 MB, resized to 128x128 px"
+    },
+    "button": {
+      "uploadPhoto": "Upload Photo",
+      "removeAvatar": "Remove",
+      "changePassword": "Change Password"
+    },
+    "label": {
+      "displayName": "Display Name",
+      "username": "Username",
+      "role": "Role",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "New Password (Confirm)"
+    },
+    "placeholder": {
+      "displayName": "Enter your name..."
+    }
+  },
+  "userMgmt": {
+    "error": {
+      "usernamePasswordRequired": "Username and password are required",
+      "createFailed": "Failed to create user",
+      "lastAdmin": "Cannot demote the last administrator. Assign another admin first.",
+      "roleChangeFailed": "Failed to change role",
+      "passwordTooShort": "Password must be at least 3 characters",
+      "passwordResetFailed": "Failed to reset password",
+      "cannotDeleteSelf": "You cannot delete yourself",
+      "cannotDeleteLastAdmin": "Cannot delete the last administrator",
+      "deleteFailed": "Delete failed",
+      "notFounder": "Only the founder administrator can perform this action"
+    },
+    "success": {
+      "userCreated": "User created",
+      "roleChanged": "Role changed",
+      "passwordReset": "Password reset",
+      "passwordResetDetail": "New password assigned",
+      "userDeleted": "User deleted",
+      "avatarRemoved": "Avatar removed",
+      "userBlocked": "Main archive access blocked",
+      "userUnblocked": "Main archive access restored",
+      "developerEnabled": "Developer access granted",
+      "developerDisabled": "Developer access revoked"
+    },
+    "blockNotification": {
+      "subject": "Main Archive Access Restricted",
+      "body": "Your access to the main archive has been restricted by the administrator. You can continue using your local archive. Contact your administrator for details."
+    },
+    "delete": {
+      "confirm": "Delete \"{{name}}\"?",
+      "confirmDetail": "This user will be permanently removed."
+    },
+    "header": {
+      "userCount": "{{count}} users"
+    },
+    "button": {
+      "newUser": "New User",
+      "add": "Add"
+    },
+    "form": {
+      "usernameLabel": "Username *",
+      "usernamePlaceholder": "username",
+      "passwordLabel": "Password *",
+      "passwordPlaceholder": "password123",
+      "displayNameLabel": "Display Name",
+      "displayNamePlaceholder": "Full Name",
+      "roleLabel": "Role",
+      "developerLabel": "Developer access",
+      "newPasswordPlaceholder": "New password"
+    },
+    "table": {
+      "empty": "No registered users"
+    },
+    "col": {
+      "username": "Username",
+      "displayName": "Display Name",
+      "role": "Role",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "badge": {
+      "you": "(you)",
+      "blocked": "BLOCKED",
+      "developer": "DEVELOPER",
+      "founder": "FOUNDER"
+    },
+    "tooltip": {
+      "resetPassword": "Reset Password",
+      "removeAvatar": "Remove Avatar",
+      "deleteUser": "Delete User",
+      "blockUser": "Block main archive access",
+      "unblockUser": "Restore main archive access",
+      "toggleDeveloper": "Toggle developer access"
+    },
+    "displayName": "Name"
+  },
+  "detail": {
+    "section": {
+      "colorPalette": "Color Palette",
+      "fileInfo": "File Information",
+      "formatProps": "Format Properties",
+      "convertedFile": "Version-Converted File",
+      "docExcerpt": "Document Excerpt",
+      "docIndex": "Document Content (Index)",
+      "aiTags": "AI Tags",
+      "techMeta": "Technical Metadata",
+      "archStyle": "Architectural Style",
+      "match": "Match Source"
+    },
+    "color": {
+      "analyzing": "Analyzing…",
+      "refresh": "Refresh"
+    },
+    "error": {
+      "copyPathFailed": "Failed to copy path.",
+      "openFileFailed": "Failed to open file: {{error}}",
+      "openFolderFailed": "Failed to open folder: {{error}}",
+      "colorExtractFailed": "Failed to extract color palette: {{error}}"
+    },
+    "tag": {
+      "versionConverted": "Version Converted"
+    },
+    "convert": {
+      "maxRunning": "3ds Max is currently open. Please close Max and try again.",
+      "noInstall": "No suitable 3ds Max installation found.",
+      "successReal": "File converted to V{{year}} (via 3ds Max)",
+      "successQuick": "File stamped as V{{year}}",
+      "error": "Conversion error: {{error}}"
+    },
+    "export": {
+      "success": "Exported as {{format}}",
+      "error": "Export error: {{error}}",
+      "exporting": "Exporting...",
+      "fbxTitle": "Export MAX file to FBX format (requires 3ds Max)",
+      "objTitle": "Export MAX file to OBJ format (requires 3ds Max)"
+    },
+    "button": {
+      "openFile": "Open File",
+      "converting": "Converting...",
+      "downgrade": "Downgrade Version",
+      "showInFolder": "Show in Folder",
+      "copied": "Copied!",
+      "copyPath": "Copy Path"
+    },
+    "convertMode": {
+      "quick": "Quick",
+      "quickDesc": "Change stamp",
+      "real": "Real",
+      "realDesc": "Via 3ds Max",
+      "notFound": "Max not found",
+      "quickWarning": "Changes the version stamp. Fast but version-specific features may be incompatible.",
+      "realWarning": "Re-saves with installed 3ds Max. Ensures full compatibility.",
+      "detected": "{{versions}} detected"
+    },
+    "version": {
+      "current": "← current"
+    },
+    "label": {
+      "size": "Size",
+      "type": "Type",
+      "category": "Category",
+      "created": "Created",
+      "updated": "Updated",
+      "drawingDate": "Drawing Date",
+      "maxVersion": "Max Version",
+      "maxLayers": "Max Layers",
+      "maxObjects": "Max Objects",
+      "original": "Original:",
+      "source": "Source:",
+      "dwgVersion": "AutoCAD Version",
+      "skpVersion": "SketchUp Version",
+      "rvtVersion": "Revit Version",
+      "rvtProjectName": "Project Name",
+      "rvtWorkshared": "Worksharing",
+      "rvtStoreys": "Storeys",
+      "ifcSchema": "IFC Schema",
+      "ifcProjectName": "Project Name",
+      "ifcBuildingName": "Building Name",
+      "ifcOriginatingSystem": "Originating System",
+      "ifcEntities": "Entity Count",
+      "ifcStoreys": "Storeys",
+      "ifcSpaces": "Spaces",
+      "path": "Path",
+      "layers": "Layers ({{count}})",
+      "blockCount": "Block Count",
+      "renderEngine": "Render Engine",
+      "textureCount": "Texture Count",
+      "rooms": "Rooms ({{count}})",
+      "materials": "Materials",
+      "resolution": "Resolution",
+      "pageCount": "Page Count",
+      "colorProfile": "Color Profile",
+      "imageRefs": "Image References ({{count}})"
+    },
+    "action": {
+      "open": "Open",
+      "showInFolder": "Show in Folder"
+    },
+    "backup": {
+      "title": "{{count}} Backup File(s)",
+      "totalSize": "Total {{size}}"
+    },
+    "chunk": {
+      "info": "Chunk: {{index}} · Page {{page}}"
+    },
+    "docIndex": {
+      "hasChunks": "This file was scanned from content. {{count}} chunk record(s) found.",
+      "noChunks": "No content chunks found for this file.",
+      "garbage": "Content was extracted but is not readable text.",
+      "searchHint": "If you type something in the search box and this file appears in results, the relevant section will appear above as \"Document Excerpt\".",
+      "ocrHint": "Tip: If you expect text search in this file, keep AI enabled when re-scanning; scanned documents may need OCR via Ollama."
+    },
+    "match": {
+      "file": "In DWG File",
+      "ai": "AI Detection",
+      "meta": "Metadata"
+    }
+  },
+  "dashboard": {
+    "stat": {
+      "totalAssets": "Total Assets",
+      "activeProjects": "Active Projects",
+      "totalSize": "Total Size",
+      "indexed": "Indexed",
+      "partiallyIndexed": "Partially Indexed"
+    },
+    "card": {
+      "categoryDist": "Asset Type Distribution",
+      "materialGroups": "Material Groups",
+      "projectPhases": "Project Phases",
+      "fileFormats": "File Format Distribution",
+      "archStyles": "Architectural Styles",
+      "sizeByFormat": "Disk Usage by Format",
+      "monthlyGrowth": "Monthly Growth (Last 12 Months)",
+      "monthlyGrowthHint": "{{count}} files added in this period (by creation date)"
+    },
+    "activity": {
+      "title": "Last 7 Days Activity",
+      "totalOps": "{{count}} operations",
+      "topUsers": "Most Active Users",
+      "topActions": "Action Types"
+    }
+  },
+  "technical": {
+    "empty": "No assets found matching the filters.",
+    "tooltip": {
+      "sortColumn": "Click to sort"
+    },
+    "col": {
+      "fileName": "File Name",
+      "type": "Type",
+      "category": "Category",
+      "version": "Version",
+      "project": "Project",
+      "phase": "Phase",
+      "material": "Material",
+      "size": "Size",
+      "score": "Score",
+      "updated": "Updated",
+      "aiTags": "AI Tags"
+    }
+  },
+  "assetCard": {
+    "badge": {
+      "similarity": "{{score}}% Similarity",
+      "stale": "File changed since last scan — needs rescan",
+      "staleShort": "Stale",
+      "missing": "File not found on disk",
+      "missingShort": "Missing",
+      "version": "Scanner updated — rescan extracts more data",
+      "versionShort": "New data"
+    },
+    "videoPreview": "Video Preview"
+  },
+  "health": {
+    "idle": "Freshness unknown",
+    "error": "Check failed",
+    "allFresh": "All up to date",
+    "stale": "{{count}} file(s) outdated",
+    "missing": "{{count}} file(s) missing",
+    "versionOutdated": "{{count}} file(s) can extract more data",
+    "checking": {
+      "label": "Checking freshness…",
+      "progress": "{{done}}/{{total}} checked"
+    },
+    "modal": {
+      "title": "Archive Health Report",
+      "recheck": "Recheck",
+      "allFreshTitle": "All files are up to date",
+      "lastCheck": "Last check: {{time}}",
+      "summary": "{{stale}} changed · {{missing}} missing · {{version}} can be updated",
+      "staleSection": "Changed files ({{count}})",
+      "missingSection": "Missing files ({{count}})",
+      "versionSection": "Scanner updated ({{count}})",
+      "versionHint": "These files were processed by an older scanner version. Rescanning extracts more data (the files themselves are unchanged).",
+      "rescanAll": "Full Rescan",
+      "deltaScan": "Delta Scan",
+      "deltaScanHint": "Only runs new extractors, preserves existing metadata. Much faster.",
+      "missingHint": "To clean up records for missing files, use Settings → Health Check.",
+      "legacyFormatSection": "Legacy format files ({{count}})",
+      "legacyFormatHint": "These files use an older (binary) Office format. Converting to modern OOXML equivalents is recommended for long-term archival.",
+      "legacyFormatChipTitle": "{{legacy}} → {{recommended}}",
+      "fixitySection": "Fixity (bit-rot) sample check",
+      "fixityHint": "Recomputes file hashes on a random sample and compares with the baseline. Mismatching files may be corrupted on disk or have been modified.",
+      "fixityRun": "Run",
+      "fixitySampleAria": "Sample percentage",
+      "fixityClean": "{{sampled}} files checked · {{ok}} healthy · {{seconds}}s",
+      "fixityIssues": "{{sampled}} checked · {{mismatch}} corrupted · {{missing}} not found · {{error}} errors",
+      "fixityNoBaseline": "{{count}} files have no baseline hash yet — skipped.",
+      "fixityStatus": {
+        "mismatch": "Hash mismatch — bit-rot suspected",
+        "missing": "File not on disk",
+        "error": "Read/compute error"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Application Error",
+    "description": "An unexpected error occurred. Try reloading the application.",
+    "reload": "Reload",
+    "continue": "Continue"
+  },
+  "modalError": {
+    "title": "Panel Error",
+    "description": "An unexpected error occurred in this panel.",
+    "close": "Close"
+  },
+  "statusBar": {
+    "mainArchive": "Main Archive",
+    "localArchive": "Local Archive",
+    "timeRemaining": "(~{{time}} remaining)",
+    "itemsPerSec": "{{speed}} items/s",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancelTask": "Cancel",
+    "unreadNotifications": "{{count}} unread notifications",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all",
+    "noNotifications": "No notifications",
+    "userManagement": "User Management",
+    "editProfile": "Edit Profile",
+    "logout": "Log Out",
+    "switchUser": "Switch User",
+    "reportError": "Report to Developer",
+    "errorReported": "Error report sent",
+    "errorReportSent": "Sent",
+    "errorReportSubject": "Error Report: {{title}}",
+    "reportLimitReached": "Daily message limit reached",
+    "ai": {
+      "ready": "AI: Ready",
+      "partial": "AI: Model missing",
+      "offline": "AI: Ollama offline"
+    }
+  },
+  "sidebarConfig": {
+    "title": "Panel Settings",
+    "description": "Customize which details appear in the left panel, their names, and order.",
+    "resetDefaults": "Reset to Defaults"
+  },
+  "assetTags": {
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "placeholder": "Type tag name...",
+    "createTag": "Create \"{{name}}\""
+  },
+  "tagManagement": {
+    "delete": "Delete tag \"{{name}}\"",
+    "deleteConfirm": "Are you sure you want to delete \"{{name}}\"? It will be removed from all files."
+  },
+  "undo": {
+    "hint": "Ctrl+Z to undo",
+    "undone": "Undone",
+    "redone": "Reapplied"
+  },
+  "blankMenu": {
+    "section": {
+      "view": "View",
+      "cardSize": "Card Size",
+      "selection": "Selection",
+      "sort": "Sort"
+    },
+    "view": {
+      "explorer": "Explorer",
+      "technical": "Technical List",
+      "dashboard": "Dashboard"
+    },
+    "cardSize": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "selection": {
+      "selectAll": "Select All",
+      "clearSelection": "Clear Selection ({{count}})"
+    },
+    "sort": {
+      "name": "By Name",
+      "date": "By Created Date",
+      "modified": "By Modified Date",
+      "type": "By Type",
+      "size": "By Size",
+      "aiScore": "By Visual AI Score",
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "rescan": "Re-scan..."
+  },
+  "contextMenu": {
+    "openFile": "Open File",
+    "showInFolder": "Show in Folder",
+    "copyPath": "Copy Path",
+    "pathCopied": "Path copied to clipboard",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "addTags": "Add Tags...",
+    "rescan": {
+      "label": "Re-scan This File",
+      "scanning": "Scanning...",
+      "started": "Re-scanning...",
+      "done": "Re-scan complete",
+      "failed": "Re-scan failed"
+    },
+    "dwgSimilarity": "DWG Structural Similarity",
+    "findSimilar": {
+      "title": "Find Similar:",
+      "high": "High similarity",
+      "normal": "Standard similarity",
+      "medium": "Medium similarity",
+      "wide": "Broad similarity"
+    },
+    "delete": "Delete",
+    "addToSelection": "Add to Selection",
+    "removeFromSelection": "Remove from Selection",
+    "ragExclude": "Hide from AI",
+    "ragInclude": "Show to AI"
+  },
+  "assetStatus": {
+    "section": "Project Status",
+    "clientName": "Client",
+    "approvalStatus": "Approval Status",
+    "versionLabel": "Version",
+    "deadline": "Deadline",
+    "clickToEdit": "Click to edit...",
+    "status": {
+      "draft": "Draft",
+      "review": "In Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  },
+  "assetRelations": {
+    "section": "Linked Files",
+    "type": {
+      "pdf_export": "PDF Export",
+      "render_of": "Render",
+      "version_of": "Version",
+      "project_group": "Project Group"
+    },
+    "auto": "Auto",
+    "addLink": "Add Link",
+    "removeLink": "Remove Link",
+    "noLinks": "No links",
+    "searchPlaceholder": "Type file name..."
+  },
+  "perfSetup": {
+    "lowTier": "Low",
+    "highTier": "High",
+    "analyzed": "Your machine has been analyzed. Recommended settings are shown below.",
+    "cores": "{{count}} cores",
+    "lowIsFast": "low = fast",
+    "selectMode": "Select a mode or accept the recommendation:",
+    "skip": "Skip, I'll configure manually",
+    "applyRecommended": "Apply Recommended Settings",
+    "recommended": "Recommended"
+  },
+  "deletion": {
+    "confirmTitle": "Delete \"{{fileName}}\"?",
+    "confirmBody": "File will be removed from the archive. You can undo with Ctrl+Z.",
+    "removed": "Removed from archive",
+    "removedUndo": "\"{{fileName}}\" — can be undone with Ctrl+Z",
+    "undone": "Undone",
+    "undoneDetail": "\"{{fileName}}\" restored to archive (favorites and tags preserved)",
+    "label": "\"{{fileName}}\" removed from archive"
+  },
+  "dbAssets": {
+    "timeout": "Database loading timed out (90s). Please reload the page.",
+    "dbError": "Database error",
+    "wasmTimeout": "WASM module could not be loaded — timeout.",
+    "initFailed": "Database initialization failed: {{message}}",
+    "recoveryTitle": "Database Problem Detected",
+    "recoveryDetail": "The database file was corrupted and could not be opened. The corrupted file has been automatically backed up and the application started with a fresh database. Contact your administrator to recover previous data."
+  },
+  "scanReports": {
+    "title": "Scan Reports",
+    "loading": "Loading reports...",
+    "loadingContent": "Loading...",
+    "empty": "No reports yet. After a scan, skipped or failed files appear here.",
+    "selectReport": "Select a report on the left",
+    "openInEditor": "Open in editor",
+    "saveAs": "Save as",
+    "entries": "entries",
+    "unknownRoot": "(folder name unknown)",
+    "noEntriesFiltered": "No entries match the filter",
+    "col": {
+      "path": "Path",
+      "category": "Category",
+      "reason": "Reason"
+    }
+  },
+  "scanWorkflow": {
+    "started": "Scan started",
+    "willClear": "Records under the selected folder will be cleared",
+    "willAppend": "Will be added to existing data",
+    "willFullReset": "The ENTIRE archive will be reset and scanned from scratch",
+    "fullResetConfirm": "Are you sure you want to reset the entire archive?",
+    "fullResetConfirmDetail": "This operation will permanently delete ALL records (including other source folders). An automatic backup is taken before the scan.",
+    "fullResetConfirmButton": "Yes, reset the archive",
+    "modelFailed": "AI model could not be loaded",
+    "continueWithout": "Continuing without embeddings",
+    "completed": "Scan completed",
+    "filesScanned": "{{count}} files scanned",
+    "paused": "Scan paused",
+    "pausedHint": "Click \"Resume\" to continue",
+    "resumed": "Scan resumed",
+    "cancelled": "Scan cancelled",
+    "cancelledByUser": "Scan stopped by user",
+    "selectFiles": "Select Files to Add to Archive",
+    "selectFolder": "Select Archive Folder to Scan",
+    "allFiles": "All Files",
+    "reportSaved": "Scan report saved",
+    "reportSavedDetail": "{{count}} entries — {{path}}"
+  },
+  "imageSearch": {
+    "enableAiFirst": "Please start AI indexing first to enable the search infrastructure.",
+    "noOllamaUrl": "Ollama URL is not set. Configure it in AI Vision Settings.",
+    "noApiKey": "{{provider}} API key is not entered. Configure it in AI Vision Settings.",
+    "preparing": "Preparing image...",
+    "clipAnalyzing": "Analyzing Image (CLIP)...",
+    "oldIndex": "Old visual index format detected. Re-scan the archive with CLIP enabled for more accurate results.",
+    "clipPHashLow": "🔍 Visual Results (CLIP) — pHash coverage low, re-scan recommended",
+    "clipPHash": "🔍 Visual Results (CLIP + pHash)",
+    "noClipMap": "No CLIP-scanned visual map found. Re-scan the archive with CLIP enabled.",
+    "clipError": "CLIP engine error. Falling back to keyword model...",
+    "analyzing": "Analyzing image… ({{elapsed}}s)",
+    "ollamaTimeout": "Ollama did not respond (10 min). Check that Ollama is running and the moondream model is installed.",
+    "apiTimeout": "API did not respond (60s). Check your internet connection and API settings.",
+    "analysisError": "Image analysis error: {{error}}",
+    "emptyResponse": "AI model returned an empty response. Check your API settings.",
+    "searchError": "Image search error: {{error}}",
+    "noMatches": "No keyword matches found in archive for this image"
+  },
+  "embeddingSearch": {
+    "error": "Semantic search error",
+    "errorDetail": "Could not create embedding"
+  },
+  "storageWarningHook": {
+    "storageFull": "Storage full",
+    "storageFullDetail": "localStorage limit exceeded (5-10MB). Try clearing old scans.",
+    "diskLow": "Disk space low",
+    "diskLowDetail": "Insufficient free space on the disk where the database is stored. Scan or import operations may fail.",
+    "saveFailed": "Database save error",
+    "saveFailedDetail": "Database could not be saved to disk."
+  },
+  "notifications": {
+    "taskCompleted": "{{label}} completed",
+    "duration": "Duration: {{time}}",
+    "taskFailed": "{{label}} failed"
+  },
+  "userService": {
+    "defaultAdminName": "Administrator",
+    "dbNotReady": "DB not ready",
+    "usernameRequired": "Username and password required",
+    "usernameTaken": "This username is already taken",
+    "usernameLengthError": "Username must be between 3 and 32 characters",
+    "passwordTooLong": "Password cannot exceed 128 characters",
+    "cannotDemoteFounder": "The founder administrator's role cannot be changed",
+    "cannotDeleteFounder": "The founder administrator cannot be deleted"
+  },
+  "batchActions": {
+    "tagAddFailed": "Tag add failed",
+    "tagRemoveFailed": "Tag remove failed",
+    "updateFailed": "Could not update {{field}}",
+    "trashFailed": "Could not move to trash"
+  },
+  "exportService": {
+    "reportTitle": "ArchivistPro Archive Report",
+    "createdAt": "Created: {{date}}",
+    "indexed": "Indexed: {{count}}",
+    "tagged": "Tagged: {{count}}",
+    "byCategory": "── By Category ──",
+    "byFileType": "── By File Type ──",
+    "byProjectPhase": "── By Project Phase ──",
+    "byMaterialGroup": "── By Material Group ──"
+  },
+  "lan": {
+    "title": "LAN Sharing",
+    "startServer": "Start Server",
+    "stopServer": "Stop Server",
+    "serverRunning": "Server is running",
+    "authCode": "Auth Code",
+    "regenerateCode": "Regenerate Code",
+    "connect": "Connect",
+    "download": "Download Archive",
+    "ipAddress": "IP Address",
+    "port": "Port",
+    "connectionInfo": "Connection Info",
+    "enterCode": "Enter auth code",
+    "status": {
+      "connected": "Connected",
+      "disconnected": "Not connected",
+      "downloading": "Downloading..."
+    },
+    "startServerHint": "Share archive over LAN (port 9471)",
+    "connectHint": "Download archive from another computer",
+    "integrityFailed": "Download integrity check failed. Please try again.",
+    "downloadSuccess": "Archive downloaded and loaded successfully.",
+    "dbSize": "DB Size",
+    "serverHint": "On the other computer, go to Settings > Network > Connect and enter the IP and code above."
+  },
+  "facets": {
+    "projectPhase": "Project Phase",
+    "approvalStatus": "Approval Status",
+    "approvalStatus.draft": "Draft",
+    "approvalStatus.review": "In Review",
+    "approvalStatus.approved": "Approved",
+    "approvalStatus.rejected": "Rejected",
+    "category": "Asset Type",
+    "materialGroup": "Material Group",
+    "colorTheme": "Color Theme",
+    "architecturalStyle": "Architectural Style"
+  },
+  "appVersion": {
+    "description": "Architectural File Archive & Smart Search"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "letsGo": "Let's Go",
+    "start": "Get Started",
+    "replayTour": "Replay Tour",
+    "welcome": {
+      "title": "Welcome to Archivist Pro!",
+      "desc": "Let us show you around. This quick tour will introduce the key features. You can skip anytime."
+    },
+    "scan": {
+      "title": "Scan Your Files",
+      "desc": "Add your project folders and start scanning. DWG, MAX, SKP, PDF and 80+ file formats are automatically recognized and archived."
+    },
+    "search": {
+      "title": "Smart Search",
+      "desc": "Find your files using keyword or semantic search. With AI indexing enabled, it also catches similar concepts."
+    },
+    "viewModes": {
+      "title": "View Modes",
+      "desc": "Use Explorer view for file cards, Dashboard for statistics, and Technical view for detailed tables."
+    },
+    "aiChat": {
+      "title": "AI Assistant",
+      "desc": "Ask natural language questions about the files in your archive. AI analyzes file contents to provide answers."
+    },
+    "settings": {
+      "title": "Settings",
+      "desc": "Configure user management, security, AI settings, backups, and language preferences here."
+    },
+    "done": {
+      "title": "You're All Set!",
+      "desc": "You've learned the basics. You can restart this tour anytime from Settings. Happy archiving!"
+    }
+  },
+  "wizard": {
+    "title": "Archivist Pro Setup Wizard",
+    "step": "Step {{current}} / {{total}}",
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip",
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Let's check your system before you start using Archivist Pro.",
+      "language": "Language",
+      "systemCheck": "System Check",
+      "wasm": "WebAssembly Support",
+      "wasmOk": "WASM is supported",
+      "wasmFail": "WASM is not supported — app may not work properly",
+      "os": "Operating System",
+      "disk": "Estimated Disk Space",
+      "diskAvailable": "{{size}} available",
+      "diskUnavailable": "Information unavailable"
+    },
+    "checklist": {
+      "title": "Requirements",
+      "subtitle": "Check the installation status of the following components.",
+      "ollamaService": "Ollama Service",
+      "ollamaRunning": "Running",
+      "ollamaNotRunning": "Not running or not installed",
+      "ollamaLink": "Download from ollama.com",
+      "chatModel": "Chat Model",
+      "chatModelOk": "{{model}} installed",
+      "chatModelMissing": "Not installed — run in terminal: ollama pull {{model}}",
+      "visionModel": "Vision Model",
+      "visionModelOk": "{{model}} installed",
+      "visionModelMissing": "Not installed — run in terminal: ollama pull llava",
+      "odaConverter": "ODA FileConverter",
+      "odaFound": "Detected",
+      "odaNotFound": "Not found",
+      "odaLink": "Download from opendesign.com",
+      "recheck": "Recheck",
+      "optionalNote": "These requirements are optional. You can configure missing ones later from Settings.",
+      "checking": "Checking..."
+    },
+    "ready": {
+      "title": "All Set!",
+      "subtitle": "Setup is complete. Review the summary below.",
+      "summary": "Setup Summary",
+      "aiMode": "AI Mode",
+      "aiModeLocal": "Local AI (Ollama)",
+      "aiModeSkip": "AI disabled",
+      "missingDeps": "Missing Requirements",
+      "missingDepsNone": "All installed",
+      "missingDepsCount": "{{count}} missing",
+      "systemStatus": "System Status",
+      "allGood": "All checks passed",
+      "hasWarnings": "{{count}} warning(s)",
+      "defaultCreds": "Default Login Credentials",
+      "defaultCredsHint": "Username: admin / Password: admin",
+      "changePasswordHint": "We recommend changing your password after your first login.",
+      "launch": "Launch Archivist Pro"
+    },
+    "dwg": {
+      "title": "DWG File Support",
+      "description": "ODA FileConverter is required to extract layers, blocks and text from DWG files.",
+      "detected": "ODA FileConverter detected",
+      "notDetected": "ODA FileConverter not found",
+      "optional": "This step is optional — you can install it later from Settings.",
+      "rescanNote": "Previously scanned DWG files may have incomplete layer/block data. Re-scan those files to get full data."
+    }
+  },
+  "scanner": {
+    "odaNotInstalled": "Install ODA FileConverter from Settings > DWG Converter for full DWG support."
+  },
+  "autoRagIndex": {
+    "progress": "AI indexing: {{current}}/{{total}}",
+    "stop": "Stop"
+  },
+  "dbSaving": {
+    "label": "Saving database..."
+  },
+  "updater": {
+    "sectionTitle": "Updates",
+    "currentVersion": "Current Version",
+    "checking": "Checking...",
+    "available": "v{{version}} update available",
+    "checkNow": "Check Now",
+    "upToDate": "You are running the latest version",
+    "checkError": "Check failed: {{error}}",
+    "openDownload": "Download",
+    "serverNotConfigured": "Update server not configured — enter a server URL below",
+    "serverUrlPlaceholder": "http://192.168.1.10:8080/archivist",
+    "serverUrlHelp": "Address of the update server on your local network. This URL must serve latest.json and the installer file. Leave blank to disable update checks.",
+    "serverUrlSaved": "Saved"
+  },
+  "duplicateFinder": {
+    "title": "Duplicate & Similar File Finder",
+    "checkExactHash": "Exact Duplicates",
+    "checkSameName": "Same Name, Different Location",
+    "checkVisual": "Visual Similarity",
+    "checkStructural": "Structural Similarity (CAD, 3D, Docs)",
+    "threshold": "Similarity Threshold",
+    "scan": "Scan",
+    "scanning": "Scanning...",
+    "largeArchiveWarning": "Visual/Structural similarity scan on {{count}} files may take a long time and consume memory. For large archives, start with 'Exact Duplicates' only.",
+    "cancel": "Cancel",
+    "cancelledPartial": "cancelled — partial results",
+    "results": "{{groups}} groups, {{total}} files",
+    "noResults": "No duplicates or similar files found",
+    "missingHash": "Missing hash: {{count}} files — these cannot be included in exact duplicate scan.",
+    "missingPhash": "{{count}} visual files have no pHash data — skipped in visual similarity scan",
+    "missingMetadata": "{{count}} structural files have no metadata — skipped in structural similarity scan",
+    "rescan": "Re-scan",
+    "skipMissing": "Skip",
+    "showFiles": "Show Files",
+    "hideFiles": "Hide",
+    "rescanThese": "Scan These",
+    "deleteSelected": "Delete Selected ({{count}})",
+    "keepFirst": "Keep Newest, Delete Others",
+    "viewList": "List",
+    "viewCompare": "Compare",
+    "similarity": "{{score}}% similar",
+    "pHashDiff": "pHash diff: {{dist}}/64 bits → {{score}}% similar",
+    "confirmDeleteMultiple": "Delete {{count}} files permanently?",
+    "confirmDeleteMultipleDetail": "This action cannot be undone. Files will be removed from the archive.",
+    "groupExactHash": "Exact Duplicates",
+    "groupSameName": "Same Name",
+    "groupVisual": "Visually Similar",
+    "groupStructural": "Structurally Similar",
+    "copiesCount": "{{count}} copies",
+    "similarCount": "{{count}} similar",
+    "fileSize": "Size",
+    "modified": "Modified",
+    "comparePanelTitle": "Comparison",
+    "comparePanelHint": "Click the count badge on any group in the list",
+    "compareDeleteLeft": "Delete Left",
+    "compareDeleteRight": "Delete Right",
+    "deleteSuccess": "{{count}} files removed from archive",
+    "buttonTooltip": "Find Duplicates",
+    "confirmDeleteSingle": "Delete \"{{name}}\"?",
+    "viewerDeleteHint": "Only admins can delete from the main archive",
+    "groupLabel": "groups",
+    "comparePanelInstruction": "Click the compare icon on two files from the list view",
+    "selectedCount": "{{count}} files selected",
+    "resetCompare": "Reset",
+    "comparePending": "Select a second file to compare",
+    "andOthers": "etc.",
+    "structuralPerfWarning": "{{count}} structural files will be scanned — this may take a few seconds",
+    "detailSettings": "Detail Settings",
+    "advancedCriteria": "Advanced Criteria",
+    "formatFilters": "Format Filters",
+    "formatFiltersHint": "Which file types to show in results",
+    "comparisonCriteria": "Comparison Criteria",
+    "comparisonCriteriaHint": "Which fields are used for structural similarity — rescan after changing",
+    "generalCriteria": "General Criteria",
+    "generalCriteriaHint": "Adds extra filters to Same Name and Structural Similarity modes",
+    "formatCriteria": "Format-Specific Criteria",
+    "formatCriteriaHint": "Which metadata fields to compare for structural similarity",
+    "performanceFilters": "Performance Filters",
+    "performanceFiltersHint": "Narrow the scan pool to speed things up",
+    "criteriaRescanNeeded": "Criteria changed — rescan for up-to-date results",
+    "fmtCad": "CAD / Drawing (DWG, DXF)",
+    "fmtBim3d": "BIM / 3D Model (MAX, SKP, RVT, IFC)",
+    "fmtDoc": "Document (PDF, DOCX, XLS, PPT…)",
+    "fmtImage": "Image (JPEG, PNG, PSD…)",
+    "fmtVideo": "Video (MP4)",
+    "fmtBackup": "Backup (BAK)",
+    "critSameSize": "Same file size",
+    "critModifiedWithin": "Modified within window",
+    "critSameParentFolder": "Same parent folder name",
+    "sizeTolerance": "Tolerance",
+    "tolExact": "Exact match",
+    "tol1kb": "± 1 KB",
+    "tol1percent": "± 1%",
+    "days": "days",
+    "minFileSize": "Minimum file size",
+    "critDwgLayers": "Layers",
+    "critDwgBlocks": "Blocks",
+    "critDwgText": "Text contents",
+    "critDwgXrefs": "Xrefs",
+    "critIfcStoreys": "Storey count",
+    "critIfcEntities": "Entity count",
+    "critMaxMaterials": "Material list",
+    "critMaxRenderEngine": "Render engine",
+    "critMaxVersion": "Max version",
+    "critSkpComponents": "Components",
+    "critSkpLayers": "Layers",
+    "critSkpVersion": "SketchUp version",
+    "critRvtStoreys": "Storey names",
+    "critRvtProjectName": "Project name",
+    "critOfficeTitle": "Title",
+    "critOfficeAuthor": "Author",
+    "critPdfPages": "Page count"
+  },
+  "crashReport": {
+    "title": "Crash Reports",
+    "empty": "No crash reports found",
+    "clearAll": "Clear All",
+    "clearAllConfirm": "Delete all crash reports?",
+    "clearAllDetail": "This action cannot be undone.",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this crash report?",
+    "noStackTrace": "No stack trace available",
+    "type": {
+      "react_error": "React Error",
+      "window_error": "Window Error",
+      "unhandled_rejection": "Unhandled Promise",
+      "rust_panic": "Rust Panic"
+    },
+    "field": {
+      "component": "Component",
+      "version": "Version",
+      "os": "Operating System",
+      "message": "Error Message",
+      "stackTrace": "Stack Trace"
+    }
+  },
+  "notification": {
+    "newMessage": "You have a new message 💬",
+    "newMessages": "You have {{count}} new messages 💬",
+    "trayOpen": "Open ArchivistPro",
+    "trayQuit": "Quit",
+    "devFeedbackTitle": "New Developer Feedback"
+  },
+  "batchToolbar": {
+    "ariaLabel": "Bulk action toolbar",
+    "selectedCount": "{{count}} files selected",
+    "addTags": "Add Tags",
+    "selectAll": "Select All",
+    "clearSelection": "Clear Selection",
+    "selectAllConfirmMessage": "{{count}} files will be selected",
+    "selectAllConfirmDetail": "All visible files will be marked as selected. Bulk operations like tagging will affect every one of them.",
+    "confirmSelectLabel": "Select"
+  },
+  "archiveImport": {
+    "rolledBack": "Import failed. Database was automatically restored from backup.",
+    "failed": "Import failed."
+  },
+  "foldersView": {
+    "empty": {
+      "title": "No scanned folders yet",
+      "desc": "Start a scan to add folders to your archive. Folders will appear here as cards.",
+      "scanBtn": "Scan Folder"
+    },
+    "card": {
+      "fileCount": "{{count}} files",
+      "noFiles": "Empty"
+    }
+  },
+  "batchTagModal": {
+    "title": "Bulk Add Tags",
+    "subtitle": "Will be applied to {{count}} files",
+    "noTags": "No tags yet. Create a new tag below.",
+    "newTag": "Create New Tag",
+    "newTagPlaceholder": "Tag name...",
+    "createAndAdd": "Create & Select",
+    "willAdd": "Tags to add",
+    "apply": "Apply ({{count}})",
+    "applying": "Applying...",
+    "noTagsSelected": "Select at least one tag",
+    "successTitle": "Bulk Tags Applied",
+    "success": "Added {{tagCount}} tag(s) to {{count}} files",
+    "bulkWarning": "{{count}} files will be affected — proceed with care"
+  },
+  "chat": {
+    "welcome": {
+      "title": "Ask your archive a question",
+      "subtitle": "Fully offline. Answers come from indexed documents in your archive.",
+      "example1": "\"Which glass profiles were used in this project?\"",
+      "example2": "\"What are the common details in 2024 villa projects?\"",
+      "example3": "\"Is there a fire regulation clause in this specification?\""
+    },
+    "autoSync": {
+      "confirmTitle": "Metadata update",
+      "confirmDetail": "Metadata format has been updated. {{count}} files will be re-indexed. This may take several minutes in the background. Start now?",
+      "confirmStart": "Start now"
+    },
+    "ollama": {
+      "connected": "Ollama",
+      "disconnected": "Ollama offline",
+      "checking": "Checking Ollama connection...",
+      "notRunning": "Ollama is not running — AI Chat is unavailable",
+      "hint1": "Ollama is required for RAG chat. Embedding features (semantic search, visual search) work without Ollama.",
+      "installSteps": "Installation:",
+      "step1": "Download and install Ollama from ollama.com/download",
+      "step2": "In terminal: ollama pull qwen3:8b (recommended) or ollama pull qwen3:4b (lightweight)",
+      "step3": "In terminal: ollama serve",
+      "step4": "Reopen this panel"
+    },
+    "corsWarning": "CORS is not configured — Ollama cannot communicate with this app and AI chat may not work.",
+    "scope": {
+      "all": "All Archive",
+      "projects": "Projects",
+      "tags": "Tags"
+    },
+    "index": {
+      "missingWarning": "{{count}} file(s) not yet indexed for AI.",
+      "openStatus": "Open Index Status",
+      "autoPreparing": "Preparing metadata for AI Chat in background",
+      "autoPending": "Metadata will be prepared for {{count}} file(s) — starting automatically.",
+      "content": "Content",
+      "badgeTooltip": "Meta: metadata indexed · Content: file body indexed",
+      "errors": "error(s)"
+    },
+    "input": {
+      "placeholder": "Ask your archive — '/visual <text>' for image search (Enter = send)"
+    },
+    "header": {
+      "title": "AI Chat"
+    },
+    "sessions": {
+      "title": "Chats",
+      "new": "New",
+      "empty": "No chats yet. Start with \"+ New\"."
+    },
+    "toggle": {
+      "on": "ON",
+      "off": "OFF"
+    },
+    "queryRewrite": {
+      "label": "Enrich"
+    },
+    "prepareIndex": {
+      "label": "Prepare...",
+      "tooltip": "Index files that aren't yet ready for AI chat"
+    },
+    "phase": {
+      "searching": "Searching sources...",
+      "loading_model": "Loading language model...",
+      "loading_vectors": "Loading vector index...",
+      "comparing": "Calculating similarity...",
+      "metadata_search": "Scanning file metadata...",
+      "reranking": "Reranking...",
+      "generating": "Generating answer..."
+    },
+    "diagnostics": {
+      "candidates": "{{total}} candidates · FTS {{fts}} · embedding {{emb}}",
+      "reranked": "after rerank {{count}} → to LLM",
+      "dimMismatch": "{{skipped}} chunks skipped — embedding dimension mismatch (query {{queryDim}}, DB has {{dbDims}}). Re-index the files."
+    },
+    "thinking": "Searching sources and preparing answer...",
+    "abort": "Stop",
+    "send": "Send",
+    "noGpu": "No GPU detected on this machine. AI chat is only available on GPU-enabled machines. You can use the search feature in the left panel.",
+    "fallback": {
+      "reranker": "Reranker timed out — default ranking was used.",
+      "queryRewrite": "Query enrichment failed — original query was used."
+    },
+    "help": {
+      "button": "Help",
+      "title": "AI Chat — Feature Guide",
+      "glossary": "Glossary (know these first)",
+      "chunkDesc": "We split a file's text into small pieces (~500 words) that AI can process. A mathematical signature (embedding) is generated for each chunk, and search works on these.",
+      "embeddingDesc": "A 384-dimensional number list representing a text's meaning. Embeddings of similar texts are close to each other.",
+      "metaChunkDesc": "A special chunk generated from a file's metadata only (file name, project, tags, DWG layers). Enables searching DWG/MAX files that have no body text.",
+      "citationDesc": "Sources marked with \"[1]\", \"[2]\" etc. in the answer. Click to navigate to the source file.",
+      "hallucination": "Hallucination",
+      "hallucinationDesc": "When AI fabricates information not present in sources. The system prevents this with keyword checks + strict prompt rules.",
+      "llmDesc": "Large Language Model — the AI model that generates answers. Runs locally on Ollama. Recommended: qwen3:8b · Minimum: qwen3:4b",
+      "flowTitle": "General Flow",
+      "flowDesc": "Write a question → system searches indexed files → feeds the most relevant chunks to the LLM → generates a sourced answer. Response streams word by word.",
+      "slashTitle": "Slash Commands",
+      "slashVisualDesc": "Searches for images instead of text. E.g.: /visual staircase plan → CLIP semantic visual search. Short form: /g",
+      "badgesTitle": "Header Badges",
+      "badgeModel": "Active Ollama model",
+      "badgeOllama": "Connection status (green/red)",
+      "badgeRerank": "When on: top-20 chunks are retrieved, LLM picks the best 6 by relevance. +1 LLM call, more accurate answer. When off: direct top-8 embedding results.",
+      "badgeEnrich": "When on, short queries are expanded with synonyms + English equivalents via LLM. Queries longer than 5 words are considered specific and left unchanged.",
+      "badgeScope": "Narrow search scope: select a specific project or tag → search only those files.",
+      "indexTitle": "Index Modal",
+      "indexBtn": "Index",
+      "indexBtnDesc": "Splits missing files' body text into chunks and generates embeddings.",
+      "metaBtn": "Generate all metadata",
+      "metaBtnDesc": "Generates \"metadata chunks\" for all active files including DWG/MAX. Brings AI chat search coverage closer to sidebar search.",
+      "purgeBtn": "Clean up",
+      "purgeBtnDesc": "Removes obsolete chunk records from old versions. Does not touch files.",
+      "answerTitle": "Answers & Sources",
+      "citationChip": "[N] file.dwg",
+      "citationChipDesc": "Click → the related source card flashes and scrolls into view. Also opens the asset detail panel.",
+      "sourceCard": "Source card",
+      "sourceCardDesc": "File name + page + short preview + score. Click → open asset detail.",
+      "stopBtn": "Stop button",
+      "stopBtnDesc": "You can stop mid-answer. The partial answer is saved.",
+      "sessionTitle": "Chat Management",
+      "newSession": "+ New",
+      "newSessionDesc": "Open a blank chat. After the first Q&A, the LLM auto-generates a title.",
+      "deleteSession": "× Delete",
+      "deleteSessionDesc": "Deletes the chat and all its messages. Undo with Ctrl+Z.",
+      "behaviorTitle": "Behavior Notes",
+      "antiHallucination": "Anti-hallucination",
+      "antiHallucinationDesc": "If none of the query keywords appear in any indexed file, the LLM is not called and \"no info found\" is returned.",
+      "conversationCtx": "Conversation context",
+      "conversationCtxDesc": "The last 4 messages are added to the prompt as PREVIOUS CONVERSATION. Follow-up questions (\"who is that?\", \"which project?\") work.",
+      "autoIndex": "Auto indexing",
+      "autoIndexDesc": "When a new folder is scanned, all new files including DWG are indexed as metadata chunks in the background, ready for chat."
+    },
+    "synthesis": {
+      "pickTitle": "Pick documents for synthesis — per-document section + comparison",
+      "pickButton": "Pick docs",
+      "modeActive": "Synthesis: {{count}} docs",
+      "chipBarLabel": "Synthesis documents:",
+      "removeChip": "Remove",
+      "clearAll": "Exit synthesis mode",
+      "exit": "Exit",
+      "maxDocsWarning": "Maximum 10 documents can be selected"
+    },
+    "export": {
+      "button": "Export",
+      "tooltip": "Download chat as Markdown",
+      "empty": "No messages to export"
+    }
+  },
+  "assetPicker": {
+    "title": "Pick documents for synthesis",
+    "subtitle": "Each selected document gets its own section + a comparison summary.",
+    "searchPlaceholder": "Search by file name or path…",
+    "typeFilterTitle": "Filter by file type",
+    "allTypes": "All types",
+    "selectFiltered": "Select filtered",
+    "clear": "Clear",
+    "empty": "No indexed documents yet. First index files via Chat → 📊 Index button.",
+    "noResults": "No search results.",
+    "chunkCount": "Indexed chunk count",
+    "selected": "selected",
+    "capWarning": "Recommended max",
+    "confirmSynth": "Synthesize ({{count}})",
+    "confirmFocus": "Focus ({{count}})"
+  },
+  "visualSearch": {
+    "dwgWarning": {
+      "title": "Visual similarity is unreliable for technical drawings",
+      "body": "CLIP-based visual search produces weak signal on DWG/DXF drawings. For more accurate results, search by layer/block name text or use a geometric shape query (e.g. \"octagonal pool\", \"5x10 m rectangular rooms\")."
+    }
+  },
+  "dateRange": {
+    "title": "Date Range",
+    "from": "From",
+    "to": "To",
+    "clear": "Clear date filter"
+  },
+  "dwgSimilarity": {
+    "title": "DWG Structural Similarity Search",
+    "reference": "Reference",
+    "searching": "Searching similar DWGs...",
+    "noResults": "No similar DWG files found.",
+    "filesFound": "files found",
+    "topScore": "top score",
+    "layers": "Layers",
+    "blocks": "Blocks",
+    "texts": "Text",
+    "shapes": "Shapes"
+  },
+  "booleanSearch": {
+    "hint": "Tip: Use AND, OR, NOT operators and \"quoted phrases\"",
+    "examples": "Example: plan AND kitchen · facade OR section · hall NOT parking · \"floor plan\""
+  },
+  "shapeSearch": {
+    "title": "Geometric Shape Search",
+    "tab": {
+      "image": "Reference Image",
+      "criteria": "Search by Properties"
+    },
+    "dropHint": "Drag & drop an image or click to select (PNG, JPG, BMP)",
+    "dropSubHint": "The geometric shape in the image will be extracted and matched against DWG files",
+    "analyzing": "Analyzing contours...",
+    "detected": "Detected shape:",
+    "vertexCount": "Edge count",
+    "minRegularity": "Min regularity",
+    "minCompactness": "Min compactness",
+    "minRectangularity": "Min rectangularity",
+    "compact": "Cmp",
+    "solid": "Sol",
+    "rect": "Rct",
+    "category": "Category",
+    "allCategories": "All",
+    "search": "Search",
+    "includeOpen": "Include open shapes (polyline, arc)",
+    "scoreLabel": "score",
+    "filesFound": "files",
+    "topScore": "top score",
+    "openShapes": "open shapes",
+    "noResults": "No matching geometric shapes found. DWG files must have shape index built.",
+    "noResultsHint": "No results found. This panel searches only indexed DWG/DXF files — other formats (SKP, PDF, images, etc.) are not included in this search.",
+    "dwgBadgeTitle": "Searches only DWG and DXF files",
+    "tagFilter": "Tag filter",
+    "showInArchive": "Show in Archive",
+    "assetNotFound": "File not found in archive",
+    "error": {
+      "noPath": "Could not get file path. Please use the \"Select File\" button."
+    }
+  },
+  "aiSetup": {
+    "title": "AI Setup Wizard",
+    "next": "Continue",
+    "back": "Back",
+    "ready": "Ready",
+    "notInstalled": "Offline",
+    "starting": "Starting...",
+    "stopping": "Stopping...",
+    "stop": "Stop",
+    "download": "Download",
+    "pulling": "Downloading...",
+    "retry": "Retry",
+    "downloaded": "Downloaded",
+    "step0": {
+      "desc": "Ollama is required for AI features (chat, visual search, tag suggestions). Ollama is a free tool that runs AI models locally on your computer.",
+      "ollamaLabel": "Ollama Server",
+      "startBtn": "Start Ollama",
+      "installGuide": "If Ollama is not installed, download it from ollama.com/download, install it, and return to this step.",
+      "corsBtn": "Set CORS Permission"
+    },
+    "step1": {
+      "desc": "Two models are needed for AI: one for text questions and one for image analysis. You can download missing models with a single click.",
+      "chatLabel": "Text Model",
+      "chatReady": "Text Model Ready",
+      "chatMissing": "Text Model Missing",
+      "chatMissingModel": "{{model}} missing — run in terminal: ollama pull {{model}}",
+      "altHint": "Or you can select one of the installed models from Advanced Model Settings: {{models}}",
+      "visionLabel": "Vision Model",
+      "visionReady": "Vision Model Ready",
+      "visionMissing": "Vision Model Missing",
+      "visionMissingModel": "{{model}} missing — run in terminal: ollama pull {{model}}",
+      "allReady": "All models are ready!",
+      "downloadAll": "Download All",
+      "hint": "Text model ({{chatModel}}, ~2.5 GB) and vision model ({{visionModel}}, ~4.7 GB) will be downloaded. This may take a few minutes depending on your internet connection."
+    },
+    "step2": {
+      "title": "AI Ready!",
+      "desc": "All AI features are ready to use. You can ask questions about your archive, analyze images, and use smart search.",
+      "clipBuiltin": "Bundled",
+      "embedding": "Text Indexing",
+      "embeddingBuiltin": "Bundled",
+      "finishBtn": "Complete Setup"
+    }
+  },
+  "aiStatus": {
+    "label": "AI Status",
+    "title": "AI Status",
+    "offline": "Offline",
+    "missing": "Missing",
+    "builtin": "Bundled",
+    "chatModel": "Text Model",
+    "visionModel": "Vision Model",
+    "setupLink": "Open AI Setup Wizard",
+    "corsNotSet": "Not configured"
+  },
+  "database": {
+    "lockWarningTitle": "Database Lock",
+    "lockWarningMessage": "The database is being written by another process. Data may not be up to date."
+  },
+  "lockScreen": {
+    "message": "Session timed out. Enter your password to continue.",
+    "passwordPlaceholder": "Password",
+    "unlock": "Unlock",
+    "switchUser": "Switch User",
+    "wrongPassword": "Wrong password",
+    "error": "Verification error"
+  },
+  "sessionWarning": {
+    "title": "Session Expiring",
+    "message": "Screen will lock in {{seconds}} seconds.",
+    "extend": "Extend"
+  },
+  "permission": {
+    "adminRequired": "This action requires admin privileges"
+  },
+  "broadcast": {
+    "title": "Send Announcement",
+    "description": "This message will be shown to all users.",
+    "priority": "Priority",
+    "subject": "Subject",
+    "subjectPlaceholder": "Announcement title",
+    "message": "Message",
+    "messagePlaceholder": "Announcement content...",
+    "sendButton": "Send Announcement",
+    "sent": "Announcement sent"
+  },
+  "printReport": {
+    "title": "Archive Report",
+    "print": "Print",
+    "archiveReport": "Archive Report",
+    "indexed": "Indexed",
+    "tagged": "Tagged",
+    "materials": "Material Groups"
+  },
+  "dropZone": {
+    "dropHere": "Drop folder here",
+    "dropDesc": "Files will be scanned and added to archive",
+    "hint": "Add Folder",
+    "useButton": "Use the scan button to add files."
+  },
+  "versionTimeline": {
+    "title": "Version History",
+    "current": "current"
+  },
+  "userBatch": {
+    "title": "CSV Import",
+    "selectFile": "Select CSV File",
+    "preview": "{{count}} users found",
+    "import": "Add All ({{count}})",
+    "importDone": "{{success}}/{{total}} users added",
+    "errorExists": "User already exists"
+  },
+  "tagManager": {
+    "title": "Tag Management",
+    "empty": "No tags yet",
+    "rename": "Rename",
+    "merge": "Merge",
+    "delete": "Delete",
+    "changeColor": "Change color",
+    "confirmDelete": "\"{{name}}\" tag and all its connections will be deleted. Continue?",
+    "confirmMerge": "\"{{source}}\" tag will be merged into \"{{target}}\". Source tag will be deleted. Continue?",
+    "mergeHint": "\"{{source}}\" → select target tag",
+    "merged": "Tags merged"
+  },
+  "xmp": {
+    "exportTitle": "Export this file's metadata as an XMP sidecar file",
+    "exporting": "Writing XMP...",
+    "exportSuccess": "XMP sidecar created: {{file}}",
+    "exportError": "XMP export error",
+    "contextMenu": "Create XMP Sidecar",
+    "batchExport": "Create XMP Sidecar for All",
+    "batchStarted": "XMP export started for {{count}} files...",
+    "batchDone": "XMP export complete: {{written}} written, {{errors}} errors",
+    "fallbackNote": "({{count}} files write-protected — saved to backup location)",
+    "fallbackSingle": "(Folder is write-protected — saved to backup location)",
+    "help": {
+      "title": "What is XMP Sidecar Export?",
+      "body": "XMP (Extensible Metadata Platform) is an international metadata standard developed by Adobe. A .xmp file placed alongside each file carries tags, project name, approval status, version, and other information. Even if the file is moved or the database is deleted, the metadata is preserved. Adobe Bridge, Lightroom, and other DAM tools can read this format.",
+      "howTo": "Usage: Click the 'XMP' button in the file detail panel, or use 'Create XMP Sidecar for All' from the source folder menu. If the folder is write-protected, files are automatically saved to the application data folder."
+    }
+  },
+  "approval": {
+    "title": "Approval Queue",
+    "pendingReview": "{{count}} files pending review",
+    "approveAll": "Approve All",
+    "rejectAll": "Reject All",
+    "batchDone": "{{count}} files → {{status}}",
+    "statusChanged": "{{file}} → {{status}}",
+    "more": "more files...",
+    "rejectionReason": "Rejection Reason",
+    "rejectionReasonPlaceholder": "Enter rejection reason...",
+    "history": "Approval History"
+  },
+  "ragSensitivity": {
+    "title": "AI Sensitivity Filter",
+    "subtitle": "Exclude sensitive data from AI chat",
+    "enabled": "Filter active — sensitive data hidden from AI",
+    "disabled": "Filter off — AI can access all data",
+    "activate": "Enable",
+    "categories": {
+      "title": "Sensitive data categories",
+      "financial": "Financial",
+      "personal": "Personal Info",
+      "legal": "Legal",
+      "hr": "Human Resources"
+    },
+    "keywords": {
+      "title": "Custom keywords",
+      "placeholder": "Add keyword...",
+      "add": "Add",
+      "empty": "No custom keywords added yet"
+    },
+    "manualCount": "{{count}} files manually hidden from AI"
+  },
+  "previewReason": {
+    "file_too_big": "No preview — file exceeds size limit",
+    "no_preview_in_file": "No preview — the file was saved without an embedded thumbnail",
+    "parse_failed": "No preview — file format could not be parsed",
+    "format_unsupported": "Preview not supported for this format",
+    "unknown": "No preview"
+  }
+}

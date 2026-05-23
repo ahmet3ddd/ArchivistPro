@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.tauri.app/v2/schema.json",
+  "identifier": "default",
+  "description": "Archivist Pro – Klasör tarama, dosya okuma ve native shell izinleri",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-close",
+    "core:window:allow-destroy",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-message",
+    "shell:allow-open",
+    "fs:allow-read-dir",
+    "fs:allow-stat",
+    "fs:allow-exists",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        {
+          "path": "**"
+        }
+      ],
+      "deny": [
+        {
+          "path": "C:/Windows/**"
+        },
+        {
+          "path": "C:/Program Files/**"
+        },
+        {
+          "path": "C:/Program Files (x86)/**"
+        },
+        {
+          "path": "$LOCALDATA/Microsoft/**"
+        },
+        {
+          "path": "$APPDATA/Microsoft/Credentials/**"
+        },
+        {
+          "path": "$APPDATA/Microsoft/Crypto/**"
+        },
+        {
+          "path": "$APPDATA/Microsoft/Protect/**"
+        },
+        {
+          "path": "$APPDATA/Microsoft/SystemCertificates/**"
+        }
+      ]
+    },
+    "notification:default",
+    "http:default"
+  ]
+}

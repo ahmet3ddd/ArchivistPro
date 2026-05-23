@@ -1,0 +1,2694 @@
+{
+  "reload": {
+    "disabled": "已禁用重新加载 — 为保护会话和未保存的数据，F5/Ctrl+R 被屏蔽。"
+  },
+  "folderWatcher": {
+    "toast": {
+      "title": "文件夹变更",
+      "message": "在 {{path}} 中检测到变更。是否要重新扫描？"
+    }
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "delete": "删除",
+    "loading": "加载中...",
+    "reload": "重新加载",
+    "search": "搜索",
+    "open": "打开",
+    "exitConfirm": "确定要退出应用程序吗？",
+    "exitConfirmDetail": "所有进行中的操作都将终止。",
+    "exitConfirmLabel": "退出",
+    "savingBeforeExit": "正在保存数据,请稍候...",
+    "role": {
+      "admin": "管理员",
+      "viewer": "用户",
+      "developer": "开发者"
+    },
+    "unknown": "未知",
+    "active": "激活",
+    "aria": {
+      "close": "关闭",
+      "dismiss": "关闭通知",
+      "back": "返回"
+    },
+    "refresh": "刷新",
+    "back": "返回",
+    "button": {
+      "save": "保存",
+      "cancel": "取消",
+      "close": "关闭",
+      "saving": "保存中..."
+    },
+    "error": {
+      "unknown": "未知错误",
+      "prefix": "错误",
+      "fileNotFound": "文件未找到",
+      "permissionDenied": "您没有执行此操作的权限",
+      "diskFull": "磁盘空间不足",
+      "networkError": "网络连接失败",
+      "unauthorized": "您需要登录才能执行此操作",
+      "fileAlreadyExists": "文件已存在",
+      "invalidPath": "无效的文件路径"
+    },
+    "archive": {
+      "main": "主档案",
+      "local": "本地档案"
+    }
+  },
+  "login": {
+    "subtitle": "建筑文件归档系统",
+    "label": {
+      "username": "用户名",
+      "password": "密码"
+    },
+    "button": {
+      "submit": "登录",
+      "loggingIn": "登录中...",
+      "preparing": "准备中...",
+      "exit": "退出",
+      "cancel": "取消"
+    },
+    "dbLoadingHint": "加载中: {{size}} MB",
+    "error": {
+      "fieldsRequired": "需要用户名和密码",
+      "invalidCredentials": "用户名或密码错误",
+      "lockedOut": "尝试失败次数过多。请在 {{minutes}} 分钟后重试。",
+      "viewerModeAdminBlocked": "此应用程序在查看者模式下运行。无法进行管理员登录。",
+      "loginFailed": "登录时发生错误"
+    },
+    "aria": {
+      "hidePassword": "隐藏密码",
+      "showPassword": "显示密码"
+    },
+    "toast": {
+      "success": "登录成功",
+      "successBody": "已作为 {{username}} 登录 ({{role}})"
+    },
+    "forgotPassword": {
+      "link": "忘记密码",
+      "title": "重置密码",
+      "step1Title": "输入恢复代码",
+      "step1Desc": "请输入应用 AppData 文件夹中 recovery.key 文件里的代码。",
+      "step1Label": "恢复代码",
+      "step1Submit": "验证",
+      "step1Error": "恢复代码不正确",
+      "step2Title": "设置新密码",
+      "step2UserLabel": "用户",
+      "step2PassLabel": "新密码",
+      "step2ConfirmLabel": "确认密码",
+      "step2Submit": "重置密码",
+      "step2PasswordMismatch": "密码不匹配",
+      "step2Success": "密码重置成功",
+      "backToLogin": "返回登录",
+      "noAdmins": "系统中未找到管理员用户"
+    },
+    "firstRun": {
+      "title": "初始设置",
+      "subtitle": "创建管理员账户",
+      "usernameLabel": "用户名",
+      "passwordLabel": "密码",
+      "confirmLabel": "确认密码",
+      "submit": "创建账户",
+      "creating": "创建中...",
+      "passwordMismatch": "密码不匹配",
+      "minLength": "密码至少需要6个字符",
+      "success": "管理员账户已创建"
+    }
+  },
+  "topbar": {
+    "viewMode": {
+      "explorer": "资源管理器",
+      "technical": "技术",
+      "dashboard": "仪表板",
+      "folders": "文件夹"
+    },
+    "resultCount": "{{count}} 个资产",
+    "filters": {
+      "clearAll": "清除全部"
+    },
+    "tooltip": {
+      "cardSize": "卡片大小: {{size}}px",
+      "undo": "撤销 (Ctrl+Z)",
+      "redo": "重做 (Ctrl+Y)",
+      "deleteFromArchive": "从档案中移除 (Delete)",
+      "trash": "回收站",
+      "organize": "整理",
+      "aiSettings": "AI 与视觉设置",
+      "export": "导出 / 报告",
+      "feedback": "消息 / 反馈",
+      "help": "帮助 (F1)",
+      "settings": "设置",
+      "auditLog": "审计日志"
+    },
+    "aria": {
+      "openMenu": "打开菜单",
+      "removeFilter": "移除 {{value}} 过滤器",
+      "cardSize": "卡片大小",
+      "feedbackUnread": "消息 ({{count}} 未读)"
+    },
+    "indexing": {
+      "progress": "正在索引... {{progress}}%",
+      "upToDate": "索引已是最新"
+    },
+    "aiChat": {
+      "label": "AI 对话",
+      "tooltip": "AI 对话 — 询问您的档案",
+      "text": "AI",
+      "noGpu": "未检测到GPU — 此设备无法使用AI对话"
+    },
+    "visualSearch": {
+      "label": "视觉搜索",
+      "tooltip": "视觉搜索 — 按图像搜索 (CLIP)",
+      "text": "视觉"
+    },
+    "shapeSearch": {
+      "label": "搜索形状",
+      "tooltip": "在DWG图纸中搜索几何形状",
+      "text": "形状"
+    },
+    "advancedSearch": {
+      "title": "高级搜索",
+      "aiChat": "AI对话 — 询问档案",
+      "visualSearch": "视觉搜索 (CLIP)",
+      "duplicateFinder": "查找相似/重复",
+      "shapeSearch": "形状搜索 (DWG)"
+    },
+    "backToFolders": "返回文件夹",
+    "folderCount": "{{count}} 个文件夹"
+  },
+  "sidebar": {
+    "ragExcludeFolder": "从AI排除",
+    "ragIncludeFolder": "包含在AI中",
+    "section": {
+      "archive": "档案"
+    },
+    "archive": {
+      "main": "主档案",
+      "local": "本地档案",
+      "blocked": "管理员已限制您访问主档案"
+    },
+    "button": {
+      "scanAndIndex": "扫描文件夹并索引",
+      "scanOnly": "扫描文件夹"
+    },
+    "lastScan": {
+      "label": "最后扫描：",
+      "files": "文件"
+    },
+    "search": {
+      "placeholderSemantic": "自然语言/视觉搜索...",
+      "placeholderText": "搜索...",
+      "recentSearches": "最近搜索",
+      "clearAll": "清除全部",
+      "removeItem": "移除",
+      "clear": "清除搜索",
+      "minCharsHint": "输入至少 3 个字符"
+    },
+    "tooltip": {
+      "editPanel": "编辑面板",
+      "imageSearch": "按图像搜索",
+      "clearImage": "清除图像"
+    },
+    "aria": {
+      "searchAssets": "搜索资产",
+      "imageSearch": "按图像搜索",
+      "searchSensitivity": "搜索灵敏度"
+    },
+    "imageSearch": {
+      "analyzing": "正在分析…"
+    },
+    "contentSearch": {
+      "loading": "正在加载AI搜索引擎...",
+      "preparing": "AI模型准备中...",
+      "error": "AI搜索引擎加载失败 — 内容搜索不可用",
+      "retry": "重试",
+      "notIndexed": "文件尚未建立内容索引",
+      "rescan": "重新扫描",
+      "notReady": "内容搜索不可用",
+      "configure": "设置"
+    },
+    "sensitivity": {
+      "label": "视觉搜索灵敏度",
+      "description": "视觉和语义阈值"
+    },
+    "ai": {
+      "semanticActive": "语义搜索已激活",
+      "textBased": "基于文本的搜索",
+      "loading": "AI 加载中...",
+      "chunkCount": "{{count}} 个分块",
+      "noIndex": "无索引",
+      "embeddingCountTooltip": "已索引 {{count}} 个内容分块"
+    },
+    "footer": {
+      "totalAssets": "总资产",
+      "indexed": "已索引"
+    },
+    "favorites": {
+      "label": "收藏夹"
+    },
+    "sourceFolders": {
+      "title": "源文件夹",
+      "empty": "尚未扫描文件夹",
+      "clearFilters": "清除过滤器",
+      "renameLabel": "输入新名称：",
+      "confirmRemove": "确定要从档案中移除此源文件夹吗？（文件不会被删除）",
+      "confirmDelete": "确定要永久删除此源文件夹及其所有资产吗？",
+      "confirmDeleteCount": "将删除 {{count}} 个文件。",
+      "deleted": "已移至回收站",
+      "deletedUndo": "按 Ctrl+Z 撤销或从回收站恢复",
+      "menu": {
+        "open": "管理",
+        "rename": "重命名",
+        "rescan": "重新扫描",
+        "scanReports": "扫描报告",
+        "scanRelations": "扫描关联",
+        "scanRelationsDone": "检测到 {{count}} 个新关联",
+        "scanRelationsNone": "未找到新关联",
+        "remove": "从档案中移除",
+        "deleteWithAssets": "删除（包含资产）",
+        "setTags": "标签...",
+        "moveTo": "移动到组"
+      },
+      "groups": {
+        "add": "+新建组",
+        "promptName": "输入组名称：",
+        "promptRename": "输入新组名称：",
+        "confirmDelete": "删除此组？文件夹将变为未分组状态。",
+        "noGroup": "从组中移除",
+        "rename": "重命名",
+        "changeColor": "更改颜色",
+        "delete": "删除组"
+      },
+      "favorites": {
+        "section": "收藏夹",
+        "add": "添加到收藏夹",
+        "remove": "从收藏夹中移除"
+      },
+      "tags": {
+        "noTags": "无标签",
+        "newTag": "新标签..."
+      }
+    },
+    "embedding": {
+      "coverage": "AI索引覆盖率",
+      "coverageLabel": "AI索引进度条"
+    }
+  },
+  "explorer": {
+    "empty": {
+      "title": "档案为空",
+      "description": "通过扫描文件来构建您的档案。",
+      "scanButton": "扫描文件夹并索引",
+      "scanButtonOnly": "扫描文件夹"
+    },
+    "noResults": {
+      "title": "未找到结果",
+      "description": "没有与当前搜索和过滤器匹配的文件。",
+      "clearFilters": "清除过滤器"
+    }
+  },
+  "merge": {
+    "title": "合并档案",
+    "source": "源档案",
+    "target": "目标档案",
+    "strategy": {
+      "title": "冲突策略",
+      "keepNewer": "保留较新版本（默认）",
+      "keepBoth": "全部保留（创建副本）",
+      "skipExisting": "跳过现有"
+    },
+    "include": {
+      "title": "要复制的数据",
+      "tags": "标签",
+      "embeddings": "AI 向量",
+      "textChunks": "文本分块",
+      "summaries": "摘要",
+      "favorites": "收藏"
+    },
+    "preview": {
+      "button": "预览",
+      "sourceAssets": "源资产数量",
+      "targetAssets": "目标资产数量",
+      "conflicts": "冲突数量",
+      "tags": "源标签数量",
+      "embeddings": "源向量数量",
+      "strategyNote": "冲突处理方式：{{strategy}}",
+      "toggleDetails": "详细列表",
+      "truncated": "显示前 {{limit}} 条记录"
+    },
+    "disposition": {
+      "merge": "将添加",
+      "overwrite": "将覆盖",
+      "skip": "将跳过",
+      "rename": "将重命名"
+    },
+    "confirm": {
+      "button": "合并",
+      "warning": "此操作无法撤销。是否继续？"
+    },
+    "progress": {
+      "phase": {
+        "assets": "正在复制资产...",
+        "tags": "正在复制标签...",
+        "embeddings": "正在复制 AI 向量...",
+        "chunks": "正在复制文本分块...",
+        "summaries": "正在复制摘要...",
+        "favorites": "正在复制收藏...",
+        "saving": "正在保存..."
+      }
+    },
+    "result": {
+      "title": "合并完成",
+      "merged": "已添加",
+      "overwritten": "已覆盖",
+      "skipped": "已跳过",
+      "renamed": "已重命名",
+      "errors": "错误"
+    },
+    "error": {
+      "sameArchive": "源档案和目标档案必须不同",
+      "targetNotLoaded": "无法加载目标档案",
+      "alreadyRunning": "另一个合并操作正在进行中。请稍候。",
+      "rollbackFailed": "合并失败且回滚也失败。目标档案可能已损坏 — 请从备份恢复。"
+    }
+  },
+  "extract": {
+    "title": "从档案中提取",
+    "source": "源档案",
+    "filter": {
+      "title": "过滤条件",
+      "folders": "源文件夹",
+      "fileTypes": "文件类型",
+      "projectPhases": "项目阶段",
+      "dateRange": "日期范围",
+      "dateFrom": "开始日期",
+      "dateTo": "结束日期",
+      "tags": "标签",
+      "noneSelected": "未选择",
+      "noActiveWarning": "未选择过滤器 — 所有资产将被提取"
+    },
+    "target": {
+      "title": "目标",
+      "new": "创建新档案",
+      "existing": "添加到现有档案",
+      "newName": "新档案名称",
+      "newType": "档案类型",
+      "typeShared": "共享",
+      "typePersonal": "个人"
+    },
+    "mode": {
+      "title": "模式",
+      "copy": "复制（保留源文件）",
+      "move": "移动（从源档案中删除）",
+      "moveWarning": "警告：移动操作无法撤销。匹配的资产将从源档案中永久删除。"
+    },
+    "include": {
+      "title": "要复制的数据",
+      "tags": "标签",
+      "embeddings": "AI 向量",
+      "textChunks": "文本分块",
+      "summaries": "摘要",
+      "favorites": "收藏"
+    },
+    "preview": {
+      "button": "预览",
+      "matched": "匹配的资产数量",
+      "totalSize": "总大小",
+      "byType": "按类型",
+      "noMatch": "没有匹配的资产",
+      "toggleDetails": "详细列表",
+      "truncated": "显示前 {{limit}} 条记录"
+    },
+    "presets": {
+      "label": "预设：",
+      "choose": "— 请选择 —",
+      "apply": "应用",
+      "delete": "删除",
+      "namePlaceholder": "新预设名称",
+      "save": "保存"
+    },
+    "confirm": {
+      "button": "提取",
+      "warning": "此操作无法撤销。是否继续？",
+      "moveWarning": "移动模式 — 匹配的资产将从源档案中删除！"
+    },
+    "progress": {
+      "phase": {
+        "filtering": "正在过滤...",
+        "creating_target": "正在创建新档案...",
+        "assets": "正在复制资产...",
+        "tags": "正在复制标签...",
+        "embeddings": "正在复制 AI 向量...",
+        "chunks": "正在复制文本分块...",
+        "summaries": "正在复制摘要...",
+        "favorites": "正在复制收藏...",
+        "deleting_source": "正在从源档案中删除...",
+        "saving": "正在保存..."
+      }
+    },
+    "result": {
+      "title": "提取完成",
+      "matched": "已匹配",
+      "extracted": "已提取",
+      "deletedFromSource": "已从源档案删除",
+      "errors": "错误",
+      "goToTarget": "前往新档案"
+    },
+    "error": {
+      "noSource": "未选择源档案",
+      "noTargetName": "新档案名称不能为空",
+      "targetExists": "同名档案已存在",
+      "sameTarget": "目标档案必须与源档案不同",
+      "targetNotLoaded": "无法加载目标档案",
+      "alreadyRunning": "另一个提取操作正在进行中",
+      "rollbackFailed": "提取失败且回滚也失败。档案可能已损坏 — 请从备份恢复。"
+    }
+  },
+  "storageWarning": {
+    "message": "⚠️ 浏览器存储空间已满 (限制为 5-10MB)。部分数据无法保存。请尝试清除旧的扫描记录。",
+    "aria": {
+      "dismiss": "关闭警告"
+    }
+  },
+  "app": {
+    "db": {
+      "loading": "正在加载数据库..."
+    },
+    "toast": {
+      "reportDownloaded": "报告已下载",
+      "reportDownloadedBody": "已报告 {{count}} 个文件"
+    }
+  },
+  "modals": {
+    "settings": "设置",
+    "help": "帮助",
+    "trash": "回收站",
+    "feedback": "消息 / 反馈",
+    "feedbackAdmin": "收件箱",
+    "logViewer": "审计日志",
+    "scan": "扫描文件夹并索引",
+    "scanOnly": "扫描文件",
+    "refile": "重新整理文件",
+    "aiSettings": "AI 视觉设置",
+    "userProfile": "个人资料",
+    "userManagement": "用户管理"
+  },
+  "settings": {
+    "tab": {
+      "general": "常规",
+      "storage": "存储",
+      "network": "网络",
+      "about": "关于",
+      "security": "安全"
+    },
+    "language": {
+      "label": "语言",
+      "description": "更改界面语言"
+    },
+    "section": {
+      "userInfo": "用户信息",
+      "appearance": "外观",
+      "archives": "档案",
+      "archiveMerge": "档案合并",
+      "archiveExtract": "档案提取",
+      "pathRemap": "路径重映射",
+      "backup": "备份",
+      "trash": "回收站",
+      "lan": "局域网共享",
+      "aiConnections": "AI 连接",
+      "about": "关于",
+      "odaConverter": "DWG 转换器 (ODA)",
+      "fp32": "WebGPU 模型 (fp32)",
+      "developerMode": "开发者模式",
+      "healthCheck": "健康检查",
+      "help": "帮助与指南",
+      "scanning": "扫描"
+    },
+    "card": {
+      "userInfoSub": "会话和权限信息",
+      "appearanceSub": "主题、颜色和语言偏好",
+      "scanningSub": "AI 索引和文件夹监控设置",
+      "odaSub": "用于 DWG/DXF 文件的 ODA FileConverter",
+      "fp32Sub": "用于 WebGPU 加速的 fp32 模型（可选）",
+      "helpSub": "重新观看入门导览",
+      "archivesSub": "主档案和个人档案位置",
+      "archiveOpsSub": "路径重映射、合并和提取操作",
+      "backupSub": "自动备份、快照和便携式档案",
+      "performanceSub": "扫描检查点和工作线程数设置",
+      "maintenanceSub": "孤立文件检测和回收站",
+      "lanSub": "通过局域网共享或下载档案",
+      "devModeSub": "设置为开发者设备",
+      "updateServerSub": "自定义更新服务器配置",
+      "aiConnectionsSub": "AI 服务连接信息",
+      "sessionSub": "会话超时设置",
+      "auditSub": "审计日志保留期限",
+      "loginSecSub": "登录尝试和锁定设置",
+      "appInfoSub": "版本和平台信息",
+      "updatesSub": "检查更新",
+      "extractorsSub": "支持的文件格式和提取器",
+      "crashLogsSub": "查看崩溃报告",
+      "archiveOps": "档案操作",
+      "performance": "性能",
+      "maintenance": "维护"
+    },
+    "autoRagIndex": {
+      "toggle": "扫描后自动 AI 索引",
+      "description": "扫描完成后,新的或已更改的文件将在后台处理以供 AI 聊天查询。此操作占用大量 CPU;若禁用,则需从 RAG 面板手动启动索引。"
+    },
+    "folderWatch": {
+      "enabledToggle": "监视文件夹变化",
+      "enabledDescription": "检测已扫描根文件夹内新增/删除/修改的文件,并在右下角显示通知。禁用时,在手动扫描之前不会察觉到变化。",
+      "autoRescanToggle": "检测到变化时自动重新扫描",
+      "autoRescanDescription": "若 60 秒内无新变化到达,则自动重新扫描该文件夹。如果已有扫描正在运行则跳过。默认:关闭。"
+    },
+    "healthCheck": {
+      "description": "检查档案中的文件记录在磁盘上是否仍然存在。您可以批量清理文件缺失的孤立记录。",
+      "button": "运行健康检查",
+      "scanning": "检查中...",
+      "noOrphans": "所有文件都在原位 — 未发现问题。",
+      "found": "发现 {{count}} 条孤立记录（磁盘文件缺失）。",
+      "deleteButton": "删除 {{count}} 条孤立记录",
+      "deleted": "已清理 {{count}} 条孤立记录。",
+      "error": "健康检查期间发生错误。"
+    },
+    "merge": {
+      "description": "将两个档案中的资产及相关数据合并到一个目标档案中。",
+      "openButton": "合并档案..."
+    },
+    "extract": {
+      "description": "将符合过滤条件的资产从一个档案复制或移动到新档案或现有档案中。",
+      "openButton": "从档案中提取..."
+    },
+    "developerMode": {
+      "description": "将此设备设为开发者计算机，以通过局域网直接接收用户反馈。需要运行局域网服务器才能接收消息。",
+      "enable": "将此设备设为开发者",
+      "disable": "禁用",
+      "enabled": "开发者模式已启用。",
+      "disabled": "开发者模式已禁用。",
+      "enableError": "无法获取 IP 地址。",
+      "currentIp": "开发者 IP",
+      "statusActive": "活动",
+      "statusInactive": "未活动",
+      "serverStarted": "局域网服务器已自动启动。",
+      "serverWarning": "局域网服务器无法启动 — 可能无法接收消息。"
+    },
+    "user": {
+      "username": "用户",
+      "role": "角色",
+      "activeArchive": "活动档案"
+    },
+    "appearance": {
+      "theme": "主题",
+      "accentColor": "强调色"
+    },
+    "theme": {
+      "dark": "深色",
+      "light": "浅色"
+    },
+    "accent": {
+      "default": "默认",
+      "amber": "琥珀",
+      "lime": "青柠",
+      "teal": "青色"
+    },
+    "archive": {
+      "location": "位置",
+      "size": "大小",
+      "readOnly": "只读 — 需要管理员权限",
+      "changePath": "更改位置",
+      "active": "激活",
+      "managedByAdmin": "由管理员管理",
+      "readOnlyAccess": "只读访问",
+      "localStoragePath": "localStorage (浏览器)",
+      "personalFullAccess": "个人档案 — 完全访问权限",
+      "mainDescAdmin": "由管理员管理",
+      "mainDescViewer": "只读访问",
+      "localDesc": "个人档案 — 完全访问权限"
+    },
+    "storage": {
+      "loading": "加载中...",
+      "browserMode": "localStorage (浏览器模式)",
+      "browserModeShort": "localStorage (浏览器)",
+      "notCreated": "未创建",
+      "selectFolder": "选择数据库文件夹",
+      "locationUpdated": "数据库位置已更新。重启后将使用此位置。",
+      "locationUpdateError": "更新数据库位置时出错。",
+      "remapOldRequired": "您必须输入旧的根路径。",
+      "remapSuccess": "文件路径已成功重映射。"
+    },
+    "remap": {
+      "description": "如果您将项目文件夹移动到了不同的驱动器，您可以批量更新文件路径。",
+      "oldPlaceholder": "旧根路径 (例如 C:\\Projects\\Office\\)",
+      "newPlaceholder": "新根路径 (例如 D:\\Archive\\Office\\)",
+      "button": "重映射文件路径"
+    },
+    "backup": {
+      "description": "您可以以不同方式备份您的档案。",
+      "autoTitle": "自动备份 (快照)",
+      "autoDescription": "在此设备上创建每小时或手动备份。意外删除或更改后可还原到先前状态。最多保留 5 个备份,最旧的会自动删除。",
+      "portableTitle": "便携备份文件 (.archivistpro)",
+      "portableDescription": "将整个档案导出为单个 .archivistpro 文件或从备份还原。可用于迁移到其他计算机或存储在 U 盘上。",
+      "scheduleOff": "禁用",
+      "hours": "小时",
+      "schedule": "自动备份"
+    },
+    "snapshot": {
+      "maxTitle": "最大备份数量",
+      "maxDescription": "超过此限制的最旧备份会被自动删除。",
+      "create": "创建备份",
+      "creating": "正在创建备份...",
+      "restore": "恢复",
+      "delete": "删除",
+      "empty": "尚无备份。",
+      "confirmRestore": "这将使用选定的备份覆盖当前数据库。",
+      "confirmRestoreDetail": "备份日期：{{date}}",
+      "confirmDelete": "此备份将被永久删除。",
+      "createSuccess": "备份创建成功。",
+      "createError": "创建备份失败。",
+      "restoreSuccess": "数据库已从备份中恢复。",
+      "restoreError": "恢复失败。",
+      "deleteSuccess": "备份已删除。",
+      "deleteError": "删除备份失败。",
+      "schedule": "自动备份",
+      "scheduleOff": "关闭",
+      "hours": "小时"
+    },
+    "scan": {
+      "checkpointTitle": "扫描检查点间隔",
+      "checkpointDescription": "扫描期间每隔多少个文件将数据库保存到磁盘。值越低越安全（数据丢失风险越小），值越高扫描越快。",
+      "prepareWorkersTitle": "并行准备工作线程",
+      "prepareWorkersDescription": "扫描期间并行提取多少个文件的哈希 + 元数据 + 缩略图。HDD：1-2（寻道抖动风险），SSD：3-4，NVMe + 8 线程：6-8，NVMe + 16+ 线程（Ryzen 9、Threadripper、Xeon）：10-16。在少核心系统上设置过高没有帮助。",
+      "prepareWorkersDetected": "检测到 {{cores}} 个核心 · 推荐：{{recommended}}",
+      "prepareWorkersAutoApply": "自动应用"
+    },
+    "trash": {
+      "description": "已删除的文件会被移动到 .archivistpro-trash/ 文件夹。可以使用撤销功能恢复。",
+      "descriptionPart1": "已删除的文件会被移动到",
+      "descriptionPart2": "文件夹。可以使用撤销功能恢复。"
+    },
+    "lan": {
+      "description": "您可以通过局域网从另一台设备下载档案,或在网络上共享您的档案。",
+      "shareMode": "共享模式",
+      "shareModeValue": "导出/导入 (第 1 阶段)"
+    },
+    "archiveBackup": {
+      "exportButton": "创建备份文件",
+      "importButton": "从备份还原 (.archivistpro)",
+      "exportLabel": "正在导出",
+      "importLabel": "正在还原",
+      "import": {
+        "title": "从备份还原档案",
+        "dbSize": "要还原的 DB: {{size}} MB",
+        "unknownSize": "将还原整个档案",
+        "warning": "将替换当前档案。",
+        "remapToggle": "重新映射文件路径",
+        "remapHint": "如果备份来自其他计算机,请将源根路径替换为本机的路径。",
+        "oldRootLabel": "旧根路径 (备份中)",
+        "oldRootPlaceholder": "例如 C:\\Old_PC\\Projects\\",
+        "newRootLabel": "新根路径 (本机)",
+        "newRootPlaceholder": "例如 D:\\Projects\\",
+        "browse": "浏览...",
+        "confirmButton": "还原",
+        "cancelButton": "取消",
+        "remapHintMulti": "在备份中检测到 {{count}} 个源文件夹。为每个选择本机上的新路径。",
+        "fileCount": "{{count}} 个文件",
+        "skipHint": "新路径留空的行将被跳过。",
+        "allUnderOne": "全部放在同一文件夹下"
+      }
+    },
+    "fp32": {
+      "description": "WebGPU 加速需要 fp32 模型（约 580MB）。为减小安装包未内置。请选择通过 'npm run models:download:fp32' 下载的 'public/models' 文件夹；复制后重启应用。若无则自动使用 CPU (q8)。",
+      "pathLabel": "模型文件夹",
+      "statusFound": "fp32 模型已安装（WebGPU 已启用）",
+      "statusNotFound": "未安装 fp32 模型（CPU/q8 模式）",
+      "statusUnknown": "状态未知",
+      "browse": "选择文件夹并安装",
+      "importing": "正在复制",
+      "imported": "fp32 模型已安装 — 请重启应用",
+      "restartHint": "重启后生效"
+    },
+    "oda": {
+      "description": "ODA FileConverter 用于从 DWG 文件中精确提取图层/块/文字信息。如未安装，将使用原始二进制扫描作为后备方案。",
+      "pathLabel": "ODA FileConverter 路径",
+      "pathPlaceholder": "输入 ODAFileConverter.exe 的路径",
+      "autoDetect": "自动检测",
+      "found": "已找到",
+      "notFound": "未找到",
+      "browse": "浏览",
+      "cleared": "ODA 路径已清除",
+      "saved": "ODA 路径已保存",
+      "fileNotFound": "文件未找到",
+      "detecting": "检测中...",
+      "install": "下载并安装",
+      "installBundled": "从安装包安装",
+      "installingBundled": "正在从安装包安装...",
+      "installedBundled": "已成功从安装包安装",
+      "bundledNotAvailable": "捆绑安装包不可用，正在尝试在线方式...",
+      "installing": "安装中...",
+      "installed": "安装完成",
+      "installedButNotDetected": "安装完成，但无法自动检测 ODA 路径。请点击「自动检测」或手动输入路径。",
+      "downloadPageOpened": "下载页面已打开。安装后请点击「自动检测」。",
+      "installFailed": "自动安装失败，已打开下载页面",
+      "noInstallerFound": "自动安装失败。请从您的电脑中选择 ODA 安装程序。",
+      "selectInstallerTitle": "选择 ODA FileConverter 安装程序",
+      "installerFilter": "安装程序"
+    },
+    "ai": {
+      "hint": "使用顶部栏的大脑图标进入 AI 视觉设置。",
+      "saved": "AI 设置已保存",
+      "deviceTitle": "AI 计算设备",
+      "deviceDescription": "文本和图像嵌入模型的运行位置。GPU (WebGPU) 在现代显卡上快 5-10 倍；CPU 可在任何系统上工作。自动 = 如果系统支持则使用 GPU。",
+      "deviceAuto": "自动",
+      "deviceGpu": "GPU (WebGPU)",
+      "deviceCpu": "CPU (WASM)",
+      "deviceProbeOk": "✓ 此系统上可使用 WebGPU — 可使用 GPU 加速",
+      "deviceProbeMissing": "WebGPU 不可用 — 仅支持 CPU",
+      "deviceRestartNote": "更改在下次 AI 模型加载时（或重启应用后）生效。"
+    },
+    "about": {
+      "version": "版本",
+      "buildDate": "构建日期",
+      "platform": "平台",
+      "database": "数据库",
+      "aiml": "AI/ML",
+      "aiMlValue": "Xenova Transformers (本地 WASM)",
+      "description": "所有 AI 操作都在您的本地计算机上运行。您的文件不会被发送到任何服务器。",
+      "extractorsTitle": "文件类型提取器",
+      "extractorsDesc": "从各文件格式中提取的元数据字段。点击行查看详情。",
+      "extractorCol": {
+        "type": "格式",
+        "extractors": "提取器",
+        "fields": "字段"
+      }
+    },
+    "security": {
+      "title": "安全",
+      "sessionTimeout": "会话超时",
+      "sessionTimeoutDesc": "在指定的不活动时间后锁定屏幕。",
+      "minutes": "分钟",
+      "never": "从不锁定",
+      "currentStateLabel": "当前状态",
+      "currentStateActive": "{{duration}}后屏幕锁定",
+      "currentStateNever": "自动锁定已禁用",
+      "hint": "超时后，屏幕锁定但会话保持开启。输入密码继续。",
+      "auditRetentionSection": "审计日志保留",
+      "auditRetentionTitle": "保留期限",
+      "auditRetentionDesc": "应用启动时会清理早于此期限的审计日志。选择 ∞ 则永不删除。",
+      "daysSuffix": "天",
+      "loginSection": "登录安全",
+      "loginMaxAttemptsTitle": "最大失败尝试次数",
+      "loginMaxAttemptsDesc": "超过此数量的用户将被锁定。窗口等于锁定时长。",
+      "attemptsSuffix": "次",
+      "loginLockoutTitle": "锁定时长",
+      "loginLockoutDesc": "超过最大尝试次数后，账户在此期限内保持锁定。",
+      "minutesSuffix": "分钟"
+    }
+  },
+  "help": {
+    "aria": {
+      "close": "关闭帮助面板"
+    },
+    "tab": {
+      "adminGuide": "管理员指南",
+      "userGuide": "用户指南",
+      "shortcuts": "快捷键",
+      "techRef": "技术参考",
+      "scenarios": "我能做什么？",
+      "changelog": "发布说明"
+    },
+    "role": {
+      "admin": "管理员 — 所有功能可用",
+      "viewer": "用户 — 档案只读"
+    },
+    "search": "搜索...",
+    "guide": {
+      "loading": "正在加载指南..."
+    },
+    "error": {
+      "loadFailed": "无法加载指南: {{message}}"
+    }
+  },
+  "trash": {
+    "title": "回收站",
+    "hint": {
+      "undoWithCtrlZ": "您可以使用 Ctrl+Z 撤销最后一次删除的文件。"
+    },
+    "lastOperation": "最后操作: ",
+    "undone": "已撤销",
+    "selectAll": "全选",
+    "deselectAll": "取消全选",
+    "restored": "已恢复 {{count}} 个文件",
+    "restoredSingle": "\"{{fileName}}\" 已恢复",
+    "permanentDeleted": "已永久删除 {{count}} 个文件",
+    "trashEmptied": "回收站已清空 ({{count}} 个文件)",
+    "confirmPermanentDelete": "此操作无法撤销。将永久删除所选的 {{count}} 个文件。",
+    "confirmEmptyTrash": "回收站中的所有文件将被永久删除。此操作无法撤销。",
+    "autoRestore": {
+      "title": "文件夹已从回收站恢复",
+      "message": "\"{{label}}\" 因再次扫描而从回收站自动恢复。"
+    },
+    "button": {
+      "undoLastDelete": "撤销最后一次删除",
+      "restore": "恢复",
+      "permanentDelete": "永久删除",
+      "emptyTrash": "清空回收站"
+    },
+    "column": {
+      "label": "文件夹名称",
+      "path": "路径"
+    },
+    "empty": {
+      "title": "回收站为空",
+      "description": "从档案中移除的文件将显示在这里。"
+    },
+    "footer": {
+      "note": "删除操作仅从档案中移除文件。物理文件仍保留在原处。",
+      "count": "回收站中有 {{count}} 个文件"
+    },
+    "tab": {
+      "files": "文件",
+      "folders": "文件夹"
+    },
+    "folder": {
+      "restoredSingle": "\"{{label}}\" 已恢复",
+      "permanentDeleted": "已永久删除 {{count}} 个文件夹",
+      "confirmPermanentDelete": "\"{{label}}\" 及其所有文件将被永久删除。此操作无法撤销。",
+      "emptyTitle": "没有已删除的文件夹",
+      "emptyDescription": "从侧边栏删除的文件夹将在此保留 30 天。",
+      "footerCount": "回收站中有 {{count}} 个文件夹"
+    }
+  },
+  "feedback": {
+    "error": {
+      "bodyEmpty": "消息内容不能为空。",
+      "dailyLimit": "您已达到每日消息限制 (最大 {{limit}} 条)。请明天再试。",
+      "recipientRequired": "必须选择收件人"
+    },
+    "success": {
+      "sent": "您的消息已发送。(剩余: {{remaining}})"
+    },
+    "tab": {
+      "compose": "新消息",
+      "messages": "消息 ({{count}})",
+      "developer": "致开发者",
+      "inbox": "收件箱",
+      "sent": "已发送 ({{count}})",
+      "broadcast": "公告"
+    },
+    "developer": {
+      "description": "向开发团队发送您的请求、意见和建议。您可以在此标签页中跟踪回复。",
+      "subjectPlaceholder": "例如：功能请求、Bug 报告...",
+      "bodyPlaceholder": "在此撰写您的详细消息...",
+      "send": "发送给开发者",
+      "sent": "您的反馈已提交。",
+      "sentLan": "您的反馈已送达开发者 ✓",
+      "sentOffline": "开发者目前离线 — 您的消息已保存。",
+      "empty": "暂无开发者反馈。",
+      "export": "导出 (.txt)"
+    },
+    "label": {
+      "recipient": "收件人",
+      "to": "致：",
+      "from": "来自：",
+      "messageType": "消息类型",
+      "priority": "优先级",
+      "subject": "主题 (可选)",
+      "message": "消息"
+    },
+    "type": {
+      "suggestion": "改进建议",
+      "private": "私信",
+      "request": "请求",
+      "suggestionBadge": "建议",
+      "privateBadge": "私人",
+      "requestBadge": "请求"
+    },
+    "request": {
+      "allAdminsNote": "此请求将发送给所有管理员。可用的管理员将认领并回应。",
+      "allAdminsBadge": "所有管理员"
+    },
+    "claim": {
+      "unclaimed": "待处理",
+      "claimedByYou": "由您认领",
+      "claimedBy": "认领人：{{admin}}"
+    },
+    "priority": {
+      "normal": "普通",
+      "important": "重要",
+      "importantBadge": "重要"
+    },
+    "placeholder": {
+      "selectRecipient": "选择用户...",
+      "subject": "简短的标题...",
+      "body": "写下您的消息...",
+      "reply": "写下回复..."
+    },
+    "button": {
+      "send": "发送",
+      "filter": "过滤",
+      "newMessage": "新消息",
+      "resolve": "已解决",
+      "claim": "认领",
+      "release": "释放",
+      "delete": "删除",
+      "deleteSelected": "删除选中项 ({{count}})",
+      "selectAll": "全选"
+    },
+    "sent": {
+      "empty": "您尚未发送任何消息。"
+    },
+    "reply": {
+      "success": "回复已发送。"
+    },
+    "delete": {
+      "confirm": "确定要删除此消息吗？",
+      "confirmDetail": "消息及其所有回复将被永久删除。"
+    },
+    "badge": {
+      "newCount": "{{count}} 条新消息"
+    },
+    "filter": {
+      "allTypes": "所有类型",
+      "allStatuses": "所有状态",
+      "allSenders": "所有发件人"
+    },
+    "status": {
+      "unread": "未读",
+      "read": "已读",
+      "resolved": "已解决"
+    },
+    "inbox": {
+      "empty": "收件箱为空。"
+    },
+    "replyCount": "({{count}} 条回复)"
+  },
+  "scan": {
+    "preparing": "准备中...",
+    "preparingDetail": "正在加载 AI 模型，请稍候。",
+    "description": "选择一个建筑项目文件夹。系统将扫描并添加所有支持的文件到档案中。",
+    "section": {
+      "scanMode": "扫描模式",
+      "aiVectors": "AI 语义向量",
+      "colorPalette": "调色板分析"
+    },
+    "mode": {
+      "merge": "添加到现有列表",
+      "mergeDesc": "新文件将被添加到现有的 {{count}} 条记录中。",
+      "replaceUnderPath": "重新扫描所选文件夹",
+      "replaceUnderPathDesc": "仅清除所选文件夹下的记录；其他源文件夹将被保留。",
+      "fullReset": "重置整个存档并重新扫描",
+      "fullResetDesc": "所有记录（包括其他文件夹）都将被删除，所选文件夹将从头开始扫描。"
+    },
+    "badge": {
+      "alwaysActive": "始终激活"
+    },
+    "ai": {
+      "description": "将使用 MiniLM-L6-v2 模型为每个文件生成语义向量。",
+      "lowHardwareWarning": "在低性能硬件上，扫描可能需要更长时间。",
+      "modelReady": "AI 模型已准备就绪",
+      "modelLoading": "正在加载模型... {{progress}}%",
+      "modelWillLoad": "模型将在第一次扫描时自动加载 (~23MB)"
+    },
+    "color": {
+      "enabledDesc": "将提取每个图像的主色调。",
+      "disabledDesc": "颜色分析已禁用。"
+    },
+    "button": {
+      "selectFolder": "选择文件夹并扫描",
+      "selectFiles": "选择文件并添加",
+      "resume": "恢复",
+      "pause": "暂停",
+      "cancel": "取消",
+      "closeAndView": "关闭并查看结果"
+    },
+    "progress": {
+      "filesProcessed": "已处理 {{processed}} / {{total}} 个文件"
+    },
+    "eta": {
+      "elapsed": "⏱ 已用时间:",
+      "remaining": "⏳ 剩余时间:",
+      "calculating": "正在计算…"
+    },
+    "status": {
+      "paused": "⏸ 已暂停"
+    },
+    "errors": {
+      "count": "{{count}} 个错误",
+      "occurred": "发生了 {{count}} 个错误。"
+    },
+    "complete": {
+      "cancelled": "扫描已取消",
+      "cancelledDesc": "已完成 {{count}} 个文件",
+      "success": "扫描完成！",
+      "fileFormats": "文件格式",
+      "cacheDetail": "个文件从缓存加载 (未修改)，",
+      "indexedDetail": "个文件已成功索引。",
+      "scannedDetail": "个文件已成功扫描。",
+      "rescannedDetail": "个文件已重新扫描。",
+      "rescannedIndexedDetail": "个文件已重新索引。",
+      "durationSuffix": "耗时",
+      "autoRagActive": "AI 索引正在后台进行",
+      "autoRagDesc": "正在处理 {{current}}/{{total}} 个文件。可通过顶部横幅的“停止”按钮终止;此操作占用大量 CPU。"
+    },
+    "duration": {
+      "hours": "{{h}}小时 {{m}}分钟 {{s}}秒",
+      "minutes": "{{m}}分钟 {{s}}秒",
+      "seconds": "{{s}}秒"
+    },
+    "cache": "{{count}} 个缓存",
+    "cacheLoaded": "从缓存加载了 {{count}} 个",
+    "pendingRescanTitle": "{{count}} 个文件等待重新扫描",
+    "pendingRescanStart": "开始扫描这些文件",
+    "largeScan": {
+      "title": "检测到大型文件夹",
+      "detail": "此文件夹包含 {{fileCount}} 个受支持的文件和 {{folderCount}} 个子文件夹。扫描可能需要较长时间。您可以逐步添加文件夹以加快扫描速度。",
+      "confirm": "仍然扫描"
+    }
+  },
+  "refile": {
+    "structure": {
+      "byProject": "按项目",
+      "byProjectDesc": "按项目名称对文件进行分组",
+      "byCategory": "按类别",
+      "byCategoryDesc": "按类别对文件进行分组",
+      "byType": "按文件类型",
+      "byTypeDesc": "按扩展名对文件进行分组",
+      "byDate": "按日期",
+      "byDateDesc": "按日期对文件进行分组"
+    },
+    "action": {
+      "copied": "已复制",
+      "moved": "已移动"
+    },
+    "dialog": {
+      "selectDest": "选择目标文件夹 (文件将被整理到这里)"
+    },
+    "result": {
+      "success": "已成功 {{action}} {{processed}} 个文件。创建了 {{folders}} 个文件夹。",
+      "browserMode": "创建了 {{count}} 个引用 (.ref) 文件。",
+      "error": "错误: {{message}}"
+    },
+    "summary": "已选中 {{fileCount}} 个文件。它们将根据以下结构进行整理:",
+    "preview": {
+      "title": "预览 ({{count}} 个文件夹)"
+    },
+    "button": {
+      "copy": "复制 / 整理",
+      "move": "移动 / 整理"
+    },
+    "backupFiles": "备份文件",
+    "browser": {
+      "note": "在浏览器中，仅创建 .ref 引用文件。"
+    },
+    "processing": {
+      "title": "正在整理文件...",
+      "progress": "第 {{current}} / {{total}} 个文件"
+    },
+    "done": {
+      "error": "操作失败",
+      "success": "操作完成！"
+    },
+    "confirm": {
+      "moveTitle": "移动文件",
+      "copyTitle": "复制文件",
+      "body": "将整理 {{count}} 个文件。",
+      "moveWarning": "警告：移动操作将删除原始文件。此操作无法撤销。",
+      "confirmMove": "确认移动",
+      "confirmCopy": "确认复制"
+    }
+  },
+  "logViewer": {
+    "delete": {
+      "noneFound": "未找到要删除的记录。",
+      "failed": "删除失败",
+      "confirm": "确定要删除 {{count}} 条日志记录吗？",
+      "confirmDetail": "选定的记录将被永久删除。",
+      "success": "日志已删除",
+      "successDetail": "删除了 {{count}} 条记录"
+    },
+    "clearAll": {
+      "confirm": "确定要清除所有日志吗？",
+      "confirmDetail": "此操作无法撤销。",
+      "success": "日志已清除"
+    },
+    "clearByDate": {
+      "confirm": "确定要删除超过 {{days}} 天的日志吗？",
+      "confirmDetail": "此日期之前的记录将被删除。",
+      "success": "旧日志已清除",
+      "successDetail": "删除了 {{count}} 条记录"
+    },
+    "header": {
+      "totalRecords": "共 {{count}} 条记录",
+      "selected": "已选择 {{count}} 条"
+    },
+    "tooltip": {
+      "deleteSelected": "删除选中的 {{count}} 条记录 (Delete)",
+      "refresh": "刷新",
+      "clearByDate": "按日期清除",
+      "clearAll": "清除全部",
+      "deselectAll": "取消选择",
+      "selectAll": "全选",
+      "verifyIntegrity": "验证日志完整性（哈希链）"
+    },
+    "integrity": {
+      "valid": "日志完整性已验证 — {{count}} 条记录链一致。",
+      "invalid": "日志完整性已损坏 — {{broken}}/{{total}} 条记录不一致。",
+      "firstBroken": "首个损坏记录 id: {{id}}",
+      "missingHash": "{{count}} 条记录缺少哈希（旧迁移待完成）。",
+      "hint": "如果附近没有 LOG_DELETED / LOG_CLEARED 标记，则怀疑有外部篡改。DB 文件可能在应用外被编辑。",
+      "error": "验证失败: {{error}}"
+    },
+    "button": {
+      "deleteSelected": "删除选中项",
+      "clearByDate": "清除"
+    },
+    "dateBar": {
+      "label": "清除旧记录:",
+      "daysOld": "超过 {{days}} 天"
+    },
+    "filter": {
+      "allActions": "所有操作"
+    },
+    "action": {
+      "scanStarted": "扫描开始",
+      "scanCompleted": "扫描完成",
+      "scanCancelled": "扫描取消",
+      "fileAdded": "文件已添加",
+      "fileDeleted": "文件已删除",
+      "fileRestored": "文件已恢复",
+      "settingsChanged": "设置已更改",
+      "userLogin": "用户登录",
+      "userLogout": "用户注销",
+      "dbExport": "数据库导出",
+      "dbImport": "数据库导入",
+      "refileCompleted": "整理完成",
+      "versionConvert": "版本转换",
+      "messageSent": "消息发送",
+      "messageReplied": "消息回复",
+      "messageDelete": "消息删除"
+    },
+    "table": {
+      "empty": "未找到日志记录"
+    },
+    "col": {
+      "time": "时间",
+      "role": "角色",
+      "action": "操作",
+      "target": "目标",
+      "result": "结果"
+    },
+    "detail": {
+      "title": "详细信息",
+      "extraInfo": "附加信息",
+      "noExtra": "此条目没有附加信息。",
+      "tooltip": "显示详细信息 (双击)"
+    },
+    "footer": {
+      "selectedOf": "已选 {{selected}} / {{total}}",
+      "showing": "显示 {{count}} 条记录",
+      "hint": "点击: 选择 | Ctrl+点击: 多选 | Shift+点击: 范围 | 双击: 详情"
+    }
+  },
+  "audit": {
+    "scanInterrupted": {
+      "noteUserClose": "扫描进行时应用程序被正常关闭。扫描中断。",
+      "noteUnexpected": "应用程序在扫描完成前意外终止 (没有正常关闭标记)。",
+      "possibleCauses": "可能原因: 应用崩溃 · 系统关机 · 任务管理器终止 · 防病毒/安全软件 · 断电",
+      "cause": {
+        "app_crash": "应用程序崩溃 (Windows: 应用程序错误 / 事件 1000)。",
+        "app_hang": "应用程序无响应,被强制终止 (Windows: 应用程序挂起 / 事件 1002)。",
+        "system_shutdown": "系统已关闭或重启 (Windows: 事件 1074 / 6006)。",
+        "system_unexpected_reboot": "系统意外重启: 断电、内核崩溃或蓝屏 (Windows: 事件 6008 / 41)。"
+      }
+    }
+  },
+  "aiSettings": {
+    "description": "选择并配置 AI 提供程序以启用基于图像的搜索。",
+    "label": {
+      "provider": "提供程序",
+      "ollamaUrl": "Ollama 服务器地址",
+      "visionModel": "视觉模型",
+      "apiKey": "API 密钥"
+    },
+    "badge": {
+      "local": "🔒 本地 / 私密",
+      "cloud": "云 API"
+    },
+    "guide": {
+      "title": "安装指南 — 第一次使用？"
+    },
+    "hint": {
+      "defaultUrl": "您不需要更改默认地址。",
+      "modelRecommendation": "如果您有 GPU，推荐使用 llava。"
+    },
+    "model": {
+      "llavaDesc": "(推荐 — 使用 GPU 时速度快, ~4.7 GB)",
+      "moondreamDesc": "(轻量级替代方案, ~1.7 GB)"
+    },
+    "button": {
+      "testing": "正在测试…",
+      "test": "测试连接"
+    },
+    "test": {
+      "ollamaOk": "Ollama 正在运行，连接成功！",
+      "cloudOk": "API 连接成功！"
+    },
+    "placeholder": {
+      "apiKey": "输入您的 {{provider}} API 密钥"
+    },
+    "section": {
+      "clip": "高级图像索引 (CLIP)"
+    },
+    "clip": {
+      "on": "开",
+      "off": "关",
+      "description": "开启时，系统将使用 CLIP 对您的图像进行索引。"
+    },
+    "guide_note": {
+      "llavaNote": "LLaVA 模型需要大约 4.7 GB 的磁盘空间。"
+    },
+    "ollamaSteps": {
+      "step1Title": "下载并安装 Ollama",
+      "step1Body": "访问 ollama.com，下载适用于 Windows 的版本并安装。安装后，它将在系统托盘中运行。",
+      "step2Title": "下载视觉模型",
+      "step2Body": "在开始菜单中输入 \"cmd\" 并按回车键。将以下命令粘贴到打开的窗口中：",
+      "step3Title": "授予应用程序访问权限 (CORS)",
+      "step3Body": "默认情况下，Ollama 拒绝来自此应用程序的请求。要授予权限：",
+      "step4Title": "测试连接",
+      "step4Body": "如果 Ollama 正在系统托盘中运行，请单击下面的「测试连接」按钮。"
+    },
+    "error": {
+      "invalidJson": "Ollama 返回了无效的 JSON 格式。",
+      "noVisionModel": "Ollama 正在运行，但未安装视觉模型。请按照安装指南中的第 2 步操作。",
+      "oldVersion": "您的 Ollama 版本 ({{version}}) 太旧。可能无法完全支持 GPU。请从 ollama.com 更新。",
+      "notRunning": "Ollama 未运行或地址不正确。请查看安装指南。",
+      "noApiKey": "未输入 API 密钥。",
+      "timeout": "连接超时 (15秒)。请检查您的 API 密钥和互联网连接。",
+      "invalidApiKey": "API 密钥无效。请确保您输入了正确的密钥。"
+    },
+    "copied": "✓ 已复制",
+    "copy": "复制",
+    "newModelHint": "要添加新模型：",
+    "pullModel": "下载模型",
+    "pullModelLoading": "下载中...",
+    "pullModelSuccess": "模型下载成功！",
+    "pullModelError": "模型下载失败",
+    "pullModelHint": "llava ~4.7 GB — 下载可能需要一些时间",
+    "setCors": "设置 CORS",
+    "setCorsLoading": "设置中...",
+    "setCorsSuccess": "CORS 已设置！请重启 Ollama。",
+    "setCorsError": "CORS 设置失败",
+    "setCorsHint": "别忘了重启 Ollama",
+    "openSetupWizard": "AI 设置向导",
+    "status": {
+      "title": "AI 状态",
+      "refresh": "刷新",
+      "ollamaServer": "Ollama 服务器",
+      "chatModel": "文本模型",
+      "visionModel": "视觉模型",
+      "ready": "就绪",
+      "missing": "缺失",
+      "notRunning": "离线",
+      "pulling": "下载中...",
+      "configured": "已配置",
+      "downloadChat": "下载",
+      "downloadVision": "下载",
+      "installHint": "如果已安装 Ollama，请使用上方的\"启动\"按钮。否则请从 ollama.com/download 下载。",
+      "advanced": "高级模型设置",
+      "chatModelHint": "用于 RAG 对话、标签生成、查询增强。推荐：qwen3:8b · 最低：qwen3:4b",
+      "visionModelHint": "用于视觉分析和 OCR。默认：llava",
+      "installedModels": "已安装的模型：",
+      "start": "启动",
+      "stop": "停止",
+      "startOllama": "启动 Ollama",
+      "stopOllama": "停止 Ollama",
+      "starting": "启动中...",
+      "stopping": "停止中...",
+      "chatMissing": "{{model}} 缺失",
+      "visionMissing": "{{model}} 缺失",
+      "chatAltHint": "或者您可以从已安装的模型中选择：{{models}}"
+    }
+  },
+  "profile": {
+    "error": {
+      "imageOnly": "只能上传图像文件",
+      "fileTooLarge": "文件太大 ({{size}} MB)。最大允许 2 MB。",
+      "uploadFailed": "上传图像时出错",
+      "currentPasswordRequired": "请输入当前密码",
+      "newPasswordTooShort": "新密码必须至少包含 3 个字符",
+      "passwordMismatch": "新密码不匹配",
+      "wrongPassword": "当前密码不正确",
+      "updateFailed": "更新失败",
+      "saveFailed": "保存时出错"
+    },
+    "success": {
+      "updated": "个人资料已更新",
+      "passwordChanged": "密码已更改"
+    },
+    "avatar": {
+      "uploading": "上传中...",
+      "hint": "最大 2 MB，将被调整为 128x128 像素"
+    },
+    "button": {
+      "uploadPhoto": "上传照片",
+      "removeAvatar": "移除",
+      "changePassword": "更改密码"
+    },
+    "label": {
+      "displayName": "显示名称",
+      "username": "用户名",
+      "role": "角色",
+      "currentPassword": "当前密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认新密码"
+    },
+    "placeholder": {
+      "displayName": "输入您的姓名..."
+    }
+  },
+  "userMgmt": {
+    "error": {
+      "usernamePasswordRequired": "需要用户名和密码",
+      "createFailed": "无法创建用户",
+      "lastAdmin": "无法降级最后一位管理员。请先指定另一位管理员。",
+      "roleChangeFailed": "无法更改角色",
+      "passwordTooShort": "密码必须至少包含 3 个字符",
+      "passwordResetFailed": "无法重置密码",
+      "cannotDeleteSelf": "您不能删除自己",
+      "cannotDeleteLastAdmin": "无法删除最后一位管理员",
+      "deleteFailed": "删除失败",
+      "notFounder": "只有初始管理员可以执行此操作"
+    },
+    "success": {
+      "userCreated": "用户已创建",
+      "roleChanged": "角色已更改",
+      "passwordReset": "密码已重置",
+      "passwordResetDetail": "已分配新密码",
+      "userDeleted": "用户已删除",
+      "avatarRemoved": "头像已移除",
+      "userBlocked": "主档案访问被阻止",
+      "userUnblocked": "主档案访问已解锁",
+      "developerEnabled": "开发者权限已授予",
+      "developerDisabled": "开发者权限已撤销"
+    },
+    "blockNotification": {
+      "subject": "主档案访问限制",
+      "body": "您的主档案访问权限已被管理员限制。您可以继续使用您的本地档案。详情请联系您的管理员。"
+    },
+    "delete": {
+      "confirm": "确定要删除 \"{{name}}\" 吗？",
+      "confirmDetail": "此用户将被永久删除。"
+    },
+    "header": {
+      "userCount": "{{count}} 个用户"
+    },
+    "button": {
+      "newUser": "新用户",
+      "add": "添加"
+    },
+    "form": {
+      "usernameLabel": "用户名 *",
+      "usernamePlaceholder": "用户名",
+      "passwordLabel": "密码 *",
+      "passwordPlaceholder": "密码123",
+      "displayNameLabel": "显示名称",
+      "displayNamePlaceholder": "全名",
+      "roleLabel": "角色",
+      "developerLabel": "开发者权限",
+      "newPasswordPlaceholder": "新密码"
+    },
+    "table": {
+      "empty": "没有注册用户"
+    },
+    "col": {
+      "username": "用户名",
+      "displayName": "显示名称",
+      "role": "角色",
+      "createdAt": "创建时间",
+      "actions": "操作"
+    },
+    "badge": {
+      "you": "(你)",
+      "blocked": "已阻止",
+      "developer": "开发者",
+      "founder": "创始人"
+    },
+    "tooltip": {
+      "resetPassword": "重置密码",
+      "removeAvatar": "移除头像",
+      "deleteUser": "删除用户",
+      "blockUser": "阻止访问主档案",
+      "unblockUser": "解锁主档案访问",
+      "toggleDeveloper": "切换开发者访问权限"
+    },
+    "displayName": "名称"
+  },
+  "detail": {
+    "section": {
+      "colorPalette": "调色板",
+      "fileInfo": "文件信息",
+      "formatProps": "格式属性",
+      "convertedFile": "版本已转换的文件",
+      "docExcerpt": "文档摘录",
+      "docIndex": "文档内容 (索引)",
+      "aiTags": "AI 标签",
+      "techMeta": "技术元数据",
+      "archStyle": "建筑风格",
+      "match": "匹配来源"
+    },
+    "color": {
+      "analyzing": "分析中…",
+      "refresh": "刷新"
+    },
+    "error": {
+      "copyPathFailed": "无法复制路径。",
+      "openFileFailed": "无法打开文件: {{error}}",
+      "openFolderFailed": "无法打开文件夹: {{error}}",
+      "colorExtractFailed": "无法提取调色板: {{error}}"
+    },
+    "tag": {
+      "versionConverted": "版本已转换"
+    },
+    "convert": {
+      "maxRunning": "3ds Max 当前已打开。请关闭 Max 后重试。",
+      "noInstall": "未找到合适的 3ds Max 安装。",
+      "successReal": "文件已转换为 V{{year}} (使用 3ds Max)",
+      "successQuick": "文件已标记为 V{{year}}",
+      "error": "转换错误: {{error}}"
+    },
+    "export": {
+      "success": "已导出为 {{format}}",
+      "error": "导出错误: {{error}}",
+      "exporting": "导出中...",
+      "fbxTitle": "将 MAX 文件导出为 FBX 格式（需要 3ds Max）",
+      "objTitle": "将 MAX 文件导出为 OBJ 格式（需要 3ds Max）"
+    },
+    "button": {
+      "openFile": "打开文件",
+      "converting": "正在转换...",
+      "downgrade": "降级版本",
+      "showInFolder": "在文件夹中显示",
+      "copied": "已复制！",
+      "copyPath": "复制路径"
+    },
+    "convertMode": {
+      "quick": "快速",
+      "quickDesc": "更改标记",
+      "real": "真实",
+      "realDesc": "使用 3ds Max",
+      "notFound": "未找到 Max",
+      "quickWarning": "更改版本标记。速度快但特定版本的功能可能不兼容。",
+      "realWarning": "使用已安装的 3ds Max 重新保存。确保完全兼容性。",
+      "detected": "检测到 {{versions}}"
+    },
+    "version": {
+      "current": "← 当前"
+    },
+    "label": {
+      "size": "大小",
+      "type": "类型",
+      "category": "类别",
+      "created": "创建时间",
+      "updated": "更新时间",
+      "drawingDate": "绘图日期",
+      "maxVersion": "Max 版本",
+      "maxLayers": "Max 图层",
+      "maxObjects": "Max 对象",
+      "original": "原始:",
+      "source": "来源:",
+      "dwgVersion": "AutoCAD 版本",
+      "skpVersion": "SketchUp 版本",
+      "rvtVersion": "Revit 版本",
+      "rvtProjectName": "项目名称",
+      "rvtWorkshared": "工作共享",
+      "rvtStoreys": "楼层数",
+      "ifcSchema": "IFC 架构",
+      "ifcProjectName": "项目名称",
+      "ifcBuildingName": "建筑名称",
+      "ifcOriginatingSystem": "来源系统",
+      "ifcEntities": "实体数量",
+      "ifcStoreys": "楼层数",
+      "ifcSpaces": "空间数",
+      "path": "路径",
+      "layers": "图层 ({{count}})",
+      "blockCount": "块数量",
+      "renderEngine": "渲染引擎",
+      "textureCount": "纹理数量",
+      "rooms": "房间 ({{count}})",
+      "materials": "材质",
+      "resolution": "分辨率",
+      "pageCount": "页数",
+      "colorProfile": "色彩配置文件",
+      "imageRefs": "图像引用 ({{count}})"
+    },
+    "action": {
+      "open": "打开",
+      "showInFolder": "在文件夹中显示"
+    },
+    "backup": {
+      "title": "{{count}} 个备份文件",
+      "totalSize": "总计 {{size}}"
+    },
+    "chunk": {
+      "info": "块: {{index}} · 页 {{page}}"
+    },
+    "docIndex": {
+      "hasChunks": "此文件已扫描内容。有 {{count}} 个块记录。",
+      "noChunks": "未找到此文件的内容块。",
+      "garbage": "已提取内容，但不是可读文本。",
+      "searchHint": "如果您在搜索框中输入内容并且此文件在结果中突出显示，则相关部分将在上方显示为「文档摘录」。",
+      "ocrHint": "提示：如果您希望在此文件中进行文本搜索，请在重新扫描档案时开启 AI；扫描的文档可能需要通过 Ollama 进行 OCR 处理。"
+    },
+    "match": {
+      "file": "在 DWG 文件中",
+      "ai": "AI 检测",
+      "meta": "元数据"
+    }
+  },
+  "dashboard": {
+    "stat": {
+      "totalAssets": "总资产",
+      "activeProjects": "活动项目",
+      "totalSize": "总大小",
+      "indexed": "已索引",
+      "partiallyIndexed": "部分索引"
+    },
+    "card": {
+      "categoryDist": "资产类型分布",
+      "materialGroups": "材质组",
+      "projectPhases": "项目阶段",
+      "fileFormats": "文件格式分布",
+      "archStyles": "建筑风格",
+      "sizeByFormat": "按格式划分的磁盘占用",
+      "monthlyGrowth": "月度增长（最近 12 个月）",
+      "monthlyGrowthHint": "此期间共添加 {{count}} 个文件（按创建日期）"
+    },
+    "activity": {
+      "title": "最近7天活动",
+      "totalOps": "{{count}} 项操作",
+      "topUsers": "最活跃用户",
+      "topActions": "操作类型"
+    }
+  },
+  "technical": {
+    "empty": "未找到与过滤器匹配的资产。",
+    "tooltip": {
+      "sortColumn": "点击排序"
+    },
+    "col": {
+      "fileName": "文件名",
+      "type": "类型",
+      "category": "类别",
+      "version": "版本",
+      "project": "项目",
+      "phase": "阶段",
+      "material": "材质",
+      "size": "大小",
+      "score": "分数",
+      "updated": "更新时间",
+      "aiTags": "AI 标签"
+    }
+  },
+  "assetCard": {
+    "badge": {
+      "similarity": "{{score}}% 相似度",
+      "stale": "文件自上次扫描后已更改 — 需要重新扫描",
+      "staleShort": "过时",
+      "missing": "磁盘上找不到文件",
+      "missingShort": "丢失",
+      "version": "扫描器已更新 — 重新扫描可提取更多数据",
+      "versionShort": "新数据"
+    },
+    "videoPreview": "视频预览"
+  },
+  "health": {
+    "idle": "新鲜度未知",
+    "error": "检查失败",
+    "allFresh": "全部最新",
+    "stale": "{{count}} 个文件已过时",
+    "missing": "{{count}} 个文件丢失",
+    "versionOutdated": "{{count}} 个文件可提取更多数据",
+    "checking": {
+      "label": "正在检查新鲜度…",
+      "progress": "{{done}}/{{total}} 已检查"
+    },
+    "modal": {
+      "title": "归档健康报告",
+      "recheck": "重新检查",
+      "allFreshTitle": "所有文件均为最新",
+      "lastCheck": "上次检查：{{time}}",
+      "summary": "{{stale}} 已更改 · {{missing}} 丢失 · {{version}} 可更新",
+      "staleSection": "已更改的文件（{{count}}）",
+      "missingSection": "丢失的文件（{{count}}）",
+      "versionSection": "扫描器已更新（{{count}}）",
+      "versionHint": "这些文件由旧版扫描器处理。重新扫描可提取更多数据（文件本身未变）。",
+      "rescanAll": "全部重新扫描",
+      "missingHint": "要清除丢失文件的记录，请使用设置 → 健康检查。",
+      "deltaScan": "增量扫描",
+      "deltaScanHint": "仅运行新提取器，保留现有元数据。速度更快。",
+      "legacyFormatSection": "旧格式文件（{{count}}）",
+      "legacyFormatHint": "这些文件使用旧版（二进制）Office 格式。建议转换为现代 OOXML 等效格式以便长期归档。",
+      "legacyFormatChipTitle": "{{legacy}} → {{recommended}}",
+      "fixitySection": "完整性（位衰退）抽样检查",
+      "fixityHint": "对随机样本重新计算文件哈希并与基线比较。不匹配的文件可能在磁盘上已损坏或被修改。",
+      "fixityRun": "运行",
+      "fixitySampleAria": "采样百分比",
+      "fixityClean": "已检查 {{sampled}} 个文件 · {{ok}} 个完好 · {{seconds}} 秒",
+      "fixityIssues": "已检查 {{sampled}} · {{mismatch}} 个损坏 · {{missing}} 个未找到 · {{error}} 个错误",
+      "fixityNoBaseline": "{{count}} 个文件尚无基线哈希 — 已跳过。",
+      "fixityStatus": {
+        "mismatch": "哈希不匹配 — 疑似位衰退",
+        "missing": "磁盘上未找到文件",
+        "error": "读取/计算错误"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "应用程序错误",
+    "description": "发生意外错误。尝试重新加载应用程序。",
+    "reload": "重新加载",
+    "continue": "继续"
+  },
+  "modalError": {
+    "title": "面板错误",
+    "description": "此面板中发生意外错误。您可以关闭此面板。",
+    "close": "关闭"
+  },
+  "statusBar": {
+    "mainArchive": "主档案",
+    "localArchive": "本地档案",
+    "timeRemaining": "(剩余约 {{time}})",
+    "itemsPerSec": "{{speed}} 项/秒",
+    "pause": "暂停",
+    "resume": "恢复",
+    "cancelTask": "取消",
+    "unreadNotifications": "{{count}} 条未读通知",
+    "notifications": "通知",
+    "markAllRead": "全部标记为已读",
+    "clearAll": "清除全部",
+    "noNotifications": "没有通知",
+    "userManagement": "用户管理",
+    "editProfile": "编辑个人资料",
+    "logout": "注销",
+    "switchUser": "切换用户",
+    "reportError": "报告给开发者",
+    "errorReported": "错误报告已发送",
+    "errorReportSent": "已发送",
+    "errorReportSubject": "错误报告：{{title}}",
+    "reportLimitReached": "已达到每日消息限制",
+    "ai": {
+      "ready": "AI：就绪",
+      "partial": "AI：模型缺失",
+      "offline": "AI：Ollama 离线"
+    }
+  },
+  "sidebarConfig": {
+    "title": "面板设置",
+    "description": "您可以自定义左侧面板中显示的详细信息、名称和顺序。",
+    "resetDefaults": "重置为默认"
+  },
+  "assetTags": {
+    "addToFavorites": "添加到收藏夹",
+    "removeFromFavorites": "从收藏夹中移除",
+    "placeholder": "输入标签名称...",
+    "createTag": "创建 \"{{name}}\""
+  },
+  "tagManagement": {
+    "delete": "删除标签 \"{{name}}\"",
+    "deleteConfirm": "确定要删除 \"{{name}}\" 吗？将从所有文件中移除。"
+  },
+  "undo": {
+    "hint": "Ctrl+Z 撤销",
+    "undone": "已撤销",
+    "redone": "已重新应用"
+  },
+  "blankMenu": {
+    "section": {
+      "view": "视图",
+      "cardSize": "卡片大小",
+      "selection": "选择",
+      "sort": "排序"
+    },
+    "view": {
+      "explorer": "资源管理器",
+      "technical": "技术列表",
+      "dashboard": "仪表板"
+    },
+    "cardSize": {
+      "small": "小",
+      "medium": "中",
+      "large": "大"
+    },
+    "selection": {
+      "selectAll": "全选",
+      "clearSelection": "清除选择 ({{count}})"
+    },
+    "sort": {
+      "name": "按名称",
+      "date": "按创建日期",
+      "modified": "按修改日期",
+      "type": "按类型",
+      "size": "按大小",
+      "aiScore": "按视觉 AI 分数",
+      "asc": "升序",
+      "desc": "降序"
+    },
+    "rescan": "重新扫描..."
+  },
+  "contextMenu": {
+    "openFile": "打开文件",
+    "showInFolder": "在文件夹中显示",
+    "copyPath": "复制路径",
+    "pathCopied": "路径已复制到剪贴板",
+    "addToFavorites": "添加到收藏夹",
+    "removeFromFavorites": "从收藏夹中移除",
+    "addTags": "添加标签...",
+    "rescan": {
+      "label": "重新扫描此文件",
+      "scanning": "扫描中...",
+      "started": "正在重新扫描...",
+      "done": "重新扫描完成",
+      "failed": "重新扫描失败"
+    },
+    "dwgSimilarity": "DWG 结构相似度",
+    "findSimilar": {
+      "title": "查找相似：",
+      "high": "高相似度",
+      "normal": "标准相似度",
+      "medium": "中等相似度",
+      "wide": "广泛相似度"
+    },
+    "delete": "删除",
+    "addToSelection": "添加到选择",
+    "removeFromSelection": "从选择中移除",
+    "ragExclude": "从AI隐藏",
+    "ragInclude": "对AI显示"
+  },
+  "assetStatus": {
+    "section": "项目状态",
+    "clientName": "客户",
+    "approvalStatus": "审批状态",
+    "versionLabel": "版本",
+    "deadline": "截止日期",
+    "clickToEdit": "点击编辑...",
+    "status": {
+      "draft": "草稿",
+      "review": "审核中",
+      "approved": "已通过",
+      "rejected": "已拒绝"
+    }
+  },
+  "assetRelations": {
+    "section": "关联文件",
+    "type": {
+      "pdf_export": "PDF 导出",
+      "render_of": "渲染图",
+      "version_of": "版本",
+      "project_group": "项目组"
+    },
+    "auto": "自动",
+    "addLink": "添加链接",
+    "removeLink": "移除链接",
+    "noLinks": "无链接",
+    "searchPlaceholder": "输入文件名..."
+  },
+  "perfSetup": {
+    "lowTier": "低",
+    "highTier": "高",
+    "analyzed": "您的计算机已分析。下面是推荐设置。",
+    "cores": "{{count}} 核心",
+    "lowIsFast": "低 = 快速",
+    "selectMode": "选择一种模式或接受推荐：",
+    "skip": "跳过，我将手动配置",
+    "applyRecommended": "应用推荐设置",
+    "recommended": "推荐"
+  },
+  "deletion": {
+    "confirmTitle": "确定要删除 \"{{fileName}}\" 吗？",
+    "confirmBody": "文件将从档案中移除。您可以按 Ctrl+Z 撤销。",
+    "removed": "已从档案中移除",
+    "removedUndo": "\"{{fileName}}\" — 可按 Ctrl+Z 撤销",
+    "undone": "已撤销",
+    "undoneDetail": "\"{{fileName}}\" 已恢复到档案 (保留了收藏和标签)",
+    "label": "\"{{fileName}}\" 已从档案中移除"
+  },
+  "dbAssets": {
+    "timeout": "加载数据库超时 (90秒)。请重新加载页面。",
+    "dbError": "数据库错误",
+    "wasmTimeout": "无法加载 WASM 模块 — 超时。",
+    "initFailed": "无法初始化数据库: {{message}}",
+    "recoveryTitle": "检测到数据库问题",
+    "recoveryDetail": "数据库文件已损坏，无法打开。损坏的文件已自动备份，应用程序已使用全新的数据库启动。请联系管理员以恢复以前的数据。"
+  },
+  "scanReports": {
+    "title": "扫描报告",
+    "loading": "正在加载报告...",
+    "loadingContent": "加载中...",
+    "empty": "暂无报告。扫描结束后，跳过或失败的文件会显示在此处。",
+    "selectReport": "请在左侧选择一个报告",
+    "openInEditor": "在编辑器中打开",
+    "saveAs": "另存为",
+    "entries": "条记录",
+    "unknownRoot": "（文件夹名称未知）",
+    "noEntriesFiltered": "没有匹配筛选的记录",
+    "col": {
+      "path": "路径",
+      "category": "类别",
+      "reason": "原因"
+    }
+  },
+  "scanWorkflow": {
+    "started": "扫描已开始",
+    "willClear": "所选文件夹下的记录将被清除",
+    "willAppend": "将追加到现有数据",
+    "willFullReset": "整个存档将被重置并重新扫描",
+    "fullResetConfirm": "您确定要重置整个存档吗？",
+    "fullResetConfirmDetail": "此操作将永久删除所有记录（包括其他源文件夹）。扫描前会自动备份。",
+    "fullResetConfirmButton": "是的，重置存档",
+    "modelFailed": "无法加载 AI 模型",
+    "continueWithout": "在没有嵌入的情况下继续",
+    "completed": "扫描已完成",
+    "filesScanned": "扫描了 {{count}} 个文件",
+    "paused": "扫描已暂停",
+    "pausedHint": "单击「恢复」按钮继续",
+    "resumed": "扫描继续",
+    "cancelled": "扫描已取消",
+    "cancelledByUser": "扫描被用户停止",
+    "selectFiles": "选择要添加到档案的文件",
+    "selectFolder": "选择要扫描的档案文件夹",
+    "allFiles": "所有文件",
+    "reportSaved": "扫描报告已保存",
+    "reportSavedDetail": "{{count}} 条记录 — {{path}}"
+  },
+  "imageSearch": {
+    "enableAiFirst": "请先开启 AI 索引以激活搜索基础设施。",
+    "noOllamaUrl": "未设置 Ollama URL。请在 AI 视觉设置中配置它。",
+    "noApiKey": "未输入 {{provider}} API 密钥。请在 AI 视觉设置中配置它。",
+    "preparing": "准备视觉搜索...",
+    "clipAnalyzing": "使用 CLIP 跟踪图像...",
+    "oldIndex": "检测到旧图像索引格式。要获得更准确的结果，请在开启 CLIP 的情况下重新扫描档案。",
+    "clipPHashLow": "🔍 视觉结果 (CLIP) — pHash 覆盖率低，建议重新扫描",
+    "clipPHash": "🔍 视觉结果 (CLIP + pHash)",
+    "noClipMap": "未找到 CLIP 扫描的图像映射。请在开启 CLIP 的情况下重新扫描档案。",
+    "clipError": "CLIP 引擎错误。切换到备用词模型...",
+    "analyzing": "正在分析图像… ({{elapsed}}s)",
+    "ollamaTimeout": "Ollama 无响应 (10 分钟)。检查 Ollama 是否正在运行且 moondream 模型是否已安装。",
+    "apiTimeout": "API 无响应 (60秒)。请检查您的互联网连接和 API 设置。",
+    "analysisError": "图像分析错误: {{error}}",
+    "emptyResponse": "AI 模型返回空响应。请检查您的 API 设置。",
+    "searchError": "图像搜索错误: {{error}}",
+    "noMatches": "在存档中未找到与该图像匹配的关键词"
+  },
+  "embeddingSearch": {
+    "error": "语义搜索错误",
+    "errorDetail": "无法创建嵌入"
+  },
+  "storageWarningHook": {
+    "storageFull": "存储空间已满",
+    "storageFullDetail": "超出了 localStorage 限制 (5-10MB)。尝试清除旧的扫描。",
+    "diskLow": "磁盘空间不足",
+    "diskLowDetail": "数据库存储所在磁盘的可用空间不足。扫描或导入操作可能会失败。",
+    "saveFailed": "数据库保存错误",
+    "saveFailedDetail": "无法将数据库保存到磁盘。"
+  },
+  "notifications": {
+    "taskCompleted": "{{label}} 已完成",
+    "duration": "持续时间: {{time}}",
+    "taskFailed": "{{label}} 失败"
+  },
+  "userService": {
+    "defaultAdminName": "管理员",
+    "dbNotReady": "数据库未准备就绪",
+    "usernameRequired": "需要用户名和密码",
+    "usernameTaken": "此用户名已被使用",
+    "usernameLengthError": "用户名必须介于 3 到 32 个字符之间",
+    "passwordTooLong": "密码最大长度为 128 个字符",
+    "cannotDemoteFounder": "创始人管理员的角色不能被更改",
+    "cannotDeleteFounder": "创始人管理员不能被删除"
+  },
+  "batchActions": {
+    "tagAddFailed": "添加标签失败",
+    "tagRemoveFailed": "移除标签失败",
+    "updateFailed": "无法更新 {{field}}",
+    "trashFailed": "无法移至回收站"
+  },
+  "exportService": {
+    "reportTitle": "ArchivistPro 档案报告",
+    "createdAt": "创建于: {{date}}",
+    "indexed": "已索引: {{count}}",
+    "tagged": "已标记: {{count}}",
+    "byCategory": "── 按类别 ──",
+    "byFileType": "── 按文件类型 ──",
+    "byProjectPhase": "── 按项目阶段 ──",
+    "byMaterialGroup": "── 按材质组 ──"
+  },
+  "lan": {
+    "title": "局域网共享",
+    "startServer": "启动服务器",
+    "stopServer": "停止服务器",
+    "serverRunning": "服务器正在运行",
+    "authCode": "连接代码",
+    "regenerateCode": "重生成代码",
+    "connect": "连接",
+    "download": "下载档案",
+    "ipAddress": "IP 地址",
+    "port": "端口",
+    "connectionInfo": "连接信息",
+    "enterCode": "输入连接代码",
+    "status": {
+      "connected": "已连接",
+      "disconnected": "未连接",
+      "downloading": "下载中..."
+    },
+    "startServerHint": "通过局域网共享档案（端口 9471）",
+    "connectHint": "从另一台计算机下载档案",
+    "integrityFailed": "下载完整性检查失败，请重试。",
+    "downloadSuccess": "档案下载并加载成功。",
+    "dbSize": "数据库大小",
+    "serverHint": "在另一台电脑上，进入设置 > 网络 > 连接，输入上方的IP和代码。"
+  },
+  "facets": {
+    "projectPhase": "项目阶段",
+    "approvalStatus": "审批状态",
+    "approvalStatus.draft": "草稿",
+    "approvalStatus.review": "审核中",
+    "approvalStatus.approved": "已通过",
+    "approvalStatus.rejected": "已拒绝",
+    "category": "资产类型",
+    "materialGroup": "材质组",
+    "colorTheme": "色彩主题",
+    "architecturalStyle": "建筑风格"
+  },
+  "appVersion": {
+    "description": "建筑文件归档和智能搜索"
+  },
+  "wizard": {
+    "title": "Archivist Pro 安装向导",
+    "step": "步骤 {{current}} / {{total}}",
+    "next": "下一步",
+    "back": "上一步",
+    "skip": "跳过",
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "在开始使用 Archivist Pro 之前，让我们检查一下您的系统。",
+      "language": "语言选择",
+      "systemCheck": "系统检查",
+      "wasm": "WebAssembly 支持",
+      "wasmOk": "支持 WASM",
+      "wasmFail": "不支持 WASM — 应用程序可能无法运行",
+      "os": "操作系统",
+      "disk": "预计磁盘空间",
+      "diskAvailable": "可用 {{size}}",
+      "diskUnavailable": "无法获取信息"
+    },
+    "checklist": {
+      "title": "环境要求",
+      "subtitle": "检查以下组件的安装状态。",
+      "ollamaService": "Ollama 服务",
+      "ollamaRunning": "运行中",
+      "ollamaNotRunning": "未运行或未安装",
+      "ollamaLink": "从 ollama.com 下载",
+      "chatModel": "聊天模型",
+      "chatModelOk": "{{model}} 已安装",
+      "chatModelMissing": "未安装 — 在终端中运行：ollama pull {{model}}",
+      "visionModel": "视觉模型",
+      "visionModelOk": "{{model}} 已安装",
+      "visionModelMissing": "未安装 — 在终端中运行：ollama pull llava",
+      "odaConverter": "ODA FileConverter",
+      "odaFound": "已检测到",
+      "odaNotFound": "未找到",
+      "odaLink": "从 opendesign.com 下载",
+      "fp32Models": "WebGPU 模型 (fp32)",
+      "fp32Found": "已安装 — WebGPU 加速已启用",
+      "fp32NotFound": "未安装（可选 — 使用 CPU 运行）",
+      "fp32Hint": "可稍后在 设置 > WebGPU 模型 中安装",
+      "recheck": "重新检查",
+      "optionalNote": "这些要求是可选的。您可以稍后在设置中配置缺失的项目。",
+      "checking": "检查中..."
+    },
+    "ready": {
+      "title": "一切准备就绪！",
+      "subtitle": "设置完成。请查看下面的摘要信息。",
+      "summary": "设置摘要",
+      "aiMode": "AI 模式",
+      "aiModeLocal": "本地 AI (Ollama)",
+      "aiModeSkip": "AI 已禁用",
+      "missingDeps": "缺少的要求",
+      "missingDepsNone": "全部已安装",
+      "missingDepsCount": "缺少 {{count}} 项",
+      "systemStatus": "系统状态",
+      "allGood": "所有检查均通过",
+      "hasWarnings": "存在 {{count}} 个警告",
+      "defaultCreds": "首个管理员帐户",
+      "defaultCredsHint": "在下一屏幕设置",
+      "changePasswordHint": "在下一步中，您将设置自己的管理员用户名和密码（至少6个字符）。请将这些信息保存在安全的地方。",
+      "launch": "启动 Archivist Pro"
+    },
+    "dwg": {
+      "title": "DWG 文件支持",
+      "description": "需要 ODA FileConverter 来从 DWG 文件中提取图层、块和文字。",
+      "detected": "已检测到 ODA FileConverter",
+      "notDetected": "未检测到 ODA FileConverter",
+      "optional": "此步骤为可选 — 您可以稍后在设置中安装。",
+      "rescanNote": "之前扫描的 DWG 文件可能缺少完整的图层/块数据。请重新扫描这些文件以获取完整数据。"
+    }
+  },
+  "scanner": {
+    "odaNotInstalled": "请在设置 > DWG 转换器中安装 ODA FileConverter 以获得完整的 DWG 支持。"
+  },
+  "autoRagIndex": {
+    "progress": "AI 索引: {{current}}/{{total}}",
+    "stop": "停止"
+  },
+  "dbSaving": {
+    "label": "正在保存数据库..."
+  },
+  "updater": {
+    "sectionTitle": "更新",
+    "currentVersion": "当前版本",
+    "checking": "检查中...",
+    "available": "v{{version}} 更新可用",
+    "checkNow": "立即检查",
+    "upToDate": "您使用的是最新版本",
+    "checkError": "检查错误: {{error}}",
+    "openDownload": "下载",
+    "serverNotConfigured": "未配置更新服务器 — 请在下方输入服务器 URL",
+    "serverUrlPlaceholder": "http://192.168.1.10:8080/archivist",
+    "serverUrlHelp": "局域网中更新服务器的地址。此地址下应包含 latest.json 和安装文件。留空则不进行更新检查。",
+    "serverUrlSaved": "已保存"
+  },
+  "duplicateFinder": {
+    "title": "重复和相似文件查找器",
+    "checkExactHash": "完全重复",
+    "checkSameName": "同名不同位置",
+    "checkVisual": "视觉相似",
+    "checkStructural": "结构相似 (CAD, 3D, 文档)",
+    "threshold": "相似度阈值",
+    "scan": "扫描",
+    "scanning": "扫描中...",
+    "largeArchiveWarning": "对{{count}}个文件进行视觉/结构相似性扫描可能需要较长时间并消耗大量内存。建议先使用'完全重复'模式。",
+    "cancel": "取消",
+    "cancelledPartial": "已取消 — 部分结果",
+    "results": "{{groups}} 个分组，{{total}} 个文件",
+    "noResults": "未找到重复或相似文件",
+    "missingHash": "缺少哈希值: {{count}} 个文件 — 这些文件无法包含在精确重复扫描中。",
+    "missingPhash": "{{count}} 个视觉文件没有 pHash 数据 — 在视觉相似度扫描中已跳过",
+    "missingMetadata": "{{count}} 个结构化文件没有元数据 — 在结构相似度扫描中已跳过",
+    "rescan": "重新扫描",
+    "skipMissing": "跳过",
+    "showFiles": "显示文件",
+    "hideFiles": "隐藏",
+    "rescanThese": "扫描这些",
+    "deleteSelected": "删除选中 ({{count}})",
+    "keepFirst": "保留最新的，删除其余",
+    "viewList": "列表",
+    "viewCompare": "比较",
+    "similarity": "{{score}}% 相似",
+    "pHashDiff": "pHash 差异: {{dist}}/64 位 → {{score}}% 相似",
+    "confirmDeleteMultiple": "确定要永久删除 {{count}} 个文件吗？",
+    "confirmDeleteMultipleDetail": "此操作无法撤销。文件将从档案中移除。",
+    "groupExactHash": "完全重复",
+    "groupSameName": "同名文件",
+    "groupVisual": "视觉相似",
+    "groupStructural": "结构相似",
+    "copiesCount": "{{count}} 个副本",
+    "similarCount": "{{count}} 个相似项",
+    "fileSize": "大小",
+    "modified": "修改时间",
+    "comparePanelTitle": "比较",
+    "comparePanelHint": "点击列表中任一组的计数徽章",
+    "compareDeleteLeft": "删除左侧",
+    "compareDeleteRight": "删除右侧",
+    "deleteSuccess": "已从档案中移除 {{count}} 个文件",
+    "buttonTooltip": "查找重复文件",
+    "confirmDeleteSingle": "确定要删除 \"{{name}}\" 吗？",
+    "viewerDeleteHint": "只有管理员可以从主档案中删除文件",
+    "groupLabel": "组",
+    "comparePanelInstruction": "在列表视图中点击两个文件的比较图标",
+    "selectedCount": "已选择 {{count}} 个文件",
+    "resetCompare": "重置",
+    "comparePending": "请选择第二个文件进行比较",
+    "andOthers": "等",
+    "structuralPerfWarning": "将扫描 {{count}} 个结构化文件 — 这可能需要几秒钟",
+    "detailSettings": "详细设置",
+    "advancedCriteria": "高级准则",
+    "formatFilters": "格式过滤器",
+    "formatFiltersHint": "要在结果中显示的类型",
+    "comparisonCriteria": "比较准则",
+    "comparisonCriteriaHint": "结构相似性使用的字段 — 更改后需重新扫描",
+    "generalCriteria": "通用准则",
+    "generalCriteriaHint": "为同名和结构相似性模式添加额外过滤器",
+    "formatCriteria": "格式特定准则",
+    "formatCriteriaHint": "结构相似性要比较的元数据字段",
+    "performanceFilters": "性能过滤器",
+    "performanceFiltersHint": "缩小扫描池以提高速度",
+    "criteriaRescanNeeded": "准则已更改 — 请重新扫描以获取最新结果",
+    "fmtCad": "CAD / 图纸 (DWG, DXF)",
+    "fmtBim3d": "BIM / 3D 模型 (MAX, SKP, RVT, IFC)",
+    "fmtDoc": "文档 (PDF, DOCX, XLS, PPT…)",
+    "fmtImage": "图像 (JPEG, PNG, PSD…)",
+    "fmtVideo": "视频 (MP4)",
+    "fmtBackup": "备份 (BAK)",
+    "critSameSize": "相同文件大小",
+    "critModifiedWithin": "在时间窗口内修改",
+    "critSameParentFolder": "相同父文件夹名称",
+    "sizeTolerance": "公差",
+    "tolExact": "完全匹配",
+    "tol1kb": "± 1 KB",
+    "tol1percent": "± 1%",
+    "days": "天",
+    "minFileSize": "最小文件大小",
+    "critDwgLayers": "图层",
+    "critDwgBlocks": "块",
+    "critDwgText": "文本内容",
+    "critDwgXrefs": "外部参照",
+    "critIfcStoreys": "楼层数",
+    "critIfcEntities": "实体数量",
+    "critMaxMaterials": "材质列表",
+    "critMaxRenderEngine": "渲染引擎",
+    "critMaxVersion": "Max 版本",
+    "critSkpComponents": "组件",
+    "critSkpLayers": "图层",
+    "critSkpVersion": "SketchUp 版本",
+    "critRvtStoreys": "楼层名称",
+    "critRvtProjectName": "项目名称",
+    "critOfficeTitle": "标题",
+    "critOfficeAuthor": "作者",
+    "critPdfPages": "页数"
+  },
+  "crashReport": {
+    "title": "错误报告",
+    "empty": "没有错误报告",
+    "clearAll": "清除全部",
+    "clearAllConfirm": "确定要删除所有错误报告吗？",
+    "clearAllDetail": "此操作无法撤销。",
+    "delete": "删除",
+    "deleteConfirm": "确定要删除此错误报告吗？",
+    "noStackTrace": "没有堆栈跟踪信息",
+    "type": {
+      "react_error": "React 错误",
+      "window_error": "窗口错误",
+      "unhandled_rejection": "未处理的 Promise",
+      "rust_panic": "Rust 恐慌"
+    },
+    "field": {
+      "component": "组件",
+      "version": "版本",
+      "os": "操作系统",
+      "message": "错误信息",
+      "stackTrace": "堆栈跟踪"
+    }
+  },
+  "notification": {
+    "newMessage": "您有一条新消息 💬",
+    "newMessages": "您有 {{count}} 条新消息 💬",
+    "trayOpen": "打开 ArchivistPro",
+    "trayQuit": "退出",
+    "devFeedbackTitle": "新的开发者反馈"
+  },
+  "batchToolbar": {
+    "ariaLabel": "批量操作工具栏",
+    "selectedCount": "已选择 {{count}} 个文件",
+    "addTags": "添加标签",
+    "selectAll": "全选",
+    "clearSelection": "清除选择",
+    "selectAllConfirmMessage": "将选择 {{count}} 个文件",
+    "selectAllConfirmDetail": "所有可见文件将被标记为已选中。批量操作（如标签）将影响所有这些文件。",
+    "confirmSelectLabel": "选择"
+  },
+  "archiveImport": {
+    "rolledBack": "导入失败。数据库已从备份中自动恢复。",
+    "failed": "导入失败。"
+  },
+  "batchTagModal": {
+    "title": "批量添加标签",
+    "subtitle": "将应用于 {{count}} 个文件",
+    "noTags": "尚无标签，请在下方创建新标签。",
+    "newTag": "创建新标签",
+    "newTagPlaceholder": "标签名称...",
+    "createAndAdd": "创建并选择",
+    "willAdd": "将添加的标签",
+    "apply": "应用 ({{count}})",
+    "applying": "正在应用...",
+    "noTagsSelected": "请至少选择一个标签",
+    "successTitle": "批量标签已应用",
+    "success": "已为 {{count}} 个文件添加 {{tagCount}} 个标签",
+    "bulkWarning": "将影响 {{count}} 个文件 — 请谨慎操作"
+  },
+  "chat": {
+    "welcome": {
+      "title": "向您的档案提问",
+      "subtitle": "完全离线。答案来自档案中已索引的文档。",
+      "example1": "\"这个项目使用了哪些玻璃型材？\"",
+      "example2": "\"2024年别墅项目的共同细节是什么？\"",
+      "example3": "\"这份规范中是否有消防法规条款？\""
+    },
+    "autoSync": {
+      "confirmTitle": "元数据更新",
+      "confirmDetail": "元数据格式已更新。将重新索引 {{count}} 个文件，后台可能需要几分钟。立即开始吗？",
+      "confirmStart": "立即开始"
+    },
+    "ollama": {
+      "connected": "Ollama",
+      "disconnected": "Ollama 离线",
+      "checking": "正在检查 Ollama 连接...",
+      "notRunning": "Ollama 未运行 — AI 对话不可用",
+      "hint1": "Ollama 是 RAG 对话所必需的。嵌入功能（语义搜索、视觉搜索）无需 Ollama 即可工作。",
+      "installSteps": "安装步骤：",
+      "step1": "从 ollama.com/download 下载并安装 Ollama",
+      "step2": "在终端中输入：ollama pull qwen3:8b（推荐）或 ollama pull qwen3:4b（轻量）",
+      "step3": "在终端中输入：ollama serve",
+      "step4": "重新打开此面板"
+    },
+    "corsWarning": "未配置CORS — Ollama无法与应用通信，AI对话可能无法使用。",
+    "scope": {
+      "all": "全部档案",
+      "projects": "项目",
+      "tags": "标签"
+    },
+    "index": {
+      "missingWarning": "{{count}} 个文件尚未建立 AI 索引。",
+      "openStatus": "打开索引状态",
+      "autoPreparing": "正在后台为 AI 对话准备元数据",
+      "autoPending": "将为 {{count}} 个文件准备元数据 — 即将自动开始。",
+      "content": "内容",
+      "badgeTooltip": "Meta：已索引元数据 · Content：已索引文件正文",
+      "errors": "个错误"
+    },
+    "input": {
+      "placeholder": "向您的档案提问 — '/visual <文本>' 进行图像搜索（回车 = 发送）"
+    },
+    "header": {
+      "title": "AI 对话"
+    },
+    "sessions": {
+      "title": "对话",
+      "new": "新建",
+      "empty": "暂无对话。点击\"+ 新建\"开始。"
+    },
+    "toggle": {
+      "on": "开",
+      "off": "关"
+    },
+    "queryRewrite": {
+      "label": "增强"
+    },
+    "prepareIndex": {
+      "label": "准备...",
+      "tooltip": "为 AI 聊天准备尚未索引的文件"
+    },
+    "phase": {
+      "searching": "正在搜索来源...",
+      "reranking": "重新排序中...",
+      "generating": "正在生成回答...",
+      "loading_model": "正在加载语言模型...",
+      "loading_vectors": "正在加载向量索引...",
+      "comparing": "正在计算相似度...",
+      "metadata_search": "正在扫描文件元数据..."
+    },
+    "diagnostics": {
+      "candidates": "{{total}} 个候选 · FTS {{fts}} · 嵌入 {{emb}}",
+      "reranked": "重排后 {{count}} → 发送给 LLM",
+      "dimMismatch": "已跳过 {{skipped}} 个块 — 嵌入维度不匹配（查询 {{queryDim}}，数据库为 {{dbDims}}）。请重新索引文件。"
+    },
+    "thinking": "正在搜索来源并准备回答...",
+    "abort": "停止",
+    "send": "发送",
+    "fallback": {
+      "reranker": "重排器超时 — 已使用默认排序。",
+      "queryRewrite": "查询增强失败 — 已使用原始查询。"
+    },
+    "help": {
+      "button": "帮助",
+      "title": "AI 对话 — 功能指南",
+      "glossary": "术语表（先了解这些）",
+      "chunkDesc": "我们将文件的文本分割成小段（约500字），以便 AI 处理。为每个分块生成数学签名（嵌入），搜索基于这些签名进行。",
+      "embeddingDesc": "一个 384 维的数字列表，代表文本的含义。含义相似的文本嵌入向量彼此接近。",
+      "metaChunkDesc": "仅从文件元数据（文件名、项目、标签、DWG 图层）生成的特殊分块。使得没有正文文本的 DWG/MAX 文件也可被搜索。",
+      "citationDesc": "回答中标有 \"[1]\"、\"[2]\" 等标记的来源。点击可跳转到源文件。",
+      "hallucination": "幻觉",
+      "hallucinationDesc": "AI 编造来源中不存在的信息时称为幻觉。系统通过关键词检查和严格的提示规则来防止这种情况。",
+      "llmDesc": "大语言模型 — 生成回答的 AI 模型。在 Ollama 上本地运行。推荐：qwen3:8b · 最低：qwen3:4b",
+      "flowTitle": "一般流程",
+      "flowDesc": "输入问题 → 系统搜索已索引的文件 → 将最相关的分块提供给 LLM → 生成带来源引用的回答。回答逐字流式输出。",
+      "slashTitle": "斜杠命令",
+      "slashVisualDesc": "搜索图像而非文本。例如：/visual 楼梯平面 → CLIP 语义视觉搜索。缩写：/g",
+      "badgesTitle": "顶部标记",
+      "badgeModel": "当前使用的 Ollama 模型",
+      "badgeOllama": "连接状态（绿色/红色）",
+      "badgeRerank": "开启时：检索前 20 个分块，LLM 按相关性选出最佳 6 个。多一次 LLM 调用，回答更精确。关闭时：直接取前 8 个嵌入结果。",
+      "badgeEnrich": "开启时，短查询会通过 LLM 扩展为同义词和英文对照。超过 5 个词的查询视为已足够具体，不做修改。",
+      "badgeScope": "缩小搜索范围：选择特定项目或标签 → 只搜索那些文件。",
+      "indexTitle": "索引面板",
+      "indexBtn": "索引",
+      "indexBtnDesc": "将未索引文件的正文切分为分块并生成嵌入。",
+      "metaBtn": "生成所有元数据",
+      "metaBtnDesc": "为所有活动文件（包括 DWG/MAX）生成\"元数据分块\"。使 AI 对话的搜索覆盖范围接近侧边栏搜索。",
+      "purgeBtn": "清理",
+      "purgeBtnDesc": "移除旧版本的过期分块记录。不影响文件。",
+      "answerTitle": "回答与来源",
+      "citationChip": "[N] file.dwg",
+      "citationChipDesc": "点击 → 相关来源卡片闪烁并滚动到视图中。同时打开资产详情面板。",
+      "sourceCard": "来源卡片",
+      "sourceCardDesc": "文件名 + 页码 + 简短预览 + 分数。点击 → 打开资产详情。",
+      "stopBtn": "停止按钮",
+      "stopBtnDesc": "可以在回答生成中途停止。部分回答会被保存。",
+      "sessionTitle": "对话管理",
+      "newSession": "+ 新建",
+      "newSessionDesc": "打开空白对话。首次问答后，LLM 自动生成标题。",
+      "deleteSession": "x 删除",
+      "deleteSessionDesc": "删除对话及其所有消息。可用 Ctrl+Z 撤销。",
+      "behaviorTitle": "行为说明",
+      "antiHallucination": "防幻觉",
+      "antiHallucinationDesc": "如果查询关键词在任何已索引文件中都未出现，则不会调用 LLM，直接返回\"未找到相关信息\"。",
+      "conversationCtx": "对话上下文",
+      "conversationCtxDesc": "最后 4 条消息作为 PREVIOUS CONVERSATION 添加到提示中。后续问题（\"那个人是谁？\"、\"哪个项目？\"）可正常工作。",
+      "autoIndex": "自动索引",
+      "autoIndexDesc": "扫描新文件夹后，所有新文件（包括 DWG）会在后台自动索引为元数据分块，随时可供对话使用。"
+    },
+    "synthesis": {
+      "pickTitle": "选择文档进行综合分析 — 逐文档分析 + 对比",
+      "pickButton": "选择文档",
+      "modeActive": "综合分析：{{count}} 个文档",
+      "chipBarLabel": "综合分析文档：",
+      "removeChip": "移除",
+      "clearAll": "退出综合分析模式",
+      "exit": "退出",
+      "maxDocsWarning": "最多可选择 10 个文档"
+    },
+    "export": {
+      "button": "导出",
+      "tooltip": "下载对话为 Markdown",
+      "empty": "没有可导出的消息"
+    },
+    "noGpu": "此设备未检测到GPU。AI对话仅在支持GPU的设备上可用。您可以使用左侧面板的搜索功能。"
+  },
+  "assetPicker": {
+    "title": "选择文档进行综合分析",
+    "subtitle": "每个选中的文档将获得独立章节 + 对比摘要。",
+    "searchPlaceholder": "按文件名或路径搜索…",
+    "typeFilterTitle": "按文件类型过滤",
+    "allTypes": "所有类型",
+    "selectFiltered": "选择已过滤项",
+    "clear": "清除",
+    "empty": "暂无已索引的文档。请先通过对话 → 索引按钮为文件建立索引。",
+    "noResults": "无搜索结果。",
+    "chunkCount": "已索引分块数",
+    "selected": "已选择",
+    "capWarning": "建议最大数量",
+    "confirmSynth": "综合分析 ({{count}})",
+    "confirmFocus": "聚焦 ({{count}})"
+  },
+  "visualSearch": {
+    "dwgWarning": {
+      "title": "视觉相似度对技术图纸不可靠",
+      "body": "基于 CLIP 的视觉搜索对 DWG/DXF 图纸效果较弱。为获得更准确的结果，请按图层/块名称文本搜索，或使用几何形状查询（例如\"八角形泳池\"、\"5x10米矩形房间\"）。"
+    }
+  },
+  "dateRange": {
+    "title": "日期范围",
+    "from": "起始日期",
+    "to": "截止日期",
+    "clear": "清除日期筛选"
+  },
+  "dwgSimilarity": {
+    "title": "DWG 结构相似度搜索",
+    "reference": "参考文件",
+    "searching": "正在搜索相似DWG...",
+    "noResults": "未找到相似DWG文件。",
+    "filesFound": "个文件",
+    "topScore": "最高分",
+    "layers": "图层",
+    "blocks": "块",
+    "texts": "文本",
+    "shapes": "形状"
+  },
+  "booleanSearch": {
+    "hint": "提示：可使用 AND、OR、NOT 运算符和\"引号短语\"",
+    "examples": "示例：plan AND kitchen · facade OR section · hall NOT parking · \"floor plan\""
+  },
+  "shapeSearch": {
+    "title": "几何形状搜索",
+    "tab": {
+      "image": "参考图像",
+      "criteria": "按属性搜索"
+    },
+    "dropHint": "拖放图像或点击选择（PNG、JPG、BMP）",
+    "dropSubHint": "系统将提取图像中的几何形状，并在 DWG 文件中搜索相似形状",
+    "analyzing": "正在分析轮廓...",
+    "detected": "检测到的形状：",
+    "vertexCount": "边数",
+    "minRegularity": "最小规则度",
+    "minCompactness": "最小紧凑度",
+    "minRectangularity": "最小矩形度",
+    "compact": "紧凑",
+    "solid": "填充",
+    "rect": "矩形",
+    "category": "类别",
+    "allCategories": "全部",
+    "search": "搜索",
+    "includeOpen": "包含开放形状（折线、弧线）",
+    "scoreLabel": "分数",
+    "filesFound": "个文件",
+    "topScore": "最高分",
+    "openShapes": "个开放形状",
+    "noResults": "未找到匹配的几何形状。DWG 文件需要先建立形状索引。",
+    "noResultsHint": "未找到结果。此面板仅搜索已索引的 DWG/DXF 文件 — 其他格式（SKP、PDF、图像等）不包含在此搜索中。",
+    "dwgBadgeTitle": "仅搜索 DWG 和 DXF 文件",
+    "tagFilter": "标签过滤",
+    "showInArchive": "在档案中显示",
+    "assetNotFound": "在档案中找不到该文件",
+    "error": {
+      "noPath": "无法获取文件路径。请使用\"选择文件\"按钮。"
+    }
+  },
+  "aiSetup": {
+    "title": "AI 设置向导",
+    "next": "继续",
+    "back": "返回",
+    "ready": "就绪",
+    "notInstalled": "离线",
+    "starting": "启动中...",
+    "stopping": "停止中...",
+    "stop": "停止",
+    "download": "下载",
+    "pulling": "下载中...",
+    "retry": "重试",
+    "downloaded": "已下载",
+    "step0": {
+      "desc": "Ollama 是 AI 功能（对话、视觉搜索、标签建议）所必需的。Ollama 是一个免费工具，可在您的电脑上本地运行 AI 模型。",
+      "ollamaLabel": "Ollama 服务器",
+      "startBtn": "启动 Ollama",
+      "installGuide": "如果尚未安装 Ollama，请从 ollama.com/download 下载安装，然后返回此步骤。",
+      "corsBtn": "设置 CORS 权限"
+    },
+    "step1": {
+      "desc": "AI 需要两个模型：一个用于文本问答，一个用于图像分析。您可以一键下载缺失的模型。",
+      "chatLabel": "文本模型",
+      "chatReady": "文本模型就绪",
+      "chatMissing": "文本模型缺失",
+      "visionLabel": "视觉模型",
+      "visionReady": "视觉模型就绪",
+      "visionMissing": "视觉模型缺失",
+      "allReady": "所有模型已就绪！",
+      "downloadAll": "全部下载",
+      "hint": "文本模型 ({{chatModel}}，约 2.5 GB) 和视觉模型 ({{visionModel}}，约 4.7 GB) 将被下载。下载时间取决于您的网络速度。",
+      "chatMissingModel": "{{model}} 缺失 — 在终端运行：ollama pull {{model}}",
+      "altHint": "或者，您可以从高级模型设置中选择已安装的模型：{{models}}",
+      "visionMissingModel": "{{model}} 缺失 — 在终端运行：ollama pull {{model}}"
+    },
+    "step2": {
+      "title": "AI 已就绪！",
+      "desc": "所有 AI 功能已准备就绪。您可以向档案提问、分析图像并使用智能搜索。",
+      "clipBuiltin": "内置",
+      "embedding": "文本索引",
+      "embeddingBuiltin": "内置",
+      "finishBtn": "完成设置"
+    }
+  },
+  "aiStatus": {
+    "label": "AI 状态",
+    "title": "AI 状态",
+    "offline": "离线",
+    "missing": "缺失",
+    "builtin": "内置",
+    "chatModel": "文本模型",
+    "visionModel": "视觉模型",
+    "setupLink": "打开 AI 设置向导",
+    "corsNotSet": "未配置"
+  },
+  "filterPreset": {
+    "label": "筛选器预设",
+    "empty": "尚无保存的预设",
+    "saveCurrentFilters": "保存当前筛选器",
+    "namePlaceholder": "预设名称..."
+  },
+  "onboarding": {
+    "skip": "跳过",
+    "back": "返回",
+    "next": "继续",
+    "letsGo": "开始吧",
+    "start": "开始使用",
+    "replayTour": "重播导览",
+    "welcome": {
+      "title": "欢迎使用 Archivist Pro！",
+      "desc": "让我们带您了解一下。这个简短的导览将介绍主要功能。您可以随时跳过。"
+    },
+    "scan": {
+      "title": "扫描您的文件",
+      "desc": "添加您的项目文件夹并开始扫描。DWG、MAX、SKP、PDF 和 80+ 文件格式将自动识别并归档。"
+    },
+    "search": {
+      "title": "智能搜索",
+      "desc": "使用关键词或语义搜索查找文件。启用AI索引后，还可以捕捉相似概念。"
+    },
+    "viewModes": {
+      "title": "显示模式",
+      "desc": "使用资源管理器视图查看文件卡片，使用仪表板查看统计数据，使用技术视图查看详细表格。"
+    },
+    "aiChat": {
+      "title": "AI 助手",
+      "desc": "用自然语言询问有关档案中文件的问题。AI 会分析文件内容并提供答案。"
+    },
+    "settings": {
+      "title": "设置",
+      "desc": "在这里配置用户管理、安全、AI设置、备份和语言偏好。"
+    },
+    "done": {
+      "title": "准备就绪！",
+      "desc": "您已掌握了基础知识。可以随时从设置中重新启动此导览。祝您归档愉快！"
+    }
+  },
+  "database": {
+    "lockWarningTitle": "数据库锁定",
+    "lockWarningMessage": "数据库正被其他进程写入，数据可能不是最新的。"
+  },
+  "lockScreen": {
+    "message": "会话已超时。请输入密码继续。",
+    "passwordPlaceholder": "密码",
+    "unlock": "解锁",
+    "switchUser": "切换用户",
+    "wrongPassword": "密码错误",
+    "error": "验证错误"
+  },
+  "sessionWarning": {
+    "title": "会话即将过期",
+    "message": "屏幕将在 {{seconds}} 秒后锁定。",
+    "extend": "延长"
+  },
+  "permission": {
+    "adminRequired": "此操作需要管理员权限"
+  },
+  "broadcast": {
+    "title": "发送公告",
+    "description": "此消息将显示给所有用户。",
+    "priority": "优先级",
+    "subject": "主题",
+    "subjectPlaceholder": "公告标题",
+    "message": "消息",
+    "messagePlaceholder": "公告内容...",
+    "sendButton": "发送公告",
+    "sent": "公告已发送"
+  },
+  "printReport": {
+    "title": "档案报告",
+    "print": "打印",
+    "archiveReport": "档案报告",
+    "indexed": "已索引",
+    "tagged": "已标记",
+    "materials": "材料组"
+  },
+  "dropZone": {
+    "dropHere": "将文件夹拖到此处",
+    "dropDesc": "文件将被扫描并添加到档案",
+    "hint": "添加文件夹",
+    "useButton": "请使用扫描按钮添加文件。"
+  },
+  "versionTimeline": {
+    "title": "版本历史",
+    "current": "当前"
+  },
+  "userBatch": {
+    "title": "CSV 导入",
+    "selectFile": "选择 CSV 文件",
+    "preview": "找到 {{count}} 名用户",
+    "import": "全部添加 ({{count}})",
+    "importDone": "已添加 {{success}}/{{total}} 名用户",
+    "errorExists": "用户已存在"
+  },
+  "tagManager": {
+    "title": "标签管理",
+    "empty": "暂无标签",
+    "rename": "重命名",
+    "merge": "合并",
+    "delete": "删除",
+    "changeColor": "更改颜色",
+    "confirmDelete": "\"{{name}}\" 标签及其所有关联将被删除。是否继续？",
+    "confirmMerge": "\"{{source}}\" 标签将合并到 \"{{target}}\"。源标签将被删除。是否继续？",
+    "mergeHint": "\"{{source}}\" → 选择目标标签",
+    "merged": "标签已合并"
+  },
+  "foldersView": {
+    "empty": {
+      "title": "尚无扫描文件夹",
+      "desc": "开始扫描以将文件夹添加到存档。文件夹将以卡片形式显示。",
+      "scanBtn": "扫描文件夹"
+    },
+    "card": {
+      "fileCount": "{{count}} 个文件",
+      "noFiles": "空"
+    }
+  },
+  "xmp": {
+    "exportTitle": "将此文件的元数据导出为XMP附属文件",
+    "exporting": "正在写入XMP...",
+    "exportSuccess": "XMP附属文件已创建：{{file}}",
+    "exportError": "XMP导出错误",
+    "contextMenu": "创建XMP附属文件",
+    "batchExport": "为所有文件创建XMP附属文件",
+    "batchStarted": "正在为{{count}}个文件导出XMP...",
+    "batchDone": "XMP导出完成：{{written}}个已写入，{{errors}}个错误",
+    "fallbackNote": "（{{count}}个文件写保护——已保存到备用位置）",
+    "fallbackSingle": "（文件夹写保护——已保存到备用位置）",
+    "help": {
+      "title": "什么是XMP附属文件导出？",
+      "body": "XMP（可扩展元数据平台）是Adobe开发的国际元数据标准。放置在每个文件旁边的.xmp文件携带标签、项目名称、审批状态、版本等信息。即使文件被移动或数据库被删除，元数据也会被保留。Adobe Bridge、Lightroom和其他DAM工具可以读取此格式。",
+      "howTo": "使用方法：在文件详情面板中点击'XMP'按钮，或从源文件夹菜单中选择'为所有文件创建XMP附属文件'。如果文件夹为写保护，文件将自动保存到应用程序数据文件夹。"
+    }
+  },
+  "approval": {
+    "title": "审批队列",
+    "pendingReview": "{{count}}个文件等待审批",
+    "approveAll": "全部批准",
+    "rejectAll": "全部拒绝",
+    "batchDone": "{{count}}个文件 → {{status}}",
+    "statusChanged": "{{file}} → {{status}}",
+    "more": "更多文件...",
+    "rejectionReason": "拒绝原因",
+    "rejectionReasonPlaceholder": "输入拒绝原因...",
+    "history": "审批历史"
+  },
+  "ragSensitivity": {
+    "title": "AI 敏感数据过滤器",
+    "subtitle": "从AI聊天中排除敏感数据",
+    "enabled": "过滤器已启用 — 敏感数据已对AI隐藏",
+    "disabled": "过滤器已关闭 — AI可访问所有数据",
+    "activate": "启用",
+    "categories": {
+      "title": "敏感数据类别",
+      "financial": "财务",
+      "personal": "个人信息",
+      "legal": "法律",
+      "hr": "人力资源"
+    },
+    "keywords": {
+      "title": "自定义关键词",
+      "placeholder": "添加关键词...",
+      "add": "添加",
+      "empty": "尚未添加自定义关键词"
+    },
+    "manualCount": "{{count}} 个文件已手动从AI中隐藏"
+  }
+}

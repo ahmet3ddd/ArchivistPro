@@ -1,0 +1,68 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Transformers.js modelleri — `npm run models:download` ile indirilir (~218 MB)
+public/models/
+
+# ONNX runtime WASM dosyaları — postinstall ile node_modules'dan kopyalanır
+public/ort/
+
+# Tauri signing keys
+.tauri/
+~/.tauri/
+~\.tauri\
+*.key
+*.pem
+
+# Kişisel ve hassas dosyalar — repoya dahil edilmemeli
+key.txt
+key_nasıl.md
+benim görev listem.txt
+*.msi
+
+# Offline build varlıkları — scripts/prepare-offline-assets.ps1 ile indirilir
+# Repoya commit edilmez; her geliştiricinin kendi indirmesi gerekir.
+src-tauri/MicrosoftEdgeWebView2RuntimeInstallerX64.exe
+src-tauri/resources/oda_installer.exe
+
+# Offline build çıktısı — Tauri build + prepare sonrası oluşur
+offline-bundle/
+
+# Test coverage çıktısı
+coverage/
+
+# Claude Code / AI asistan dosyaları
+.claude/
+.claude-memory/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Gate #1 — gerçek/anonim DB test verisi ASLA commit edilmez (PII koruması)
+test-data/
+*_anon*.db
+*.db-wal
+*.db-shm
+
+# Python
+__pycache__/
+*.pyc

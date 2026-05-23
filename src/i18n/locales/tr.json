@@ -1,0 +1,2701 @@
+{
+  "folderWatcher": {
+    "toast": {
+      "title": "Klasör Değişikliği",
+      "message": "{{path}} içinde değişiklik tespit edildi. Yeniden taramak ister misiniz?"
+    }
+  },
+  "reload": {
+    "disabled": "Yeniden yükleme devre dışı — oturum ve veri kaybını önlemek için F5/Ctrl+R engellendi."
+  },
+  "common": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "delete": "Sil",
+    "loading": "Yükleniyor...",
+    "reload": "Yeniden Yükle",
+    "search": "Ara",
+    "open": "Aç",
+    "exitConfirm": "Uygulamadan çıkmak istediğinize emin misiniz?",
+    "exitConfirmDetail": "Açık olan işlemler sonlandırılacak.",
+    "exitConfirmLabel": "Çık",
+    "savingBeforeExit": "Veriler kaydediliyor, lütfen bekleyin...",
+    "role": {
+      "admin": "Yönetici",
+      "viewer": "Kullanıcı",
+      "developer": "Geliştirici"
+    },
+    "unknown": "Bilinmiyor",
+    "active": "AKTİF",
+    "aria": {
+      "close": "Kapat",
+      "dismiss": "Bildirimi kapat",
+      "back": "Geri"
+    },
+    "refresh": "Yenile",
+    "back": "Geri",
+    "button": {
+      "save": "Kaydet",
+      "cancel": "İptal",
+      "close": "Kapat",
+      "saving": "Kaydediliyor..."
+    },
+    "error": {
+      "unknown": "Bilinmeyen hata",
+      "prefix": "Hata",
+      "fileNotFound": "Dosya bulunamadı",
+      "permissionDenied": "Bu işlem için yetkiniz yok",
+      "diskFull": "Disk alanı yetersiz",
+      "networkError": "Ağ bağlantısı kurulamadı",
+      "unauthorized": "Bu işlem için oturum açmanız gerekiyor",
+      "fileAlreadyExists": "Dosya zaten mevcut",
+      "invalidPath": "Geçersiz dosya yolu"
+    },
+    "archive": {
+      "main": "Ana Arşiv",
+      "local": "Yerel Arşiv"
+    }
+  },
+  "login": {
+    "subtitle": "Mimari Dosya Arşiv Sistemi",
+    "label": {
+      "username": "Kullanıcı Adı",
+      "password": "Şifre"
+    },
+    "button": {
+      "submit": "Giriş Yap",
+      "loggingIn": "Giriş yapılıyor...",
+      "preparing": "Hazırlanıyor...",
+      "exit": "Çıkış",
+      "cancel": "Vazgeç"
+    },
+    "dbLoadingHint": "Yükleniyor: {{size}} MB",
+    "error": {
+      "fieldsRequired": "Kullanıcı adı ve şifre gerekli",
+      "invalidCredentials": "Kullanıcı adı veya şifre hatalı",
+      "lockedOut": "Çok fazla başarısız deneme. {{minutes}} dakika sonra tekrar deneyin.",
+      "viewerModeAdminBlocked": "Bu uygulama Viewer modunda çalışıyor. Admin girişi yapılamaz.",
+      "loginFailed": "Giriş sırasında bir hata oluştu"
+    },
+    "aria": {
+      "hidePassword": "Şifreyi gizle",
+      "showPassword": "Şifreyi göster"
+    },
+    "toast": {
+      "success": "Giriş başarılı",
+      "successBody": "{{username}} olarak giriş yapıldı ({{role}})"
+    },
+    "forgotPassword": {
+      "link": "Şifremi unuttum",
+      "title": "Şifre Sıfırlama",
+      "step1Title": "Kurtarma Kodunu Girin",
+      "step1Desc": "Uygulamanın AppData klasöründeki recovery.key dosyasındaki kodu girin.",
+      "step1Label": "Kurtarma Kodu",
+      "step1Submit": "Doğrula",
+      "step1Error": "Kurtarma kodu hatalı",
+      "step2Title": "Yeni Şifre Belirle",
+      "step2UserLabel": "Kullanıcı",
+      "step2PassLabel": "Yeni Şifre",
+      "step2ConfirmLabel": "Şifre Tekrar",
+      "step2Submit": "Şifreyi Sıfırla",
+      "step2PasswordMismatch": "Şifreler eşleşmiyor",
+      "step2Success": "Şifre başarıyla sıfırlandı",
+      "backToLogin": "Giriş ekranına dön",
+      "noAdmins": "Sistemde admin kullanıcı bulunamadı"
+    },
+    "firstRun": {
+      "title": "İlk Kurulum",
+      "subtitle": "Yönetici hesabını oluşturun",
+      "usernameLabel": "Kullanıcı Adı",
+      "passwordLabel": "Şifre",
+      "confirmLabel": "Şifre Tekrar",
+      "submit": "Hesabı Oluştur",
+      "creating": "Oluşturuluyor...",
+      "passwordMismatch": "Şifreler eşleşmiyor",
+      "minLength": "Şifre en az 6 karakter olmalı",
+      "success": "Admin hesabı oluşturuldu"
+    }
+  },
+  "topbar": {
+    "viewMode": {
+      "folders": "Klasörler",
+      "explorer": "Kaşif",
+      "technical": "Teknik",
+      "dashboard": "Dashboard"
+    },
+    "backToFolders": "Klasörlere dön",
+    "resultCount": "{{count}} varlık",
+    "folderCount": "{{count}} klasör",
+    "filters": {
+      "clearAll": "Tümünü Temizle"
+    },
+    "tooltip": {
+      "cardSize": "Kart boyutu: {{size}}px",
+      "undo": "Geri Al (Ctrl+Z)",
+      "redo": "Yinele (Ctrl+Y)",
+      "deleteFromArchive": "Arşivden Kaldır (Delete)",
+      "trash": "Çöp Kutusu",
+      "organize": "Organize Et",
+      "aiSettings": "AI & Vision Ayarları",
+      "export": "Dışa Aktar / Rapor",
+      "feedback": "Mesajlar",
+      "help": "Yardım (F1)",
+      "settings": "Ayarlar",
+      "auditLog": "Audit Log"
+    },
+    "aria": {
+      "openMenu": "Menüyü aç",
+      "removeFilter": "{{value}} filtresini kaldır",
+      "cardSize": "Kart boyutu",
+      "feedbackUnread": "Mesajlar ({{count}} okunmamış)"
+    },
+    "indexing": {
+      "progress": "İndeksleniyor... {{progress}}%",
+      "upToDate": "İndeksler güncel"
+    },
+    "aiChat": {
+      "label": "AI Sohbet",
+      "tooltip": "AI Sohbet — arşive soru sor",
+      "noGpu": "GPU algılanamadı — AI sohbet bu makinede kullanılamaz",
+      "text": "AI"
+    },
+    "visualSearch": {
+      "label": "Görsel Ara",
+      "tooltip": "Görsel Ara — 'şu desene benzer çizimler' gibi metinle resim ara (CLIP)",
+      "text": "Görsel"
+    },
+    "shapeSearch": {
+      "label": "Şekil Ara",
+      "tooltip": "DWG çizimlerinde geometrik şekil arama",
+      "text": "Şekil"
+    },
+    "advancedSearch": {
+      "title": "Gelişmiş Arama",
+      "aiChat": "AI Sohbet — Arşive Sor",
+      "visualSearch": "Görsel Arama (CLIP)",
+      "duplicateFinder": "Benzer / Kopya Bul",
+      "shapeSearch": "Şekil Arama (DWG)"
+    }
+  },
+  "filterPreset": {
+    "label": "Filtre Kayıtları",
+    "empty": "Henüz kayıtlı filtre yok",
+    "saveCurrentFilters": "Mevcut Filtreleri Kaydet",
+    "namePlaceholder": "Preset adı..."
+  },
+  "sidebar": {
+    "ragExcludeFolder": "AI'dan Hariç Tut",
+    "ragIncludeFolder": "AI'a Dahil Et",
+    "section": {
+      "archive": "Arşiv"
+    },
+    "archive": {
+      "main": "Ana Arşiv",
+      "local": "Yerel Arşiv",
+      "blocked": "Ana arşive erişiminiz yönetici tarafından kısıtlandı"
+    },
+    "button": {
+      "scanAndIndex": "Klasör Tara & İndeksle",
+      "scanOnly": "Klasör Tara"
+    },
+    "lastScan": {
+      "label": "Son tarama:",
+      "files": "dosya"
+    },
+    "search": {
+      "placeholderSemantic": "Doğal/Görsel ara...",
+      "placeholderText": "Arama yap...",
+      "recentSearches": "Son Aramalar",
+      "clearAll": "Tümünü Temizle",
+      "removeItem": "Kaldır",
+      "clear": "Aramayı Temizle",
+      "minCharsHint": "En az 3 karakter girin"
+    },
+    "tooltip": {
+      "editPanel": "Paneli Düzenle",
+      "imageSearch": "Görsel ile Ara",
+      "clearImage": "Görseli temizle"
+    },
+    "aria": {
+      "searchAssets": "Varlık ara",
+      "imageSearch": "Görsel ile ara",
+      "searchSensitivity": "Arama hassasiyeti"
+    },
+    "imageSearch": {
+      "analyzing": "Analiz ediliyor…"
+    },
+    "contentSearch": {
+      "loading": "AI arama motoru yükleniyor...",
+      "preparing": "AI modeli hazırlanıyor...",
+      "error": "AI arama motoru yüklenemedi — içerik araması devre dışı",
+      "retry": "Yeniden Dene",
+      "notIndexed": "Dosyalar içerik araması için indexlenmemiş",
+      "rescan": "Yeniden Tara",
+      "notReady": "İçerik araması devre dışı",
+      "configure": "Ayarlar"
+    },
+    "sensitivity": {
+      "label": "Görsel Arama Hassasiyeti",
+      "description": "Görsel ve semantik eşik"
+    },
+    "ai": {
+      "semanticActive": "Semantik arama aktif",
+      "textBased": "Metin bazlı arama",
+      "loading": "AI yükleniyor...",
+      "chunkCount": "{{count}} parça",
+      "noIndex": "index yok",
+      "embeddingCountTooltip": "{{count}} içerik parçası indexlendi"
+    },
+    "embedding": {
+      "coverage": "AI index kapsamı",
+      "coverageLabel": "AI indexleme ilerleme çubuğu"
+    },
+    "footer": {
+      "totalAssets": "Toplam Varlık",
+      "indexed": "İndekslenen"
+    },
+    "favorites": {
+      "label": "Favoriler"
+    },
+    "sourceFolders": {
+      "title": "Kaynak Klasörler",
+      "empty": "Henüz klasör taranmadı",
+      "clearFilters": "Filtreleri Temizle",
+      "renameLabel": "Yeni ad girin:",
+      "confirmRemove": "Bu kaynak klasörü arşivden çıkarmak istediğinizden emin misiniz? (Asset'ler silinmez)",
+      "confirmDelete": "Bu kaynak klasörü ve içindeki tüm asset'ler Çöp Kutusu'na taşınacak (30 gün sonra otomatik silinir).",
+      "confirmDeleteCount": "{{count}} dosya Çöp Kutusu'na taşınacak.",
+      "deleted": "Çöp Kutusu'na taşındı",
+      "deletedUndo": "Geri almak için Ctrl+Z veya Çöp Kutusu'ndan geri yükleyin",
+      "menu": {
+        "open": "Yönet",
+        "rename": "Yeniden Adlandır",
+        "rescan": "Yeniden Tara",
+        "scanReports": "Tarama Raporları",
+        "scanRelations": "Bağlantıları Tara",
+        "scanRelationsDone": "{{count}} yeni ilişki tespit edildi",
+        "scanRelationsNone": "Yeni ilişki bulunamadı",
+        "remove": "Arşivden Çıkar",
+        "deleteWithAssets": "Sil (asset'lerle)",
+        "setTags": "Etiketler...",
+        "moveTo": "Gruba Taşı"
+      },
+      "groups": {
+        "add": "+Grup",
+        "promptName": "Grup adını girin:",
+        "promptRename": "Yeni grup adını girin:",
+        "confirmDelete": "Bu grubu silmek istediğinizden emin misiniz? Klasörler gruptan çıkarılacak, silinmeyecek.",
+        "noGroup": "Gruptan Çıkar",
+        "rename": "Yeniden Adlandır",
+        "changeColor": "Rengi Değiştir",
+        "delete": "Grubu Sil"
+      },
+      "favorites": {
+        "section": "Favoriler",
+        "add": "Favorilere Ekle",
+        "remove": "Favorilerden Çıkar"
+      },
+      "tags": {
+        "noTags": "Etiket yok",
+        "newTag": "Yeni etiket..."
+      }
+    }
+  },
+  "explorer": {
+    "empty": {
+      "title": "Arşiv boş",
+      "description": "Dosyalarınızı tarayarak arşivinizi oluşturun.",
+      "scanButton": "Klasör Tara & İndeksle",
+      "scanButtonOnly": "Klasör Tara"
+    },
+    "noResults": {
+      "title": "Sonuç bulunamadı",
+      "description": "Mevcut arama ve filtrelerle eşleşen dosya yok.",
+      "clearFilters": "Filtreleri Temizle"
+    }
+  },
+  "storageWarning": {
+    "message": "⚠️ Depolama alanı yetersiz. Bazı veriler kaydedilemeyebilir. Disk alanını kontrol edin veya eski taramaları temizleyin.",
+    "aria": {
+      "dismiss": "Uyarıyı kapat"
+    }
+  },
+  "merge": {
+    "title": "Arşivleri Birleştir",
+    "source": "Kaynak Arşiv",
+    "target": "Hedef Arşiv",
+    "strategy": {
+      "title": "Çakışma Stratejisi",
+      "keepNewer": "Yeniyi Tut (varsayılan)",
+      "keepBoth": "Her İkisini Tut (kopya oluştur)",
+      "skipExisting": "Mevcutları Atla"
+    },
+    "include": {
+      "title": "Kopyalanacak Veriler",
+      "tags": "Etiketler",
+      "embeddings": "AI Vektörleri",
+      "textChunks": "Metin Parçaları",
+      "summaries": "Özetler",
+      "favorites": "Favoriler"
+    },
+    "preview": {
+      "button": "Önizleme",
+      "sourceAssets": "Kaynak asset sayısı",
+      "targetAssets": "Hedef asset sayısı",
+      "conflicts": "Çakışma sayısı",
+      "tags": "Kaynak etiket sayısı",
+      "embeddings": "Kaynak vektör sayısı",
+      "strategyNote": "Çakışmalar şu stratejiyle işlenecek: {{strategy}}",
+      "toggleDetails": "Detaylı liste",
+      "truncated": "ilk {{limit}} kayıt gösteriliyor"
+    },
+    "disposition": {
+      "merge": "Eklenecek",
+      "overwrite": "Üzerine yazılacak",
+      "skip": "Atlanacak",
+      "rename": "Yeniden adlandırılacak"
+    },
+    "confirm": {
+      "button": "Birleştir",
+      "warning": "Bu işlem geri alınamaz. Devam etmek istiyor musunuz?"
+    },
+    "progress": {
+      "phase": {
+        "assets": "Asset'ler kopyalanıyor...",
+        "tags": "Etiketler kopyalanıyor...",
+        "embeddings": "AI vektörleri kopyalanıyor...",
+        "chunks": "Metin parçaları kopyalanıyor...",
+        "summaries": "Özetler kopyalanıyor...",
+        "favorites": "Favoriler kopyalanıyor...",
+        "saving": "Kaydediliyor..."
+      }
+    },
+    "result": {
+      "title": "Birleştirme Tamamlandı",
+      "merged": "Eklenen",
+      "overwritten": "Güncellenen",
+      "skipped": "Atlanan",
+      "renamed": "Yeniden adlandırılan",
+      "errors": "Hatalar"
+    },
+    "error": {
+      "sameArchive": "Kaynak ve hedef farklı olmalı",
+      "targetNotLoaded": "Hedef arşiv yüklenemedi",
+      "alreadyRunning": "Başka bir birleştirme işlemi devam ediyor. Lütfen bitmesini bekleyin.",
+      "rollbackFailed": "Birleştirme başarısız oldu ve geri alma işlemi de başarısız oldu. Hedef arşiv bozulmuş olabilir — lütfen yedekten geri yükleyin."
+    }
+  },
+  "extract": {
+    "title": "Arşivden Çıkar",
+    "source": "Kaynak Arşiv",
+    "filter": {
+      "title": "Filtre Kriterleri",
+      "folders": "Kaynak Klasörler",
+      "fileTypes": "Dosya Tipleri",
+      "projectPhases": "Proje Fazı",
+      "dateRange": "Tarih Aralığı",
+      "dateFrom": "Başlangıç",
+      "dateTo": "Bitiş",
+      "tags": "Etiketler",
+      "noneSelected": "Seçilmedi",
+      "noActiveWarning": "Hiç filtre seçilmedi — tüm asset'ler çıkarılacak"
+    },
+    "target": {
+      "title": "Hedef",
+      "new": "Yeni Arşiv Oluştur",
+      "existing": "Mevcut Arşive Ekle",
+      "newName": "Yeni arşiv adı",
+      "newType": "Arşiv tipi",
+      "typeShared": "Paylaşımlı",
+      "typePersonal": "Kişisel"
+    },
+    "mode": {
+      "title": "Mod",
+      "copy": "Kopyala (kaynak korunur)",
+      "move": "Taşı (kaynaktan silinir)",
+      "moveWarning": "DİKKAT: Taşıma geri alınamaz. Eşleşen asset'ler kaynak arşivden kalıcı olarak silinecek."
+    },
+    "include": {
+      "title": "Kopyalanacak Veriler",
+      "tags": "Etiketler",
+      "embeddings": "AI Vektörleri",
+      "textChunks": "Metin Parçaları",
+      "summaries": "Özetler",
+      "favorites": "Favoriler"
+    },
+    "preview": {
+      "button": "Önizleme",
+      "matched": "Eşleşen asset sayısı",
+      "totalSize": "Toplam boyut",
+      "byType": "Tipe göre",
+      "noMatch": "Hiçbir asset eşleşmedi",
+      "toggleDetails": "Detaylı liste",
+      "truncated": "ilk {{limit}} kayıt gösteriliyor"
+    },
+    "presets": {
+      "label": "Preset:",
+      "choose": "— seç —",
+      "apply": "Uygula",
+      "delete": "Sil",
+      "namePlaceholder": "Yeni preset adı",
+      "save": "Kaydet"
+    },
+    "confirm": {
+      "button": "Çıkar",
+      "warning": "Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
+      "moveWarning": "Taşıma modu — eşleşen asset'ler kaynaktan silinecek!"
+    },
+    "progress": {
+      "phase": {
+        "filtering": "Filtreleniyor...",
+        "creating_target": "Yeni arşiv oluşturuluyor...",
+        "assets": "Asset'ler kopyalanıyor...",
+        "tags": "Etiketler kopyalanıyor...",
+        "embeddings": "AI vektörleri kopyalanıyor...",
+        "chunks": "Metin parçaları kopyalanıyor...",
+        "summaries": "Özetler kopyalanıyor...",
+        "favorites": "Favoriler kopyalanıyor...",
+        "deleting_source": "Kaynaktan siliniyor...",
+        "saving": "Kaydediliyor..."
+      }
+    },
+    "result": {
+      "title": "Çıkarma Tamamlandı",
+      "matched": "Eşleşen",
+      "extracted": "Kopyalanan",
+      "deletedFromSource": "Kaynaktan silinen",
+      "errors": "Hatalar",
+      "goToTarget": "Yeni arşive git"
+    },
+    "error": {
+      "noSource": "Kaynak arşiv seçilmedi",
+      "noTargetName": "Yeni arşiv adı boş olamaz",
+      "targetExists": "Bu isimde bir arşiv zaten var",
+      "sameTarget": "Hedef kaynaktan farklı olmalı",
+      "targetNotLoaded": "Hedef arşiv yüklenemedi",
+      "alreadyRunning": "Başka bir çıkarma işlemi devam ediyor",
+      "rollbackFailed": "Çıkarma başarısız oldu ve geri alma işlemi de başarısız oldu. Hedef/kaynak arşiv bozulmuş olabilir — lütfen yedekten geri yükleyin."
+    }
+  },
+  "app": {
+    "db": {
+      "loading": "Veritabanı yükleniyor..."
+    },
+    "toast": {
+      "reportDownloaded": "Rapor indirildi",
+      "reportDownloadedBody": "{{count}} dosya raporlandı"
+    }
+  },
+  "modals": {
+    "settings": "Ayarlar",
+    "help": "Yardım",
+    "trash": "Çöp Kutusu",
+    "feedback": "Mesajlar",
+    "feedbackAdmin": "Mesajlar",
+    "logViewer": "Audit Log",
+    "scan": "Dosya Tara & İndeksle",
+    "scanOnly": "Dosya Tara",
+    "refile": "Dosyaları Yeniden Organize Et",
+    "aiSettings": "AI Vision Ayarları",
+    "userProfile": "Profil",
+    "userManagement": "Kullanıcı Yönetimi"
+  },
+  "settings": {
+    "tab": {
+      "general": "Genel",
+      "storage": "Depolama",
+      "network": "Ağ",
+      "security": "Güvenlik",
+      "about": "Hakkında"
+    },
+    "language": {
+      "label": "Dil",
+      "description": "Arayüz dilini değiştirin"
+    },
+    "section": {
+      "userInfo": "Kullanıcı Bilgileri",
+      "appearance": "Görünüm",
+      "archives": "Arşivler",
+      "archiveMerge": "Arşiv Birleştirme",
+      "archiveExtract": "Arşiv Çıkarma",
+      "pathRemap": "Yol Yeniden Eşleme",
+      "backup": "Yedekleme",
+      "trash": "Çöp Kutusu",
+      "lan": "LAN Paylaşım",
+      "aiConnections": "AI Bağlantıları",
+      "about": "Hakkında",
+      "odaConverter": "DWG Dönüştürücü (ODA)",
+      "fp32": "WebGPU Modelleri (fp32)",
+      "help": "Yardım & Rehber",
+      "developerMode": "Geliştirici Modu",
+      "healthCheck": "Sağlık Kontrolü",
+      "scanning": "Tarama"
+    },
+    "card": {
+      "userInfoSub": "Oturum ve yetki bilgileri",
+      "appearanceSub": "Tema, renk ve dil tercihleri",
+      "scanningSub": "AI indeksleme ve klasör izleme ayarları",
+      "odaSub": "DWG/DXF dosyaları için ODA FileConverter",
+      "fp32Sub": "WebGPU hızlandırma için fp32 modelleri (opsiyonel)",
+      "helpSub": "Tanıtım turunu tekrar izleyin",
+      "archivesSub": "Ana ve kişisel arşiv konumları",
+      "archiveOpsSub": "Yol eşleme, birleştirme ve çıkarma işlemleri",
+      "backupSub": "Otomatik yedek, snapshot ve taşınabilir arşiv",
+      "performanceSub": "Tarama checkpoint ve işçi sayısı ayarları",
+      "maintenanceSub": "Yetim dosya tespiti ve çöp kutusu",
+      "lanSub": "Arşivi yerel ağda paylaşın veya indirin",
+      "devModeSub": "Geliştirici cihazı olarak ayarlayın",
+      "updateServerSub": "Özel güncelleme sunucusu yapılandırması",
+      "aiConnectionsSub": "AI servisleri bağlantı bilgileri",
+      "sessionSub": "Oturum zaman aşımı ayarları",
+      "auditSub": "Denetim logu saklama süresi",
+      "loginSecSub": "Giriş denemesi ve kilitleme ayarları",
+      "appInfoSub": "Sürüm ve platform bilgileri",
+      "updatesSub": "Güncellemeleri kontrol edin",
+      "extractorsSub": "Desteklenen dosya formatları ve çıkarıcılar",
+      "crashLogsSub": "Hata raporlarını görüntüleyin",
+      "archiveOps": "Arşiv İşlemleri",
+      "performance": "Performans",
+      "maintenance": "Bakım"
+    },
+    "autoRagIndex": {
+      "toggle": "Tarama sonrası otomatik AI indeksleme",
+      "description": "Tarama bitince yeni/değişen dosyaların metni arka planda işlenip AI sohbetine hazırlanır. Bu işlem CPU yoğun olabilir; kapatılırsa indeksleme yalnız RAG panelinden elle başlatılır."
+    },
+    "folderWatch": {
+      "enabledToggle": "Klasör değişikliklerini izle",
+      "enabledDescription": "Taranmış kök klasörlerde dosya eklenmesi/silinmesi/değişmesi tespit edilir ve sağ alt köşede bildirim gösterilir. Kapatıldığında tarama yapılana kadar değişiklikler fark edilmez.",
+      "autoRescanToggle": "Değişiklik tespit edilince otomatik yeniden tara",
+      "autoRescanDescription": "60 saniye boyunca yeni değişiklik gelmezse o klasör için yeniden tarama otomatik başlar. Tarama sırasında çalışıyorsa atlanır. Varsayılan: kapalı."
+    },
+    "healthCheck": {
+      "description": "Arşivdeki dosya kayıtlarının diskte mevcut olup olmadığını kontrol eder. Eksik dosyalı (yetim) kayıtları toplu temizleyebilirsiniz.",
+      "button": "Sağlık Kontrolü Başlat",
+      "scanning": "Kontrol ediliyor...",
+      "noOrphans": "Tüm dosyalar yerinde — sorun bulunamadı.",
+      "found": "{{count}} yetim kayıt bulundu (dosya diskte mevcut değil).",
+      "deleteButton": "{{count}} yetim kaydı sil",
+      "deleted": "{{count}} yetim kayıt temizlendi.",
+      "error": "Sağlık kontrolü sırasında hata oluştu."
+    },
+    "merge": {
+      "description": "İki arşivin asset'lerini ve ilişkili verilerini tek bir hedef arşivde birleştirin.",
+      "openButton": "Arşivleri Birleştir..."
+    },
+    "extract": {
+      "description": "Bir arşivden filtre kriterlerine uyan asset'leri yeni veya mevcut bir arşive kopyalayın ya da taşıyın.",
+      "openButton": "Arşivden Çıkar..."
+    },
+    "developerMode": {
+      "description": "Bu cihazı geliştirici olarak ayarlayarak kullanıcıların geri bildirimlerini LAN üzerinden doğrudan alın. Mesajları almak için LAN sunucusunun çalışıyor olması gerekir.",
+      "enable": "Bu cihazı geliştirici olarak ayarla",
+      "disable": "Devre Dışı Bırak",
+      "enabled": "Geliştirici modu etkinleştirildi.",
+      "disabled": "Geliştirici modu devre dışı bırakıldı.",
+      "enableError": "IP adresi alınamadı.",
+      "currentIp": "Geliştirici IP",
+      "statusActive": "Aktif",
+      "statusInactive": "Pasif",
+      "serverStarted": "LAN sunucusu otomatik başlatıldı.",
+      "serverWarning": "LAN sunucusu başlatılamadı — mesajlar alınamayabilir."
+    },
+    "user": {
+      "username": "Kullanıcı",
+      "role": "Rol",
+      "activeArchive": "Aktif Arşiv"
+    },
+    "appearance": {
+      "theme": "Tema",
+      "accentColor": "Vurgu Rengi"
+    },
+    "theme": {
+      "dark": "Koyu",
+      "light": "Açık"
+    },
+    "accent": {
+      "default": "Varsayılan",
+      "amber": "Amber",
+      "lime": "Yeşil",
+      "teal": "Turkuaz"
+    },
+    "archive": {
+      "location": "Konum",
+      "size": "Boyut",
+      "readOnly": "Salt-okunur — yönetici izni gerekli",
+      "changePath": "Konumu değiştir",
+      "active": "AKTİF",
+      "managedByAdmin": "Yönetici tarafından yönetilir",
+      "readOnlyAccess": "Salt-okunur erişim",
+      "localStoragePath": "localStorage (tarayıcı)",
+      "personalFullAccess": "Kişisel arşiv — tam yetki",
+      "mainDescAdmin": "Yönetici tarafından yönetilir",
+      "mainDescViewer": "Salt-okunur erişim",
+      "localDesc": "Kişisel arşiv — tam yetki"
+    },
+    "storage": {
+      "loading": "Yükleniyor...",
+      "browserMode": "localStorage (tarayıcı modu)",
+      "browserModeShort": "localStorage (tarayıcı)",
+      "notCreated": "Oluşturulmamış",
+      "selectFolder": "Veritabanı klasörünü seç",
+      "locationUpdated": "Veritabanı konumu güncellendi. Yeniden başlatınca bu konum kullanılacak.",
+      "locationUpdateError": "Veritabanı konumu güncellenirken hata oluştu.",
+      "remapOldRequired": "Eski kök yolu girmelisiniz.",
+      "remapSuccess": "Dosya yolları yeniden eşlendi."
+    },
+    "remap": {
+      "description": "Proje klasörünü farklı bir sürücüye taşıdıysanız, dosya yollarını toplu güncelleyebilirsiniz.",
+      "oldPlaceholder": "Eski kök yol (ör. C:\\Projeler\\Ofis\\)",
+      "newPlaceholder": "Yeni kök yol (ör. D:\\Arsiv\\Ofis\\)",
+      "button": "Dosya yollarını yeniden eşle"
+    },
+    "backup": {
+      "description": "Arşivinizi farklı yöntemlerle yedekleyebilirsiniz.",
+      "autoTitle": "Otomatik Yedek (Snapshot)",
+      "autoDescription": "Bu cihazda saatlik veya manuel yedek alır. Yanlışlıkla silme veya değişiklik sonrası eski hale dönebilirsiniz. En fazla 5 yedek tutulur, en eskisi otomatik silinir.",
+      "portableTitle": "Taşınabilir Yedek Dosyası (.archivistpro)",
+      "portableDescription": "Tüm arşivinizi tek bir .archivistpro dosyasına çıkarın veya yedekten geri yükleyin. Başka bilgisayara taşımak veya USB'de saklamak için kullanın.",
+      "scheduleOff": "Devre Dışı",
+      "hours": "saat",
+      "schedule": "Otomatik Yedekleme"
+    },
+    "snapshot": {
+      "maxTitle": "Maksimum Yedek Sayısı",
+      "maxDescription": "Bu sınırı aşan en eski yedekler otomatik silinir.",
+      "create": "Yedek Al",
+      "creating": "Yedek alınıyor...",
+      "restore": "Geri Yükle",
+      "delete": "Sil",
+      "empty": "Henüz yedek yok.",
+      "confirmRestore": "Bu yedeği geri yüklemek mevcut veritabanının üzerine yazacaktır.",
+      "confirmRestoreDetail": "Yedek tarihi: {{date}}",
+      "confirmDelete": "Bu yedek kalıcı olarak silinecektir.",
+      "createSuccess": "Yedek başarıyla alındı.",
+      "createError": "Yedek alınamadı.",
+      "restoreSuccess": "Veritabanı yedekten geri yüklendi.",
+      "restoreError": "Geri yükleme başarısız oldu.",
+      "deleteSuccess": "Yedek silindi.",
+      "deleteError": "Yedek silinemedi.",
+      "schedule": "Otomatik Yedekleme",
+      "scheduleOff": "Devre Dışı",
+      "hours": "saat"
+    },
+    "scan": {
+      "checkpointTitle": "Tarama Checkpoint Aralığı",
+      "checkpointDescription": "Tarama sırasında her kaç dosyada bir veritabanı diske kaydedilsin. Düşük değer = daha güvenli (az veri kaybı riski), yüksek değer = daha hızlı tarama.",
+      "prepareWorkersTitle": "Paralel Hazırlama İşçisi",
+      "prepareWorkersDescription": "Tarama sırasında aynı anda kaç dosyanın hash + metadata + thumbnail çıkarımı yapılsın. HDD: 1-2 (seek thrash riski), SSD: 3-4, NVMe + 8 thread: 6-8, NVMe + 16+ thread (Ryzen 9, Threadripper, Xeon): 10-16. Az çekirdekli sistemde yüksek değer fayda sağlamaz.",
+      "prepareWorkersDetected": "{{cores}} çekirdek tespit edildi · Önerilen: {{recommended}}",
+      "prepareWorkersAutoApply": "Otomatik Uygula"
+    },
+    "trash": {
+      "description": "Silinen dosyalar .archivistpro-trash/ klasörüne taşınır. Undo ile geri alınabilir.",
+      "descriptionPart1": "Silinen dosyalar",
+      "descriptionPart2": "klasörüne taşınır. Undo ile geri alınabilir."
+    },
+    "lan": {
+      "description": "LAN üzerinden başka bir cihazdan arşiv indirebilir veya cihazınızdaki arşivi paylaşabilirsiniz.",
+      "shareMode": "Paylaşım Modu",
+      "shareModeValue": "Export/Import (Faz 1)"
+    },
+    "archiveBackup": {
+      "exportButton": "Yedek Dosyası Oluştur",
+      "importButton": "Yedekten Geri Yükle (.archivistpro)",
+      "exportLabel": "Yedekleniyor",
+      "importLabel": "Geri yükleniyor",
+      "import": {
+        "title": "Arşivi yedekten geri yükle",
+        "dbSize": "İçe aktarılacak DB: {{size}} MB",
+        "unknownSize": "Tüm arşiv içe aktarılacak",
+        "warning": "Mevcut arşivin yerine bu yedek yüklenir.",
+        "remapToggle": "Dosya yollarını yeniden eşle",
+        "remapHint": "Yedek başka bilgisayardan geliyorsa dosya yollarını bu makinedekiyle değiştirin.",
+        "oldRootLabel": "Eski kök yol (yedekteki)",
+        "oldRootPlaceholder": "Örn. C:\\Eski_PC\\Projeler\\",
+        "newRootLabel": "Yeni kök yol (bu makinede)",
+        "newRootPlaceholder": "Örn. D:\\Projeler\\",
+        "browse": "Gözat...",
+        "confirmButton": "Geri Yükle",
+        "cancelButton": "İptal",
+        "remapHintMulti": "Yedekteki {{count}} kök klasör tespit edildi. Her biri için bu makinedeki yeni karşılığını seçin.",
+        "fileCount": "{{count}} dosya",
+        "skipHint": "Yeni yolu boş bırakılan satırlar atlanır.",
+        "allUnderOne": "Hepsini aynı klasör altına yerleştir"
+      }
+    },
+    "fp32": {
+      "description": "WebGPU hızlandırma fp32 modelleri gerektirir (~580MB). Kurulum boyutunu küçük tutmak için pakete dahil edilmez. 'npm run models:download:fp32' ile indirilen 'public/models' klasörünü seçin; kopyalandıktan sonra uygulamayı yeniden başlatın. Modeller yoksa otomatik olarak CPU (q8) ile çalışır.",
+      "pathLabel": "Model Klasörü",
+      "statusFound": "fp32 modelleri kurulu (WebGPU aktif)",
+      "statusNotFound": "fp32 modelleri kurulu değil (CPU/q8 modu)",
+      "statusUnknown": "Durum bilinmiyor",
+      "browse": "Klasör Seç ve Kur",
+      "importing": "Kopyalanıyor",
+      "imported": "fp32 modelleri kuruldu — uygulamayı yeniden başlatın",
+      "restartHint": "yeniden başlatmada etkin"
+    },
+    "oda": {
+      "description": "ODA FileConverter, DWG dosyalarından katman/blok/metin bilgilerini tam doğrulukla çıkarmak için kullanılır. Yüklü değilse ham binary tarama ile devam edilir.",
+      "pathLabel": "ODA FileConverter Yolu",
+      "pathPlaceholder": "ODAFileConverter yolunu girin (.exe veya .msi)",
+      "autoDetect": "Otomatik Algıla",
+      "found": "Bulundu",
+      "notFound": "Bulunamadı",
+      "browse": "Gözat",
+      "cleared": "ODA yolu temizlendi",
+      "saved": "ODA yolu kaydedildi",
+      "fileNotFound": "Dosya bulunamadı",
+      "detecting": "Aranıyor...",
+      "install": "İndir ve Kur",
+      "installBundled": "Paketten Kur",
+      "installingBundled": "Paketten kuruluyor...",
+      "installedBundled": "Paketten başarıyla kuruldu",
+      "bundledNotAvailable": "Paket kurulumu bulunamadı, çevrimiçi yöntemler deneniyor...",
+      "installing": "Kuruluyor...",
+      "installed": "Kurulum tamamlandı",
+      "installedButNotDetected": "Kurulum tamamlandı ancak ODA yolu otomatik algılanamadı. Lütfen 'Otomatik Algıla' butonuna tıklayın veya yolu elle girin.",
+      "downloadPageOpened": "İndirme sayfası açıldı. Kurulumdan sonra 'Otomatik Algıla' butonuna tıklayın.",
+      "installFailed": "Otomatik kurulum başarısız, indirme sayfası açıldı",
+      "noInstallerFound": "Otomatik kurulum başarısız. Lütfen ODA yükleyicisini bilgisayarınızdan seçin.",
+      "selectInstallerTitle": "ODA FileConverter Yükleyicisini Seçin",
+      "installerFilter": "Yükleyici"
+    },
+    "ai": {
+      "hint": "AI Vision ayarları için üst bardaki beyin ikonunu kullanın.",
+      "saved": "AI ayarları kaydedildi",
+      "deviceTitle": "AI Hesaplama Cihazı",
+      "deviceDescription": "Metin ve görsel embedding modellerinin nerede çalışacağı. GPU (WebGPU) modern grafik kartlarında 5-10x daha hızlıdır; CPU her sistemde çalışır. Otomatik = sistem destekliyorsa GPU kullanır.",
+      "deviceAuto": "Otomatik",
+      "deviceGpu": "GPU (WebGPU)",
+      "deviceCpu": "CPU (WASM)",
+      "deviceProbeOk": "✓ WebGPU bu sistemde mevcut — GPU hızlandırma kullanılabilir",
+      "deviceProbeMissing": "WebGPU bulunamadı — yalnızca CPU kullanılabilir",
+      "deviceRestartNote": "Değişiklik sonraki AI model yüklemesinde (veya uygulama yeniden başlatıldığında) geçerli olur."
+    },
+    "security": {
+      "title": "Güvenlik",
+      "sessionTimeout": "Oturum Zaman Aşımı",
+      "sessionTimeoutDesc": "Belirtilen süre boyunca etkileşim olmazsa ekran kilitlenir.",
+      "minutes": "dakika",
+      "never": "Hiçbir zaman kilitleme",
+      "currentStateLabel": "Mevcut durum",
+      "currentStateActive": "Ekran {{duration}} sonra kilitlenir",
+      "currentStateNever": "Otomatik kilit devre dışı",
+      "hint": "Zaman aşımı durumunda ekran kilitlenir ancak oturumunuz açık kalır. Şifrenizi girerek devam edebilirsiniz.",
+      "auditRetentionSection": "Denetim Günlüğü Saklama",
+      "auditRetentionTitle": "Saklama Süresi",
+      "auditRetentionDesc": "Bu süreden eski denetim günlüğü kayıtları uygulama açılışında temizlenir. ∞ seçilirse hiçbir şey silinmez.",
+      "daysSuffix": "gün",
+      "loginSection": "Giriş Güvenliği",
+      "loginMaxAttemptsTitle": "Maksimum Başarısız Deneme",
+      "loginMaxAttemptsDesc": "Bu sayıyı aşan kullanıcı kilitlenir. Pencere = kilit süresi.",
+      "attemptsSuffix": "deneme",
+      "loginLockoutTitle": "Kilit Süresi",
+      "loginLockoutDesc": "Maksimum deneme aşıldığında hesap bu kadar süreyle kilitli kalır.",
+      "minutesSuffix": "dk"
+    },
+    "about": {
+      "version": "Versiyon",
+      "buildDate": "Build Tarihi",
+      "platform": "Platform",
+      "database": "Veritabanı",
+      "aiml": "AI/ML",
+      "aiMlValue": "Xenova Transformers (yerel WASM)",
+      "description": "Tüm AI işlemleri yerel bilgisayarınızda çalışır. Dosyalarınız hiçbir sunucuya gönderilmez.",
+      "extractorsTitle": "Dosya Tipi Çıkarıcıları",
+      "extractorsDesc": "Her dosya formatından çıkarılan metadata alanları. Satıra tıklayarak detayları görün.",
+      "extractorCol": {
+        "type": "Format",
+        "extractors": "Çıkarıcılar",
+        "fields": "Alan"
+      }
+    }
+  },
+  "help": {
+    "aria": {
+      "close": "Yardım panelini kapat"
+    },
+    "tab": {
+      "adminGuide": "Yönetici Kılavuzu",
+      "userGuide": "Kullanım Kılavuzu",
+      "shortcuts": "Kısayollar",
+      "techRef": "Teknik Referans",
+      "scenarios": "Ne Yapabilirim?",
+      "changelog": "Sürüm Notları"
+    },
+    "role": {
+      "admin": "Yönetici — tüm özellikler aktif",
+      "viewer": "Kullanıcı — arşiv salt-okunur"
+    },
+    "search": "Ara...",
+    "guide": {
+      "loading": "Kılavuz yükleniyor..."
+    },
+    "error": {
+      "loadFailed": "Kılavuz yüklenemedi: {{message}}"
+    }
+  },
+  "trash": {
+    "title": "Çöp Kutusu",
+    "hint": {
+      "undoWithCtrlZ": "Son silinen dosyayı Ctrl+Z ile geri alabilirsiniz."
+    },
+    "lastOperation": "Son işlem: ",
+    "undone": "Geri alındı",
+    "selectAll": "Tümünü Seç",
+    "deselectAll": "Seçimi Kaldır",
+    "restored": "{{count}} dosya geri yüklendi",
+    "restoredSingle": "\"{{fileName}}\" geri yüklendi",
+    "permanentDeleted": "{{count}} dosya kalıcı olarak silindi",
+    "trashEmptied": "Çöp kutusu boşaltıldı ({{count}} dosya)",
+    "confirmPermanentDelete": "Bu işlem geri alınamaz. Seçilen {{count}} dosya kalıcı olarak silinecek.",
+    "confirmEmptyTrash": "Çöp kutusundaki tüm dosyalar kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+    "autoRestore": {
+      "title": "Klasör çöp kutusundan geri yüklendi",
+      "message": "\"{{label}}\" yeniden tarandığı için çöp kutusundan otomatik geri yüklendi."
+    },
+    "button": {
+      "undoLastDelete": "Son Silmeyi Geri Al",
+      "restore": "Geri Yükle",
+      "permanentDelete": "Kalıcı Sil",
+      "emptyTrash": "Çöp Kutusunu Boşalt"
+    },
+    "column": {
+      "label": "Klasör Adı",
+      "path": "Yol"
+    },
+    "empty": {
+      "title": "Çöp kutusu boş",
+      "description": "Arşivden kaldırılan dosyalar burada görünür."
+    },
+    "footer": {
+      "note": "Silme işlemi dosyayı arşivden kaldırır. Fiziksel dosya yerinde durur.",
+      "count": "{{count}} dosya çöp kutusunda"
+    },
+    "tab": {
+      "files": "Dosyalar",
+      "folders": "Klasörler"
+    },
+    "folder": {
+      "restoredSingle": "\"{{label}}\" geri yüklendi",
+      "permanentDeleted": "{{count}} klasör kalıcı olarak silindi",
+      "confirmPermanentDelete": "\"{{label}}\" klasörü ve içindeki tüm dosyalar kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+      "emptyTitle": "Silinen klasör yok",
+      "emptyDescription": "Sidebar'dan silinen klasörler burada 30 gün saklanır.",
+      "footerCount": "{{count}} klasör çöp kutusunda"
+    }
+  },
+  "feedback": {
+    "error": {
+      "bodyEmpty": "Mesaj içeriği boş olamaz.",
+      "dailyLimit": "Günlük mesaj limitine ulaştınız (maks. {{limit}}). Yarın tekrar deneyebilirsiniz.",
+      "recipientRequired": "Alıcı seçmelisiniz"
+    },
+    "success": {
+      "sent": "Mesajınız iletildi. (Kalan: {{remaining}})"
+    },
+    "tab": {
+      "compose": "Yeni Mesaj",
+      "messages": "Mesajlar ({{count}})",
+      "developer": "Geliştiriciye",
+      "inbox": "Gelen Kutusu",
+      "sent": "Gönderilenler ({{count}})",
+      "broadcast": "Duyuru"
+    },
+    "developer": {
+      "description": "Program geliştirici ekibine istek, görüş ve önerilerinizi iletin. Yanıtlarınızı bu sekmeden takip edebilirsiniz.",
+      "subjectPlaceholder": "Örn: Yeni özellik isteği, Hata bildirimi...",
+      "bodyPlaceholder": "Detaylı açıklamanızı buraya yazın...",
+      "send": "Geliştiriciye Gönder",
+      "sent": "Geri bildiriminiz kaydedildi.",
+      "sentLan": "Geri bildiriminiz geliştiriciye ulaştı ✓",
+      "sentOffline": "Geliştirici şu an çevrimdışı — mesajınız kaydedildi.",
+      "empty": "Henüz geliştirici geri bildirimi yok.",
+      "export": "Dışa Aktar (.txt)"
+    },
+    "label": {
+      "recipient": "Alıcı",
+      "to": "Kime:",
+      "from": "Kimden:",
+      "messageType": "Mesaj Türü",
+      "priority": "Öncelik",
+      "subject": "Konu (opsiyonel)",
+      "message": "Mesaj"
+    },
+    "type": {
+      "suggestion": "İyileştirme Önerisi",
+      "private": "Özel Mesaj",
+      "request": "Talep",
+      "suggestionBadge": "Öneri",
+      "privateBadge": "Özel",
+      "requestBadge": "Talep"
+    },
+    "request": {
+      "allAdminsNote": "Bu talep tüm yöneticilere iletilecek. Hangisi uygunsa üstlenip yanıtlayacaktır.",
+      "allAdminsBadge": "Tüm yöneticiler"
+    },
+    "claim": {
+      "unclaimed": "Bekliyor",
+      "claimedByYou": "Siz üstlendiniz",
+      "claimedBy": "Üstlendi: {{admin}}"
+    },
+    "priority": {
+      "normal": "Normal",
+      "important": "Önemli",
+      "importantBadge": "Önemli"
+    },
+    "placeholder": {
+      "selectRecipient": "Kullanıcı seçin...",
+      "subject": "Kısa bir başlık...",
+      "body": "Mesajınızı yazın...",
+      "reply": "Yanıt yazın..."
+    },
+    "button": {
+      "send": "Gönder",
+      "filter": "Filtre",
+      "newMessage": "Yeni Mesaj",
+      "resolve": "Çözüldü",
+      "claim": "Üstlen",
+      "release": "Bırak",
+      "delete": "Sil",
+      "deleteSelected": "Seçilenleri Sil ({{count}})",
+      "selectAll": "Tümünü Seç"
+    },
+    "sent": {
+      "empty": "Henüz mesaj göndermediniz."
+    },
+    "reply": {
+      "success": "Yanıt gönderildi."
+    },
+    "delete": {
+      "confirm": "Bu mesaj silinsin mi?",
+      "confirmDetail": "Mesaj ve tüm yanıtları kalıcı olarak silinecek."
+    },
+    "badge": {
+      "newCount": "{{count}} yeni"
+    },
+    "filter": {
+      "allTypes": "Tüm Türler",
+      "allStatuses": "Tüm Durumlar",
+      "allSenders": "Tüm Gönderenler"
+    },
+    "status": {
+      "unread": "Okunmamış",
+      "read": "Okunmuş",
+      "resolved": "Çözüldü"
+    },
+    "inbox": {
+      "empty": "Gelen kutusu boş."
+    },
+    "replyCount": "({{count}} yanıt)"
+  },
+  "scan": {
+    "preparing": "Hazırlanıyor...",
+    "preparingDetail": "AI modelleri yükleniyor, lütfen bekleyin.",
+    "description": "Bir mimari proje klasörü seçin. Sistem, desteklenen tüm dosyaları tarayacak ve arşive ekleyecektir.",
+    "section": {
+      "scanMode": "Tarama modu",
+      "aiVectors": "AI Semantik Vektörler",
+      "colorPalette": "Renk Paleti Analizi"
+    },
+    "mode": {
+      "merge": "Mevcut listeye ekle",
+      "mergeDesc": "Yeni dosyalar mevcut {{count}} kayda eklenecek.",
+      "replaceUnderPath": "Seçilen klasörü yeniden tara",
+      "replaceUnderPathDesc": "Sadece seçilen klasör altındaki kayıtlar silinir; diğer kaynak klasörler korunur.",
+      "fullReset": "Tüm arşivi sıfırla ve baştan tara",
+      "fullResetDesc": "TÜM kayıtlar (diğer klasörler dahil) silinir ve seçilen klasör baştan taranır."
+    },
+    "badge": {
+      "alwaysActive": "HER ZAMAN AKTİF"
+    },
+    "ai": {
+      "description": "Her dosya için MiniLM-L6-v2 modeli ile semantik vektör oluşturulur.",
+      "lowHardwareWarning": "Düşük performanslı donanımda tarama daha uzun sürebilir.",
+      "modelReady": "AI modeli hazır",
+      "modelLoading": "Model yükleniyor... {{progress}}%",
+      "modelWillLoad": "Model ilk taramada otomatik yüklenecek (~23MB)"
+    },
+    "color": {
+      "enabledDesc": "Her görsel için dominant renkler çıkarılır.",
+      "disabledDesc": "Renk analizi devre dışı."
+    },
+    "button": {
+      "selectFolder": "Klasör Seç ve Tara",
+      "selectFiles": "Dosya Seç ve Ekle",
+      "resume": "Devam Et",
+      "pause": "Duraklat",
+      "cancel": "İptal Et",
+      "closeAndView": "Kapat ve Sonuçları Gör"
+    },
+    "progress": {
+      "filesProcessed": "{{processed}} / {{total}} dosya işlendi"
+    },
+    "eta": {
+      "elapsed": "⏱ Geçen:",
+      "remaining": "⏳ Kalan:",
+      "calculating": "Hesaplanıyor…"
+    },
+    "status": {
+      "paused": "⏸ Duraklatıldı"
+    },
+    "errors": {
+      "count": "{{count}} hata",
+      "occurred": "{{count}} hata oluştu."
+    },
+    "complete": {
+      "cancelled": "Tarama İptal Edildi",
+      "cancelledDesc": "{{count}} dosya tamamlandı",
+      "success": "Tarama Tamamlandı!",
+      "fileFormats": "Dosya Formatları",
+      "cacheDetail": "dosya önbellekten yüklendi (değişmedi),",
+      "indexedDetail": "dosya başarıyla indekslendi.",
+      "scannedDetail": "dosya başarıyla tarandı.",
+      "rescannedDetail": "dosya yeniden tarandı.",
+      "rescannedIndexedDetail": "dosya yeniden indekslendi.",
+      "durationSuffix": "sürdü",
+      "autoRagActive": "AI indeksleme arka planda devam ediyor",
+      "autoRagDesc": "{{current}}/{{total}} dosya işleniyor. Üst banner'daki Durdur butonu ile sonlandırabilirsiniz; bu işlem CPU'yu yoğun kullanır."
+    },
+    "duration": {
+      "hours": "{{h}}sa {{m}}dk {{s}}sn",
+      "minutes": "{{m}}dk {{s}}sn",
+      "seconds": "{{s}}sn"
+    },
+    "cache": "{{count}} önbellek",
+    "cacheLoaded": "{{count}} önbellekten",
+    "pendingRescanTitle": "{{count}} dosya yeniden taranmayı bekliyor",
+    "pendingRescanStart": "Bu Dosyaları Tara",
+    "largeScan": {
+      "title": "Büyük Klasör Tespit Edildi",
+      "detail": "Bu klasörde {{fileCount}} desteklenen dosya ve {{folderCount}} alt klasör bulundu. Tarama uzun sürebilir. Klasörleri parça parça ekleyerek daha hızlı tarayabilirsiniz.",
+      "confirm": "Yine de Tara"
+    }
+  },
+  "refile": {
+    "structure": {
+      "byProject": "Proje Bazlı",
+      "byProjectDesc": "Dosyaları proje adına göre grupla",
+      "byCategory": "Kategori Bazlı",
+      "byCategoryDesc": "Dosyaları kategoriye göre grupla",
+      "byType": "Dosya Türü",
+      "byTypeDesc": "Dosyaları uzantıya göre grupla",
+      "byDate": "Tarih Bazlı",
+      "byDateDesc": "Dosyaları tarihe göre grupla"
+    },
+    "action": {
+      "copied": "kopyalandı",
+      "moved": "taşındı"
+    },
+    "dialog": {
+      "selectDest": "Hedef klasörü seçin (dosyalar buraya organize edilecek)"
+    },
+    "result": {
+      "success": "{{processed}} dosya başarıyla {{action}}. {{folders}} klasör oluşturuldu.",
+      "browserMode": "{{count}} referans (.ref) dosyası oluşturuldu.",
+      "error": "Hata: {{message}}"
+    },
+    "summary": "{{fileCount}} dosya seçili. Aşağıdaki yapıya göre organize edilecek:",
+    "preview": {
+      "title": "Önizleme ({{count}} klasör)"
+    },
+    "button": {
+      "copy": "Kopyala / Organize Et",
+      "move": "Taşı / Organize Et"
+    },
+    "backupFiles": "yedek dosya",
+    "browser": {
+      "note": "Tarayıcıda yalnızca .ref referans dosyaları oluşturulur."
+    },
+    "processing": {
+      "title": "Dosyalar organize ediliyor...",
+      "progress": "{{current}} / {{total}} dosya"
+    },
+    "done": {
+      "error": "İşlem Başarısız",
+      "success": "İşlem Tamamlandı!"
+    },
+    "confirm": {
+      "moveTitle": "Dosyaları Taşı",
+      "copyTitle": "Dosyaları Kopyala",
+      "body": "{{count}} dosya organize edilecek.",
+      "moveWarning": "Dikkat: Taşıma işlemi orijinal dosyaları silecektir. Bu işlem geri alınamaz.",
+      "confirmMove": "Taşımayı Onayla",
+      "confirmCopy": "Kopyalamayı Onayla"
+    }
+  },
+  "logViewer": {
+    "delete": {
+      "noneFound": "Silinecek kayıt bulunamadı.",
+      "failed": "Silme başarısız",
+      "confirm": "{{count}} log kaydı silinsin mi?",
+      "confirmDetail": "Seçili kayıtlar kalıcı olarak kaldırılacak.",
+      "success": "Kayıtlar silindi",
+      "successDetail": "{{count}} kayıt kaldırıldı"
+    },
+    "clearAll": {
+      "confirm": "Tüm loglar silinsin mi?",
+      "confirmDetail": "Bu işlem geri alınamaz.",
+      "success": "Loglar temizlendi"
+    },
+    "clearByDate": {
+      "confirm": "{{days}} günden eski loglar silinsin mi?",
+      "confirmDetail": "Bu tarihten önceki kayıtlar silinecek.",
+      "success": "Eski loglar temizlendi",
+      "successDetail": "{{count}} kayıt silindi"
+    },
+    "header": {
+      "totalRecords": "{{count}} kayıt",
+      "selected": "{{count}} seçili"
+    },
+    "tooltip": {
+      "deleteSelected": "{{count}} seçili kaydı sil (Delete)",
+      "refresh": "Yenile",
+      "clearByDate": "Tarih bazlı temizle",
+      "clearAll": "Tümünü Temizle",
+      "deselectAll": "Seçimi kaldır",
+      "selectAll": "Tümünü seç",
+      "verifyIntegrity": "Log bütünlüğünü doğrula (hash chain)"
+    },
+    "integrity": {
+      "valid": "Log bütünlüğü doğrulandı — {{count}} kayıt zincirde tutarlı.",
+      "invalid": "Log bütünlüğü kırık — {{broken}}/{{total}} kayıt uyumsuz.",
+      "firstBroken": "İlk kırık kayıt id: {{id}}",
+      "missingHash": "{{count}} kayıtta hash eksik (eski migration bekleniyor).",
+      "hint": "Yakın bir LOG_DELETED / LOG_CLEARED işareti yoksa, dış müdahale şüphesi vardır. DB dosyası dışarıdan düzenlenmiş olabilir.",
+      "error": "Doğrulama başarısız: {{error}}"
+    },
+    "button": {
+      "deleteSelected": "Seçilileri Sil",
+      "clearByDate": "Temizle"
+    },
+    "dateBar": {
+      "label": "Eski kayıtları temizle:",
+      "daysOld": "{{days}} günden eski"
+    },
+    "filter": {
+      "allActions": "Tüm Aksiyonlar"
+    },
+    "action": {
+      "scanStarted": "Tarama Başladı",
+      "scanCompleted": "Tarama Tamamlandı",
+      "scanCancelled": "Tarama İptal",
+      "fileAdded": "Dosya Eklendi",
+      "fileDeleted": "Dosya Silindi",
+      "fileRestored": "Dosya Geri Alındı",
+      "settingsChanged": "Ayar Değişikliği",
+      "userLogin": "Kullanıcı Girişi",
+      "userLogout": "Kullanıcı Çıkışı",
+      "dbExport": "DB Dışa Aktarım",
+      "dbImport": "DB İçe Aktarım",
+      "refileCompleted": "Organize Tamamlandı",
+      "versionConvert": "Sürüm Dönüştürme",
+      "messageSent": "Mesaj Gönderme",
+      "messageReplied": "Mesaj Yanıtlama",
+      "messageDelete": "Mesaj Silme"
+    },
+    "table": {
+      "empty": "Log kaydı bulunamadı"
+    },
+    "col": {
+      "time": "Zaman",
+      "role": "Rol",
+      "action": "Aksiyon",
+      "target": "Hedef",
+      "result": "Sonuç"
+    },
+    "detail": {
+      "title": "Detay",
+      "extraInfo": "Ek Bilgi",
+      "noExtra": "Bu kayıt için ek bilgi yok.",
+      "tooltip": "Detayları görüntüle (çift tıkla)"
+    },
+    "footer": {
+      "selectedOf": "{{selected}} / {{total}} seçili",
+      "showing": "{{count}} kayıt gösteriliyor",
+      "hint": "Click: seç | Ctrl+Click: çoklu | Shift+Click: aralık | Çift tık: detay"
+    }
+  },
+  "audit": {
+    "scanInterrupted": {
+      "noteUserClose": "Tarama sürerken uygulama düzgün şekilde kapatıldı. Tarama yarıda kaldı.",
+      "noteUnexpected": "Tarama bitmeden uygulama beklenmedik şekilde sonlandı (graceful kapanış işareti yok).",
+      "possibleCauses": "Olası sebepler: uygulama çöktü · sistem kapatıldı · Görev Yöneticisi'nden sonlandırıldı · antivirüs/güvenlik yazılımı · elektrik kesintisi",
+      "cause": {
+        "app_crash": "Uygulama çöktü (Windows: Application Error / Event 1000).",
+        "app_hang": "Uygulama yanıt vermiyordu, zorla sonlandırıldı (Windows: Application Hang / Event 1002).",
+        "system_shutdown": "Sistem planlı şekilde kapatıldı veya yeniden başlatıldı (Windows: Event 1074 / 6006).",
+        "system_unexpected_reboot": "Sistem beklenmedik şekilde yeniden başladı: güç kaybı, kernel panic veya BSOD (Windows: Event 6008 / 41)."
+      }
+    }
+  },
+  "aiSettings": {
+    "description": "Görsel ile arama yapabilmek için bir AI sağlayıcısı seçin ve yapılandırın.",
+    "label": {
+      "provider": "Sağlayıcı",
+      "ollamaUrl": "Ollama Sunucu Adresi",
+      "visionModel": "Vision Modeli",
+      "apiKey": "API Anahtarı (Key)"
+    },
+    "badge": {
+      "local": "🔒 Yerel / Gizli",
+      "cloud": "Bulut API"
+    },
+    "guide": {
+      "title": "Kurulum Rehberi — İlk kez mi kullanıyorsunuz?"
+    },
+    "hint": {
+      "defaultUrl": "Varsayılan adresi değiştirmenize gerek yoktur.",
+      "modelRecommendation": "GPU varsa llava önerilir."
+    },
+    "model": {
+      "llavaDesc": "(önerilen — GPU ile hızlı, ~4.7 GB)",
+      "moondreamDesc": "(hafif alternatif, ~1.7 GB)"
+    },
+    "button": {
+      "testing": "Test ediliyor…",
+      "test": "Bağlantıyı Test Et"
+    },
+    "test": {
+      "ollamaOk": "Ollama çalışıyor, bağlantı başarılı!",
+      "cloudOk": "API bağlantısı başarılı!"
+    },
+    "placeholder": {
+      "apiKey": "{{provider}} API anahtarınızı girin"
+    },
+    "section": {
+      "clip": "Gelişmiş Görsel İndeksleme (CLIP)"
+    },
+    "clip": {
+      "on": "Açık",
+      "off": "Kapalı",
+      "description": "Açık olduğunda, sistem resimlerinizi CLIP ile indeksler."
+    },
+    "guide_note": {
+      "llavaNote": "LLaVA modeli yaklaşık 4.7 GB disk alanı gerektirir."
+    },
+    "ollamaSteps": {
+      "step1Title": "Ollama'yı indir ve kur",
+      "step1Body": "ollama.com adresine gidin, Windows için indirin ve kurun. Kurulum sonrası sistem tepsisinde çalışır.",
+      "step2Title": "Vision modelini indir",
+      "step2Body": "Başlat menüsünde \"cmd\" yazıp Enter'a basın. Açılan pencereye aşağıdaki komutu yapıştırın:",
+      "step3Title": "Uygulamaya erişim izni ver (CORS)",
+      "step3Body": "Ollama varsayılan olarak bu uygulamadan gelen istekleri reddeder. İzin vermek için:",
+      "step4Title": "Bağlantıyı test edin",
+      "step4Body": "Ollama sistem tepsisinde çalışıyorsa, aşağıdaki 'Bağlantıyı Test Et' butonuna tıklayın."
+    },
+    "error": {
+      "invalidJson": "Ollama yanıtı geçersiz JSON formatında.",
+      "noVisionModel": "Ollama çalışıyor ama vision modeli yüklü değil. Kurulum rehberindeki 2. adımı uygulayın.",
+      "oldVersion": "Ollama sürümünüz ({{version}}) çok eski. GPU desteği tam olmayabilir. ollama.com'dan güncelleyin.",
+      "notRunning": "Ollama çalışmıyor veya adres yanlış. Kurulum rehberini kontrol edin.",
+      "noApiKey": "API anahtarı girilmemiş.",
+      "timeout": "Bağlantı zaman aşımına uğradı (15s). API anahtarınızı ve internet bağlantınızı kontrol edin.",
+      "invalidApiKey": "API anahtarı geçersiz. Lütfen doğru anahtarı girdiğinizden emin olun."
+    },
+    "copied": "✓ Kopyalandı",
+    "copy": "Kopyala",
+    "newModelHint": "Yeni model eklemek için:",
+    "pullModel": "Model İndir",
+    "pullModelLoading": "İndiriliyor...",
+    "pullModelSuccess": "Model başarıyla indirildi!",
+    "pullModelError": "Model indirilemedi",
+    "pullModelHint": "llava ~4.7 GB — indirme uzun sürebilir",
+    "setCors": "CORS Ayarla",
+    "setCorsLoading": "Ayarlanıyor...",
+    "setCorsSuccess": "CORS ayarlandı! Ollama'yı yeniden başlatın.",
+    "setCorsError": "CORS ayarlanamadı",
+    "setCorsHint": "Ollama'yı yeniden başlatmayı unutmayın",
+    "openSetupWizard": "AI Kurulum Sihirbazı",
+    "status": {
+      "title": "AI Durumu",
+      "refresh": "Yenile",
+      "ollamaServer": "Ollama Sunucu",
+      "chatModel": "Metin Modeli",
+      "visionModel": "Görsel Model",
+      "ready": "Hazır",
+      "missing": "Eksik",
+      "chatMissing": "{{model}} eksik",
+      "visionMissing": "{{model}} eksik",
+      "chatAltHint": "Veya kurulu modellerden birini seçebilirsiniz: {{models}}",
+      "notRunning": "Kapalı",
+      "pulling": "İndiriliyor...",
+      "configured": "Ayarlı",
+      "downloadChat": "İndir",
+      "downloadVision": "İndir",
+      "installHint": "Ollama kuruluysa yukarıdaki \"Başlat\" butonunu kullanın. Kurulu değilse ollama.com/download adresinden indirin.",
+      "advanced": "Gelişmiş Model Ayarları",
+      "chatModelHint": "RAG sohbet, etiket üretimi, sorgu zenginleştirme için. Önerilen: qwen3:8b · Minimum: qwen3:4b",
+      "visionModelHint": "Görsel analiz ve OCR için. Varsayılan: llava",
+      "installedModels": "Kurulu modeller:",
+      "start": "Başlat",
+      "stop": "Durdur",
+      "startOllama": "Ollama'yı Başlat",
+      "stopOllama": "Ollama'yı Durdur",
+      "starting": "Başlatılıyor...",
+      "stopping": "Durduruluyor..."
+    }
+  },
+  "profile": {
+    "error": {
+      "imageOnly": "Sadece resim dosyası yüklenebilir",
+      "fileTooLarge": "Dosya boyutu çok büyük ({{size}} MB). Maksimum 2 MB olabilir.",
+      "uploadFailed": "Resim yüklenirken hata oluştu",
+      "currentPasswordRequired": "Mevcut şifrenizi girin",
+      "newPasswordTooShort": "Yeni şifre en az 3 karakter olmalı",
+      "passwordMismatch": "Yeni şifreler eşleşmiyor",
+      "wrongPassword": "Mevcut şifre hatalı",
+      "updateFailed": "Güncelleme başarısız",
+      "saveFailed": "Kaydetme sırasında hata oluştu"
+    },
+    "success": {
+      "updated": "Profil güncellendi",
+      "passwordChanged": "Şifre değiştirildi"
+    },
+    "avatar": {
+      "uploading": "Yükleniyor...",
+      "hint": "Maks. 2 MB, 128x128 px'e küçültülür"
+    },
+    "button": {
+      "uploadPhoto": "Fotoğraf Yükle",
+      "removeAvatar": "Kaldır",
+      "changePassword": "Şifre Değiştir"
+    },
+    "label": {
+      "displayName": "Görünen Ad",
+      "username": "Kullanıcı Adı",
+      "role": "Rol",
+      "currentPassword": "Mevcut Şifre",
+      "newPassword": "Yeni Şifre",
+      "confirmPassword": "Yeni Şifre (Tekrar)"
+    },
+    "placeholder": {
+      "displayName": "Adınızı girin..."
+    }
+  },
+  "userMgmt": {
+    "error": {
+      "usernamePasswordRequired": "Kullanıcı adı ve şifre gerekli",
+      "createFailed": "Kullanıcı oluşturulamadı",
+      "lastAdmin": "Son yönetici düşürülemez. Önce başka bir yönetici atayın.",
+      "roleChangeFailed": "Rol değiştirilemedi",
+      "passwordTooShort": "Şifre en az 3 karakter olmalı",
+      "passwordResetFailed": "Şifre sıfırlanamadı",
+      "cannotDeleteSelf": "Kendinizi silemezsiniz",
+      "cannotDeleteLastAdmin": "Son yönetici silinemez",
+      "deleteFailed": "Silinemedi",
+      "notFounder": "Bu işlem yalnızca kurucu yönetici tarafından yapılabilir"
+    },
+    "success": {
+      "userCreated": "Kullanıcı oluşturuldu",
+      "roleChanged": "Rol değiştirildi",
+      "passwordReset": "Şifre sıfırlandı",
+      "passwordResetDetail": "Yeni şifre atandı",
+      "userDeleted": "Kullanıcı silindi",
+      "avatarRemoved": "Avatar kaldırıldı",
+      "userBlocked": "Ana arşiv erişimi engellendi",
+      "userUnblocked": "Ana arşiv erişimi açıldı",
+      "developerEnabled": "Geliştirici yetkisi verildi",
+      "developerDisabled": "Geliştirici yetkisi kaldırıldı"
+    },
+    "blockNotification": {
+      "subject": "Ana Arşiv Erişim Kısıtlaması",
+      "body": "Ana arşive erişiminiz yönetici tarafından kısıtlandı. Yerel arşivinizi kullanmaya devam edebilirsiniz. Detay için yöneticinize başvurun."
+    },
+    "delete": {
+      "confirm": "\"{{name}}\" silinsin mi?",
+      "confirmDetail": "Bu kullanıcı kalıcı olarak kaldırılacak."
+    },
+    "header": {
+      "userCount": "{{count}} kullanıcı"
+    },
+    "button": {
+      "newUser": "Yeni Kullanıcı",
+      "add": "Ekle"
+    },
+    "form": {
+      "usernameLabel": "Kullanıcı Adı *",
+      "usernamePlaceholder": "kullanici",
+      "passwordLabel": "Şifre *",
+      "passwordPlaceholder": "sifre123",
+      "displayNameLabel": "Görünen Ad",
+      "displayNamePlaceholder": "Ad Soyad",
+      "roleLabel": "Rol",
+      "developerLabel": "Geliştirici yetkisi",
+      "newPasswordPlaceholder": "Yeni şifre"
+    },
+    "table": {
+      "empty": "Kayıtlı kullanıcı yok"
+    },
+    "col": {
+      "username": "Kullanıcı Adı",
+      "displayName": "Görünen Ad",
+      "role": "Rol",
+      "createdAt": "Oluşturulma",
+      "actions": "İşlemler"
+    },
+    "badge": {
+      "you": "(sen)",
+      "blocked": "ENGELLİ",
+      "developer": "GELİŞTİRİCİ",
+      "founder": "KURUCU"
+    },
+    "tooltip": {
+      "resetPassword": "Şifre Sıfırla",
+      "removeAvatar": "Avatar Sil",
+      "deleteUser": "Kullanıcıyı Sil",
+      "blockUser": "Ana arşiv erişimini engelle",
+      "unblockUser": "Ana arşiv erişimini aç",
+      "toggleDeveloper": "Geliştirici yetkisini aç/kapat"
+    },
+    "displayName": "Ad"
+  },
+  "detail": {
+    "section": {
+      "colorPalette": "Renk Paleti",
+      "fileInfo": "Dosya Bilgileri",
+      "formatProps": "Format Özellikleri",
+      "convertedFile": "Sürüm Dönüştürülmüş Dosya",
+      "docExcerpt": "Doküman Alıntısı",
+      "docIndex": "Doküman İçeriği (İndeks)",
+      "aiTags": "AI Etiketleri",
+      "techMeta": "Teknik Metadata",
+      "archStyle": "Mimari Stil",
+      "match": "Eşleşme Kaynağı"
+    },
+    "color": {
+      "analyzing": "Analiz ediliyor…",
+      "refresh": "Yenile"
+    },
+    "error": {
+      "copyPathFailed": "Yol kopyalanamadı.",
+      "openFileFailed": "Dosya açılamadı: {{error}}",
+      "openFolderFailed": "Klasör açılamadı: {{error}}",
+      "colorExtractFailed": "Renk paleti çıkarılamadı: {{error}}"
+    },
+    "tag": {
+      "versionConverted": "Sürüm Dönüştürülmüş"
+    },
+    "convert": {
+      "maxRunning": "3ds Max şu anda açık. Lütfen Max'ı kapatıp tekrar deneyin.",
+      "noInstall": "Uygun 3ds Max kurulumu bulunamadı.",
+      "successReal": "Dosya V{{year}} olarak dönüştürüldü (3ds Max ile)",
+      "successQuick": "Dosya V{{year}} olarak damgalandı",
+      "error": "Dönüştürme hatası: {{error}}"
+    },
+    "export": {
+      "success": "{{format}} olarak export edildi",
+      "error": "Export hatası: {{error}}",
+      "exporting": "Export ediliyor...",
+      "fbxTitle": "MAX dosyasını FBX formatına export et (3ds Max gerektirir)",
+      "objTitle": "MAX dosyasını OBJ formatına export et (3ds Max gerektirir)"
+    },
+    "button": {
+      "openFile": "Dosyayı Aç",
+      "converting": "Dönüştürülüyor...",
+      "downgrade": "Sürüm Düşür",
+      "showInFolder": "Klasörde Göster",
+      "copied": "Kopyalandı!",
+      "copyPath": "Yolu Kopyala"
+    },
+    "convertMode": {
+      "quick": "Hızlı",
+      "quickDesc": "Damga değiştir",
+      "real": "Gerçek",
+      "realDesc": "3ds Max ile",
+      "notFound": "Max bulunamadı",
+      "quickWarning": "Versiyon damgasını değiştirir. Hızlıdır ama sürüme özgü özellikler uyumsuz olabilir.",
+      "realWarning": "Kurulu 3ds Max ile yeniden kaydeder. Tam uyumluluk sağlar.",
+      "detected": "{{versions}} algılandı"
+    },
+    "version": {
+      "current": "← mevcut"
+    },
+    "label": {
+      "size": "Boyut",
+      "type": "Tür",
+      "category": "Kategori",
+      "created": "Oluşturma",
+      "updated": "Güncelleme",
+      "drawingDate": "Çizim Tarihi",
+      "maxVersion": "Max Sürümü",
+      "maxLayers": "Max Katmanları",
+      "maxObjects": "Max Nesneleri",
+      "original": "Orijinal:",
+      "source": "Kaynak:",
+      "dwgVersion": "AutoCAD Sürümü",
+      "skpVersion": "SketchUp Sürümü",
+      "rvtVersion": "Revit Sürümü",
+      "rvtProjectName": "Proje Adı",
+      "rvtWorkshared": "Worksharing",
+      "rvtStoreys": "Kat Sayısı",
+      "ifcSchema": "IFC Şema",
+      "ifcProjectName": "Proje Adı",
+      "ifcBuildingName": "Bina Adı",
+      "ifcOriginatingSystem": "Kaynak Sistem",
+      "ifcEntities": "Entity Sayısı",
+      "ifcStoreys": "Kat Sayısı",
+      "ifcSpaces": "Mekan Sayısı",
+      "path": "Yol",
+      "layers": "Katmanlar ({{count}})",
+      "blockCount": "Blok Sayısı",
+      "renderEngine": "Render Motoru",
+      "textureCount": "Doku Sayısı",
+      "rooms": "Odalar ({{count}})",
+      "materials": "Malzemeler",
+      "resolution": "Çözünürlük",
+      "pageCount": "Sayfa Sayısı",
+      "colorProfile": "Renk Profili",
+      "imageRefs": "Görsel Referansları ({{count}})"
+    },
+    "action": {
+      "open": "Aç",
+      "showInFolder": "Klasörde Göster"
+    },
+    "backup": {
+      "title": "{{count}} Yedek Dosya",
+      "totalSize": "Toplam {{size}}"
+    },
+    "chunk": {
+      "info": "Chunk: {{index}} · Sayfa {{page}}"
+    },
+    "docIndex": {
+      "hasChunks": "Bu dosya içerikten tarandı. {{count}} parça (chunk) kaydı var.",
+      "noChunks": "Bu dosya için içerik parçası bulunamadı.",
+      "garbage": "İçerik çıkarıldı ama okunabilir metin değil.",
+      "searchHint": "Arama kutusuna bir şey yazıp bu dosya sonuçlarda öne çıkarsa, yukarıda \"Doküman Alıntısı\" olarak ilgili bölüm görünür.",
+      "ocrHint": "İpucu: Bu dosyada metin araması bekliyorsan arşivi yeniden tararken AI açık olsun; taranmış dokümanlarda Ollama ile OCR gerekebilir."
+    },
+    "match": {
+      "file": "DWG Dosyasında",
+      "ai": "AI Tespiti",
+      "meta": "Metadata"
+    }
+  },
+  "dashboard": {
+    "stat": {
+      "totalAssets": "Toplam Varlık",
+      "activeProjects": "Aktif Proje",
+      "totalSize": "Toplam Boyut",
+      "indexed": "İndekslenen",
+      "partiallyIndexed": "Kısmen İndeksli"
+    },
+    "card": {
+      "categoryDist": "Varlık Türü Dağılımı",
+      "materialGroups": "Malzeme Grupları",
+      "projectPhases": "Proje Safhaları",
+      "fileFormats": "Dosya Format Dağılımı",
+      "archStyles": "Mimari Stiller",
+      "sizeByFormat": "Format Bazlı Boyut Dağılımı",
+      "monthlyGrowth": "Aylık Büyüme (Son 12 Ay)",
+      "monthlyGrowthHint": "Toplam {{count}} dosya eklendi (oluşturulma tarihine göre)"
+    },
+    "activity": {
+      "title": "Son 7 Gün Aktivitesi",
+      "totalOps": "{{count}} işlem",
+      "topUsers": "En Aktif Kullanıcılar",
+      "topActions": "İşlem Türleri"
+    }
+  },
+  "technical": {
+    "empty": "Filtrelere uygun varlık bulunamadı.",
+    "tooltip": {
+      "sortColumn": "Sıralamak için tıkla"
+    },
+    "col": {
+      "fileName": "Dosya Adı",
+      "type": "Tür",
+      "category": "Kategori",
+      "version": "Sürüm",
+      "project": "Proje",
+      "phase": "Safha",
+      "material": "Malzeme",
+      "size": "Boyut",
+      "score": "Skor",
+      "updated": "Güncelleme",
+      "aiTags": "AI Etiketleri"
+    }
+  },
+  "assetCard": {
+    "badge": {
+      "similarity": "{{score}}% Benzerlik",
+      "stale": "Son taramadan sonra dosya değişmiş — yeniden taranmalı",
+      "staleShort": "Eski",
+      "missing": "Dosya diskte bulunamıyor",
+      "missingShort": "Kayıp",
+      "version": "Tarayıcı güncellendi — yeniden taranırsa daha fazla veri çıkarılır",
+      "versionShort": "Yeni veri"
+    },
+    "videoPreview": "Video Önizleme"
+  },
+  "health": {
+    "idle": "Güncellik durumu bilinmiyor",
+    "error": "Kontrol başarısız",
+    "allFresh": "Hepsi güncel",
+    "stale": "{{count}} dosya güncelliğini yitirmiş",
+    "missing": "{{count}} dosya bulunamıyor",
+    "versionOutdated": "{{count}} dosyada daha fazla veri çıkarılabilir",
+    "checking": {
+      "label": "Güncellik kontrol ediliyor…",
+      "progress": "{{done}}/{{total}} kontrol edildi"
+    },
+    "modal": {
+      "title": "Arşiv Güncellik Raporu",
+      "recheck": "Yeniden Kontrol Et",
+      "allFreshTitle": "Tüm dosyalar güncel",
+      "lastCheck": "Son kontrol: {{time}}",
+      "summary": "{{stale}} değişmiş · {{missing}} bulunamıyor · {{version}} güncellenebilir",
+      "staleSection": "Değişmiş dosyalar ({{count}})",
+      "missingSection": "Bulunamayan dosyalar ({{count}})",
+      "versionSection": "Tarayıcı güncellendi ({{count}})",
+      "versionHint": "Bu dosyalar daha eski bir tarayıcı sürümüyle işlendi. Yeniden tarama daha fazla veri çıkarır (dosya değişmemiş).",
+      "rescanAll": "Tam Yeniden Tara",
+      "deltaScan": "Delta Tara",
+      "deltaScanHint": "Sadece yeni çıkarıcılar çalıştırılır, mevcut metadata korunur. Çok daha hızlı.",
+      "missingHint": "Bulunamayan dosyalar için 'Sağlık Kontrolü' → Ayarlar panelinden kayıtları temizleyebilirsiniz.",
+      "legacyFormatSection": "Eski format dosyaları ({{count}})",
+      "legacyFormatHint": "Aşağıdaki dosyalar eski (binary) Office formatında. Modern OOXML karşılıklarına dönüştürmek uzun vadeli arşiv için önerilir.",
+      "legacyFormatChipTitle": "{{legacy}} → {{recommended}}",
+      "fixitySection": "Bütünlük (bit-rot) örnek kontrolü",
+      "fixityHint": "Rastgele örneklem üzerinde dosya hash'i yeniden hesaplanır ve baseline ile karşılaştırılır. Eşleşmeyen dosyalar diskte bozulmuş veya değiştirilmiş olabilir.",
+      "fixityRun": "Çalıştır",
+      "fixitySampleAria": "Örneklem yüzdesi",
+      "fixityClean": "{{sampled}} dosya kontrol edildi · {{ok}} sağlam · {{seconds}} sn",
+      "fixityIssues": "{{sampled}} kontrol edildi · {{mismatch}} bozuk · {{missing}} bulunamadı · {{error}} hata",
+      "fixityNoBaseline": "{{count}} dosyada baseline hash yok (henüz hesaplanmamış); kontrol atlandı.",
+      "fixityStatus": {
+        "mismatch": "Hash uyuşmuyor — bit-rot şüphesi",
+        "missing": "Dosya diskte yok",
+        "error": "Okuma/hesaplama hatası"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Uygulama Hatası",
+    "description": "Beklenmeyen bir hata oluştu. Uygulamayı yeniden yüklemeyi deneyin.",
+    "reload": "Yeniden Yükle",
+    "continue": "Devam Et"
+  },
+  "modalError": {
+    "title": "Panel Hatası",
+    "description": "Bu panelde beklenmeyen bir hata oluştu. Paneli kapatabilirsiniz.",
+    "close": "Kapat"
+  },
+  "statusBar": {
+    "mainArchive": "Ana Arşiv",
+    "localArchive": "Yerel Arşiv",
+    "timeRemaining": "(~{{time}} kaldı)",
+    "itemsPerSec": "{{speed}} öğe/s",
+    "pause": "Duraklat",
+    "resume": "Devam",
+    "cancelTask": "İptal",
+    "unreadNotifications": "{{count}} okunmamış bildirim",
+    "notifications": "Bildirimler",
+    "markAllRead": "Tümünü okundu yap",
+    "clearAll": "Tümünü temizle",
+    "noNotifications": "Bildirim yok",
+    "userManagement": "Kullanıcı Yönetimi",
+    "editProfile": "Profili Düzenle",
+    "logout": "Çıkış Yap",
+    "switchUser": "Kullanıcı Değiştir",
+    "reportError": "Geliştiriciye Bildir",
+    "errorReported": "Hata raporu gönderildi",
+    "errorReportSent": "Gönderildi",
+    "errorReportSubject": "Hata Raporu: {{title}}",
+    "reportLimitReached": "Günlük mesaj limitine ulaşıldı",
+    "ai": {
+      "ready": "AI: Hazır",
+      "partial": "AI: Model eksik",
+      "offline": "AI: Ollama kapalı"
+    }
+  },
+  "sidebarConfig": {
+    "title": "Panel Ayarları",
+    "description": "Sol panelde hangi detayların görüneceğini, isimlerini ve sırasını özelleştirebilirsiniz.",
+    "resetDefaults": "Varsayılana Dön"
+  },
+  "assetTags": {
+    "addToFavorites": "Favorilere ekle",
+    "removeFromFavorites": "Favorilerden çıkar",
+    "placeholder": "Etiket adı yazın...",
+    "createTag": "\"{{name}}\" oluştur"
+  },
+  "tagManagement": {
+    "delete": "\"{{name}}\" etiketini sil",
+    "deleteConfirm": "\"{{name}}\" etiketini silmek istediğinize emin misiniz? Tüm dosyalardan kaldırılacaktır."
+  },
+  "undo": {
+    "hint": "Ctrl+Z ile geri al",
+    "undone": "Geri alındı",
+    "redone": "Yeniden uygulandı"
+  },
+  "blankMenu": {
+    "section": {
+      "view": "Görünüm",
+      "cardSize": "Kart Boyutu",
+      "selection": "Seçim",
+      "sort": "Sıralama"
+    },
+    "view": {
+      "explorer": "Explorer",
+      "technical": "Teknik Liste",
+      "dashboard": "Dashboard"
+    },
+    "cardSize": {
+      "small": "Küçük",
+      "medium": "Orta",
+      "large": "Büyük"
+    },
+    "selection": {
+      "selectAll": "Tümünü Seç",
+      "clearSelection": "Seçimi Temizle ({{count}})"
+    },
+    "sort": {
+      "name": "Ada göre",
+      "date": "Oluşturma tarihine göre",
+      "modified": "Değişiklik tarihine göre",
+      "type": "Türe göre",
+      "size": "Boyuta göre",
+      "aiScore": "Görsel AI skoruna göre",
+      "asc": "Artan",
+      "desc": "Azalan"
+    },
+    "rescan": "Yeniden Tara..."
+  },
+  "contextMenu": {
+    "openFile": "Dosyayı Aç",
+    "showInFolder": "Klasörde Göster",
+    "copyPath": "Yolu Kopyala",
+    "pathCopied": "Yol panoya kopyalandı",
+    "addToFavorites": "Favorilere Ekle",
+    "removeFromFavorites": "Favorilerden Çıkar",
+    "addTags": "Etiket Ekle...",
+    "rescan": {
+      "label": "Bu Dosyayı Yeniden Tara",
+      "scanning": "Taranıyor...",
+      "started": "Yeniden taranıyor...",
+      "done": "Yeniden tarama tamamlandı",
+      "failed": "Yeniden tarama başarısız"
+    },
+    "dwgSimilarity": "DWG Yapısal Benzerlik Ara",
+    "findSimilar": {
+      "title": "Benzerini Bul:",
+      "high": "Yüksek benzerlik",
+      "normal": "Standart benzerlik",
+      "medium": "Orta benzerlik",
+      "wide": "Geniş benzerlik"
+    },
+    "delete": "Sil",
+    "addToSelection": "Seçime Ekle",
+    "removeFromSelection": "Seçimden Çıkar",
+    "ragExclude": "AI'dan Gizle",
+    "ragInclude": "AI'a Aç"
+  },
+  "assetStatus": {
+    "section": "Proje Durumu",
+    "clientName": "Müşteri",
+    "approvalStatus": "Onay Durumu",
+    "versionLabel": "Versiyon",
+    "deadline": "Teslim Tarihi",
+    "clickToEdit": "Düzenlemek için tıklayın...",
+    "status": {
+      "draft": "Taslak",
+      "review": "İncelemede",
+      "approved": "Onaylandı",
+      "rejected": "Reddedildi"
+    }
+  },
+  "assetRelations": {
+    "section": "Bağlantılı Dosyalar",
+    "type": {
+      "pdf_export": "PDF Çıktısı",
+      "render_of": "Render",
+      "version_of": "Versiyon",
+      "project_group": "Proje Grubu"
+    },
+    "auto": "Otomatik",
+    "addLink": "Bağlantı Ekle",
+    "removeLink": "Bağlantıyı Kaldır",
+    "noLinks": "Bağlantı yok",
+    "searchPlaceholder": "Dosya adı yazın..."
+  },
+  "perfSetup": {
+    "lowTier": "Düşük",
+    "highTier": "Yüksek",
+    "analyzed": "Makineniz analiz edildi. Önerilen ayarlar aşağıda.",
+    "cores": "{{count}} çekirdek",
+    "lowIsFast": "düşük = hızlı",
+    "selectMode": "Bir mod seçin veya öneriyi kabul edin:",
+    "skip": "Atla, elle yapılandıracağım",
+    "applyRecommended": "Önerilen Ayarı Uygula",
+    "recommended": "Önerilen"
+  },
+  "deletion": {
+    "confirmTitle": "\"{{fileName}}\" silinsin mi?",
+    "confirmBody": "Dosya arşivden kaldırılacak. Ctrl+Z ile geri alabilirsiniz.",
+    "removed": "Arşivden kaldırıldı",
+    "removedUndo": "\"{{fileName}}\" — Ctrl+Z ile geri alınabilir",
+    "undone": "Geri alındı",
+    "undoneDetail": "\"{{fileName}}\" arşive geri eklendi (favori ve etiketler korundu)",
+    "label": "\"{{fileName}}\" arşivden kaldırıldı"
+  },
+  "dbAssets": {
+    "timeout": "Veritabanı yüklenirken zaman aşımı (90s). Sayfayı yeniden yükleyin.",
+    "dbError": "Veritabanı hatası",
+    "wasmTimeout": "WASM modülü yüklenemedi — zaman aşımı.",
+    "initFailed": "Veritabanı başlatılamadı: {{message}}",
+    "recoveryTitle": "Veritabanı Sorunu Tespit Edildi",
+    "recoveryDetail": "Veritabanı dosyası bozuk olduğu için okunamadı. Bozuk dosya otomatik olarak yedeklendi ve uygulama temiz bir veritabanıyla başlatıldı. Önceki verilerinizi kurtarmak için yöneticinizle iletişime geçin."
+  },
+  "scanReports": {
+    "title": "Tarama Raporları",
+    "loading": "Raporlar yükleniyor...",
+    "loadingContent": "Yükleniyor...",
+    "empty": "Henüz rapor yok. Tarama bittikten sonra atlanan/hata veren dosyalar burada listelenir.",
+    "selectReport": "Soldan bir rapor seçin",
+    "openInEditor": "Editörde aç",
+    "saveAs": "Farklı kaydet",
+    "entries": "kayıt",
+    "unknownRoot": "(klasör adı bilinmiyor)",
+    "noEntriesFiltered": "Filtre ile eşleşen kayıt yok",
+    "col": {
+      "path": "Yol",
+      "category": "Kategori",
+      "reason": "Sebep"
+    }
+  },
+  "scanWorkflow": {
+    "started": "Tarama başladı",
+    "willClear": "Seçilen klasör altındaki kayıtlar temizlenecek",
+    "willAppend": "Mevcut verilere eklenecek",
+    "willFullReset": "TÜM arşiv sıfırlanacak ve baştan taranacak",
+    "fullResetConfirm": "Tüm arşivi sıfırlamak istediğinize emin misiniz?",
+    "fullResetConfirmDetail": "Bu işlem TÜM kayıtları (diğer kaynak klasörler dahil) kalıcı olarak siler. Tarama öncesi otomatik yedek alınır.",
+    "fullResetConfirmButton": "Evet, arşivi sıfırla",
+    "modelFailed": "AI model yüklenemedi",
+    "continueWithout": "Embedding olmadan devam ediliyor",
+    "completed": "Tarama tamamlandı",
+    "filesScanned": "{{count}} dosya tarandı",
+    "paused": "Tarama duraklatıldı",
+    "pausedHint": "Devam etmek için \"Devam\" butonuna tıklayın",
+    "resumed": "Tarama devam ediyor",
+    "cancelled": "Tarama iptal edildi",
+    "cancelledByUser": "Tarama kullanıcı tarafından durduruldu",
+    "selectFiles": "Arşive Eklenecek Dosyaları Seçin",
+    "selectFolder": "Taranacak Arşiv Klasörünü Seçin",
+    "allFiles": "Tüm Dosyalar",
+    "reportSaved": "Tarama raporu kaydedildi",
+    "reportSavedDetail": "{{count}} kayıt — {{path}}"
+  },
+  "imageSearch": {
+    "enableAiFirst": "Lütfen önce AI indekslemeyi başlatarak arama altyapısını aktif hale getirin.",
+    "noOllamaUrl": "Ollama URL adresi ayarlanmamış. AI Vision Ayarları'ndan yapılandırın.",
+    "noApiKey": "{{provider}} API anahtarı girilmemiş. AI Vision Ayarları'ndan yapılandırın.",
+    "preparing": "Görsel hazırlığı yapılıyor...",
+    "clipAnalyzing": "Görsel İzleniyor (CLIP)...",
+    "oldIndex": "Eski görsel indeks formatı tespit edildi. Daha doğru sonuçlar için arşivi CLIP açıkken yeniden taratın.",
+    "clipPHashLow": "🔍 Görsel Sonuçlar (CLIP) — pHash kapsaması düşük, yeniden tarama önerilir",
+    "clipPHash": "🔍 Görsel Sonuçlar (CLIP + pHash)",
+    "noClipMap": "CLIP ile taranmış görsel haritası bulunamadı. Arşivi CLIP açıkken yeniden taratın.",
+    "clipError": "CLIP motoru hatası. Alternatif kelime modeline (Fallback) geçiliyor...",
+    "analyzing": "Görsel analiz ediliyor… ({{elapsed}}s)",
+    "ollamaTimeout": "Ollama yanıt vermedi (10 dk). Ollama'nın çalıştığından ve moondream modelinin yüklü olduğunu kontrol edin.",
+    "apiTimeout": "API yanıt vermedi (60s). İnternet bağlantınızı ve API ayarlarınızı kontrol edin.",
+    "analysisError": "Görsel analiz hatası: {{error}}",
+    "emptyResponse": "AI modelden boş yanıt döndü. API ayarlarınızı kontrol edin.",
+    "searchError": "Görsel arama hatası: {{error}}",
+    "noMatches": "Görsel için arşivde anahtar kelime eşleşmesi bulunamadı"
+  },
+  "embeddingSearch": {
+    "error": "Semantik arama hatası",
+    "errorDetail": "Embedding oluşturulamadı"
+  },
+  "storageWarningHook": {
+    "storageFull": "Depolama alanı dolu",
+    "storageFullDetail": "localStorage limiti aşıldı (5-10MB). Eski taramaları temizlemeyi deneyin.",
+    "diskLow": "Disk alanı düşük",
+    "diskLowDetail": "Veritabanının bulunduğu diskte yeterli boş alan yok. Tarama veya import işlemleri başarısız olabilir.",
+    "saveFailed": "Veritabanı kaydetme hatası",
+    "saveFailedDetail": "Veritabanı diske kaydedilemedi."
+  },
+  "notifications": {
+    "taskCompleted": "{{label}} tamamlandı",
+    "duration": "Süre: {{time}}",
+    "taskFailed": "{{label}} başarısız"
+  },
+  "userService": {
+    "defaultAdminName": "Yönetici",
+    "dbNotReady": "DB hazır değil",
+    "usernameRequired": "Kullanıcı adı ve şifre gerekli",
+    "usernameTaken": "Bu kullanıcı adı zaten kullanılıyor",
+    "usernameLengthError": "Kullanıcı adı 3-32 karakter arasında olmalıdır",
+    "passwordTooLong": "Şifre en fazla 128 karakter olabilir",
+    "cannotDemoteFounder": "Kurucu yönetici rolü düşürülemez",
+    "cannotDeleteFounder": "Kurucu yönetici silinemez"
+  },
+  "batchActions": {
+    "tagAddFailed": "Tag ekleme başarısız",
+    "tagRemoveFailed": "Tag kaldırma başarısız",
+    "updateFailed": "{{field}} güncellenemedi",
+    "trashFailed": "Çöp kutusuna taşınamadı"
+  },
+  "exportService": {
+    "reportTitle": "ArchivistPro Arşiv Raporu",
+    "createdAt": "Oluşturulma: {{date}}",
+    "indexed": "İndekslenmiş: {{count}}",
+    "tagged": "Etiketlenmiş: {{count}}",
+    "byCategory": "── Kategoriye Göre ──",
+    "byFileType": "── Dosya Tipine Göre ──",
+    "byProjectPhase": "── Proje Fazına Göre ──",
+    "byMaterialGroup": "── Malzeme Grubuna Göre ──"
+  },
+  "lan": {
+    "title": "LAN Paylaşımı",
+    "startServer": "Sunucuyu Başlat",
+    "stopServer": "Sunucuyu Durdur",
+    "serverRunning": "Sunucu çalışıyor",
+    "authCode": "Bağlantı Kodu",
+    "regenerateCode": "Kodu Yenile",
+    "connect": "Bağlan",
+    "download": "Arşivi İndir",
+    "ipAddress": "IP Adresi",
+    "port": "Port",
+    "connectionInfo": "Bağlantı Bilgileri",
+    "enterCode": "Bağlantı kodunu girin",
+    "status": {
+      "connected": "Bağlı",
+      "disconnected": "Bağlı değil",
+      "downloading": "İndiriliyor..."
+    },
+    "startServerHint": "Arşivi LAN üzerinden paylaş (port 9471)",
+    "connectHint": "Başka bir bilgisayardan arşiv indir",
+    "integrityFailed": "İndirme bütünlük kontrolü başarısız. Lütfen tekrar deneyin.",
+    "downloadSuccess": "Arşiv başarıyla indirildi ve yüklendi.",
+    "dbSize": "DB Boyutu",
+    "serverHint": "Diğer bilgisayarda Ayarlar > Ağ > Bağlan'a tıklayıp yukarıdaki IP ve kodu girmesi yeterli."
+  },
+  "facets": {
+    "projectPhase": "Proje Safhası",
+    "approvalStatus": "Onay Durumu",
+    "approvalStatus.draft": "Taslak",
+    "approvalStatus.review": "İncelemede",
+    "approvalStatus.approved": "Onaylandı",
+    "approvalStatus.rejected": "Reddedildi",
+    "category": "Varlık Türü",
+    "materialGroup": "Malzeme Grubu",
+    "colorTheme": "Renk Teması",
+    "architecturalStyle": "Mimari Stil"
+  },
+  "appVersion": {
+    "description": "Mimari Dosya Arşiv & Akıllı Arama"
+  },
+  "onboarding": {
+    "skip": "Atla",
+    "back": "Geri",
+    "next": "Devam",
+    "letsGo": "Hadi Başlayalım",
+    "start": "Kullanmaya Başla",
+    "replayTour": "Rehberi Tekrarla",
+    "welcome": {
+      "title": "Archivist Pro'ya Hoş Geldiniz!",
+      "desc": "Uygulamanızı tanıyalım. Bu kısa rehber size temel özellikleri gösterecek. İstediğiniz zaman atlayabilirsiniz."
+    },
+    "scan": {
+      "title": "Dosyalarınızı Tarayın",
+      "desc": "Proje klasörlerinizi ekleyin ve taramayı başlatın. DWG, MAX, SKP, PDF ve 80+ dosya formatı otomatik olarak tanınır ve arşivlenir."
+    },
+    "search": {
+      "title": "Akıllı Arama",
+      "desc": "Anahtar kelime veya anlam tabanlı arama ile dosyalarınızı bulun. AI indexleme aktifken benzer kavramları da yakalar."
+    },
+    "viewModes": {
+      "title": "Görünüm Modları",
+      "desc": "Gezgin görünümü ile dosya kartlarını, Gösterge Paneli ile istatistikleri, Teknik görünüm ile detaylı tabloyu inceleyin."
+    },
+    "aiChat": {
+      "title": "AI Asistan",
+      "desc": "Arşivinizdeki dosyalar hakkında doğal dilde soru sorun. AI, dosya içeriklerini analiz ederek yanıt verir."
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "desc": "Kullanıcı yönetimi, güvenlik, AI yapılandırması, yedekleme ve dil tercihlerinizi buradan ayarlayın."
+    },
+    "done": {
+      "title": "Hazırsınız!",
+      "desc": "Temel özellikleri öğrendiniz. İstediğiniz zaman Ayarlar'dan bu rehberi tekrar başlatabilirsiniz. İyi arşivlemeler!"
+    }
+  },
+  "wizard": {
+    "title": "Archivist Pro Kurulum Sihirbazı",
+    "step": "Adım {{current}} / {{total}}",
+    "next": "İleri",
+    "back": "Geri",
+    "skip": "Atla",
+    "welcome": {
+      "title": "Hoş Geldiniz!",
+      "subtitle": "Archivist Pro'yu kullanmaya başlamadan önce sisteminizi kontrol edelim.",
+      "language": "Dil Seçimi",
+      "systemCheck": "Sistem Kontrolü",
+      "wasm": "WebAssembly Desteği",
+      "wasmOk": "WASM destekleniyor",
+      "wasmFail": "WASM desteklenmiyor — uygulama çalışmayabilir",
+      "os": "İşletim Sistemi",
+      "disk": "Tahmini Disk Alanı",
+      "diskAvailable": "{{size}} kullanılabilir",
+      "diskUnavailable": "Bilgi alınamadı"
+    },
+    "checklist": {
+      "title": "Gereksinimler",
+      "subtitle": "Aşağıdaki bileşenlerin kurulum durumunu kontrol edin.",
+      "ollamaService": "Ollama Servisi",
+      "ollamaRunning": "Çalışıyor",
+      "ollamaNotRunning": "Çalışmıyor veya kurulu değil",
+      "ollamaLink": "ollama.com adresinden indirin",
+      "chatModel": "Chat Modeli",
+      "chatModelOk": "{{model}} kurulu",
+      "chatModelMissing": "Kurulu değil — terminalde: ollama pull {{model}}",
+      "visionModel": "Vision Modeli",
+      "visionModelOk": "{{model}} kurulu",
+      "visionModelMissing": "Kurulu değil — terminalde: ollama pull llava",
+      "odaConverter": "ODA FileConverter",
+      "odaFound": "Algılandı",
+      "odaNotFound": "Bulunamadı",
+      "odaLink": "opendesign.com adresinden indirin",
+      "fp32Models": "WebGPU Modelleri (fp32)",
+      "fp32Found": "Kurulu — WebGPU hızlandırma aktif",
+      "fp32NotFound": "Kurulu değil (opsiyonel — CPU ile çalışır)",
+      "fp32Hint": "Ayarlar > WebGPU Modelleri'nden sonradan kurabilirsiniz",
+      "recheck": "Tekrar Kontrol",
+      "optionalNote": "Bu gereksinimler isteğe bağlıdır. Eksik kalanları sonradan Ayarlar'dan yapılandırabilirsiniz.",
+      "checking": "Kontrol ediliyor..."
+    },
+    "ready": {
+      "title": "Her Şey Hazır!",
+      "subtitle": "Kurulum tamamlandı. Aşağıdaki özet bilgileri kontrol edin.",
+      "summary": "Kurulum Özeti",
+      "aiMode": "AI Modu",
+      "aiModeLocal": "Yerel AI (Ollama)",
+      "aiModeSkip": "AI devre dışı",
+      "missingDeps": "Eksik Gereksinimler",
+      "missingDepsNone": "Tümü kurulu",
+      "missingDepsCount": "{{count}} eksik",
+      "systemStatus": "Sistem Durumu",
+      "allGood": "Tüm kontroller başarılı",
+      "hasWarnings": "{{count}} uyarı mevcut",
+      "defaultCreds": "İlk Admin Hesabı",
+      "defaultCredsHint": "Sonraki ekrandan ayarlanacak",
+      "changePasswordHint": "Bir sonraki adımda kendi admin kullanıcı adı ve şifrenizi (en az 6 karakter) belirleyeceksiniz. Bu bilgileri güvenli bir yerde saklayın.",
+      "launch": "Archivist Pro'yu Başlat"
+    },
+    "dwg": {
+      "title": "DWG Dosya Desteği",
+      "description": "DWG dosyalarınızdan katman, blok ve metin bilgilerini çıkarmak için ODA FileConverter gereklidir.",
+      "detected": "ODA FileConverter algılandı",
+      "notDetected": "ODA FileConverter bulunamadı",
+      "optional": "Bu adım isteğe bağlıdır — sonra Ayarlar'dan kurabilirsiniz.",
+      "rescanNote": "Önceden taranmış DWG dosyalarınızın katman/blok bilgileri eksik olabilir. Tam veri için bu dosyaları yeniden tarayın."
+    }
+  },
+  "scanner": {
+    "odaNotInstalled": "DWG dosyaları için tam destek almak için Ayarlar > DWG Dönüştürücü bölümünden ODA FileConverter kurulumu yapın."
+  },
+  "autoRagIndex": {
+    "progress": "AI indeksleme: {{current}}/{{total}}",
+    "stop": "Durdur"
+  },
+  "dbSaving": {
+    "label": "Veritabanı kaydediliyor..."
+  },
+  "updater": {
+    "sectionTitle": "Güncelleme",
+    "currentVersion": "Mevcut Sürüm",
+    "checking": "Kontrol ediliyor...",
+    "available": "v{{version}} güncellemesi mevcut",
+    "checkNow": "Şimdi Kontrol Et",
+    "upToDate": "Güncel sürümü kullanıyorsunuz",
+    "checkError": "Kontrol hatası: {{error}}",
+    "openDownload": "İndir",
+    "serverNotConfigured": "Güncelleme sunucusu yapılandırılmamış — aşağıdan sunucu URL'si girin",
+    "serverUrlPlaceholder": "http://192.168.1.10:8080/archivist",
+    "serverUrlHelp": "Yerel ağdaki güncelleme sunucusunun adresi. Bu adres altında latest.json ve kurulum dosyası bulunmalıdır. Boş bırakılırsa güncelleme kontrolü yapılmaz.",
+    "serverUrlSaved": "Kaydedildi"
+  },
+  "duplicateFinder": {
+    "title": "Kopya & Benzer Dosya Bulucu",
+    "checkExactHash": "Birebir Kopya",
+    "checkSameName": "Aynı İsim, Farklı Konum",
+    "checkVisual": "Görsel Benzerlik",
+    "checkStructural": "Yapısal Benzerlik (CAD, 3D, Döküman)",
+    "threshold": "Benzerlik Eşiği",
+    "scan": "Tara",
+    "scanning": "Taranıyor...",
+    "largeArchiveWarning": "Görsel/Yapısal benzerlik taraması {{count}} dosyada uzun sürebilir ve bellek tüketebilir. Büyük arşivlerde önce sadece 'Birebir Kopya' ile başlamanız önerilir.",
+    "cancel": "İptal",
+    "cancelledPartial": "iptal edildi — kısmi sonuçlar",
+    "results": "{{groups}} grup, {{total}} dosya",
+    "noResults": "Kopya veya benzer dosya bulunamadı",
+    "missingHash": "Hash eksik: {{count}} dosya — bunlar birebir kopya taramasına dahil edilemez.",
+    "missingPhash": "{{count}} görsel dosyada pHash verisi eksik — görsel benzerlik taramasında atlandılar",
+    "missingMetadata": "{{count}} yapısal dosyada metadata eksik — yapısal benzerlik taramasında atlandılar",
+    "rescan": "Yeniden Tara",
+    "skipMissing": "Atla",
+    "showFiles": "Dosyaları Göster",
+    "hideFiles": "Gizle",
+    "rescanThese": "Bunları Tara",
+    "deleteSelected": "Seçilileri Sil ({{count}})",
+    "keepFirst": "En Yeniyi Koru, Diğerlerini Sil",
+    "viewList": "Liste",
+    "viewCompare": "Karşılaştır",
+    "similarity": "%{{score}} benzerlik",
+    "pHashDiff": "pHash farkı: {{dist}}/64 bit → %{{score}} benzerlik",
+    "confirmDeleteMultiple": "{{count}} dosya kalıcı olarak silinsin mi?",
+    "confirmDeleteMultipleDetail": "Bu işlem geri alınamaz. Dosyalar arşivden kaldırılır.",
+    "groupExactHash": "Birebir Kopya",
+    "groupSameName": "Aynı İsim",
+    "groupVisual": "Görsel Benzer",
+    "groupStructural": "Yapısal Benzer",
+    "copiesCount": "{{count}} kopya",
+    "similarCount": "{{count}} benzer",
+    "fileSize": "Boyut",
+    "modified": "Değiştirme",
+    "comparePanelTitle": "Karşılaştırma",
+    "comparePanelHint": "Grup listesinden bir grubun kopya sayısına tıklayın",
+    "compareDeleteLeft": "Solu Sil",
+    "compareDeleteRight": "Sağı Sil",
+    "deleteSuccess": "{{count}} dosya arşivden silindi",
+    "buttonTooltip": "Kopya Bul",
+    "confirmDeleteSingle": "\"{{name}}\" silinsin mi?",
+    "viewerDeleteHint": "Ana arşivde silme yalnızca yöneticiye açıktır",
+    "groupLabel": "grup",
+    "comparePanelInstruction": "Liste görünümünden iki dosyanın karşılaştırma ikonuna tıklayın",
+    "selectedCount": "{{count}} dosya seçili",
+    "resetCompare": "Sıfırla",
+    "comparePending": "Karşılaştırılacak ikinci dosyayı seçin",
+    "andOthers": "vb.",
+    "structuralPerfWarning": "{{count}} yapısal dosya taranacak — bu işlem birkaç saniye sürebilir",
+    "detailSettings": "Detay Ayarları",
+    "advancedCriteria": "Gelişmiş Kriterler",
+    "formatFilters": "Format Filtreleri",
+    "formatFiltersHint": "Sonuçlarda hangi dosya türleri gösterilsin",
+    "comparisonCriteria": "Karşılaştırma Kriterleri",
+    "comparisonCriteriaHint": "Yapısal benzerlikte hangi alanlar kullanılsın — değiştirince yeniden tarayın",
+    "generalCriteria": "Genel Kriterler",
+    "generalCriteriaHint": "Aynı İsim ve Yapısal Benzerlik modlarına ek filtre uygular",
+    "formatCriteria": "Format-Spesifik Kriterler",
+    "formatCriteriaHint": "Yapısal benzerlikte hangi metadata alanları karşılaştırılsın",
+    "performanceFilters": "Performans Filtreleri",
+    "performanceFiltersHint": "Tarama havuzunu daraltarak hızlandırır",
+    "criteriaRescanNeeded": "Kriterler değişti — güncel sonuç için yeniden tarayın",
+    "fmtCad": "CAD / Çizim (DWG, DXF)",
+    "fmtBim3d": "BIM / 3D Model (MAX, SKP, RVT, IFC)",
+    "fmtDoc": "Döküman (PDF, DOCX, XLS, PPT…)",
+    "fmtImage": "Görsel (JPEG, PNG, PSD…)",
+    "fmtVideo": "Video (MP4)",
+    "fmtBackup": "Yedek (BAK)",
+    "critSameSize": "Aynı dosya boyutu",
+    "critModifiedWithin": "Değişiklik tarihi yakın",
+    "critSameParentFolder": "Aynı klasör adı (parent)",
+    "sizeTolerance": "Tolerans",
+    "tolExact": "Tam eşleşme",
+    "tol1kb": "± 1 KB",
+    "tol1percent": "± %1",
+    "days": "gün içinde",
+    "minFileSize": "Minimum dosya boyutu",
+    "critDwgLayers": "Katmanlar",
+    "critDwgBlocks": "Bloklar",
+    "critDwgText": "Metin içeriği",
+    "critDwgXrefs": "Xref'ler",
+    "critIfcStoreys": "Kat sayısı",
+    "critIfcEntities": "Entity sayısı",
+    "critMaxMaterials": "Malzeme listesi",
+    "critMaxRenderEngine": "Render motoru",
+    "critMaxVersion": "Max sürümü",
+    "critSkpComponents": "Bileşenler",
+    "critSkpLayers": "Katmanlar",
+    "critSkpVersion": "SketchUp sürümü",
+    "critRvtStoreys": "Kat adları",
+    "critRvtProjectName": "Proje adı",
+    "critOfficeTitle": "Başlık",
+    "critOfficeAuthor": "Yazar",
+    "critPdfPages": "Sayfa sayısı"
+  },
+  "crashReport": {
+    "title": "Hata Raporları",
+    "empty": "Hata raporu bulunmuyor",
+    "clearAll": "Tümünü Temizle",
+    "clearAllConfirm": "Tüm hata raporları silinsin mi?",
+    "clearAllDetail": "Bu işlem geri alınamaz.",
+    "delete": "Sil",
+    "deleteConfirm": "Bu hata raporu silinsin mi?",
+    "noStackTrace": "Stack trace bilgisi yok",
+    "type": {
+      "react_error": "React Hatası",
+      "window_error": "Pencere Hatası",
+      "unhandled_rejection": "İşlenmemiş Promise",
+      "rust_panic": "Rust Panic"
+    },
+    "field": {
+      "component": "Bileşen",
+      "version": "Sürüm",
+      "os": "İşletim Sistemi",
+      "message": "Hata Mesajı",
+      "stackTrace": "Stack Trace"
+    }
+  },
+  "notification": {
+    "newMessage": "Yeni bir mesajınız var 💬",
+    "newMessages": "{{count}} yeni mesajınız var 💬",
+    "trayOpen": "ArchivistPro Aç",
+    "trayQuit": "Çıkış",
+    "devFeedbackTitle": "Yeni Geliştirici Geri Bildirimi"
+  },
+  "batchToolbar": {
+    "ariaLabel": "Toplu işlem araç çubuğu",
+    "selectedCount": "{{count}} dosya seçildi",
+    "addTags": "Etiket Ekle",
+    "selectAll": "Tümünü Seç",
+    "clearSelection": "Seçimi Temizle",
+    "selectAllConfirmMessage": "{{count}} dosya seçilecek",
+    "selectAllConfirmDetail": "Görünen tüm dosyalar seçili olarak işaretlenecek. Toplu etiket gibi işlemler bu dosyaların tamamını etkileyecek.",
+    "confirmSelectLabel": "Seç"
+  },
+  "archiveImport": {
+    "rolledBack": "İçe aktarma başarısız oldu. Veritabanı yedekten otomatik olarak geri yüklendi.",
+    "failed": "İçe aktarma başarısız oldu."
+  },
+  "foldersView": {
+    "empty": {
+      "title": "Henüz taranmış klasör yok",
+      "desc": "Arşivinize klasör eklemek için tarama başlatın. Klasörler burada kart olarak görünecek.",
+      "scanBtn": "Klasör Tara"
+    },
+    "card": {
+      "fileCount": "{{count}} dosya",
+      "noFiles": "Boş"
+    }
+  },
+  "batchTagModal": {
+    "title": "Toplu Etiket Ekle",
+    "subtitle": "{{count}} dosyaya uygulanacak",
+    "noTags": "Henüz etiket yok. Aşağıdan yeni bir etiket oluşturun.",
+    "newTag": "Yeni Etiket Oluştur",
+    "newTagPlaceholder": "Etiket adı...",
+    "createAndAdd": "Oluştur ve Seç",
+    "willAdd": "Eklenecek etiketler",
+    "apply": "Uygula ({{count}})",
+    "applying": "Uygulanıyor...",
+    "noTagsSelected": "En az bir etiket seçin",
+    "successTitle": "Toplu Etiket Eklendi",
+    "success": "{{count}} dosyaya {{tagCount}} etiket eklendi",
+    "bulkWarning": "{{count}} dosya etkilenecek — dikkatli olun"
+  },
+  "chat": {
+    "welcome": {
+      "title": "Arşivinize soru sorun",
+      "subtitle": "Tamamen offline. Cevaplar arşivdeki indexlenmiş belgelerden gelir.",
+      "example1": "\"Bu projede hangi cam profilleri kullanılmış?\"",
+      "example2": "\"2024 villa projelerindeki ortak detaylar neler?\"",
+      "example3": "\"X şartnamesinde yangın yönetmeliği maddesi var mı?\""
+    },
+    "autoSync": {
+      "confirmTitle": "Metadata güncellemesi",
+      "confirmDetail": "Metadata formatı güncellendi. {{count}} dosya yeniden indekslenecek. Bu arka planda birkaç dakika sürebilir. Şimdi başlatılsın mı?",
+      "confirmStart": "Şimdi başlat"
+    },
+    "ollama": {
+      "connected": "Ollama",
+      "disconnected": "Ollama kapalı",
+      "checking": "Ollama bağlantısı kontrol ediliyor...",
+      "notRunning": "Ollama çalışmıyor — AI Sohbet kullanılamaz",
+      "hint1": "RAG sohbet özelliği için Ollama gereklidir. Embedding (semantik arama, görsel arama) Ollama'sız çalışır.",
+      "installSteps": "Kurulum:",
+      "step1": "ollama.com/download adresinden Ollama'yı indirin ve kurun",
+      "step2": "Terminal'de: ollama pull qwen3:8b (önerilen) veya ollama pull qwen3:4b (hafif)",
+      "step3": "Terminal'de: ollama serve",
+      "step4": "Bu paneli yeniden açın"
+    },
+    "corsWarning": "Ollama'nın bu uygulamaya erişmesi için CORS ayarlanmamış — AI sohbet çalışmayabilir.",
+    "scope": {
+      "all": "Tüm Arşiv",
+      "projects": "Projeler",
+      "tags": "Etiketler"
+    },
+    "index": {
+      "missingWarning": "{{count}} dosya henüz AI için hazır değil.",
+      "openStatus": "İndex Durumunu Aç",
+      "autoPreparing": "AI Chat için metadata arkaplanda hazırlanıyor",
+      "autoPending": "{{count}} dosya için metadata hazırlanacak — otomatik başlayacak.",
+      "content": "İçerik",
+      "badgeTooltip": "Meta: metadata indexli · İçerik: dosya gövdesi indexli",
+      "errors": "hata"
+    },
+    "input": {
+      "placeholder": "Arşive soru sor — '/görsel <metin>' ile görsel ara (Enter = gönder)"
+    },
+    "header": {
+      "title": "AI Sohbet"
+    },
+    "sessions": {
+      "title": "Sohbetler",
+      "new": "Yeni",
+      "empty": "Henüz sohbet yok. \"+ Yeni\" ile başlayın."
+    },
+    "toggle": {
+      "on": "AÇIK",
+      "off": "KAPALI"
+    },
+    "queryRewrite": {
+      "label": "Zenginleştir"
+    },
+    "prepareIndex": {
+      "label": "Hazırla...",
+      "tooltip": "Henüz indekslenmemiş dosyaları AI sohbete hazırla"
+    },
+    "phase": {
+      "searching": "Kaynaklar aranıyor...",
+      "loading_model": "Dil modeli yükleniyor...",
+      "loading_vectors": "Vektör indeksi yükleniyor...",
+      "comparing": "Benzerlik hesaplanıyor...",
+      "metadata_search": "Dosya bilgileri taranıyor...",
+      "reranking": "Yeniden sıralanıyor...",
+      "generating": "Yanıt oluşturuluyor..."
+    },
+    "diagnostics": {
+      "candidates": "{{total}} aday · FTS {{fts}} · embedding {{emb}}",
+      "reranked": "rerank sonrası {{count}} → LLM'e",
+      "dimMismatch": "{{skipped}} chunk atlandı — embedding boyutu uyumsuz (sorgu {{queryDim}}, DB'de {{dbDims}}). Dosyaları yeniden indeksleyin."
+    },
+    "thinking": "Kaynaklar aranıyor ve cevap hazırlanıyor...",
+    "abort": "Durdur",
+    "send": "Gönder",
+    "noGpu": "Bu makinede GPU algılanamadı. AI sohbet yalnızca GPU destekli makinelerde kullanılabilir. Sol paneldeki arama özelliğini kullanabilirsiniz.",
+    "fallback": {
+      "reranker": "Reranker zaman aşımına uğradı — varsayılan sıralama kullanıldı.",
+      "queryRewrite": "Sorgu zenginleştirme başarısız — orijinal sorgu kullanıldı."
+    },
+    "help": {
+      "button": "Yardım",
+      "title": "AI Sohbet — Özellik Rehberi",
+      "glossary": "Sözlük (önce bunları bil)",
+      "chunkDesc": "Bir dosyanın metnini AI'ın işleyebileceği küçük parçalara böleriz (~500 kelime). Her parça için bir matematiksel imza (embedding) üretilir, arama bunun üzerinden yapılır.",
+      "embeddingDesc": "Bir metnin anlamını sayılarla temsil eden 384 boyutlu sayı listesi. Benzer anlamlı metinlerin embedding'leri yakın olur.",
+      "metaChunkDesc": "Bir dosyanın sadece üst-bilgilerinden (dosya adı, proje, etiket, DWG katmanları) üretilen özel parça. DWG/MAX gibi metni olmayan dosyaların aranabilmesini sağlar.",
+      "citationDesc": "Cevapta \"[1]\", \"[2]\" gibi numaralarla belirtilen kaynak. Tıklayınca o parçanın geldiği dosyaya gidersin.",
+      "hallucination": "Halüsinasyon",
+      "hallucinationDesc": "AI'ın kaynaklarda olmayan bir şeyi uydurması. Sistem buna karşı \"anahtar kelime kontrolü\" + sıkı prompt kuralları kullanır.",
+      "llmDesc": "Large Language Model — cevabı üreten yapay zeka modeli. Yerel Ollama üzerinde çalışır. Önerilen: qwen3:8b · Minimum: qwen3:4b",
+      "flowTitle": "Genel Akış",
+      "flowDesc": "Bir soru yaz → sistem indexli dosyaları arar → en alakalı parçaları (chunk'ları) LLM'e verir → kaynaklı cevap üretir. Cevap stream halinde kelime kelime gelir.",
+      "slashTitle": "Slash Komutları",
+      "slashVisualDesc": "Metin yerine resim arar. Örn: /görsel merdiven planı → CLIP ile semantik görsel arama yapılır. Türkçe sorgu otomatik İngilizceye çevrilir. Kısa hali: /g",
+      "badgesTitle": "Üst Bardaki Rozetler",
+      "badgeModel": "Aktif Ollama modeli",
+      "badgeOllama": "Bağlantı durumu (yeşil/kırmızı)",
+      "badgeRerank": "Açıkken: top-20 chunk getirilir, LLM alaka sıralamasıyla en iyi 6'sı seçilir. +1 LLM çağrısı, daha doğru cevap. Kapalıyken: doğrudan top-8 embedding sonucu.",
+      "badgeEnrich": "Açıkken kısa sorgu LLM ile genişletilir (eş anlamlı + İngilizce karşılık). 5 kelimeden uzun sorgular spesifik kabul edilir, dokunulmaz.",
+      "badgeScope": "Arama kapsamını daralt: belirli bir proje veya etiket seç → sadece o dosyalarda ara.",
+      "indexTitle": "İndex Modalı",
+      "indexBtn": "İndexle",
+      "indexBtnDesc": "Eksik dosyaların metin gövdesini chunk'lara böler ve embedding üretir.",
+      "metaBtn": "Tüm metadata'ları üret",
+      "metaBtnDesc": "DWG/MAX dahil tüm aktif dosyalar için \"metadata chunk\" üretir. AI sohbetin sidebar arama kapsamına yaklaşmasını sağlar.",
+      "purgeBtn": "Çöp temizle",
+      "purgeBtnDesc": "Eski sürümlerden kalan, RAG için anlamsız chunk kayıtlarını siler. Dosyalara dokunmaz.",
+      "answerTitle": "Cevap & Kaynaklar",
+      "citationChip": "[N] dosya.dwg",
+      "citationChipDesc": "Tıkla → alttaki ilgili kaynak kartı parlar ve görünür alana kayar. Aynı zamanda asset detay paneli açılır.",
+      "sourceCard": "Kaynak kartı",
+      "sourceCardDesc": "Dosya adı + sayfa + kısa önizleme + skor. Tıkla → asset detayını aç.",
+      "stopBtn": "Durdur butonu",
+      "stopBtnDesc": "Cevap üretiminin ortasında kesebilirsin. Şimdiye kadar gelen kısım kaydedilir.",
+      "sessionTitle": "Sohbet Yönetimi",
+      "newSession": "+ Yeni",
+      "newSessionDesc": "Boş sohbet aç. İlk soru-cevaptan sonra LLM otomatik başlık üretir.",
+      "deleteSession": "× Sil",
+      "deleteSessionDesc": "Sohbeti ve tüm mesajlarını siler. Ctrl+Z ile geri alabilirsin.",
+      "behaviorTitle": "Davranış Notları",
+      "antiHallucination": "Halüsinasyon önleme",
+      "antiHallucinationDesc": "Sorudaki anahtar kelimeler indexli dosyaların hiçbirinde geçmiyorsa LLM çağrılmaz, \"arşivde bilgi bulamadım\" döner.",
+      "conversationCtx": "Konuşma bağlamı",
+      "conversationCtxDesc": "Son 4 mesaj ÖNCEKİ KONUŞMA olarak prompt'a eklenir. Takip soruları (\"o kim?\", \"hangi projede?\") çalışır.",
+      "autoIndex": "Otomatik indexleme",
+      "autoIndexDesc": "Yeni klasör tarandığında DWG dahil tüm yeni dosyalar arka planda metadata chunk olarak indekslenir, sohbete hazır olur."
+    },
+    "synthesis": {
+      "pickTitle": "Sentez için belge seç — her belgeden ayrı bölüm + karşılaştırma",
+      "pickButton": "Belge seç",
+      "modeActive": "Sentez: {{count}} belge",
+      "chipBarLabel": "Sentez belgeleri:",
+      "removeChip": "Çıkar",
+      "clearAll": "Sentez modunu kapat",
+      "exit": "Çık",
+      "maxDocsWarning": "En fazla 10 belge seçilebilir"
+    },
+    "export": {
+      "button": "Dışa Aktar",
+      "tooltip": "Sohbeti Markdown olarak indir",
+      "empty": "Dışa aktarılacak mesaj yok"
+    }
+  },
+  "assetPicker": {
+    "title": "Sentez için belge seç",
+    "subtitle": "Seçili belgelerden her biri için ayrı bölüm + karşılaştırma cevabı üretilir.",
+    "searchPlaceholder": "Dosya adı veya yol ile ara…",
+    "typeFilterTitle": "Dosya tipine göre filtrele",
+    "allTypes": "Tüm tipler",
+    "selectFiltered": "Filtreyi seç",
+    "clear": "Temizle",
+    "empty": "Henüz indexli belge yok. Önce Chat → 📊 İndex butonu ile belgeleri indexleyin.",
+    "noResults": "Arama sonucu yok.",
+    "chunkCount": "İndex parça sayısı",
+    "selected": "seçili",
+    "capWarning": "Önerilen üst sınır",
+    "confirmSynth": "Sentez yap ({{count}})",
+    "confirmFocus": "Odaklan ({{count}})"
+  },
+  "visualSearch": {
+    "dwgWarning": {
+      "title": "Teknik çizimde görsel benzerlik düşük güvenilirdir",
+      "body": "DWG/DXF çizimlerde CLIP tabanlı görsel arama yetersiz sinyal üretebilir. Daha doğru sonuç için katman/blok adı ile metin araması ya da geometrik şekil sorgusu (ör. \"8 gen havuz\", \"5x10 m dikdörtgen oda\") kullanın."
+    }
+  },
+  "dateRange": {
+    "title": "Tarih Aralığı",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "clear": "Tarih filtresini temizle"
+  },
+  "dwgSimilarity": {
+    "title": "DWG Yapısal Benzerlik Araması",
+    "reference": "Referans",
+    "searching": "Benzer DWG'ler aranıyor...",
+    "noResults": "Benzer DWG dosyası bulunamadı.",
+    "filesFound": "dosya bulundu",
+    "topScore": "en yüksek skor",
+    "layers": "Katman",
+    "blocks": "Blok",
+    "texts": "Metin",
+    "shapes": "Şekil"
+  },
+  "booleanSearch": {
+    "hint": "İpucu: AND, OR, NOT operatörleri ve \"tırnak içi frase\" kullanabilirsiniz",
+    "examples": "Örnek: plan AND mutfak · cephe OR kesit · salon NOT otopark · \"kat planı\""
+  },
+  "shapeSearch": {
+    "title": "Geometrik Şekil Arama",
+    "tab": {
+      "image": "Referans Görsel",
+      "criteria": "Özellik Ara"
+    },
+    "dropHint": "Görsel sürükleyin veya tıklayıp seçin (PNG, JPG, BMP)",
+    "dropSubHint": "Görseldeki geometrik şekil çıkarılır ve DWG dosyalarında benzerleri aranır",
+    "analyzing": "Kontur analizi yapılıyor...",
+    "detected": "Tespit edilen şekil:",
+    "vertexCount": "Kenar sayısı",
+    "minRegularity": "Min düzgünlük",
+    "minCompactness": "Min kompaktlık",
+    "minRectangularity": "Min dikdörtgensellik",
+    "compact": "Kmp",
+    "solid": "Dol",
+    "rect": "Dik",
+    "category": "Kategori",
+    "allCategories": "Tümü",
+    "search": "Ara",
+    "includeOpen": "Açık şekilleri de dahil et (polyline, yay)",
+    "scoreLabel": "skor",
+    "filesFound": "dosya",
+    "topScore": "en yüksek skor",
+    "openShapes": "açık şekil",
+    "noResults": "Eşleşen geometrik şekil bulunamadı. DWG dosyalarının shape index'i oluşturulmuş olmalı.",
+    "noResultsHint": "Sonuç bulunamadı. Bu panel yalnızca taranmış DWG/DXF dosyalarında şekil arar — SKP, PDF, görsel gibi diğer formatlar bu aramaya dahil değildir.",
+    "dwgBadgeTitle": "Yalnızca DWG ve DXF dosyalarında arama yapar",
+    "tagFilter": "Etiket filtresi",
+    "showInArchive": "Arşivde Göster",
+    "assetNotFound": "Dosya arşivde bulunamadı",
+    "error": {
+      "noPath": "Dosya yolu alınamadı. Lütfen \"Dosya Seç\" butonunu kullanın."
+    }
+  },
+  "aiSetup": {
+    "title": "AI Kurulum Sihirbazı",
+    "next": "Devam",
+    "back": "Geri",
+    "ready": "Hazır",
+    "notInstalled": "Kapalı",
+    "starting": "Başlatılıyor...",
+    "stopping": "Durduruluyor...",
+    "stop": "Durdur",
+    "download": "İndir",
+    "pulling": "İndiriliyor...",
+    "retry": "Tekrar",
+    "downloaded": "İndirildi",
+    "step0": {
+      "desc": "AI özellikleri (sohbet, görsel arama, etiket önerisi) için Ollama gereklidir. Ollama bilgisayarınızda yapay zeka modellerini çalıştıran ücretsiz bir araçtır.",
+      "ollamaLabel": "Ollama Sunucu",
+      "startBtn": "Ollama'yı Başlat",
+      "installGuide": "Ollama kurulu değilse ollama.com/download adresinden indirin, kurun ve tekrar bu adıma dönün.",
+      "corsBtn": "CORS İzni Ayarla"
+    },
+    "step1": {
+      "desc": "AI için iki model gereklidir: biri metin sorularına yanıt verir, diğeri görselleri analiz eder. Eksik modelleri tek tıkla indirebilirsiniz.",
+      "chatLabel": "Metin Modeli",
+      "chatReady": "Metin Modeli Hazır",
+      "chatMissing": "Metin Modeli Eksik",
+      "chatMissingModel": "{{model}} eksik — terminalde: ollama pull {{model}}",
+      "altHint": "Veya Gelişmiş Model Ayarları'ndan kurulu modellerden birini seçebilirsiniz: {{models}}",
+      "visionLabel": "Görsel Model",
+      "visionReady": "Görsel Model Hazır",
+      "visionMissing": "Görsel Model Eksik",
+      "visionMissingModel": "{{model}} eksik — terminalde: ollama pull {{model}}",
+      "allReady": "Tüm modeller hazır!",
+      "downloadAll": "Tümünü İndir",
+      "hint": "Metin modeli ({{chatModel}}, ~2.5 GB) ve görsel model ({{visionModel}}, ~4.7 GB) indirilecek. İnternet bağlantınıza göre birkaç dakika sürebilir."
+    },
+    "step2": {
+      "title": "AI Hazır!",
+      "desc": "Tüm AI özellikleri kullanıma hazır. Arşivinize soru sorabilir, görselleri analiz edebilir ve akıllı arama yapabilirsiniz.",
+      "clipBuiltin": "Paketli",
+      "embedding": "Metin İndeksleme",
+      "embeddingBuiltin": "Paketli",
+      "finishBtn": "Kurulumu Tamamla"
+    }
+  },
+  "aiStatus": {
+    "label": "AI Durumu",
+    "title": "AI Durumu",
+    "offline": "Kapalı",
+    "missing": "Eksik",
+    "builtin": "Paketli",
+    "chatModel": "Metin Modeli",
+    "visionModel": "Görsel Model",
+    "setupLink": "AI Kurulum Sihirbazını Aç",
+    "corsNotSet": "Ayarlanmamış"
+  },
+  "database": {
+    "lockWarningTitle": "Veritabanı Kilidi",
+    "lockWarningMessage": "Veritabanı başka bir işlem tarafından yazılıyor. Veriler güncel olmayabilir."
+  },
+  "lockScreen": {
+    "message": "Oturum zaman aşımına uğradı. Devam etmek için şifrenizi girin.",
+    "passwordPlaceholder": "Şifre",
+    "unlock": "Kilidi Aç",
+    "switchUser": "Kullanıcı Değiştir",
+    "wrongPassword": "Yanlış şifre",
+    "error": "Doğrulama hatası"
+  },
+  "sessionWarning": {
+    "title": "Oturum Sona Eriyor",
+    "message": "{{seconds}} saniye sonra ekran kilitlenecek.",
+    "extend": "Uzat"
+  },
+  "permission": {
+    "adminRequired": "Bu işlem admin yetkisi gerektirir"
+  },
+  "broadcast": {
+    "title": "Duyuru Gönder",
+    "description": "Bu mesaj tüm kullanıcılara gösterilecektir.",
+    "priority": "Öncelik",
+    "subject": "Konu",
+    "subjectPlaceholder": "Duyuru başlığı",
+    "message": "Mesaj",
+    "messagePlaceholder": "Duyuru içeriği...",
+    "sendButton": "Duyuru Gönder",
+    "sent": "Duyuru gönderildi"
+  },
+  "printReport": {
+    "title": "Arşiv Raporu",
+    "print": "Yazdır",
+    "archiveReport": "Arşiv Raporu",
+    "indexed": "İndekslenen",
+    "tagged": "Etiketli",
+    "materials": "Malzeme Grupları"
+  },
+  "dropZone": {
+    "dropHere": "Klasörü buraya bırakın",
+    "dropDesc": "Dosyalar taranarak arşive eklenecek",
+    "hint": "Klasör Ekle",
+    "useButton": "Dosya eklemek için tarama butonunu kullanın."
+  },
+  "versionTimeline": {
+    "title": "Versiyon Geçmişi",
+    "current": "aktif"
+  },
+  "userBatch": {
+    "title": "CSV İçe Aktarma",
+    "selectFile": "CSV Dosya Seç",
+    "preview": "{{count}} kullanıcı bulundu",
+    "import": "Tümünü Ekle ({{count}})",
+    "importDone": "{{success}}/{{total}} kullanıcı eklendi",
+    "errorExists": "Kullanıcı zaten var"
+  },
+  "tagManager": {
+    "title": "Etiket Yönetimi",
+    "empty": "Henüz etiket yok",
+    "rename": "Yeniden Adlandır",
+    "merge": "Birleştir",
+    "delete": "Sil",
+    "changeColor": "Renk değiştir",
+    "confirmDelete": "\"{{name}}\" etiketi ve tüm bağlantıları silinecek. Devam edilsin mi?",
+    "confirmMerge": "\"{{source}}\" etiketi \"{{target}}\" ile birleştirilecek. Kaynak etiket silinecek. Devam edilsin mi?",
+    "mergeHint": "\"{{source}}\" → hedef etiket seçin",
+    "merged": "Etiketler birleştirildi"
+  },
+  "xmp": {
+    "exportTitle": "Bu dosyanın metadata'sını XMP sidecar dosyasına aktar",
+    "exporting": "XMP yazılıyor...",
+    "exportSuccess": "XMP sidecar oluşturuldu: {{file}}",
+    "exportError": "XMP export hatası",
+    "contextMenu": "XMP Sidecar Oluştur",
+    "batchExport": "Tümüne XMP Sidecar Oluştur",
+    "batchStarted": "{{count}} dosya için XMP export başladı...",
+    "batchDone": "XMP export tamamlandı: {{written}} yazıldı, {{errors}} hata",
+    "fallbackNote": "({{count}} dosya yazma korumalı — yedek konuma kaydedildi)",
+    "fallbackSingle": "(Klasör yazma korumalı — yedek konuma kaydedildi)",
+    "help": {
+      "title": "XMP Sidecar Export Nedir?",
+      "body": "XMP (Extensible Metadata Platform), Adobe tarafından geliştirilen uluslararası bir metadata standardıdır. Her dosyanın yanına bırakılan .xmp dosyası; etiketler, proje adı, onay durumu, versiyon gibi bilgileri taşır. Dosya başka bir yere taşınsa veya veritabanı silinse bile metadata korunur. Adobe Bridge, Lightroom ve diğer DAM araçları bu formatı okuyabilir.",
+      "howTo": "Kullanım: Dosya detay panelinde 'XMP' butonuna tıklayın veya kaynak klasör menüsünden 'Tümüne XMP Sidecar Oluştur' seçeneğini kullanın. Klasör yazma korumalıysa dosyalar otomatik olarak uygulama veri klasörüne kaydedilir."
+    }
+  },
+  "approval": {
+    "title": "Onay Kuyruğu",
+    "pendingReview": "{{count}} dosya onay bekliyor",
+    "approveAll": "Tümünü Onayla",
+    "rejectAll": "Tümünü Reddet",
+    "batchDone": "{{count}} dosya → {{status}}",
+    "statusChanged": "{{file}} → {{status}}",
+    "more": "dosya daha...",
+    "rejectionReason": "Red Sebebi",
+    "rejectionReasonPlaceholder": "Red sebebini yazın...",
+    "history": "Onay Geçmişi"
+  },
+  "ragSensitivity": {
+    "title": "AI Hassasiyet Filtresi",
+    "subtitle": "Hassas verileri AI sohbetten hariç tut",
+    "enabled": "Filtre aktif — hassas veriler AI'dan gizleniyor",
+    "disabled": "Filtre kapalı — AI tüm verilere erişebilir",
+    "activate": "Etkinleştir",
+    "categories": {
+      "title": "Hassas veri kategorileri",
+      "financial": "Finansal",
+      "personal": "Kişisel Bilgi",
+      "legal": "Hukuki",
+      "hr": "İnsan Kaynakları"
+    },
+    "keywords": {
+      "title": "Özel anahtar kelimeler",
+      "placeholder": "Kelime ekle...",
+      "add": "Ekle",
+      "empty": "Henüz özel kelime eklenmedi"
+    },
+    "manualCount": "{{count}} dosya manuel olarak AI'dan gizlendi"
+  },
+  "previewReason": {
+    "file_too_big": "Önizleme yok — dosya boyutu sınırı aşıyor",
+    "no_preview_in_file": "Önizleme yok — dosya kaydedilirken gömülü önizleme oluşturulmamış",
+    "parse_failed": "Önizleme yok — dosya formatı tanınamadı",
+    "format_unsupported": "Önizleme bu format için desteklenmiyor",
+    "unknown": "Önizleme yok"
+  }
+}

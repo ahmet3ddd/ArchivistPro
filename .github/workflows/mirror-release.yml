@@ -1,0 +1,85 @@
+name: Mirror Release → ArchivistPro
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Mirror edilecek tag (örn: v2.4.6)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: TAG belirle
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
+      - name: Release varlıklarını indir
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir assets
+          gh release download "$TAG" \
+            --repo "${{ github.repository }}" \
+            --dir assets \
+            --pattern "*.msi" \
+            --pattern "*.exe" \
+            --pattern "*.sig" \
+            --pattern "latest.json"
+          echo "İndirilen dosyalar:"
+          ls -lh assets/
+
+      - name: latest.json URL düzelt (Arsiv-H2 → ArchivistPro)
+        run: |
+          if [[ -f assets/latest.json ]]; then
+            sed -i 's|ahmet3ddd/Arsiv-H2|ahmet3ddd/ArchivistPro|g' assets/latest.json
+            echo "latest.json güncellendi:"
+            cat assets/latest.json
+          else
+            echo "latest.json bulunamadı, atlanıyor."
+          fi
+
+      - name: Release bilgilerini al
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RELEASE_JSON=$(gh release view "$TAG" --repo "${{ github.repository }}" --json name,body,prerelease)
+          echo "RELEASE_NAME=$(echo "$RELEASE_JSON" | jq -r '.name')" >> $GITHUB_ENV
+          echo "RELEASE_PRERELEASE=$(echo "$RELEASE_JSON" | jq -r '.prerelease')" >> $GITHUB_ENV
+          echo "$RELEASE_JSON" | jq -r '.body' > body.md
+
+      - name: ArchivistPro'ya mirror et
+        env:
+          GH_TOKEN: ${{ secrets.ARCHIVISTPRO_PAT }}
+        run: |
+          ASSETS=$(find assets -type f | sort)
+
+          gh release delete "$TAG" --repo ahmet3ddd/ArchivistPro --yes 2>/dev/null || true
+
+          if [[ "$RELEASE_PRERELEASE" == "true" ]]; then
+            EXTRA_FLAGS="--prerelease"
+          else
+            EXTRA_FLAGS="--latest"
+          fi
+
+          gh release create "$TAG" \
+            --repo ahmet3ddd/ArchivistPro \
+            --title "$RELEASE_NAME" \
+            --notes-file body.md \
+            --target main \
+            $EXTRA_FLAGS \
+            $ASSETS
+
+          echo "Mirror tamamlandı: https://github.com/ahmet3ddd/ArchivistPro/releases/tag/$TAG"

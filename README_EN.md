@@ -20,11 +20,11 @@ DWG · MAX · IFC · RVT · SKP · PDF and 95+ format support
 
 | Language | Beginner guide | Pro guide |
 |---|---|---|
-| English | [INSTALL_BEGINNER_EN.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_EN.md) | [INSTALL_PRO_EN.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_EN.md) |
-| Türkçe | [KULLANICI_KURULUM_ACEMI.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_ACEMI.md) | [KULLANICI_KURULUM_PRO.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_PRO.md) |
-| العربية | [INSTALL_BEGINNER_AR.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_AR.md) | [INSTALL_PRO_AR.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_AR.md) |
-| 日本語 | [INSTALL_BEGINNER_JA.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_JA.md) | [INSTALL_PRO_JA.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_JA.md) |
-| 中文 | [INSTALL_BEGINNER_ZH.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_ZH.md) | [INSTALL_PRO_ZH.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_ZH.md) |
+| English | [INSTALL_BEGINNER_EN.html](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_EN.html) | [INSTALL_PRO_EN.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_EN.md) |
+| Türkçe | [KULLANICI_KURULUM_ACEMI.html](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_ACEMI.html) | [KULLANICI_KURULUM_PRO.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_PRO.md) |
+| العربية | [INSTALL_BEGINNER_AR.html](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_AR.html) | [INSTALL_PRO_AR.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_AR.md) |
+| 日本語 | [INSTALL_BEGINNER_JA.html](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_JA.html) | [INSTALL_PRO_JA.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_JA.md) |
+| 中文 | [INSTALL_BEGINNER_ZH.html](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_ZH.html) | [INSTALL_PRO_ZH.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_ZH.md) |
 
 > First-time users: **Beginner guide**. System admins and power users: **Pro guide**.
 
@@ -63,7 +63,7 @@ Helps architecture offices intelligently find and manage **tens of thousands of 
 |---|---|---|
 | Left panel + grid + detail panel | Ask questions about your archive | Switch between multiple archives |
 
-> Full screenshots and feature walkthrough: [Beginner install guide](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_EN.md)
+> Full screenshots and feature walkthrough: [Beginner install guide](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_EN.html)
 
 ---
 

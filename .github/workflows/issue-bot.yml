@@ -8,12 +8,11 @@ on:
 
 jobs:
   respond:
-    # Eğer yorumu botun kendisi yazdıysa sonsuz döngü olmasın diye durdurur
     if: github.event.sender.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Gemini Botunu Çalıştır
-        uses: google-gemini/gemini-github-action@v1
+        uses: google-gemini/gemini-github-action@main
         with:
           api-key: ${{ secrets.GEMINI_API_KEY }}
           model: gemini-2.5-flash

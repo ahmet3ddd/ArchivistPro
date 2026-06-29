@@ -11,40 +11,37 @@ jobs:
     if: github.event.sender.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
-      - name: Gemini API'den Yanıt Al
-        id: gemini
+      - name: Gemini API'den Yanıt Al ve Doğrudan Yorum Yaz
+        uses: actions/github-script@v7
         env:
           GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
           ISSUE_BODY: ${{ github.event.issue.body || github.event.comment.body }}
-        run: |
-          PROMPT="Sen ArchivistPro adlı açık kaynaklı GitHub projesinin resmi yardım botusun. Bu proje; Tauri, Rust, React ve SQLite kullanan, mimari formatları (DWG, MAX, SKP vb.) yapay zeka ile çevrimdışı indeksleyen bir masaüstü arşiv yöneticisidir. Kural 1: Bu proje şu an Stabil / Mevcut Haliyle Kararlı moddadır. Acil ve kritik bir hata (crash) olmadığı sürece yeni özellik eklenmeyecektir. Kural 2: Gelen mesaj hangi dildeyse o dilde kibar, profesyonel ve net bir cevap ver. Kural 3: Kullanıcıya teşekkür et, sorusunu anladığını belirt. Eğer bir hata bildiriyorsa Geliştiricimiz en kısa sürede inceleyecektir de. Eğer yeni özellik istiyorsa projenin dondurulduğunu kibarca açıkla. Gelen Kullanıcı Mesajı: $ISSUE_BODY"
-          
-          JSON_STRING=$(jq -n --arg prompt "$PROMPT" '{contents: [{parts: [{text: $prompt}]}]}')
-          
-          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}" \
-            -H "Content-Type: application/json" \
-            -d "$JSON_STRING")
-          
-          # Yanıtı doğrudan geçici bir dosyaya güvenli bir şekilde kaydet (Çıktı değişkeni kullanmıyoruz)
-          echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text' > reply.txt
-          
-          if [ ! -s reply.txt ] || [ "$(cat reply.txt)" = "null" ]; then
-            echo "API Hatası:"
-            echo "$RESPONSE"
-            exit 1
-          fi
-
-      - name: Yanıt Dosyasını Oku
-        id: read_reply
-        run: |
-          # Dosya içeriğini GitHub'ın güvenli çok satırlı formatında oku
-          echo "bot_message<<EOF" >> $GITHUB_ENV
-          cat reply.txt >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Yorumu Resmi Kütüphane ile Yapıştır
-        uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ github.event.issue.number }}
-          body: ${{ env:bot_message }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { GEMINI_KEY, ISSUE_BODY } = process.env;
+            
+            const prompt = `Sen ArchivistPro adlı açık kaynaklı GitHub projesinin resmi yardım botusun. Bu proje; Tauri, Rust, React ve SQLite kullanan, mimari formatları (DWG, MAX, SKP vb.) yapay zeka ile çevrimdışı indeksleyen bir masaüstü arşiv yöneticisidir. Kural 1: Bu proje şu an Stabil / Mevcut Haliyle Kararlı moddadır. Acil ve kritik bir hata (crash) olmadığı sürece yeni özellik eklenmeyecektir. Kural 2: Gelen mesaj hangi dildeyse o dilde kibar, profesyonel ve net bir cevap ver. Kural 3: Kullanıcıya teşekkür et, sorusunu anladığını belirt. Eğer bir hata bildiriyorsa Geliştiricimiz en kısa sürede inceleyecektir de. Eğer yeni özellik istiyorsa projenin dondurulduğunu kibarca açıkla. Gelen Kullanıcı Mesajı: ${ISSUE_BODY}`;
+
+            try {
+              const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+              });
+              
+              const data = await res.json();
+              const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+              
+              if (!botReply) {
+                throw new Error("Gemini geçerli bir yanıt dönmedi: " + JSON.stringify(data));
+              }
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: botReply
+              });
+            } catch (error) {
+              core.setFailed("İşlem başarısız oldu: " + error.message);
+            }

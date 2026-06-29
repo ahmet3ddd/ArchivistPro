@@ -11,17 +11,36 @@ jobs:
     if: github.event.sender.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
-      - name: Gemini Botunu Çalıştır
-        uses: google-gemini/gemini-github-action@main
-        with:
-          api-key: ${{ secrets.GEMINI_API_KEY }}
-          model: gemini-2.5-flash
-          prompt: |
-            Sen "ArchivistPro" adlı açık kaynaklı GitHub projesinin resmi yardım botusun.
-            Bu proje; Tauri, Rust, React ve SQLite kullanan, mimari formatları (DWG, MAX, SKP vb.) yapay zeka ile çevrimdışı indeksleyen bir masaüstü arşiv yöneticisidir.
-            
-            Kural 1: Bu proje şu an "Stabil / Mevcut Haliyle Kararlı" moddadır. Acil ve kritik bir hata (crash) olmadığı sürece yeni özellik eklenmeyecektir.
-            Kural 2: Gelen mesaj hangi dildeyse (Türkçe veya İngilizce) o dilde kibar, profesyonel ve net bir cevap ver.
-            Kural 3: Kullanıcıya teşekkür et, sorusunu/önerisini anladığını belirt. Eğer bir hata bildiriyorsa "Geliştiricimiz en kısa sürede inceleyecektir" de. Eğer yeni özellik istiyorsa projenin dondurulduğunu kibarca açıkla.
-            
-            Gelen Mesaj: ${{ github.event.issue.body || github.event.comment.body }}
+      - name: Gemini API'den Yanıt Al ve GitHub'a Yaz
+        env:
+          GEMINI_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ISSUE_BODY: ${{ github.event.issue.body || github.event.comment.body }}
+          COMMENT_URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Promptu ve mesajı güvenli bir şekilde JSON formatına hazırla
+          PROMPT="Sen ArchivistPro adlı açık kaynaklı GitHub projesinin resmi yardım botusun. Bu proje; Tauri, Rust, React ve SQLite kullanan, mimari formatları (DWG, MAX, SKP vb.) yapay zeka ile çevrimdışı indeksleyen bir masaüstü arşiv yöneticisidir. Kural 1: Bu proje şu an Stabil / Mevcut Haliyle Kararlı moddadır. Acil ve kritik bir hata (crash) olmadığı sürece yeni özellik eklenmeyecektir. Kural 2: Gelen mesaj hangi dildeyse o dilde kibar, profesyonel ve net bir cevap ver. Kural 3: Kullanıcıya teşekkür et, sorusunu anladığını belirt. Eğer bir hata bildiriyorsa Geliştiricimiz en kısa sürede inceleyecektir de. Eğer yeni özellik istiyorsa projenin dondurulduğunu kibarca açıkla. Gelen Kullanıcı Mesajı: $ISSUE_BODY"
+          
+          # JSON verisini escape et
+          JSON_STRING=$(jq -n --arg prompt "$PROMPT" '{contents: [{parts: [{text: $prompt}]}]}')
+          
+          # Gemini API'ye istek at
+          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}" \
+            -H "Content-Type: application/json" \
+            -d "$JSON_STRING")
+          
+          # Yanıtın içinden sadece metni ayıkla
+          BOT_REPLY=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
+          
+          # Eğer bot boş veya hatalı döndüyse durdur
+          if [ "$BOT_REPLY" = "null" ] || [ -z "$BOT_REPLY" ]; then
+            echo "API Hatası veya geçersiz yanıt:"
+            echo "$RESPONSE"
+            exit 1
+          fi
+          
+          # GitHub Issue'ya otomatik yorum olarak yazdır
+          jq -n --arg body "$BOT_REPLY" '{body: $body}' | curl -s -X POST "$COMMENT_URL" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @-

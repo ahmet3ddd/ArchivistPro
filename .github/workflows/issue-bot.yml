@@ -25,26 +25,26 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$JSON_STRING")
           
-          BOT_REPLY=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
+          # Yanıtı doğrudan geçici bir dosyaya güvenli bir şekilde kaydet (Çıktı değişkeni kullanmıyoruz)
+          echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text' > reply.txt
           
-          if [ "$BOT_REPLY" = "null" ] || [ -z "$BOT_REPLY" ]; then
+          if [ ! -s reply.txt ] || [ "$(cat reply.txt)" = "null" ]; then
             echo "API Hatası:"
             echo "$RESPONSE"
             exit 1
           fi
-          
-          # Yanıtı sonraki adımda kullanmak üzere güvenli bir şekilde kaydet
-          echo "reply<<EOF" >> $GITHUB_OUTPUT
-          echo "$BOT_REPLY" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Yorumu Güvenli Şekilde Gönder
-        uses: actions/github-script@v7
+      - name: Yanıt Dosyasını Oku
+        id: read_reply
+        run: |
+          # Dosya içeriğini GitHub'ın güvenli çok satırlı formatında oku
+          echo "bot_message<<EOF" >> $GITHUB_ENV
+          cat reply.txt >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Yorumu Resmi Kütüphane ile Yapıştır
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `${{ steps.gemini.outputs.reply }}`
-            })
+          issue-number: ${{ github.event.issue.number }}
+          body: ${{ env:bot_message }}
+          token: ${{ secrets.GITHUB_TOKEN }}

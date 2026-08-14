@@ -1,0 +1,21 @@
+name: Docs Quality
+
+# Dokuman kalite kapilari — tekrarlayan drift sinifina karsi nobetci:
+# surum tutarliligi · eski repo adi yasagi · kirik goreli link/gorsel.
+# Betik yerelde de ayni sekilde kosar: `node scripts/docs_quality.mjs`
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/docs_quality.mjs

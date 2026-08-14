@@ -5,7 +5,7 @@
 > هذا الدليل لك إذا كانت هذه المرة الأولى التي تثبت فيها برنامجاً على جهازك أو إذا كانت لديك خبرة محدودة في التثبيت. كل خطوة موضحة بلقطة شاشة؛ لا مصطلحات تقنية، لا معرفة مسبقة مطلوبة.
 >
 > للحصول على ملخص أكثر إيجازاً/تقنية، راجع
-> **[دليل التثبيت للمحترفين](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_AR.md)**.
+> **[دليل التثبيت للمحترفين](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_AR.md)**.
 
 ---
 
@@ -45,10 +45,10 @@
 
 1. افتح متصفح الويب (Chrome, Edge, Firefox).
 2. اذهب إلى:
-   **https://github.com/ahmet3ddd/Arsiv-H2/releases/latest**
+   **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 3. تحت قسم "**Assets**" سترى الملفات. نزّل **أحدها**:
-   - **`ArchivistPro_3.0.0_x64_en-US.msi`** ← مُوصى به
-   - `ArchivistPro_3.0.0_x64-setup.exe` ← بديل
+   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← مُوصى به
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← بديل
 
 > **MSI أم EXE:** كلاهما يثبت البرنامج نفسه. MSI أكثر شيوعاً وأسهل في الإدارة على أجهزة الشركات. أي منهما مناسب.
 
@@ -60,7 +60,7 @@
 
 ![معالج التثبيت](img/install/installer-wizard.png)
 
-1. **انقر نقراً مزدوجاً** على الملف الذي نزّلته (`ArchivistPro_3.0.0_x64_en-US.msi`). عادة يكون في مجلد **التنزيلات**.
+1. **انقر نقراً مزدوجاً** على الملف الذي نزّلته (`ArchivistPro_3.3.3_x64-setup.exe`). عادة يكون في مجلد **التنزيلات**.
 2. قد يسألك Windows: "*هل تريد السماح لهذا التطبيق بإجراء تغييرات على جهازك؟*" → اختر **نعم**.
 3. في نافذة المثبت:
    - انقر **التالي**
@@ -189,7 +189,7 @@
 2. جرب المثبت مرة أخرى.
 3. إذا فشل مجدداً، قد يكون مضاد الفيروسات يحظره؛ أضف ArchivistPro إلى قائمة الاستثناءات.
 4. إذا استمرت المشكلة، أبلغ عن المشكلة في GitHub:
-   https://github.com/ahmet3ddd/Arsiv-H2/issues
+   https://github.com/ahmet3ddd/ArchivistPro/issues
 
 ### كيف أزيل البرنامج؟
 
@@ -202,8 +202,8 @@
 
 - **داخل التطبيق:** اضغط **F1** أو انقر على أيقونة **؟ المساعدة** في أسفل اليسار. ستجد 4 تبويبات: دليل المستخدم، دليل المسؤول (إذا كان لديك حقوق)، ماذا يمكنني أن أفعل؟، ملاحظات الإصدار.
 - **التثبيت المهني:** للتثبيت الصامت ونشر الشبكة ومتغيرات البيئة وما إلى ذلك، راجع
-  [دليل التثبيت للمحترفين](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_AR.md).
-- **ملاحظات الإصدار:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/CHANGELOG.md) · [جميع ملفات الإصدار](https://github.com/ahmet3ddd/ArchivistPro/releases/tag/v3.0.0)
+  [دليل التثبيت للمحترفين](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_AR.md).
+- **ملاحظات الإصدار:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [جميع ملفات الإصدار](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
 
 أرشفة سعيدة! 🎯
 

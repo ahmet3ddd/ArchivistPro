@@ -4,7 +4,7 @@
 >
 > 本指南面向系统管理员、IT 专业人员和部署到多个工作站的人员。涵盖静默安装、网络部署、环境变量和文件位置。
 >
-> 面向最终用户的指南，请参阅 **[初学者安装指南](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_ZH.md)**。
+> 面向最终用户的指南，请参阅 **[初学者安装指南](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_BEGINNER_ZH.md)**。
 
 ---
 
@@ -34,26 +34,26 @@
 
 ```cmd
 :: 默认安装，日志写入文件
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet /norestart /log install.log
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet /norestart /log install.log
 
 :: 自定义目标位置
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
 
 :: 安装到所有用户 (每台机器)
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi ALLUSERS=1 /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi ALLUSERS=1 /quiet
 
 :: 测试时禁止重启
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet REBOOT=ReallySuppress
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet REBOOT=ReallySuppress
 ```
 
 ### 使用 NSIS (.exe)
 
 ```cmd
 :: 静默安装
-ArchivistPro_3.0.0_x64-setup.exe /S
+ArchivistPro_3.3.3_x64-setup.exe /S
 
 :: 自定义目标
-ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
+ArchivistPro_3.3.3_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 ```
 
 > **注:** 对于 NSIS 版本，`/D=` 参数必须是**最后**一个参数且**不能加引号** (NSIS 要求)。
@@ -80,7 +80,7 @@ ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 1. 将 MSI 复制到网络共享 (`\\fileserver\deploy\ArchivistPro\`)
 2. **Group Policy Management** → 相关 OU → **Computer Configuration → Policies → Software Settings → Software Installation** → 新包
 3. 包类型: 选择 **Assigned** (自动安装)
-4. 输入 UNC 路径: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.0.0_x64_en-US.msi`
+4. 输入 UNC 路径: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.3.3_x64_en-US.msi`
 5. 目标 OU 中的机器在重启后自动安装
 
 ### 3.2. Intune / MEM (Microsoft Endpoint Manager)
@@ -370,7 +370,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 ## 12. 许可和法律
 
 - **许可证:** MIT (参阅仓库根目录中的 `LICENSE`)
-- **源代码:** https://github.com/ahmet3ddd/Arsiv-H2
+- **源代码:** https://github.com/ahmet3ddd/ArchivistPro
 - **责任:** 软件按"原样"提供，没有任何保证。在生产部署之前与测试组验证
 - **遥测:** 无。不收集使用数据；不向任何服务器发送任何内容
 
@@ -378,7 +378,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 
 ## 13. 支持和反馈
 
-- **GitHub Issues:** https://github.com/ahmet3ddd/Arsiv-H2/issues
+- **GitHub Issues:** https://github.com/ahmet3ddd/ArchivistPro/issues
 - **应用内:** **设置 → 开发者 → "向开发者发送反馈"** (崩溃转储自动附加，可选)
 
 ---

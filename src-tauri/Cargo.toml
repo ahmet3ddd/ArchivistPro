@@ -4,7 +4,7 @@ version = "3.0.0"
 description = "ArchivistPro — Mimari Dosya Arşiv & Akıllı Arama"
 authors = ["ArchivistPro"]
 license = "MIT"
-repository = "https://github.com/ahmet3ddd/Arsiv-H2"
+repository = "https://github.com/ahmet3ddd/ArchivistPro"
 edition = "2021"
 rust-version = "1.77.2"
 

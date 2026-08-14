@@ -4,7 +4,7 @@
 >
 > 如果您是第一次在计算机上安装程序或安装经验有限，本指南适合您。每个步骤都配有截图说明；没有专业术语，无需先备知识。
 >
-> 如需更简洁/技术性的摘要，请参阅 **[专业安装指南](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_ZH.md)**。
+> 如需更简洁/技术性的摘要，请参阅 **[专业安装指南](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_ZH.md)**。
 
 ---
 
@@ -43,10 +43,10 @@
 ![GitHub Releases 页面](img/install/github-releases.png)
 
 1. 打开您的 Web 浏览器 (Chrome、Edge、Firefox)
-2. 转到地址: **https://github.com/ahmet3ddd/Arsiv-H2/releases/latest**
+2. 转到地址: **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 3. 在"**Assets**"部分下您将看到文件。下载**其中之一**:
-   - **`ArchivistPro_3.0.0_x64_en-US.msi`** ← 推荐
-   - `ArchivistPro_3.0.0_x64-setup.exe` ← 备选
+   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← 推荐
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← 备选
 
 > **MSI 与 EXE 的区别:** 两者安装相同的程序。MSI 更常见，在公司计算机上更易于管理。下载哪一个都可以。
 
@@ -58,7 +58,7 @@
 
 ![安装向导](img/install/installer-wizard.png)
 
-1. **双击**您下载的文件 (`ArchivistPro_3.0.0_x64_en-US.msi`)。通常位于**下载**文件夹中
+1. **双击**您下载的文件 (`ArchivistPro_3.3.3_x64-setup.exe`)。通常位于**下载**文件夹中
 2. Windows 可能会询问: "*您是否要允许此应用对您的设备进行更改？*" → 选择**是**
 3. 在安装程序窗口中:
    - 单击**下一步**
@@ -186,7 +186,7 @@
 1. 右键单击您下载的文件 → **属性** → 如果存在"**解除阻止**"复选框，请勾选 → **确定**
 2. 再次尝试安装
 3. 如果仍然失败，您的杀毒软件可能正在阻止；将 ArchivistPro 添加到例外列表
-4. 如果问题仍然存在，请在 GitHub Issues 页面上提交问题: https://github.com/ahmet3ddd/Arsiv-H2/issues
+4. 如果问题仍然存在，请在 GitHub Issues 页面上提交问题: https://github.com/ahmet3ddd/ArchivistPro/issues
 
 ### 我想卸载程序，怎么做？
 
@@ -198,8 +198,8 @@
 ## 8. 更多信息
 
 - **应用内:** 按 **F1** 键或单击左下角的 **? 帮助**图标。您会找到 4 个标签页: 用户指南、管理员指南 (如果您有权限)、我能做什么？、发布说明
-- **专业安装:** 有关静默安装、网络部署、环境变量等的信息，请参阅 [专业安装指南](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_ZH.md)
-- **发布说明:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/CHANGELOG.md) · [所有发布资源](https://github.com/ahmet3ddd/ArchivistPro/releases/tag/v3.0.0)
+- **专业安装:** 有关静默安装、网络部署、环境变量等的信息，请参阅 [专业安装指南](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_ZH.md)
+- **发布说明:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [所有发布资源](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
 
 愉快归档! 🎯
 

@@ -7,7 +7,7 @@
 > teknik terim yok, çok şey bilmenize gerek yok.
 >
 > Daha hızlı/teknik bir özet istiyorsanız:
-> **[Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_PRO.md)** dosyasına bakın.
+> **[Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/KULLANICI_KURULUM_PRO.md)** dosyasına bakın.
 
 ---
 
@@ -53,11 +53,11 @@ dosyalarınız bilgisayarınızdan dışarı gönderilmez.
 
 1. İnternet tarayıcınızı (Chrome, Edge, Firefox) açın.
 2. Şu adrese gidin:
-   **https://github.com/ahmet3ddd/Arsiv-H2/releases/latest**
+   **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 3. "**Assets**" başlığı altında dosyaları görürsünüz. Şu iki dosyadan
    **birini** seçip indirin:
-   - **`ArchivistPro_3.0.0_x64_en-US.msi`** ← Önerilen
-   - `ArchivistPro_3.0.0_x64-setup.exe` ← Alternatif
+   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← Önerilen
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternatif
 
 > **MSI ile EXE arasındaki fark:** İkisi de aynı programı kurar. MSI
 > daha yaygın kullanılır ve şirket bilgisayarlarında daha kolay yönetilir.
@@ -73,7 +73,7 @@ dosyalarınız bilgisayarınızdan dışarı gönderilmez.
 
 ![Kurulum sihirbazı](img/install/installer-wizard.png)
 
-1. İndirdiğiniz dosyaya (`ArchivistPro_3.0.0_x64_en-US.msi`) **çift
+1. İndirdiğiniz dosyaya (`ArchivistPro_3.3.3_x64-setup.exe`) **çift
    tıklayın**. Genelde **İndirilenler** klasöründe bulunur.
 2. Windows size sorabilir: "*Bu uygulamanın PC'nizde değişiklik yapmasına
    izin vermek istiyor musunuz?*" → **Evet** seçin.
@@ -240,7 +240,7 @@ mümkündür. v3.0.0 sonrası yedekler hem `archivist.db` hem
 3. Hâlâ çalışmıyorsa antivirüs programınız engellemiş olabilir; antivirüse
    ArchivistPro'yu istisna olarak ekleyin.
 4. Sorun devam ederse GitHub Issues sayfasına yazın:
-   https://github.com/ahmet3ddd/Arsiv-H2/issues
+   https://github.com/ahmet3ddd/ArchivistPro/issues
 
 ### Programı kaldırmak istiyorum, nasıl?
 
@@ -257,8 +257,8 @@ Windows **Ayarlar > Uygulamalar > Yüklü uygulamalar** menüsünden
   ikonuna tıklayın. 4 sekme bulacaksınız: Kullanım Kılavuzu, Yönetici
   Kılavuzu (yetkiniz varsa), Ne Yapabilirim?, Sürüm Notları.
 - **Profesyonel kurulum:** Sessiz kurulum, ağ deployment, ortam
-  değişkenleri vb. için [Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_PRO.md)
-- **Sürüm değişiklikleri:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/CHANGELOG.md) · [Tüm dağıtım dosyaları](https://github.com/ahmet3ddd/ArchivistPro/releases/tag/v3.0.0)
+  değişkenleri vb. için [Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/KULLANICI_KURULUM_PRO.md)
+- **Sürüm değişiklikleri:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [Tüm dağıtım dosyaları](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
 
 İyi çalışmalar! 🎯
 

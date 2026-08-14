@@ -14,8 +14,8 @@ Thank you for your interest in contributing! This guide will help you get starte
 ### Setup
 
 ```bash
-git clone https://github.com/ahmet3ddd/Arsiv-H2.git
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 npm install
 npm run tauri dev
 ```
@@ -79,7 +79,7 @@ Current stats: 2038 tests, coverage ~64% stmt / ~79% functions.
 
 ## Reporting Issues
 
-- Use [GitHub Issues](https://github.com/ahmet3ddd/Arsiv-H2/issues)
+- Use [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - Include OS version, app version, and steps to reproduce
 - For security vulnerabilities, see [SECURITY.md](SECURITY.md)
 

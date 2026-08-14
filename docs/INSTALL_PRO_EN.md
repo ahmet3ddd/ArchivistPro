@@ -7,7 +7,7 @@
 > deployment, environment variables, and file locations.
 >
 > For an end-user oriented guide, see
-> **[Beginner Install Guide](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_EN.md)**.
+> **[Beginner Install Guide](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_BEGINNER_EN.md)**.
 
 ---
 
@@ -42,26 +42,26 @@
 
 ```cmd
 :: Default install, log to file
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet /norestart /log install.log
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet /norestart /log install.log
 
 :: Custom target location
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
 
 :: Per-machine install (all users)
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi ALLUSERS=1 /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi ALLUSERS=1 /quiet
 
 :: Suppress reboot for testing
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet REBOOT=ReallySuppress
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet REBOOT=ReallySuppress
 ```
 
 ### With NSIS (.exe)
 
 ```cmd
 :: Silent install
-ArchivistPro_3.0.0_x64-setup.exe /S
+ArchivistPro_3.3.3_x64-setup.exe /S
 
 :: Custom target
-ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
+ArchivistPro_3.3.3_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 ```
 
 > **Note:** For the NSIS version, the `/D=` parameter must be the
@@ -93,7 +93,7 @@ For multi-machine deployment in Active Directory:
    package.
 3. Choose package type: **Assigned** (automatic install).
 4. Enter the UNC path:
-   `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.0.0_x64_en-US.msi`.
+   `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.3.3_x64_en-US.msi`.
 5. Computers in the target OU install automatically after restart.
 
 ### 3.2. Intune / MEM (Microsoft Endpoint Manager)
@@ -405,7 +405,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 ## 12. License and Legal
 
 - **License:** MIT (see `LICENSE` at the repo root)
-- **Source code:** https://github.com/ahmet3ddd/Arsiv-H2
+- **Source code:** https://github.com/ahmet3ddd/ArchivistPro
 - **Liability:** Software is provided "as is" without warranty.
   Validate with a test group before production deployment.
 - **Telemetry:** None. No usage data is collected; nothing is sent to
@@ -415,7 +415,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 
 ## 13. Support and Feedback
 
-- **GitHub Issues:** https://github.com/ahmet3ddd/Arsiv-H2/issues
+- **GitHub Issues:** https://github.com/ahmet3ddd/ArchivistPro/issues
 - **In-app:** **Settings → Developer → "Send Feedback to Developer"**
   (crash dump auto-attached, optional).
 

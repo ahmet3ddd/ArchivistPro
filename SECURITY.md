@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability in ArchivistPro, please report it responsibly.
 
-**Email:** Open a [GitHub Security Advisory](https://github.com/ahmet3ddd/Arsiv-H2/security/advisories/new) (preferred) or create a private issue.
+**Email:** Open a [GitHub Security Advisory](https://github.com/ahmet3ddd/ArchivistPro/security/advisories/new) (preferred) or create a private issue.
 
 Please include:
 - Description of the vulnerability

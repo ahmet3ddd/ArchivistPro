@@ -19,7 +19,7 @@
 
 ## 2. Kurulum Dosyasını İndirin
 
-- GitHub Releases sayfasına gidin: `https://github.com/ahmet3ddd/Arsiv-H2/releases/latest`
+- GitHub Releases sayfasına gidin: `https://github.com/ahmet3ddd/ArchivistPro/releases/latest`
 - **`ArchivistPro_*_x64_en-US.msi`** (MSI, önerilen) veya **`ArchivistPro_*_x64-setup.exe`** (EXE) dosyasını indirin.
 
 > `.sig` uzantılı dosyaları indirmenize gerek yoktur; bunlar otomatik güncelleme doğrulaması içindir.

@@ -5,7 +5,7 @@
 > هذا الدليل لمسؤولي الأنظمة ومتخصصي تكنولوجيا المعلومات والأشخاص الذين ينشرون البرنامج على محطات عمل متعددة. يشمل التثبيت الصامت ونشر الشبكة ومتغيرات البيئة ومواقع الملفات.
 >
 > لدليل موجه للمستخدم النهائي، راجع
-> **[دليل التثبيت للمبتدئين](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_AR.md)**.
+> **[دليل التثبيت للمبتدئين](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_BEGINNER_AR.md)**.
 
 ---
 
@@ -35,26 +35,26 @@
 
 ```cmd
 :: تثبيت افتراضي، سجل إلى ملف
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet /norestart /log install.log
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet /norestart /log install.log
 
 :: موقع هدف مخصص
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
 
 :: تثبيت لكل الأجهزة (جميع المستخدمين)
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi ALLUSERS=1 /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi ALLUSERS=1 /quiet
 
 :: قمع إعادة التشغيل للاختبار
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet REBOOT=ReallySuppress
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet REBOOT=ReallySuppress
 ```
 
 ### مع NSIS (.exe)
 
 ```cmd
 :: تثبيت صامت
-ArchivistPro_3.0.0_x64-setup.exe /S
+ArchivistPro_3.3.3_x64-setup.exe /S
 
 :: هدف مخصص
-ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
+ArchivistPro_3.3.3_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 ```
 
 > **ملاحظة:** بالنسبة لإصدار NSIS، يجب أن يكون معامل `/D=` **آخر** وسيطة و **غير مقتبس** (متطلب NSIS).
@@ -81,7 +81,7 @@ ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 1. انسخ MSI إلى مشاركة شبكة (`\\fileserver\deploy\ArchivistPro\`).
 2. **Group Policy Management** → OU ذو الصلة → **Computer Configuration → Policies → Software Settings → Software Installation** → حزمة جديدة.
 3. اختر نوع الحزمة: **Assigned** (تثبيت تلقائي).
-4. أدخل مسار UNC: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.0.0_x64_en-US.msi`.
+4. أدخل مسار UNC: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.3.3_x64_en-US.msi`.
 5. تثبت الأجهزة في OU الهدف تلقائياً بعد إعادة التشغيل.
 
 ### 3.2. Intune / MEM (Microsoft Endpoint Manager)
@@ -373,7 +373,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 ## 12. الترخيص والقانون
 
 - **الترخيص:** MIT (انظر `LICENSE` في جذر المستودع)
-- **الكود المصدري:** https://github.com/ahmet3ddd/Arsiv-H2
+- **الكود المصدري:** https://github.com/ahmet3ddd/ArchivistPro
 - **المسؤولية:** البرنامج مقدم "كما هو" بدون ضمان. تحقق مع مجموعة اختبار قبل النشر الإنتاجي.
 - **Telemetry:** لا شيء. لا يتم جمع بيانات استخدام؛ لا شيء يُرسل إلى أي خادم.
 
@@ -381,7 +381,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 
 ## 13. الدعم والملاحظات
 
-- **GitHub Issues:** https://github.com/ahmet3ddd/Arsiv-H2/issues
+- **GitHub Issues:** https://github.com/ahmet3ddd/ArchivistPro/issues
 - **داخل التطبيق:** **الإعدادات → المطور → "إرسال ملاحظات للمطور"** (تقرير الانهيار مرفق تلقائياً، اختياري).
 
 ---

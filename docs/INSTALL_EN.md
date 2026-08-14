@@ -55,8 +55,8 @@ Tauri requires C++ build tools on Windows. If [Visual Studio Build Tools](https:
 
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 
 # Install dependencies
 npm install

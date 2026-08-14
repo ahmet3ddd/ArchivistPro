@@ -7,7 +7,7 @@
 > step is shown with a screenshot; no jargon, no assumed knowledge.
 >
 > For a more concise / technical summary, see
-> **[Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_EN.md)**.
+> **[Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_EN.md)**.
 
 ---
 
@@ -52,10 +52,10 @@ computer.
 
 1. Open your web browser (Chrome, Edge, Firefox).
 2. Go to:
-   **https://github.com/ahmet3ddd/Arsiv-H2/releases/latest**
+   **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 3. Under "**Assets**" you see the files. Download **one** of these:
-   - **`ArchivistPro_3.0.0_x64_en-US.msi`** ← Recommended
-   - `ArchivistPro_3.0.0_x64-setup.exe` ← Alternative
+   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← Recommended
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternative
 
 > **MSI vs EXE:** Both install the same program. MSI is more common and
 > easier to manage on company computers. Either is fine.
@@ -70,7 +70,7 @@ computer.
 
 ![Installer wizard](img/install/installer-wizard.png)
 
-1. **Double-click** the file you downloaded (`ArchivistPro_3.0.0_x64_en-US.msi`).
+1. **Double-click** the file you downloaded (`ArchivistPro_3.3.3_x64-setup.exe`).
    Usually it's in your **Downloads** folder.
 2. Windows may ask: "*Do you want to allow this app to make changes to
    your device?*" → choose **Yes**.
@@ -240,7 +240,7 @@ Storage**. With v3.0.0, backups include both `archivist.db` and
 3. If it still fails, your antivirus may be blocking; add ArchivistPro
    to the exceptions list.
 4. If the problem persists, file an issue at GitHub:
-   https://github.com/ahmet3ddd/Arsiv-H2/issues
+   https://github.com/ahmet3ddd/ArchivistPro/issues
 
 ### How do I uninstall the program?
 
@@ -258,8 +258,8 @@ Open Windows **Settings > Apps > Installed apps**, find
   rights), What Can I Do?, Release Notes.
 - **Pro installation:** for silent install, network deployment,
   environment variables, etc., see
-  [Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_EN.md).
-- **Release notes:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/CHANGELOG.md) · [All release assets](https://github.com/ahmet3ddd/ArchivistPro/releases/tag/v3.0.0)
+  [Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_EN.md).
+- **Release notes:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [All release assets](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
 
 Happy archiving! 🎯
 

@@ -4,7 +4,7 @@
 >
 > このガイドはシステム管理者、IT プロフェッショナル、複数ワークステーションへの展開担当者向けです。サイレントインストール、ネットワーク展開、環境変数、ファイルの場所をカバーします。
 >
-> エンドユーザー向けガイドは **[初心者向けインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_BEGINNER_JA.md)** を参照。
+> エンドユーザー向けガイドは **[初心者向けインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_BEGINNER_JA.md)** を参照。
 
 ---
 
@@ -34,26 +34,26 @@
 
 ```cmd
 :: デフォルトインストール、ログをファイルに
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet /norestart /log install.log
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet /norestart /log install.log
 
 :: カスタムターゲット位置
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
 
 :: 全マシンインストール (全ユーザー)
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi ALLUSERS=1 /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi ALLUSERS=1 /quiet
 
 :: テスト用に再起動を抑制
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet REBOOT=ReallySuppress
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet REBOOT=ReallySuppress
 ```
 
 ### NSIS (.exe) で
 
 ```cmd
 :: サイレントインストール
-ArchivistPro_3.0.0_x64-setup.exe /S
+ArchivistPro_3.3.3_x64-setup.exe /S
 
 :: カスタムターゲット
-ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
+ArchivistPro_3.3.3_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 ```
 
 > **注:** NSIS バージョンでは、`/D=` パラメータは**最後**の引数で、**引用符なし**である必要があります (NSIS の要件)。
@@ -80,7 +80,7 @@ Active Directory 環境で複数マシンに展開:
 1. MSI をネットワーク共有 (`\\fileserver\deploy\ArchivistPro\`) にコピー
 2. **Group Policy Management** → 関連 OU → **Computer Configuration → Policies → Software Settings → Software Installation** → 新しいパッケージ
 3. パッケージタイプ: **Assigned** を選択 (自動インストール)
-4. UNC パスを入力: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.0.0_x64_en-US.msi`
+4. UNC パスを入力: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.3.3_x64_en-US.msi`
 5. ターゲット OU のマシンは再起動後に自動インストール
 
 ### 3.2. Intune / MEM (Microsoft Endpoint Manager)
@@ -370,7 +370,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 ## 12. ライセンスと法律
 
 - **ライセンス:** MIT (リポジトリルートの `LICENSE` を参照)
-- **ソースコード:** https://github.com/ahmet3ddd/Arsiv-H2
+- **ソースコード:** https://github.com/ahmet3ddd/ArchivistPro
 - **責任:** ソフトウェアは「現状のまま」、保証なしで提供されます。本番展開前にテストグループで検証してください
 - **テレメトリ:** なし。使用データは収集されず、サーバーに何も送信されません
 
@@ -378,7 +378,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 
 ## 13. サポートとフィードバック
 
-- **GitHub Issues:** https://github.com/ahmet3ddd/Arsiv-H2/issues
+- **GitHub Issues:** https://github.com/ahmet3ddd/ArchivistPro/issues
 - **アプリ内:** **設定 → 開発者 → "開発者にフィードバック送信"** (クラッシュダンプ自動添付、オプション)
 
 ---

@@ -7,7 +7,7 @@
 > değişkenleri ve dosya konumları kapsanır.
 >
 > Yeni başlayan kullanıcı rehberi için:
-> **[Acemi Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/KULLANICI_KURULUM_ACEMI.md)**
+> **[Acemi Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/KULLANICI_KURULUM_ACEMI.md)**
 
 ---
 
@@ -41,26 +41,26 @@
 
 ```cmd
 :: Default kurulum, log dosyasına yaz
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet /norestart /log install.log
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet /norestart /log install.log
 
 :: Özel hedef konumla
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi INSTALLDIR="D:\Apps\ArchivistPro" /quiet
 
 :: Tüm kullanıcılar için kur (per-machine)
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi ALLUSERS=1 /quiet
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi ALLUSERS=1 /quiet
 
 :: Geri yükleme (rollback) test için
-msiexec /i ArchivistPro_3.0.0_x64_en-US.msi /quiet REBOOT=ReallySuppress
+msiexec /i ArchivistPro_3.3.3_x64_en-US.msi /quiet REBOOT=ReallySuppress
 ```
 
 ### NSIS (.exe) ile
 
 ```cmd
 :: Sessiz kurulum
-ArchivistPro_3.0.0_x64-setup.exe /S
+ArchivistPro_3.3.3_x64-setup.exe /S
 
 :: Özel hedef
-ArchivistPro_3.0.0_x64-setup.exe /S /D=C:\Apps\ArchivistPro
+ArchivistPro_3.3.3_x64-setup.exe /S /D=C:\Apps\ArchivistPro
 ```
 
 > **Not:** NSIS sürüm `/D=` parametresi argüman listesinin **en sonunda**
@@ -90,7 +90,7 @@ Active Directory ortamında çoklu makineye dağıtım için:
 2. **Group Policy Management** → ilgili OU → **Computer Configuration →
    Policies → Software Settings → Software Installation** → Yeni paket.
 3. Paket türü: **Assigned** seçin (otomatik kurulum).
-4. UNC yolu girin: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.0.0_x64_en-US.msi`.
+4. UNC yolu girin: `\\fileserver\deploy\ArchivistPro\ArchivistPro_3.3.3_x64_en-US.msi`.
 5. Hedef OU'daki bilgisayarlar restart sonrası otomatik kurulum yapar.
 
 ### 3.2. Intune / MEM (Microsoft Endpoint Manager)
@@ -403,7 +403,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 ## 12. Lisans ve Yasal
 
 - **Lisans:** MIT (bkz. repo kökündeki `LICENSE`)
-- **Kaynak kod:** https://github.com/ahmet3ddd/Arsiv-H2
+- **Kaynak kod:** https://github.com/ahmet3ddd/ArchivistPro
 - **Sorumluluk:** Yazılım "olduğu gibi" sağlanır, herhangi bir garanti
   yoktur. Üretim ortamında dağıtmadan önce test grubuyla doğrulayın.
 - **Telemetri:** Yok. Kullanım verisi toplamaz, herhangi bir sunucuya
@@ -413,7 +413,7 @@ rmdir /s /q "%LOCALAPPDATA%\com.archivistpro.desktop"
 
 ## 13. Destek ve Geri Bildirim
 
-- **GitHub Issues:** https://github.com/ahmet3ddd/Arsiv-H2/issues
+- **GitHub Issues:** https://github.com/ahmet3ddd/ArchivistPro/issues
 - **Uygulama içi:** **Ayarlar → Geliştirici → "Geliştiriciye Bildir"**
   (crash dump otomatik eklenir, isteğe bağlı).
 

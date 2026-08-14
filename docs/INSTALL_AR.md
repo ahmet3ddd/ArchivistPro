@@ -55,8 +55,8 @@ npm install -g @tauri-apps/cli
 
 ```bash
 # استنساخ المستودع
-git clone <repo-url>
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 
 # تثبيت التبعيات
 npm install

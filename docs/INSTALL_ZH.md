@@ -55,8 +55,8 @@ Tauri 在 Windows 上需要 C++ 构建工具。若未安装 [Visual Studio Build
 
 ```bash
 # 克隆仓库
-git clone <repo-url>
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 
 # 安装依赖
 npm install

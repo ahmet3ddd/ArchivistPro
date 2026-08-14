@@ -4,7 +4,7 @@
 >
 > このガイドは、初めてコンピューターにプログラムをインストールする方や、インストール経験が少ない方向けです。各ステップはスクリーンショット付きで説明されています。専門用語はなく、事前知識も不要です。
 >
-> より簡潔な/技術的な要約は **[プロフェッショナルインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_JA.md)** を参照してください。
+> より簡潔な/技術的な要約は **[プロフェッショナルインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_JA.md)** を参照してください。
 
 ---
 
@@ -43,10 +43,10 @@ ArchivistPro をインストールする前に、コンピューターが以下�
 ![GitHub Releases ページ](img/install/github-releases.png)
 
 1. Web ブラウザ (Chrome、Edge、Firefox) を開きます。
-2. 次のアドレスに移動: **https://github.com/ahmet3ddd/Arsiv-H2/releases/latest**
+2. 次のアドレスに移動: **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 3. 「**Assets**」セクションの下にファイルが表示されます。次の**いずれか**をダウンロードしてください:
-   - **`ArchivistPro_3.0.0_x64_en-US.msi`** ← 推奨
-   - `ArchivistPro_3.0.0_x64-setup.exe` ← 代替
+   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← 推奨
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← 代替
 
 > **MSI と EXE の違い:** どちらも同じプログラムをインストールします。MSI はより一般的で、会社のコンピューターでの管理が容易です。どちらでも問題ありません。
 
@@ -58,7 +58,7 @@ ArchivistPro をインストールする前に、コンピューターが以下�
 
 ![インストールウィザード](img/install/installer-wizard.png)
 
-1. ダウンロードしたファイル (`ArchivistPro_3.0.0_x64_en-US.msi`) を**ダブルクリック**します。通常**ダウンロード**フォルダーにあります。
+1. ダウンロードしたファイル (`ArchivistPro_3.3.3_x64-setup.exe`) を**ダブルクリック**します。通常**ダウンロード**フォルダーにあります。
 2. Windows が尋ねる場合があります: 「*このアプリがデバイスに変更を加えることを許可しますか?*」 → **はい**を選択します。
 3. インストーラーウィンドウで:
    - **次へ**をクリック
@@ -186,7 +186,7 @@ ArchivistPro の **AI Chat** 機能には AI サポートが必要です。こ�
 1. ダウンロードしたファイルを右クリック → **プロパティ** → 「**ブロックを解除**」チェックボックスが存在する場合はチェック → **OK**
 2. インストーラーを再試行
 3. それでも失敗する場合、ウイルス対策ソフトがブロックしている可能性があります。ArchivistPro を例外として追加してください
-4. 問題が解決しない場合は、GitHub の Issues ページに投稿してください: https://github.com/ahmet3ddd/Arsiv-H2/issues
+4. 問題が解決しない場合は、GitHub の Issues ページに投稿してください: https://github.com/ahmet3ddd/ArchivistPro/issues
 
 ### プログラムをアンインストールしたいです。どうすれば?
 
@@ -198,8 +198,8 @@ Windows **設定 > アプリ > インストールされているアプリ**メ�
 ## 8. その他の情報
 
 - **アプリ内:** **F1** キーを押すか、左下の **? ヘルプ**アイコンをクリック。4 つのタブが表示されます: ユーザーガイド、管理者ガイド (権限がある場合)、何ができるか?、リリースノート。
-- **プロフェッショナルインストール:** サイレントインストール、ネットワーク展開、環境変数などについては [プロフェッショナルインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/INSTALL_PRO_JA.md) を参照
-- **リリースノート:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/releases/download/v3.0.0/CHANGELOG.md) · [すべてのリリースアセット](https://github.com/ahmet3ddd/ArchivistPro/releases/tag/v3.0.0)
+- **プロフェッショナルインストール:** サイレントインストール、ネットワーク展開、環境変数などについては [プロフェッショナルインストールガイド](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_JA.md) を参照
+- **リリースノート:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [すべてのリリースアセット](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
 
 楽しいアーカイブを! 🎯
 

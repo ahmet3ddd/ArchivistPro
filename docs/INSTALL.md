@@ -55,8 +55,8 @@ Tauri, Windows'ta C++ build tools gerektirir. [Visual Studio Build Tools](https:
 
 ```bash
 # Repoyu klonla
-git clone <repo-url>
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 
 # Bağımlılıkları kur
 npm install

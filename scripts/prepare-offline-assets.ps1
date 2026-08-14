@@ -276,7 +276,7 @@ Sistem Gereksinimleri
   - Ollama icin: en az 8 GB RAM (16 GB onerilir), ~8 GB bos disk
   - WebGPU fp32 icin: WebGPU destekli GPU, ~1.5 GB bos disk
 
-Destek: https://github.com/ahmet3ddd/Arsiv-H2/issues
+Destek: https://github.com/ahmet3ddd/ArchivistPro/issues
 "@
 $readmeContent | Out-File -FilePath $readmePath -Encoding UTF8
 

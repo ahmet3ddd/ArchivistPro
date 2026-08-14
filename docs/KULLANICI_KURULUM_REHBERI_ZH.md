@@ -19,7 +19,7 @@
 
 ## 2. 下载安装程序
 
-- 访问 GitHub Releases 页面：`https://github.com/ahmet3ddd/Arsiv-H2/releases/latest`
+- 访问 GitHub Releases 页面：`https://github.com/ahmet3ddd/ArchivistPro/releases/latest`
 - 下载 **`ArchivistPro_*_x64_en-US.msi`**（MSI，推荐）或 **`ArchivistPro_*_x64-setup.exe`**（EXE）。
 
 > 无需下载 `.sig` 文件；这些文件仅用于自动更新验证。

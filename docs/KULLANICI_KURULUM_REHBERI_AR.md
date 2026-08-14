@@ -19,7 +19,7 @@
 
 ## 2. تنزيل ملف التثبيت
 
-- انتقل إلى صفحة GitHub Releases: `https://github.com/ahmet3ddd/Arsiv-H2/releases/latest`
+- انتقل إلى صفحة GitHub Releases: `https://github.com/ahmet3ddd/ArchivistPro/releases/latest`
 - قم بتنزيل **`ArchivistPro_*_x64_en-US.msi`** (MSI، موصى به) أو **`ArchivistPro_*_x64-setup.exe`** (EXE).
 
 > لا تحتاج إلى تنزيل ملفات `.sig`؛ فهي مخصصة للتحقق من التحديثات التلقائية فحسب.

@@ -55,8 +55,8 @@ Tauri は Windows で C++ ビルドツールが必要です。[Visual Studio Bui
 
 ```bash
 # リポジトリをクローン
-git clone <repo-url>
-cd Arsiv-H2
+git clone https://github.com/ahmet3ddd/ArchivistPro.git
+cd ArchivistPro
 
 # 依存関係をインストール
 npm install

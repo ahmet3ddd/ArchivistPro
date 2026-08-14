@@ -12,12 +12,13 @@ yazılır, çevrilmez):
 - **Marka:** `ArchivistPro`
 - **Dosya uzantıları:** `DWG`, `DXF`, `MAX`, `SKP`, `RVT`, `IFC`, `PDF`,
   `DOC/DOCX`, `XLS/XLSX`, `JPG/JPEG`, `PNG`, `MP4`, `ONNX`
-- **Kütüphane / protokol adları:** `Tauri`, `Ollama`, `WebGPU`, `WebAssembly`,
-  `WASM`, `SQLite`, `FTS5`, `HNSW`, `ANN`, `RAG`, `LLM`, `MSI`, `NSIS`, `LAN`,
-  `UNC`, `WAL`, `IPC`, `CSP`, `MiniLM`, `CLIP`
-- **Sistem dosyaları:** `archivist.db`, `archivist_vec.db`, `vec.db`,
-  `archivist_local.db`, `*_premigrate_v3.db.bak`, `.archivistpro`
-- **Şema kavramları:** `epoch`, `schema`, `migration`, `chunk`, `embedding`,
+- **Kütüphane / protokol adları:** `Tauri`, `Rust`, `Ollama`, `SQLite`, `FTS5`,
+  `sqlite-vec`, `ONNX`, `ANN`, `RAG`, `LLM`, `MSI`, `NSIS`, `LAN`, `UNC`, `WAL`,
+  `IPC`, `CSP`, `MiniLM`, `CLIP`, `BLAKE3`, `argon2id`, `WebView2`
+- **Sistem dosyaları:** `archivist.db` (tek doğruluk kaynağı; vektör tabloları da
+  içindedir). Eski neslin dosya adları (`archivist_local.db` vb.) yalnız
+  içe-aktarma bağlamında geçer ve çevrilmez.
+- **Şema kavramları:** `schema`, `migration`, `chunk`, `embedding`,
   `vector index`
 
 ## Çevrilen Terimler
@@ -134,5 +135,5 @@ yazılır, çevrilmez):
 - **Bağlam istisnası:** Bağlamdan dolayı zorunlu bir varyant gerekirse
   (örn. fiilin emir kipi vs. mastar hali) ek satır olarak eklenir
   (örn. `Tarama (isim)` ve `Tara (eylem)` ayrı satırlar).
-- **Sürüm:** Bu sözlük v3.0.0 ile birlikte oluşturuldu. Değişiklikler git
-  geçmişinden takip edilir.
+- **Sürüm:** Bu sözlük v3.0.0 ile birlikte oluşturuldu; 2026-08-14'te yeni nesil
+  kod tabanına (v3.3.3) göre güncellendi. Değişiklikler git geçmişinden takip edilir.

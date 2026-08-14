@@ -1,0 +1,14 @@
+{
+  "text": "ad,soyad,sehir,proje\nAhmet,Candoken,Hatay,Arsiv\nMehmet,Yilmaz,Istanbul,Kule\nAyse,Demir,Ankara,Kopru\n",
+  "fields": {
+    "char_count": 100,
+    "csv_column_count": 4,
+    "csv_row_count": 3,
+    "encoding_hint": "UTF-8",
+    "has_bom": false,
+    "is_utf8": true,
+    "line_count": 4,
+    "preview": "ad,soyad,sehir,proje\nAhmet,Candoken,Hatay,Arsiv\nMehmet,Yilmaz,Istanbul,Kule\nAyse,Demir,Ankara,Kopru",
+    "word_count": 4
+  }
+}

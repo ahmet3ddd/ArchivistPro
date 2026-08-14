@@ -1,0 +1,27 @@
+[package]
+name = "archivist-ingest"
+version = "0.1.0"
+description = "Arsiv-H3 ingest hatti — klasor tara → BLAKE3 fixity → registry.extract → DB'ye yaz (senkron, artimsal)."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+archivist-db.workspace = true
+archivist-extract.workspace = true
+archivist-extract-text.workspace = true
+archivist-extract-image.workspace = true
+archivist-extract-cad.workspace = true
+blake3.workspace = true
+walkdir.workspace = true
+# Staleness/fixity rapor tipleri IPC'ye serileştirilir (Tauri komutu dogrudan dondurur;
+# rename_all = "camelCase" → frontend tipleri). Uretim yolunda IPC serileştirmesi yok;
+# yalniz denetim raporlari icin.
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+rusqlite.workspace = true
+image.workspace = true

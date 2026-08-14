@@ -1,0 +1,23 @@
+[package]
+name = "archivist-extract-cad"
+version = "0.1.0"
+description = "Arsiv-H3 CAD/3D cikaricilari — DWG, DXF, Revit, SketchUp, 3ds Max. ODA opsiyonel. H2'den nakil."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+archivist-extract.workspace = true
+archivist-thumbnail.workspace = true
+cfb.workspace = true
+zip.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+# ODAFileConverter registry kesfi (yalniz Windows; opsiyonel harici arac).
+winreg.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+tempfile.workspace = true
+image.workspace = true

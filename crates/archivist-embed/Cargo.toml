@@ -1,0 +1,24 @@
+[package]
+name = "archivist-embed"
+version = "0.1.0"
+description = "Arsiv-H3 metin embedding motoru — Rust ONNX Runtime (ort) + tokenizers ile MiniLM (multilingual). Tarayicida DEGIL (H2 dersi: CSP/fp32/UI-thread cilesi). 384-boyut mean-pooled+L2-norm vektor uretir; sqlite-vec'e yazilir."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# ONNX Runtime (Rust) — onnxruntime ikilisini ilk derlemede indirir (download-binaries varsayilan).
+# Pin: rc.10 (kanitlanmis stabil). API churn rc'ler arasi → surum sabit.
+ort = "=2.0.0-rc.10"
+# HuggingFace tokenizer — tokenizer.json'u dogrudan yukler. onig (regex dogrulugu) acik;
+# esaxx (yalniz egitim) kapali → daha hizli derleme.
+tokenizers = { version = "0.23", default-features = false, features = ["onig"] }
+# Gorsel on-isleme (CLIP): thumbnail decode + resize/crop → pixel_values tensoru.
+image.workspace = true
+# Cok-dilli CLIP metin: 2_Dense/model.safetensors basligini (JSON) cozmek icin.
+serde_json.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+# Gercek-model entegrasyon testi (#[ignore]; ARSIV_EMBED_MODEL_DIR ile calisir).

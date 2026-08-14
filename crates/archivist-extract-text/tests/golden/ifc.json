@@ -1,0 +1,18 @@
+{
+  "text": "Mimari Proje\nArsa A\nBina 1\nAhmet Candoken\n3D Dizayn\nRevit 2024\nViewDefinition [CoordinationView]\nZemin Kat\n1. Kat",
+  "fields": {
+    "author": "Ahmet Candoken",
+    "building_name": "Bina 1",
+    "description": "ViewDefinition [CoordinationView]",
+    "organization": "3D Dizayn",
+    "originating_system": "Revit 2024",
+    "project_name": "Mimari Proje",
+    "schema": "IFC4",
+    "site_name": "Arsa A",
+    "space_count": 1,
+    "storey_count": 2,
+    "storey_names": "Zemin Kat; 1. Kat",
+    "top_entities": "IFCBUILDINGSTOREY:2, IFCWALL:2, IFCBUILDING:1, IFCDOOR:1, IFCPROJECT:1, IFCSITE:1, IFCSPACE:1",
+    "total_entities": 9
+  }
+}

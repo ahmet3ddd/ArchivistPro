@@ -1,0 +1,21 @@
+[package]
+name = "archivist-extract-text"
+version = "0.1.0"
+description = "Arsiv-H3 metin/dokuman cikaricilari — IFC, metin (txt/csv/rtf), PDF, DXF, eski/yeni Office. H2'den nakil."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+archivist-extract.workspace = true
+archivist-thumbnail.workspace = true
+pdf-extract.workspace = true
+cfb.workspace = true
+zip.workspace = true
+encoding_rs.workspace = true
+quick-xml.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+tempfile.workspace = true

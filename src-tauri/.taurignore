@@ -1,0 +1,25 @@
+# Tauri v2 dev-watcher ignore (gitignore formati).
+#
+# `tauri dev` src-tauri/ dizinini izler; CWD de src-tauri/ oldugundan UYGULAMA
+# CALISMA-ZAMANI VERISINI buraya yazar (DB, WAL/SHM, snapshots, logs). Bu dosyalar
+# KAYNAK DEGIL — degismeleri yeniden-derleme/restart TETIKLEMEMELI.
+#
+# Somut hata (2026-07-10): arsiv ice-aktar/birlestir/cikar/reset islemleri once
+# `snapshots/pre-import-*.db` guvenlik yedegi yazar → izleyici bunu "kaynak degisti"
+# sanip uygulamayi ORTASINDA yeniden baslatir → kullaniciya COKME gibi gorunur
+# (pencere kapanir, giris ekranina doner). Bu ignore o restart'i keser.
+snapshots/
+logs/
+*.db
+*.db-wal
+*.db-shm
+*.db-shm-*
+*.db.bak
+# Adlandirilmis eszamanli yerel arsivler (2026-07-25): ek arsivler + .trash dev'de
+# src-tauri/archives/ altina yazilir → yeni bir arsiv olustur/sil izleyiciyi tetikleyip
+# uygulamayi restart eder (kullaniciya COKME gibi gorunur). `*.db` dizin OLUSUMUNU
+# kapsamaz → `archives/` acikca dislanir. (Uretimde arsivler app_data'da; bu yalniz dev.)
+archives/
+# XMP sidecar fallback + graceful-shutdown marker (dev'de src-tauri'ye dusebilir).
+xmp-sidecar/
+last_session.json

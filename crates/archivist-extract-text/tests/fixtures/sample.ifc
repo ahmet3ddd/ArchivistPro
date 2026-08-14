@@ -1,0 +1,18 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('ViewDefinition [CoordinationView]'),'2;1');
+FILE_NAME('ornek.ifc','2026-06-17T12:00:00',('Ahmet Candoken'),('3D Dizayn'),'IfcOpenShell','Revit 2024','');
+FILE_SCHEMA(('IFC4'));
+ENDSEC;
+DATA;
+#1=IFCPROJECT('0YvhhKnQ1Ea',#2,'Mimari Proje',$,$,$,$,(#10),#9);
+#5=IFCSITE('1abcdefGHIjkl',$,'Arsa A',$,$,$,$,$,$,$,$,$,$,$);
+#6=IFCBUILDING('2defABCdefABC',$,'Bina 1',$,$,$,$,$,$,$,$,$);
+#7=IFCBUILDINGSTOREY('3ghiABCdefABC',$,'Zemin Kat',$,$,$,$,$,$,0.0);
+#8=IFCBUILDINGSTOREY('4jklABCdefABC',$,'1. Kat',$,$,$,$,$,$,3000.0);
+#11=IFCSPACE('5mnoABCdefABC',$,'Salon',$,$,$,$,$,$,$,$);
+#12=IFCWALL('6pqrABCdefABC',$,'Duvar-1',$,$,$,$,$);
+#13=IFCWALL('7stuABCdefABC',$,'Duvar-2',$,$,$,$,$);
+#14=IFCDOOR('8vwxABCdefABC',$,'Kapi-1',$,$,$,$,$,$,$,$);
+ENDSEC;
+END-ISO-10303-21;

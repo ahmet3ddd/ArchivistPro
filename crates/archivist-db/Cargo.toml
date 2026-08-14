@@ -1,0 +1,34 @@
+[package]
+name = "archivist-db"
+version = "0.1.0"
+description = "Arsiv-H3 native SQLite veri katmani — sema, migration framework, FTS5, DB-ici vektor (sqlite-vec)."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# bundled: SQLite'i statik derler (heap limiti yok, tek dogruluk kaynagi).
+# FTS5 bundled amalgamation'da varsayilan acik.
+rusqlite.workspace = true
+# DB-ici vektor — karar: sqlite-vec (transactional, reload-panigi/recall-flaky
+# bug sinifini yok eder). Bkz docs/00_RATIONALE_ALTERNATIF_RAPOR.md §2.3/§5.5.
+sqlite-vec.workspace = true
+# Sorgu sonuc tipleri IPC'ye serileştirilir (query.rs); ListOpts frontend'ten gelir.
+serde.workspace = true
+# Cok-degerli facet (ext/tag/collection/onay) listesini JSON dizi metnine cevirip
+# FILTER_FRAG icinde `json_each(...)` ile `IN (...)` baglamak icin (query.rs FilterBinds).
+serde_json.workspace = true
+# Parola ozetleme — argon2id (Faz 6 auth).
+argon2 = "0.5"
+# `OsRng` (kriptografik tuz kaynagi) `password-hash`'in `getrandom` ozelliginin
+# arkasinda; argon2 bunu passthrough etmedigi icin acikca etkinlestiriyoruz.
+# argon2 ile ayni `password-hash`/`rand_core` ornegini paylasir (tek surum).
+password-hash = { version = "0.5", features = ["getrandom"] }
+
+[dev-dependencies]
+# YALNIZ test: gercek-model uctan-uca semantik arama dogrulamasi (semantic_real.rs,
+# #[ignore]). Uretim katman ayrimi korunur — archivist-db ONNX'e BAGIMLI DEGIL.
+archivist-embed.workspace = true
+# YALNIZ test: yedekleme (backup.rs) round-trip icin gecici snapshot dosyasi.
+tempfile.workspace = true

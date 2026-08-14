@@ -1,0 +1,12 @@
+[package]
+name = "archivist-thumbnail"
+version = "0.1.0"
+description = "Arsiv-H3 paylasilan thumbnail yardimcilari — resize+JPEG encode, bayt→thumbnail, gomulu raster tarama. image/text/cad aileleri kullanir."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+archivist-extract.workspace = true
+image.workspace = true

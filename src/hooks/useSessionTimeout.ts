@@ -1,131 +1,101 @@
-/**
- * Archivist Pro — Session Timeout
- *
- * Kullanıcı N dakika boyunca hiçbir etkileşim yapmazsa kilit ekranını tetikler.
- * Fare hareketi, tıklama, klavye ve dokunma olayları sayacı sıfırlar.
- *
- * Timeout süresi: Ayarlardan konfigure edilebilir (varsayılan 30 dk, 0 = devre dışı).
- * Timeout'tan 60 saniye önce uyarı callback'i çağrılır.
- */
+// Bostakalma (idle) oturum kilidi zamanlayicisi — H2 `useSessionTimeout.ts` paritesi.
+//
+// NEDEN VAR: bkz `features/settings/securitySettings.ts` basligi (H3'te oturum SURESIZ acik
+// kaliyordu; H2'de varsayilan 30 dk sonra kilitleniyordu).
+//
+// 🔑 H2'DEN BIREBIR TASINAN INCE DAVRANIS (`useSessionTimeout.ts:49-50,62-65`):
+// **Uyari gosterildikten SONRA fare/klavye aktivitesi sayaci ARTIK SIFIRLAMAZ.** Aksi halde
+// masanin yanindan gecen birinin fareye dokunmasi kilidi sonsuza erteler — yani ozellik hicbir
+// zaman devreye girmez. Uyari asamasindan yalniz ACIK "Sureyi Uzat" cikarir.
+//
+// Uygulama notu: ic ice `setTimeout` yerine saniyede bir tik atan tek `setInterval` kullanilir —
+// makine uykuya girip uyandiginda gecen sure DOGRU hesaplanir (timeout'lar uykuda kayar).
+//
+// H2'den BILEREK ALINMAYAN: H2 tarama sirasinda kilidi devre disi birakiyordu (`App.tsx:95`).
+// H3'te GEREKMEZ — tarama Rust tarafinda kosar; UI'in kilitlenmesi taramayi durdurmaz
+// (H2'de tarama renderer'da idi, bu yuzden orada gerekliydi).
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const ACTIVITY_EVENTS: (keyof DocumentEventMap)[] = [
-  'mousemove',
-  'mousedown',
-  'keydown',
-  'touchstart',
-  'scroll',
-  'wheel',
-];
+import {
+  getSessionTimeoutMin,
+  idlePhase,
+  SESSION_WARNING_SECS,
+} from "../features/settings/securitySettings";
 
-/** Timeout'tan kaç ms önce uyarı gösterilsin. */
-const WARNING_ADVANCE_MS = 60_000; // 60 saniye
+/** Aktivite sayaci sifirlayan olaylar (H2 ile ayni kume). */
+const ACTIVITY_EVENTS = [
+  "mousemove",
+  "mousedown",
+  "keydown",
+  "touchstart",
+  "scroll",
+  "wheel",
+] as const;
 
-interface Options {
-  enabled: boolean;
-  /** Timeout süresi (dakika). 0 = devre dışı. */
-  timeoutMinutes: number;
-  /** Timeout tetiklendiğinde çağrılır (kilit ekranı). */
-  onTimeout: () => void;
-  /** Timeout'tan 60 sn önce çağrılır (uyarı göster). */
-  onWarning?: () => void;
-}
-
-interface SessionTimeoutReturn {
-  /** Timer'ları sıfırla — "Süreyi Uzat" butonu için. */
+interface SessionTimeout {
+  /** Kilide az kaldi → uyari diyalogu goster. */
+  warning: boolean;
+  /** Kilide kalan saniye (uyari asamasinda anlamli). */
+  secondsLeft: number;
+  /** "Sureyi Uzat" — sayaci sifirlar, uyari asamasindan cikar. */
   extend: () => void;
 }
 
-/**
- * Oturum timeout hook'u.
- * @returns extend fonksiyonu — uyarı toast'undaki "Süreyi Uzat" butonu için.
- */
-export function useSessionTimeout({ enabled, timeoutMinutes, onTimeout, onWarning }: Options): SessionTimeoutReturn {
-  const mainTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const warningTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const onTimeoutRef = useRef(onTimeout);
-  const onWarningRef = useRef(onWarning);
-  /** Uyarı gösterildikten sonra aktivite timer'ı sıfırlamamalı. */
-  const warningFiredRef = useRef(false);
-  // timeoutMs ref'te tutulur — reset closure'u stabil kalır, her değer değişiminde
-  // yeni fonksiyon yaratılmaz → event listener'lar gereksiz yere kurulmaz/sökülmez.
-  const timeoutMsRef = useRef(timeoutMinutes * 60 * 1000);
+export function useSessionTimeout(enabled: boolean, onLock: () => void): SessionTimeout {
+  const [warning, setWarning] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(SESSION_WARNING_SECS);
+  const lastActivityRef = useRef<number>(Date.now());
+  const warningRef = useRef(false); // H2 `warningFiredRef`: uyaridan sonra aktivite sifirlamasin
+  // onLock'u ref'te tut → cagiran her render'da yeni fonksiyon versa bile interval yeniden kurulmaz.
+  const onLockRef = useRef(onLock);
+  onLockRef.current = onLock;
 
-  onTimeoutRef.current = onTimeout;
-  onWarningRef.current = onWarning;
-  timeoutMsRef.current = timeoutMinutes * 60 * 1000;
-
-  // Bağımlılık yok → her render'da aynı referans.
-  // Güncel timeout süresini ref'ten okur, closure'a yakalamaz.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const reset = useCallback(() => {
-    // Uyarı gösterildikten sonra aktivite timer'ı sıfırlamamalı —
-    // aksi halde fare hareketi lock'u sürekli erteler.
-    if (warningFiredRef.current) return;
-
-    if (mainTimerRef.current) clearTimeout(mainTimerRef.current);
-    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
-
-    const ms = timeoutMsRef.current;
-    if (ms <= 0) return;
-
-    mainTimerRef.current = setTimeout(() => {
-      onTimeoutRef.current();
-    }, ms);
-
-    if (ms > WARNING_ADVANCE_MS && onWarningRef.current) {
-      warningTimerRef.current = setTimeout(() => {
-        warningFiredRef.current = true;
-        onWarningRef.current?.();
-      }, ms - WARNING_ADVANCE_MS);
-    }
-  }, []); // stabil referans — timeoutMinutes değişiminde yeniden oluşmaz
-
-  // Event listener'lar: sadece enabled durumu değişince kurulur/sökülür.
-  // reset stabil olduğu için timeoutMinutes değişimi bu effect'i tetiklemez.
-  useEffect(() => {
-    if (!enabled || timeoutMinutes === 0) return;
-
-    reset();
-    ACTIVITY_EVENTS.forEach((ev) => document.addEventListener(ev, reset, { passive: true }));
-
-    return () => {
-      if (mainTimerRef.current) clearTimeout(mainTimerRef.current);
-      if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
-      ACTIVITY_EVENTS.forEach((ev) => document.removeEventListener(ev, reset));
-    };
-  }, [enabled, reset]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Timeout değeri değişince sadece timer'ı yeniden başlat — listener'lara dokunma.
-  useEffect(() => {
-    if (!enabled || timeoutMinutes === 0) return;
-    reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeoutMinutes]);
-
-  /** Kullanıcı "Süreyi Uzat" dediğinde: flag'ı sıfırla + timer'ları yeniden başlat. */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const extend = useCallback(() => {
-    warningFiredRef.current = false;
-    // Timer'ları temizle ve yeniden başlat
-    if (mainTimerRef.current) clearTimeout(mainTimerRef.current);
-    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
-
-    const ms = timeoutMsRef.current;
-    if (ms <= 0) return;
-
-    mainTimerRef.current = setTimeout(() => {
-      onTimeoutRef.current();
-    }, ms);
-
-    if (ms > WARNING_ADVANCE_MS && onWarningRef.current) {
-      warningTimerRef.current = setTimeout(() => {
-        warningFiredRef.current = true;
-        onWarningRef.current?.();
-      }, ms - WARNING_ADVANCE_MS);
-    }
+    lastActivityRef.current = Date.now();
+    warningRef.current = false;
+    setWarning(false);
+    setSecondsLeft(SESSION_WARNING_SECS);
   }, []);
 
-  return { extend };
+  useEffect(() => {
+    if (!enabled) {
+      // Devre disi (giris ekrani / zaten kilitli) → temiz sayfa: bir sonraki etkinlestirmede
+      // sayac sifirdan baslasin (bayat `lastActivity` ile aninda kilitlenmeyi onler).
+      extend();
+      return;
+    }
+    const timeoutMin = getSessionTimeoutMin();
+    if (timeoutMin <= 0) return; // "asla"
+
+    const onActivity = () => {
+      // UYARI ASAMASINDA aktivite sayaci SIFIRLAMAZ (yukaridaki 🔑 not).
+      if (warningRef.current) return;
+      lastActivityRef.current = Date.now();
+    };
+    for (const ev of ACTIVITY_EVENTS) {
+      window.addEventListener(ev, onActivity, { passive: true });
+    }
+
+    // Karar SAF `idlePhase`'de (securitySettings.ts) — burada yalniz yan etki var.
+    const tick = window.setInterval(() => {
+      const { phase, secondsLeft: left } = idlePhase(Date.now() - lastActivityRef.current, timeoutMin);
+      if (phase === "lock") {
+        warningRef.current = false;
+        setWarning(false);
+        onLockRef.current();
+      } else if (phase === "warning") {
+        warningRef.current = true;
+        setWarning(true);
+        setSecondsLeft(left);
+      }
+    }, 1000);
+
+    return () => {
+      window.clearInterval(tick);
+      for (const ev of ACTIVITY_EVENTS) window.removeEventListener(ev, onActivity);
+    };
+  }, [enabled, extend]);
+
+  return { warning, secondsLeft, extend };
 }

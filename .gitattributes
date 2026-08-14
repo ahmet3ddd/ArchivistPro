@@ -1,0 +1,25 @@
+# Coklu lokasyon/araç (Claude/Gemini/Codex, EV/Hassa/Ofis) arasinda satir-sonu
+# churn'unu onle: text dosyalar repoda LF olarak normalize edilir, deterministik.
+* text=auto eol=lf
+
+# Ikili dosyalar — donusum yok
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.ico  binary
+*.onnx binary
+*.wasm binary
+*.db   binary
+*.woff2 binary
+# Test fixture'lari — ikili/ham; satir-sonu donusumu golden'i bozmasin.
+*.pdf  binary
+*.dwg  binary
+*.dxf  binary
+*.psd  binary
+*.mp4  binary
+*.docx binary
+*.xlsx binary
+*.rvt  binary
+*.skp  binary
+*.max  binary

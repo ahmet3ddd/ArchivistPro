@@ -1,2694 +1,2106 @@
 {
-  "reload": {
-    "disabled": "再読み込みは無効です — セッションと未保存データを守るため F5/Ctrl+R はブロックされています。"
+  "lan": {
+    "title": "LAN共有",
+    "hint": "オフィスネットワーク上の管理者と編集者は、アドレスとコードで接続し、アクティブなアーカイブの一覧、パス、メタデータ、プレビューを読み取り、検索や利用可能なAI機能を使用できます。ファイルのダウンロードや変更はできません。既定ではオフです。",
+    "on": "実行中",
+    "off": "オフ",
+    "address": "アドレス",
+    "code": "アクセスコード",
+    "code_hint": "この共有コードを持つ信頼済みのオフィス端末は、アクティブなアーカイブ全体を読み取れます。コードはユーザー固有ではないため、信頼できる端末とのみ共有してください。",
+    "start": "開始",
+    "start_demo": "サンプルアーカイブで開始",
+    "stop": "停止",
+    "regenerate": "コードを再生成",
+    "regenerate_confirm_title": "アクセスコードを再生成しますか？",
+    "regenerate_confirm_message": "古いコードは直ちに無効になります。ペアリング済みのすべての端末がメインアーカイブへアクセスできなくなり、各端末に新しいコードを再入力する必要があります。",
+    "started": "LANサーバーを開始しました",
+    "started_demo": "サンプルメインアーカイブの共有を開始しました",
+    "demo_badge": "サンプルアーカイブ",
+    "demo_hint": "単一マシンでのテスト用: ホストは実際のアーカイブの代わりにサンプルの「メインアーカイブ」を提供します。エクスプローラーで「メインアーカイブ」を選択すると異なる内容が表示されます。実際の管理者コンピューターに接続すると無効になります。",
+    "stopped": "LANサーバーを停止しました",
+    "code_regenerated": "アクセスコードを再生成しました",
+    "action_failed": "操作に失敗しました: {{message}}",
+    "notify_placeholder": "通知のタイトル…",
+    "notify_send": "公開",
+    "notify_sent": "通知を公開しました",
+    "auto_notify_hint": "インデックス作成が完了すると通知が自動生成されます。ここから手動で公開することもできます。",
+    "clear_notifications": "通知を消去",
+    "clear_notifications_confirm_title": "通知履歴を消去しますか？",
+    "clear_notifications_confirm_message": "このホストのすべての通知がLANフィードから完全に削除されます。",
+    "notifications_cleared": "通知履歴を消去しました",
+    "demo_warning_title": "現在サンプルアーカイブを提供しています",
+    "demo_warning_body": "エクスプローラーの「メインアーカイブ」に表示されるファイルは実在しません（サンプル 12 件）。このモードではリモートチャットと意味検索は動作しません — サンプルアーカイブには AI インデックスがありません。実際のアーカイブを提供するには: 停止 → 開始。"
   },
-  "folderWatcher": {
-    "toast": {
-      "title": "フォルダの変更",
-      "message": "{{path}} で変更が検出されました。再スキャンしますか？"
-    }
+  "archive_source": {
+    "local": "このマシン",
+    "remote": "メインアーカイブ",
+    "checking": "確認中…",
+    "connected": "接続済み（{{host}}）",
+    "offline": "メインアーカイブに接続できません",
+    "read_only": "読み取り専用",
+    "detail_read_only": "メインアーカイブは読み取り専用です — 編集はこのマシンのアーカイブで行います。",
+    "write_locked_hint": "メインアーカイブは読み取り専用です — これらの操作は「このコンピューター」を選択しているときのみ実行できます。"
   },
-  "common": {
-    "save": "保存",
-    "cancel": "キャンセル",
-    "close": "閉じる",
-    "delete": "削除",
-    "loading": "読み込み中...",
-    "reload": "再読み込み",
-    "search": "検索",
-    "open": "開く",
-    "exitConfirm": "アプリケーションを終了してもよろしいですか？",
-    "exitConfirmDetail": "実行中のすべての操作が終了します。",
-    "exitConfirmLabel": "終了",
-    "savingBeforeExit": "データを保存しています、しばらくお待ちください...",
-    "role": {
-      "admin": "管理者",
-      "viewer": "ユーザー",
-      "developer": "開発者"
-    },
-    "unknown": "不明",
-    "active": "アクティブ",
-    "aria": {
-      "close": "閉じる",
-      "dismiss": "通知を閉じる",
-      "back": "戻る"
-    },
+  "remote_archive": {
+    "err_not_configured": "メインアーカイブが未設定です。設定 → LAN クライアントでホストアドレスとコードを入力してください。",
+    "err_auth_failed": "コードが無効です。メインアーカイブ側で再生成された可能性があります。設定 → LAN クライアントで更新してください。",
+    "err_timeout": "メインアーカイブが応答しませんでした（タイムアウト）。しばらくしてからもう一度お試しください。",
+    "err_server_busy": "メインアーカイブが混雑しています。少し経ってから再試行してください。",
+    "err_network_error": "メインアーカイブに接続できません。管理者のパソコンは起動していて同じネットワークにありますか？",
+    "err_bad_response": "メインアーカイブから予期しない応答がありました。",
+    "err_remote_not_indexed": "メインアーカイブに AI インデックスがありません。意味検索とチャットを使うには、管理者のコンピューターでセマンティック/RAG インデックスを作成してください。"
+  },
+  "remote_stats": {
+    "title": "メインアーカイブの概要",
+    "total_assets": "ファイル総数",
+    "folders": "フォルダー",
+    "chunks": "RAG チャンク",
+    "model_missing": "メインアーカイブで埋め込みモデルが準備されていません — リモートの意味検索とチャットは動作しません。管理者のコンピューターでモデルを取り込んでください。",
+    "index_section": "インデックス状況（読み取り専用）",
+    "embedded": "意味検索が可能",
+    "rag_indexed": "チャット（RAG）インデックス済み",
+    "pending": "残り {{count, number}}",
+    "empty": "メインアーカイブは空です",
+    "empty_hint": "管理者のコンピューターのアーカイブにはまだファイルが追加されていません。"
+  },
+  "lan_client": {
+    "title": "LANクライアント",
+    "hint": "ホストに接続して通知を表示します（読み取り専用）。ホストのアドレスと8桁のコードを入力してください。",
+    "host_label": "アドレス",
+    "host_placeholder": "例: 192.168.1.42",
+    "port_label": "ポート",
+    "code_label": "アクセスコード",
+    "code_placeholder": "8桁のコード",
+    "connect": "接続",
+    "connecting": "接続中…",
+    "disconnect": "切断",
+    "unpair": "ペアリングを削除",
+    "unpair_confirm_title": "メインアーカイブのペアリングを削除しますか？",
+    "unpair_confirm_message": "保存されたホストアドレスとアクセスコードがこの端末から削除されます。再接続するには、アドレスと8桁のコードをもう一度入力してください。",
     "refresh": "更新",
-    "back": "戻る",
-    "button": {
-      "save": "保存",
-      "cancel": "キャンセル",
-      "close": "閉じる",
-      "saving": "保存中..."
-    },
-    "error": {
-      "unknown": "不明なエラー",
-      "prefix": "エラー",
-      "fileNotFound": "ファイルが見つかりません",
-      "permissionDenied": "この操作を行う権限がありません",
-      "diskFull": "ディスクの空き容量が不足しています",
-      "networkError": "ネットワーク接続に失敗しました",
-      "unauthorized": "この操作にはログインが必要です",
-      "fileAlreadyExists": "ファイルは既に存在します",
-      "invalidPath": "無効なファイルパスです"
-    },
-    "archive": {
-      "main": "メインアーカイブ",
-      "local": "ローカルアーカイブ"
-    }
-  },
-  "login": {
-    "subtitle": "建築ドキュメントアーカイブシステム",
-    "label": {
-      "username": "ユーザー名",
-      "password": "パスワード"
-    },
-    "button": {
-      "submit": "ログイン",
-      "loggingIn": "ログイン中...",
-      "preparing": "準備中...",
-      "exit": "終了",
-      "cancel": "キャンセル"
-    },
-    "dbLoadingHint": "読み込み中: {{size}} MB",
-    "error": {
-      "fieldsRequired": "ユーザー名とパスワードが必要です",
-      "invalidCredentials": "ユーザー名またはパスワードが間違っています",
-      "lockedOut": "失敗回数が多すぎます。{{minutes}}分後に再試行してください。",
-      "viewerModeAdminBlocked": "このアプリケーションはビューアーモードで実行されています。管理者ログインはできません。",
-      "loginFailed": "ログイン中にエラーが発生しました"
-    },
-    "aria": {
-      "hidePassword": "パスワードを隠す",
-      "showPassword": "パスワードを表示"
-    },
-    "toast": {
-      "success": "ログイン成功",
-      "successBody": "{{username}} としてログインしました ({{role}})"
-    },
-    "forgotPassword": {
-      "link": "パスワードを忘れた",
-      "title": "パスワードのリセット",
-      "step1Title": "回復コードを入力",
-      "step1Desc": "アプリの AppData フォルダにある recovery.key ファイルのコードを入力してください。",
-      "step1Label": "回復コード",
-      "step1Submit": "確認",
-      "step1Error": "回復コードが正しくありません",
-      "step2Title": "新しいパスワードを設定",
-      "step2UserLabel": "ユーザー",
-      "step2PassLabel": "新しいパスワード",
-      "step2ConfirmLabel": "新しいパスワード (確認)",
-      "step2Submit": "パスワードをリセット",
-      "step2PasswordMismatch": "パスワードが一致しません",
-      "step2Success": "パスワードが正常にリセットされました",
-      "backToLogin": "ログイン画面に戻る",
-      "noAdmins": "システムに管理者ユーザーが見つかりません"
-    },
-    "firstRun": {
-      "title": "初回セットアップ",
-      "subtitle": "管理者アカウントを作成",
-      "usernameLabel": "ユーザー名",
-      "passwordLabel": "パスワード",
-      "confirmLabel": "パスワードの確認",
-      "submit": "アカウントを作成",
-      "creating": "作成中...",
-      "passwordMismatch": "パスワードが一致しません",
-      "minLength": "パスワードは6文字以上必要です",
-      "success": "管理者アカウントが作成されました"
-    }
-  },
-  "topbar": {
-    "viewMode": {
-      "explorer": "エクスプローラー",
-      "technical": "テクニカル",
-      "dashboard": "ダッシュボード",
-      "folders": "フォルダ"
-    },
-    "resultCount": "{{count}} アセット",
-    "filters": {
-      "clearAll": "すべてクリア"
-    },
-    "tooltip": {
-      "cardSize": "カードサイズ: {{size}}px",
-      "undo": "元に戻す (Ctrl+Z)",
-      "redo": "やり直す (Ctrl+Y)",
-      "deleteFromArchive": "アーカイブから削除 (Delete)",
-      "trash": "ゴミ箱",
-      "organize": "整理",
-      "aiSettings": "AI & ビジョン設定",
-      "export": "エクスポート / レポート",
-      "feedback": "メッセージ / フィードバック",
-      "help": "ヘルプ (F1)",
-      "settings": "設定",
-      "auditLog": "監査ログ"
-    },
-    "aria": {
-      "openMenu": "メニューを開く",
-      "removeFilter": "{{value}} フィルターを削除",
-      "cardSize": "カードサイズ",
-      "feedbackUnread": "メッセージ ({{count}} 未読)"
-    },
-    "indexing": {
-      "progress": "インデックス作成中... {{progress}}%",
-      "upToDate": "インデックスは最新です"
-    },
-    "aiChat": {
-      "label": "AIチャット",
-      "tooltip": "AIチャット — アーカイブに質問する",
-      "text": "AI",
-      "noGpu": "GPUが検出されません — このマシンではAIチャットは利用できません"
-    },
-    "visualSearch": {
-      "label": "ビジュアル検索",
-      "tooltip": "ビジュアル検索 — 画像で検索 (CLIP)",
-      "text": "ビジュアル"
-    },
-    "shapeSearch": {
-      "label": "形状検索",
-      "tooltip": "DWG図面での幾何形状検索",
-      "text": "形状"
-    },
-    "advancedSearch": {
-      "title": "高度な検索",
-      "aiChat": "AIチャット — アーカイブに質問",
-      "visualSearch": "ビジュアル検索 (CLIP)",
-      "duplicateFinder": "類似・重複を検索",
-      "shapeSearch": "形状検索 (DWG)"
-    },
-    "backToFolders": "フォルダに戻る",
-    "folderCount": "{{count}} フォルダ"
-  },
-  "sidebar": {
-    "ragExcludeFolder": "AIから除外",
-    "ragIncludeFolder": "AIに含める",
-    "section": {
-      "archive": "アーカイブ"
-    },
-    "archive": {
-      "main": "メインアーカイブ",
-      "local": "ローカルアーカイブ",
-      "blocked": "メインアーカイブへのアクセスは管理者によって制限されています"
-    },
-    "button": {
-      "scanAndIndex": "フォルダスキャンとインデックス",
-      "scanOnly": "フォルダスキャン"
-    },
-    "lastScan": {
-      "label": "最終スキャン:",
-      "files": "ファイル"
-    },
-    "search": {
-      "placeholderSemantic": "自然言語/画像検索...",
-      "placeholderText": "検索...",
-      "recentSearches": "最近の検索",
-      "clearAll": "すべて消去",
-      "removeItem": "削除",
-      "clear": "検索をクリア",
-      "minCharsHint": "3文字以上入力してください"
-    },
-    "tooltip": {
-      "editPanel": "パネルの編集",
-      "imageSearch": "画像で検索",
-      "clearImage": "画像をクリア"
-    },
-    "aria": {
-      "searchAssets": "アセットを検索",
-      "imageSearch": "画像で検索",
-      "searchSensitivity": "検索感度"
-    },
-    "imageSearch": {
-      "analyzing": "分析中…"
-    },
-    "contentSearch": {
-      "loading": "AI検索エンジンを読み込み中...",
-      "preparing": "AIモデルを準備中...",
-      "error": "AI検索エンジンの読み込みに失敗 — コンテンツ検索は利用できません",
-      "retry": "再試行",
-      "notIndexed": "ファイルはコンテンツ検索用にインデックスされていません",
-      "rescan": "再スキャン",
-      "notReady": "コンテンツ検索は利用できません",
-      "configure": "設定"
-    },
-    "sensitivity": {
-      "label": "画像検索感度",
-      "description": "視覚的および意味的しきい値"
-    },
-    "ai": {
-      "semanticActive": "セマンティック検索アクティブ",
-      "textBased": "テキストベースの検索",
-      "loading": "AI読み込み中...",
-      "chunkCount": "{{count}} チャンク",
-      "noIndex": "インデックスなし",
-      "embeddingCountTooltip": "{{count}} コンテンツチャンクがインデックス済み"
-    },
-    "footer": {
-      "totalAssets": "合計アセット",
-      "indexed": "インデックス済み"
-    },
-    "favorites": {
-      "label": "お気に入り"
-    },
-    "sourceFolders": {
-      "title": "ソースフォルダ",
-      "empty": "スキャンされたフォルダはありません",
-      "clearFilters": "フィルターをクリア",
-      "renameLabel": "新しい名前を入力:",
-      "confirmRemove": "このソースフォルダをアーカイブから削除してもよろしいですか？（アセット自体は削除されません）",
-      "confirmDelete": "このソースフォルダとそのすべてのアセットを完全に削除してもよろしいですか？",
-      "confirmDeleteCount": "{{count}} 個のファイルが削除されます。",
-      "deleted": "ゴミ箱に移動しました",
-      "deletedUndo": "Ctrl+Z で元に戻すか、ゴミ箱から復元できます",
-      "menu": {
-        "open": "管理",
-        "rename": "名前の変更",
-        "rescan": "再スキャン",
-        "scanReports": "スキャンレポート",
-        "scanRelations": "関連性をスキャン",
-        "scanRelationsDone": "{{count}} 件の新しい関連性が検出されました",
-        "scanRelationsNone": "新しい関連性は見つかりませんでした",
-        "remove": "アーカイブから削除",
-        "deleteWithAssets": "削除（アセットを含む）",
-        "setTags": "タグ設定...",
-        "moveTo": "グループへ移動"
-      },
-      "groups": {
-        "add": "+グループ",
-        "promptName": "グループ名を入力:",
-        "promptRename": "新しいグループ名を入力:",
-        "confirmDelete": "このグループを削除しますか？フォルダはグループ解除されます。",
-        "noGroup": "グループから削除",
-        "rename": "名前の変更",
-        "changeColor": "色の変更",
-        "delete": "グループの削除"
-      },
-      "favorites": {
-        "section": "お気に入り",
-        "add": "お気に入りに追加",
-        "remove": "お気に入りから削除"
-      },
-      "tags": {
-        "noTags": "タグなし",
-        "newTag": "新しいタグ..."
-      }
-    },
-    "embedding": {
-      "coverage": "AIインデックス対応範囲",
-      "coverageLabel": "AIインデックス進捗バー"
-    }
-  },
-  "explorer": {
-    "empty": {
-      "title": "アーカイブが空です",
-      "description": "ファイルをスキャンしてアーカイブを構築してください。",
-      "scanButton": "フォルダスキャンとインデックス",
-      "scanButtonOnly": "フォルダスキャン"
-    },
-    "noResults": {
-      "title": "結果が見つかりません",
-      "description": "現在の検索とフィルターに一致するファイルがありません。",
-      "clearFilters": "フィルターをクリア"
-    }
-  },
-  "merge": {
-    "title": "アーカイブの統合",
-    "source": "ソースアーカイブ",
-    "target": "ターゲットアーカイブ",
-    "strategy": {
-      "title": "競合戦略",
-      "keepNewer": "新しい方を保持 (デフォルト)",
-      "keepBoth": "両方保持 (コピーを作成)",
-      "skipExisting": "既存のものをスキップ"
-    },
-    "include": {
-      "title": "コピーするデータ",
-      "tags": "タグ",
-      "embeddings": "AIベクトル",
-      "textChunks": "テキストチャンク",
-      "summaries": "要約",
-      "favorites": "お気に入り"
-    },
-    "preview": {
-      "button": "プレビュー",
-      "sourceAssets": "ソースアセット数",
-      "targetAssets": "ターゲットアセット数",
-      "conflicts": "競合数",
-      "tags": "ソースタグ数",
-      "embeddings": "ソースベクトル数",
-      "strategyNote": "競合の処理方法: {{strategy}}",
-      "toggleDetails": "詳細リスト",
-      "truncated": "最初の {{limit}} 件を表示"
-    },
-    "disposition": {
-      "merge": "追加されます",
-      "overwrite": "上書きされます",
-      "skip": "スキップされます",
-      "rename": "名前変更されます"
-    },
-    "confirm": {
-      "button": "統合",
-      "warning": "この操作は元に戻せません。続行しますか？"
-    },
-    "progress": {
-      "phase": {
-        "assets": "アセットをコピー中...",
-        "tags": "タグをコピー中...",
-        "embeddings": "AIベクトルをコピー中...",
-        "chunks": "テキストチャンクをコピー中...",
-        "summaries": "要約をコピー中...",
-        "favorites": "お気に入りをコピー中...",
-        "saving": "保存中..."
-      }
-    },
-    "result": {
-      "title": "統合完了",
-      "merged": "追加済み",
-      "overwritten": "上書き済み",
-      "skipped": "スキップ済み",
-      "renamed": "名前変更済み",
-      "errors": "エラー"
-    },
-    "error": {
-      "sameArchive": "ソースとターゲットは異なる必要があります",
-      "targetNotLoaded": "ターゲットアーカイブを読み込めませんでした",
-      "alreadyRunning": "別の統合操作が進行中です。終了までお待ちください。",
-      "rollbackFailed": "統合に失敗し、ロールバックも失敗しました。ターゲットアーカイブが破損している可能性があります。バックアップから復元してください。"
-    }
-  },
-  "extract": {
-    "title": "アーカイブから抽出",
-    "source": "ソースアーカイブ",
-    "filter": {
-      "title": "フィルター条件",
-      "folders": "ソースフォルダ",
-      "fileTypes": "ファイル形式",
-      "projectPhases": "プロジェクトフェーズ",
-      "dateRange": "期間",
-      "dateFrom": "開始日",
-      "dateTo": "終了日",
-      "tags": "タグ",
-      "noneSelected": "未選択",
-      "noActiveWarning": "フィルターが選択されていません。すべてのアセットが抽出されます"
-    },
-    "target": {
-      "title": "ターゲット",
-      "new": "新しいアーカイブを作成",
-      "existing": "既存のアーカイブに追加",
-      "newName": "新しいアーカイブ名",
-      "newType": "アーカイブの種類",
-      "typeShared": "共有",
-      "typePersonal": "個人用"
-    },
-    "mode": {
-      "title": "モード",
-      "copy": "コピー (ソースを保持)",
-      "move": "移動 (ソースから削除)",
-      "moveWarning": "警告: 移動は元に戻せません。一致したアセットはソースアーカイブから完全に削除されます。"
-    },
-    "include": {
-      "title": "コピーするデータ",
-      "tags": "タグ",
-      "embeddings": "AIベクトル",
-      "textChunks": "テキストチャンク",
-      "summaries": "要約",
-      "favorites": "お気に入り"
-    },
-    "preview": {
-      "button": "プレビュー",
-      "matched": "一致したアセット数",
-      "totalSize": "合計サイズ",
-      "byType": "形式別",
-      "noMatch": "一致するアセットがありません",
-      "toggleDetails": "詳細リスト",
-      "truncated": "最初の {{limit}} 件を表示"
-    },
-    "presets": {
-      "label": "プリセット:",
-      "choose": "— 選択 —",
-      "apply": "適用",
-      "delete": "削除",
-      "namePlaceholder": "新しいプリセット名",
-      "save": "保存"
-    },
-    "confirm": {
-      "button": "抽出",
-      "warning": "この操作は元に戻せません。続行しますか？",
-      "moveWarning": "移動モード — 一致したアセットはソースから削除されます！"
-    },
-    "progress": {
-      "phase": {
-        "filtering": "フィルタリング中...",
-        "creating_target": "新しいアーカイブを作成中...",
-        "assets": "アセットをコピー中...",
-        "tags": "タグをコピー中...",
-        "embeddings": "AIベクトルをコピー中...",
-        "chunks": "テキストチャンクをコピー中...",
-        "summaries": "要約をコピー中...",
-        "favorites": "お気に入りをコピー中...",
-        "deleting_source": "ソースから削除中...",
-        "saving": "保存中..."
-      }
-    },
-    "result": {
-      "title": "抽出完了",
-      "matched": "一致",
-      "extracted": "抽出済み",
-      "deletedFromSource": "ソースから削除済み",
-      "errors": "エラー",
-      "goToTarget": "新しいアーカイブへ移動"
-    },
-    "error": {
-      "noSource": "ソースアーカイブが選択されていません",
-      "noTargetName": "新しいアーカイブ名は必須です",
-      "targetExists": "同じ名前のアーカイブが既に存在します",
-      "sameTarget": "ターゲットはソースと異なる必要があります",
-      "targetNotLoaded": "ターゲットアーカイブを読み込めませんでした",
-      "alreadyRunning": "別の抽出操作が進行中です",
-      "rollbackFailed": "抽出に失敗し、ロールバックも失敗しました。ターゲット/ソースアーカイブが破損している可能性があります。バックアップから復元してください。"
-    }
-  },
-  "storageWarning": {
-    "message": "⚠️ ストレージの空き容量が少なくなっています。一部のデータが保存されない可能性があります。ディスク容量を確認するか、古いスキャンをクリアしてください。",
-    "aria": {
-      "dismiss": "警告を閉じる"
-    }
+    "connected_to": "接続済み: {{address}}",
+    "version": "バージョン {{version}}",
+    "empty": "通知はまだありません",
+    "new_badge": "新着",
+    "mark_all_read": "すべて既読にする",
+    "poll_note": "15秒ごとに更新されます。",
+    "err_unreachable": "ホストに到達できません。アドレスと同じネットワーク上にあることを確認してください。",
+    "err_unauthorized": "アクセスコードが無効です。",
+    "err_bad_response": "予期しない応答です。",
+    "action_failed": "操作に失敗しました: {{message}}",
+    "toast_connected": "接続しました",
+    "toast_disconnected": "切断しました",
+    "toast_unpaired": "メインアーカイブのペアリングを削除しました",
+    "toast_marked_read": "通知を既読にしました",
+    "global_new_badge": "新しい通知 {{count, number}} 件"
   },
   "app": {
-    "db": {
-      "loading": "データベースを読み込み中..."
-    },
-    "toast": {
-      "reportDownloaded": "レポートをダウンロードしました",
-      "reportDownloadedBody": "{{count}} ファイルが報告されました"
-    }
+    "title": "ArchivistPro",
+    "subtitle": "建築アーカイブ管理"
   },
-  "modals": {
-    "settings": "設定",
-    "help": "ヘルプ",
-    "trash": "ゴミ箱",
-    "feedback": "メッセージ / フィードバック",
-    "feedbackAdmin": "受信トレイ",
-    "logViewer": "監査ログ",
-    "scan": "フォルダスキャンとインデックス",
-    "scanOnly": "ファイルスキャン",
-    "refile": "ファイルの再整理",
-    "aiSettings": "AI ビジョン設定",
-    "userProfile": "プロフィール",
-    "userManagement": "ユーザー管理"
+  "project": {
+    "title": "プロジェクト",
+    "client": "クライアント",
+    "assigned": "所属プロジェクト",
+    "client_inherited": "プロジェクトから: {{name}}",
+    "approval": "承認ステータス",
+    "status_draft": "ドラフト",
+    "status_review": "レビュー中",
+    "status_approved": "承認済み",
+    "status_rejected": "却下",
+    "status_unset": "未設定",
+    "approval_history": "承認履歴",
+    "approval_history_empty": "承認の変更はまだありません",
+    "approval_history_by": "{{user}} による",
+    "rejection_reason": "却下理由",
+    "version": "バージョン",
+    "deadline": "期限",
+    "save": "保存",
+    "saved": "プロジェクト情報を更新しました",
+    "bulk": {
+      "action": "プロジェクト状態",
+      "title": "プロジェクト状態を設定",
+      "subtitle": "{{count, number}} 件のファイルを選択中",
+      "warning": "チェックした項目のみ {{count, number}} 件のファイルに書き込まれます。未チェックの項目は保持されます。",
+      "apply_n": "適用（{{count, number}}）",
+      "none": "項目を選択",
+      "saved": "{{count, number}} 件のファイルを更新しました",
+      "toggle": "この項目を適用",
+      "saving": "保存中…"
+    },
+    "external_changed": "このファイルのプロジェクト情報が別の場所で変更されました。入力内容は保持されています。",
+    "external_reload": "新しい値を読み込む"
   },
-  "settings": {
-    "tab": {
-      "general": "一般",
-      "storage": "ストレージ",
-      "network": "ネットワーク",
-      "about": "情報",
-      "security": "セキュリティ"
-    },
-    "language": {
-      "label": "言語",
-      "description": "インターフェース言語を変更"
-    },
-    "section": {
-      "userInfo": "ユーザー情報",
-      "appearance": "外観",
-      "archives": "アーカイブ",
-      "archiveMerge": "アーカイブの統合",
-      "archiveExtract": "アーカイブの抽出",
-      "pathRemap": "パスの再マッピング",
-      "backup": "バックアップ",
-      "trash": "ゴミ箱",
-      "lan": "LAN 共有",
-      "aiConnections": "AI 接続",
-      "about": "情報",
-      "odaConverter": "DWG コンバーター (ODA)",
-      "fp32": "WebGPU モデル (fp32)",
-      "developerMode": "開発者モード",
-      "healthCheck": "ヘルスチェック",
-      "help": "ヘルプとガイド",
-      "scanning": "スキャン"
-    },
-    "card": {
-      "userInfoSub": "セッションと権限の詳細",
-      "appearanceSub": "テーマ、カラー、言語の設定",
-      "scanningSub": "AIインデックスとフォルダ監視の設定",
-      "odaSub": "DWG/DXFファイル用ODA FileConverter",
-      "fp32Sub": "WebGPU アクセラレーション用 fp32 モデル（オプション）",
-      "helpSub": "オンボーディングツアーを再生",
-      "archivesSub": "メインおよび個人アーカイブの場所",
-      "archiveOpsSub": "パス再マッピング、マージ、抽出操作",
-      "backupSub": "自動バックアップ、スナップショット、ポータブルアーカイブ",
-      "performanceSub": "スキャンチェックポイントとワーカー数の設定",
-      "maintenanceSub": "孤立ファイルの検出とゴミ箱",
-      "lanSub": "LANでアーカイブを共有またはダウンロード",
-      "devModeSub": "開発者デバイスとして設定",
-      "updateServerSub": "カスタム更新サーバーの設定",
-      "aiConnectionsSub": "AIサービス接続情報",
-      "sessionSub": "セッションタイムアウト設定",
-      "auditSub": "監査ログの保持期間",
-      "loginSecSub": "ログイン試行とロックアウトの設定",
-      "appInfoSub": "バージョンとプラットフォーム情報",
-      "updatesSub": "アップデートを確認",
-      "extractorsSub": "対応ファイル形式とエクストラクター",
-      "crashLogsSub": "クラッシュレポートを表示",
-      "archiveOps": "アーカイブ操作",
-      "performance": "パフォーマンス",
-      "maintenance": "メンテナンス"
-    },
-    "autoRagIndex": {
-      "toggle": "スキャン後に自動 AI インデックス",
-      "description": "スキャン完了後、新しいまたは変更されたファイルがバックグラウンドで処理され、AI チャットで検索可能になります。CPU 負荷が高くなります。無効化した場合、インデックスは RAG パネルから手動で開始する必要があります。"
-    },
-    "folderWatch": {
-      "enabledToggle": "フォルダの変更を監視",
-      "enabledDescription": "スキャン済みルートフォルダ内のファイル追加/削除/変更を検出し、右下にトースト通知を表示します。無効にすると、手動でスキャンするまで変更に気付きません。",
-      "autoRescanToggle": "変更を検出したら自動的に再スキャン",
-      "autoRescanDescription": "60 秒間さらに変更が来なければ、そのフォルダを自動的に再スキャンします。スキャンが既に実行中の場合はスキップされます。既定: オフ。"
-    },
-    "healthCheck": {
-      "description": "アーカイブ内のファイル記録がまだディスク上に存在するか確認します。ファイルが見つからない孤立した記録を一括クリーンアップできます。",
-      "button": "ヘルスチェックを実行",
-      "scanning": "チェック中...",
-      "noOrphans": "すべてのファイルは存在します。問題は見つかりませんでした。",
-      "found": "{{count}} 件の孤立した記録が見つかりました（ディスク上にファイルがありません）。",
-      "deleteButton": "{{count}} 件の孤立した記録を削除",
-      "deleted": "{{count}} 件の孤立した記録がクリーンアップされました。",
-      "error": "ヘルスチェック中にエラーが発生しました。"
-    },
-    "merge": {
-      "description": "2つのアーカイブのアセットと関連データを単一のターゲットアーカイブに統合します。",
-      "openButton": "アーカイブを統合..."
-    },
-    "extract": {
-      "description": "フィルター条件に一致するアセットを、アーカイブから新規または既存のアーカイブへコピーまたは移動します。",
-      "openButton": "アーカイブから抽出..."
-    },
-    "developerMode": {
-      "description": "このデバイスを開発者マシンに設定し、LAN 経由でユーザーフィードバックを直接受信します。メッセージを受信するには LAN サーバーが稼働している必要があります。",
-      "enable": "このデバイスを開発者に設定",
-      "disable": "無効にする",
-      "enabled": "開発者モードが有効になりました。",
-      "disabled": "開発者モードが無効になりました。",
-      "enableError": "IP アドレスを取得できませんでした。",
-      "currentIp": "開発者 IP",
-      "statusActive": "アクティブ",
-      "statusInactive": "非アクティブ",
-      "serverStarted": "LAN サーバーが自動的に開始されました。",
-      "serverWarning": "LAN サーバーを開始できませんでした — メッセージを受信できない可能性があります。"
-    },
-    "user": {
-      "username": "ユーザー",
-      "role": "ロール",
-      "activeArchive": "アクティブなアーカイブ"
-    },
-    "appearance": {
-      "theme": "テーマ",
-      "accentColor": "アクセントカラー"
-    },
-    "theme": {
-      "dark": "ダーク",
-      "light": "ライト"
-    },
-    "accent": {
-      "default": "デフォルト",
-      "amber": "アンバー",
-      "lime": "ライム",
-      "teal": "ティール"
-    },
-    "archive": {
-      "location": "場所",
-      "size": "サイズ",
-      "readOnly": "読み取り専用 — 管理者権限が必要",
-      "changePath": "場所を変更",
-      "active": "アクティブ",
-      "managedByAdmin": "管理者によって管理されています",
-      "readOnlyAccess": "読み取り専用アクセス",
-      "localStoragePath": "localStorage (ブラウザ)",
-      "personalFullAccess": "個人アーカイブ — フルアクセス",
-      "mainDescAdmin": "管理者によって管理されています",
-      "mainDescViewer": "読み取り専用アクセス",
-      "localDesc": "個人アーカイブ — フルアクセス"
-    },
-    "storage": {
-      "loading": "読み込み中...",
-      "browserMode": "localStorage (ブラウザモード)",
-      "browserModeShort": "localStorage (ブラウザ)",
-      "notCreated": "未作成",
-      "selectFolder": "データベースフォルダを選択",
-      "locationUpdated": "データベースの場所が更新されました。再起動後にこの場所が使用されます。",
-      "locationUpdateError": "データベースの場所の更新中にエラーが発生しました。",
-      "remapOldRequired": "古いルートパスを入力する必要があります。",
-      "remapSuccess": "ファイルパスの再マッピングに成功しました。"
-    },
-    "remap": {
-      "description": "プロジェクトフォルダを別のドライブに移動した場合は、ファイルパスを一括更新できます。",
-      "oldPlaceholder": "古いルートパス (例: C:\\Projects\\Office\\)",
-      "newPlaceholder": "新しいルートパス (例: D:\\Archive\\Office\\)",
-      "button": "ファイルパスを再マッピング"
-    },
-    "backup": {
-      "description": "アーカイブをさまざまな方法でバックアップできます。",
-      "autoTitle": "自動バックアップ (スナップショット)",
-      "autoDescription": "このデバイスで毎時または手動でバックアップを作成します。誤って削除または変更した場合に以前の状態に戻すことができます。最大5個のバックアップが保持され、最も古いものは自動的に削除されます。",
-      "portableTitle": "ポータブルバックアップファイル (.archivistpro)",
-      "portableDescription": "アーカイブ全体を1つの .archivistpro ファイルにエクスポートしたり、バックアップから復元できます。別のコンピューターへの移動やUSBドライブへの保存に使用します。",
-      "scheduleOff": "無効",
-      "hours": "時間",
-      "schedule": "自動バックアップ"
-    },
-    "snapshot": {
-      "maxTitle": "最大スナップショット数",
-      "maxDescription": "この上限を超えた最古のスナップショットは自動的に削除されます。",
-      "create": "バックアップを作成",
-      "creating": "バックアップを作成中...",
-      "restore": "復元",
-      "delete": "削除",
-      "empty": "バックアップはまだありません。",
-      "confirmRestore": "現在のデータベースを選択したバックアップで上書きします。",
-      "confirmRestoreDetail": "バックアップ日: {{date}}",
-      "confirmDelete": "このバックアップは完全に削除されます。",
-      "createSuccess": "バックアップが正常に作成されました。",
-      "createError": "バックアップの作成に失敗しました。",
-      "restoreSuccess": "データベースがバックアップから復元されました。",
-      "restoreError": "復元に失敗しました。",
-      "deleteSuccess": "バックアップを削除しました。",
-      "deleteError": "バックアップの削除に失敗しました。",
-      "schedule": "自動バックアップ",
-      "scheduleOff": "オフ",
-      "hours": "時間"
-    },
-    "scan": {
-      "checkpointTitle": "スキャンチェックポイント間隔",
-      "checkpointDescription": "スキャン中にデータベースをディスクに保存するファイル間隔。低い値＝安全（データ損失リスク低）、高い値＝高速スキャン。",
-      "prepareWorkersTitle": "並列準備ワーカー数",
-      "prepareWorkersDescription": "スキャン中に並列でハッシュ + メタデータ + サムネイルを抽出するファイル数。HDD: 1-2（シークスラッシングのリスク）、SSD: 3-4、NVMe + 8スレッド: 6-8、NVMe + 16+ スレッド（Ryzen 9、Threadripper、Xeon）: 10-16。少ないコア数のシステムで高い値は役に立ちません。",
-      "prepareWorkersDetected": "{{cores}} コア検出 · 推奨: {{recommended}}",
-      "prepareWorkersAutoApply": "自動適用"
-    },
-    "trash": {
-      "description": "削除されたファイルは .archivistpro-trash/ フォルダに移動されます。Undoで元に戻すことができます。",
-      "descriptionPart1": "削除されたファイルは",
-      "descriptionPart2": "フォルダに移動されます。Undoで元に戻すことができます。"
-    },
-    "lan": {
-      "description": "LAN経由で他のデバイスからアーカイブをダウンロードしたり、ネットワーク上でアーカイブを共有できます。",
-      "shareMode": "共有モード",
-      "shareModeValue": "エクスポート/インポート (フェーズ 1)"
-    },
-    "archiveBackup": {
-      "exportButton": "バックアップファイルを作成",
-      "importButton": "バックアップから復元 (.archivistpro)",
-      "exportLabel": "エクスポート中",
-      "importLabel": "復元中",
-      "import": {
-        "title": "アーカイブをバックアップから復元",
-        "dbSize": "復元する DB: {{size}} MB",
-        "unknownSize": "アーカイブ全体が復元されます",
-        "warning": "現在のアーカイブが置き換えられます。",
-        "remapToggle": "ファイルパスを再マッピング",
-        "remapHint": "バックアップが他のコンピューターからのものである場合、ソースのルートパスをこのマシンのパスに置き換えます。",
-        "oldRootLabel": "古いルートパス (バックアップ内)",
-        "oldRootPlaceholder": "例: C:\\Old_PC\\Projects\\",
-        "newRootLabel": "新しいルートパス (このマシン)",
-        "newRootPlaceholder": "例: D:\\Projects\\",
-        "browse": "参照...",
-        "confirmButton": "復元",
-        "cancelButton": "キャンセル",
-        "remapHintMulti": "バックアップで {{count}} 個のソースフォルダーが検出されました。それぞれにこのマシンの新しいパスを選択してください。",
-        "fileCount": "{{count}} ファイル",
-        "skipHint": "新しいパスが空の行はスキップされます。",
-        "allUnderOne": "すべてを同じフォルダーの下に配置"
-      }
-    },
-    "fp32": {
-      "description": "WebGPU アクセラレーションには fp32 モデル（約580MB）が必要です。インストーラーを小さく保つため同梱されていません。'npm run models:download:fp32' でダウンロードした 'public/models' フォルダーを選択し、コピー後にアプリを再起動してください。ない場合は自動的に CPU (q8) で動作します。",
-      "pathLabel": "モデルフォルダー",
-      "statusFound": "fp32 モデル導入済み（WebGPU 有効）",
-      "statusNotFound": "fp32 モデル未導入（CPU/q8 モード）",
-      "statusUnknown": "状態不明",
-      "browse": "フォルダーを選択して導入",
-      "importing": "コピー中",
-      "imported": "fp32 モデルを導入しました — アプリを再起動してください",
-      "restartHint": "再起動後に有効"
-    },
-    "oda": {
-      "description": "ODA FileConverter は DWG ファイルからレイヤー/ブロック/テキスト情報を正確に抽出するために使用されます。インストールされていない場合、フォールバックとしてバイナリスキャンが使用されます。",
-      "pathLabel": "ODA FileConverter パス",
-      "pathPlaceholder": "ODAFileConverter.exe のパスを入力",
-      "autoDetect": "自動検出",
-      "found": "検出済み",
-      "notFound": "見つかりません",
-      "browse": "参照",
-      "cleared": "ODA パスをクリアしました",
-      "saved": "ODA パスを保存しました",
-      "fileNotFound": "ファイルが見つかりません",
-      "detecting": "検出中...",
-      "install": "ダウンロードしてインストール",
-      "installBundled": "パッケージからインストール",
-      "installingBundled": "パッケージからインストール中...",
-      "installedBundled": "パッケージからのインストールが完了しました",
-      "bundledNotAvailable": "バンドルインストーラーが利用できません。オンライン方法を試みています...",
-      "installing": "インストール中...",
-      "installed": "インストール完了",
-      "installedButNotDetected": "インストールは完了しましたが、ODA パスを自動検出できませんでした。「自動検出」をクリックするか、手動でパスを入力してください。",
-      "downloadPageOpened": "ダウンロードページを開きました。インストール後「自動検出」をクリックしてください。",
-      "installFailed": "自動インストールに失敗しました。ダウンロードページを開きました",
-      "noInstallerFound": "自動インストールに失敗しました。ODA インストーラーをお使いのコンピューターから選択してください。",
-      "selectInstallerTitle": "ODA FileConverter インストーラーを選択",
-      "installerFilter": "インストーラー"
-    },
-    "ai": {
-      "hint": "トップバーの脳アイコンを使用してAIビジョン設定を開きます。",
-      "saved": "AI 設定を保存しました",
-      "deviceTitle": "AI 計算デバイス",
-      "deviceDescription": "テキストおよび画像埋め込みモデルの実行場所。GPU (WebGPU) は最新のグラフィックカードで 5-10倍高速。CPU はどのシステムでも動作。自動 = システムが対応していれば GPU を使用。",
-      "deviceAuto": "自動",
-      "deviceGpu": "GPU (WebGPU)",
-      "deviceCpu": "CPU (WASM)",
-      "deviceProbeOk": "✓ このシステムで WebGPU が利用可能 — GPU アクセラレーションを使用できます",
-      "deviceProbeMissing": "WebGPU が利用できません — CPU のみ",
-      "deviceRestartNote": "変更は次の AI モデル読み込み時（またはアプリ再起動後）に有効になります。"
-    },
-    "about": {
-      "version": "バージョン",
-      "buildDate": "ビルド日付",
-      "platform": "プラットフォーム",
-      "database": "データベース",
-      "aiml": "AI/ML",
-      "aiMlValue": "Xenova Transformers (ローカル WASM)",
-      "description": "すべてのAI操作はローカルコンピュータで実行されます。ファイルがサーバーに送信されることはありません。",
-      "extractorsTitle": "ファイル形式エクストラクタ",
-      "extractorsDesc": "各ファイル形式から抽出されるメタデータフィールド。行をクリックして詳細を表示。",
-      "extractorCol": {
-        "type": "形式",
-        "extractors": "エクストラクタ",
-        "fields": "フィールド"
-      }
-    },
-    "security": {
-      "title": "セキュリティ",
-      "sessionTimeout": "セッションタイムアウト",
-      "sessionTimeoutDesc": "指定した非アクティブ期間後に画面がロックされます。",
-      "minutes": "分",
-      "never": "ロックしない",
-      "currentStateLabel": "現在の状態",
-      "currentStateActive": "{{duration}}後に画面をロック",
-      "currentStateNever": "自動ロック無効",
-      "hint": "タイムアウト後、画面はロックされますがセッションは継続します。パスワードを入力して続けてください。",
-      "auditRetentionSection": "監査ログ保持",
-      "auditRetentionTitle": "保持期間",
-      "auditRetentionDesc": "アプリ起動時に、この期間より古い監査ログエントリは削除されます。∞ を選ぶと何も削除されません。",
-      "daysSuffix": "日",
-      "loginSection": "ログインセキュリティ",
-      "loginMaxAttemptsTitle": "最大失敗試行回数",
-      "loginMaxAttemptsDesc": "この回数を超えたユーザーはロックされます。ウィンドウはロック時間と同じです。",
-      "attemptsSuffix": "回",
-      "loginLockoutTitle": "ロック時間",
-      "loginLockoutDesc": "最大試行回数を超えると、アカウントはこの時間ロックされたままになります。",
-      "minutesSuffix": "分"
-    }
+  "projects": {
+    "title": "プロジェクト",
+    "open": "プロジェクトを開く",
+    "new": "新規プロジェクト",
+    "name": "プロジェクト名",
+    "name_required": "プロジェクト名は必須です。",
+    "client": "クライアント",
+    "phase": "フェーズ",
+    "status": "ステータス",
+    "description": "説明",
+    "deadline": "期限",
+    "create": "作成",
+    "edit": "編集",
+    "save": "保存",
+    "saving": "保存中…",
+    "delete": "削除",
+    "delete_confirm": "プロジェクト「{{name}}」を削除しますか？割り当て済みのファイルは削除されません。プロジェクトの割り当てのみ解除されます。",
+    "assign": "プロジェクトに割り当て",
+    "assign_to": "プロジェクトに割り当て",
+    "assign_subtitle": "{{count, number}} 件のファイルを選択中",
+    "assign_empty": "プロジェクトがまだありません。まず「プロジェクト」から作成してください。",
+    "unassign": "割り当てを解除",
+    "assigned_toast": "{{count, number}} 件のファイルを更新しました",
+    "asset_count": "{{count, number}} 件",
+    "count": "{{count, number}} 件のプロジェクト",
+    "empty": "プロジェクトがまだありません",
+    "empty_hint": "「+ 新規プロジェクト」で最初のプロジェクトを作成しましょう。",
+    "show": "このプロジェクトを表示",
+    "loading": "読み込み中…",
+    "load_error": "プロジェクトを読み込めませんでした",
+    "created_toast": "プロジェクトを作成しました",
+    "updated_toast": "プロジェクトを更新しました",
+    "deleted_toast": "プロジェクトを削除しました",
+    "filter_chip": "プロジェクト：{{name}}",
+    "phase_konsept": "コンセプト",
+    "phase_avan": "基本設計",
+    "phase_ruhsat": "許認可",
+    "phase_uygulama": "実施",
+    "status_aktif": "進行中",
+    "status_beklemede": "保留",
+    "status_arsiv": "アーカイブ"
+  },
+  "search": {
+    "placeholder": "検索 — ファイル名、タイトル、内容...",
+    "hint": "ヒント：AND · OR · NOT · \"完全一致フレーズ\" · ( グループ化 )",
+    "recent": "最近の検索",
+    "clear_history": "すべて消去",
+    "remove_history": "「{{term}}」を削除"
+  },
+  "shortcuts": {
+    "trash_confirm_title": "選択項目をゴミ箱へ移動",
+    "grid_move": "グリッド内を移動",
+    "grid_open": "開く / 選択",
+    "grid_toggle": "選択の切り替え",
+    "grid_range": "範囲選択を拡張",
+    "title": "キーボードショートカット",
+    "hint": "テキスト入力中はショートカットが無効になります。",
+    "focus_search": "検索にフォーカス",
+    "select_all": "読み込み済みの項目を選択",
+    "clear_selection": "選択を解除",
+    "trash": "選択項目をゴミ箱へ移動",
+    "help": "このヘルプを表示/非表示",
+    "trash_confirm": "{{count, number}} 件の項目をゴミ箱に移動しますか？"
   },
   "help": {
-    "aria": {
-      "close": "ヘルプパネルを閉じる"
-    },
-    "tab": {
-      "adminGuide": "管理者ガイド",
-      "userGuide": "ユーザーガイド",
-      "shortcuts": "ショートカット",
-      "techRef": "技術リファレンス",
-      "scenarios": "何ができる？",
-      "changelog": "リリースノート"
-    },
-    "role": {
-      "admin": "管理者 — すべての機能がアクティブ",
-      "viewer": "ユーザー — アーカイブは読み取り専用"
-    },
-    "search": "検索...",
-    "guide": {
-      "loading": "ガイドを読み込み中..."
-    },
-    "error": {
-      "loadFailed": "ガイドを読み込めませんでした: {{message}}"
-    }
+    "user_guide": "User guide",
+    "admin_guide": "Administrator guide",
+    "scenarios": "Scenarios",
+    "shortcuts": "Keyboard shortcuts",
+    "technical": "Technical reference",
+    "changelog": "In this release",
+    "search": "Search help",
+    "search_placeholder": "Search help...",
+    "sections": "Help sections",
+    "on_this_page": "On this page",
+    "no_results": "No help section matches this search.",
+    "user_badge": "User reference",
+    "admin_badge": "Administrator reference",
+    "title": "ヘルプ",
+    "intro": "アーカイブの検索、絞り込み、ツール利用のための簡単なガイドです。",
+    "section_basics": "検索とフィルター",
+    "search_label": "検索",
+    "search_desc": "上部の入力欄でファイル名、タイトル、内容を検索します。セマンティックモードは意味が近いファイルを検索し、インデックスが必要な場合があります。",
+    "filters_label": "フィルター",
+    "filters_desc": "左のサイドバーで種類、タグ、AI 分析、お気に入りにより結果を絞り込みます。有効なフィルターは上部のチップから外せます。",
+    "presets_label": "保存したフィルター",
+    "presets_desc": "現在の検索とフィルターの状態に名前を付けて保存し、同じアーカイブで再適用できます。",
+    "ai_label": "AI ツール",
+    "ai_desc": "画像検索とチャットにはローカルモデルまたはインデックスが必要な場合があります。設定 > AI で状態を管理します。",
+    "section_shortcuts": "キーボードショートカット",
+    "section_contextual": "画面ごとのヘルプ",
+    "chat_label": "チャット",
+    "chat_desc": "チャット見出しの ? で範囲、出典、モデルを説明します。",
+    "dedup_label": "重複検出",
+    "dedup_desc": "重複検出の見出しの ? でスキャンと安全な削除の流れを説明します。",
+    "hint": "? キーでもこのヘルプを開閉できます。"
   },
-  "trash": {
-    "title": "ゴミ箱",
-    "hint": {
-      "undoWithCtrlZ": "Ctrl+Zで最後に削除したファイルを元に戻すことができます。"
-    },
-    "lastOperation": "最後の操作: ",
-    "undone": "元に戻しました",
-    "selectAll": "すべて選択",
-    "deselectAll": "選択解除",
-    "restored": "{{count}} ファイルを復元しました",
-    "restoredSingle": "\"{{fileName}}\" を復元しました",
-    "permanentDeleted": "{{count}} ファイルを完全に削除しました",
-    "trashEmptied": "ゴミ箱を空にしました ({{count}} ファイル)",
-    "confirmPermanentDelete": "この操作は元に戻せません。選択した {{count}} ファイルが完全に削除されます。",
-    "confirmEmptyTrash": "ゴミ箱内のすべてのファイルが完全に削除されます。この操作は元に戻せません。",
-    "autoRestore": {
-      "title": "フォルダーがゴミ箱から復元されました",
-      "message": "\"{{label}}\" は再スキャンされたため、ゴミ箱から自動的に復元されました。"
-    },
-    "button": {
-      "undoLastDelete": "最後の削除を元に戻す",
-      "restore": "復元",
-      "permanentDelete": "完全に削除",
-      "emptyTrash": "ゴミ箱を空にする"
-    },
-    "column": {
-      "label": "フォルダ名",
-      "path": "パス"
-    },
-    "empty": {
-      "title": "ゴミ箱は空です",
-      "description": "アーカイブから削除されたファイルがここに表示されます。"
-    },
-    "footer": {
-      "note": "削除操作はアーカイブからファイルを削除するだけです。物理ファイルは元の場所に残ります。",
-      "count": "ゴミ箱に {{count}} ファイル"
-    },
-    "tab": {
-      "files": "ファイル",
-      "folders": "フォルダ"
-    },
-    "folder": {
-      "restoredSingle": "\"{{label}}\" を復元しました",
-      "permanentDeleted": "{{count}} フォルダを完全に削除しました",
-      "confirmPermanentDelete": "\"{{label}}\" とそのすべてのファイルが完全に削除されます。この操作は元に戻せません。",
-      "emptyTitle": "削除されたフォルダはありません",
-      "emptyDescription": "サイドバーから削除されたフォルダは30日間ここに保持されます。",
-      "footerCount": "ゴミ箱に {{count}} フォルダ"
-    }
+  "dropzone": {
+    "drop_here": "ここにドロップしてフォルダーをインデックス",
+    "desc": "フォルダーをドラッグ＆ドロップすると、スキャンオプションが開きます。",
+    "admin_only": "フォルダーのインデックスは管理者のみ利用できます。"
   },
-  "feedback": {
-    "error": {
-      "bodyEmpty": "メッセージの内容を空にすることはできません。",
-      "dailyLimit": "1日のメッセージ制限 (最大 {{limit}}) に達しました。明日もう一度お試しください。",
-      "recipientRequired": "受信者を選択する必要があります"
-    },
-    "success": {
-      "sent": "メッセージが送信されました。(残り: {{remaining}})"
-    },
-    "tab": {
-      "compose": "新規メッセージ",
-      "messages": "メッセージ ({{count}})",
-      "developer": "開発者へ",
-      "inbox": "受信トレイ",
-      "sent": "送信済み ({{count}})",
-      "broadcast": "お知らせ"
-    },
-    "developer": {
-      "description": "開発チームにリクエスト、ご意見、ご提案をお送りください。このタブで返信を追跡できます。",
-      "subjectPlaceholder": "例: 機能リクエスト、バグ報告...",
-      "bodyPlaceholder": "詳細なメッセージをここに入力してください...",
-      "send": "開発者に送信",
-      "sent": "フィードバックが送信されました。",
-      "sentLan": "フィードバックが開発者に配信されました ✓",
-      "sentOffline": "開発者は現在オフラインです — メッセージは保存されました。",
-      "empty": "開発者フィードバックはまだありません。",
-      "export": "エクスポート (.txt)"
-    },
-    "label": {
-      "recipient": "受信者",
-      "to": "宛先:",
-      "from": "差出人:",
-      "messageType": "メッセージタイプ",
-      "priority": "優先度",
-      "subject": "件名 (オプション)",
-      "message": "メッセージ"
-    },
-    "type": {
-      "suggestion": "改善の提案",
-      "private": "プライベートメッセージ",
-      "request": "リクエスト",
-      "suggestionBadge": "提案",
-      "privateBadge": "プライベート",
-      "requestBadge": "リクエスト"
-    },
-    "request": {
-      "allAdminsNote": "このリクエストはすべての管理者に送信されます。対応可能な管理者が対応します。",
-      "allAdminsBadge": "全管理者"
-    },
-    "claim": {
-      "unclaimed": "保留中",
-      "claimedByYou": "あなたが対応中",
-      "claimedBy": "対応者: {{admin}}"
-    },
-    "priority": {
-      "normal": "通常",
-      "important": "重要",
-      "importantBadge": "重要"
-    },
-    "placeholder": {
-      "selectRecipient": "ユーザーを選択...",
-      "subject": "短いタイトル...",
-      "body": "メッセージを入力...",
-      "reply": "返信を入力..."
-    },
-    "button": {
-      "send": "送信",
-      "filter": "フィルター",
-      "newMessage": "新規メッセージ",
-      "resolve": "解決済み",
-      "claim": "対応する",
-      "release": "解除",
-      "delete": "削除",
-      "deleteSelected": "選択項目を削除 ({{count}})",
-      "selectAll": "すべて選択"
-    },
-    "sent": {
-      "empty": "まだメッセージを送信していません。"
-    },
-    "reply": {
-      "success": "返信が送信されました。"
-    },
-    "delete": {
-      "confirm": "このメッセージを削除しますか？",
-      "confirmDetail": "メッセージとすべての返信が完全に削除されます。"
-    },
-    "badge": {
-      "newCount": "{{count}} 件の新規"
-    },
-    "filter": {
-      "allTypes": "すべてのタイプ",
-      "allStatuses": "すべてのステータス",
-      "allSenders": "すべての送信者"
-    },
-    "status": {
-      "unread": "未読",
-      "read": "既読",
-      "resolved": "解決済み"
-    },
-    "inbox": {
-      "empty": "受信トレイは空です。"
-    },
-    "replyCount": "({{count}} 件の返信)"
+  "visual": {
+    "similar_title": "{{name}} に類似する画像",
+    "similar_clear": "クリア"
   },
-  "scan": {
-    "preparing": "準備中...",
-    "preparingDetail": "AI モデルを読み込んでいます。しばらくお待ちください。",
-    "description": "建築プロジェクトフォルダを選択します。システムはサポートされているすべてのファイルをスキャンし、アーカイブに追加します。",
-    "section": {
-      "scanMode": "スキャンモード",
-      "aiVectors": "AI セマンティックベクトル",
-      "colorPalette": "カラーパレット分析"
-    },
-    "mode": {
-      "merge": "既存のリストに追加",
-      "mergeDesc": "新しいファイルが既存の {{count}} レコードに追加されます。",
-      "replaceUnderPath": "選択したフォルダを再スキャン",
-      "replaceUnderPathDesc": "選択したフォルダ配下のレコードのみ削除されます。他のソースフォルダは保持されます。",
-      "fullReset": "アーカイブ全体をリセットして新規スキャン",
-      "fullResetDesc": "すべてのレコード（他のフォルダを含む）が削除され、選択したフォルダが最初からスキャンされます。"
-    },
-    "badge": {
-      "alwaysActive": "常にアクティブ"
-    },
-    "ai": {
-      "description": "ファイルごとに MiniLM-L6-v2 モデルを使用してセマンティックベクトルが作成されます。",
-      "lowHardwareWarning": "低パフォーマンスのハードウェアでは、スキャンに時間がかかる場合があります。",
-      "modelReady": "AI モデルの準備完了",
-      "modelLoading": "モデルを読み込み中... {{progress}}%",
-      "modelWillLoad": "モデルは最初のスキャンで自動的に読み込まれます (~23MB)"
-    },
-    "color": {
-      "enabledDesc": "各画像の主要な色が抽出されます。",
-      "disabledDesc": "色分析は無効化されています。"
-    },
-    "button": {
-      "selectFolder": "フォルダを選択してスキャン",
-      "selectFiles": "ファイルを選択して追加",
-      "resume": "再開",
-      "pause": "一時停止",
-      "cancel": "キャンセル",
-      "closeAndView": "閉じて結果を表示"
-    },
-    "progress": {
-      "filesProcessed": "{{processed}} / {{total}} ファイルを処理しました"
-    },
-    "eta": {
-      "elapsed": "⏱ 経過:",
-      "remaining": "⏳ 残り:",
-      "calculating": "計算中…"
-    },
-    "status": {
-      "paused": "⏸ 一時停止中"
-    },
-    "errors": {
-      "count": "{{count}} 件のエラー",
-      "occurred": "{{count}} 件のエラーが発生しました。"
-    },
-    "complete": {
-      "cancelled": "スキャンがキャンセルされました",
-      "cancelledDesc": "{{count}} ファイル完了",
-      "success": "スキャンが完了しました！",
-      "fileFormats": "ファイル形式",
-      "cacheDetail": "ファイルがキャッシュから読み込まれました (変更なし)、",
-      "indexedDetail": "ファイルが正常にインデックスされました。",
-      "scannedDetail": "ファイルが正常にスキャンされました。",
-      "rescannedDetail": "ファイルが再スキャンされました。",
-      "rescannedIndexedDetail": "ファイルが再インデックスされました。",
-      "durationSuffix": "経過",
-      "autoRagActive": "AI インデックスがバックグラウンドで実行中",
-      "autoRagDesc": "{{current}}/{{total}} ファイルを処理中。上部バナーの停止ボタンで中止できます。CPU 負荷が高くなります。"
-    },
-    "duration": {
-      "hours": "{{h}}時間 {{m}}分 {{s}}秒",
-      "minutes": "{{m}}分 {{s}}秒",
-      "seconds": "{{s}}秒"
-    },
-    "cache": "{{count}} キャッシュ",
-    "cacheLoaded": "{{count}} 件をキャッシュから",
-    "pendingRescanTitle": "{{count}} 件のファイルが再スキャン待ちです",
-    "pendingRescanStart": "これらのファイルをスキャン",
-    "largeScan": {
-      "title": "大きなフォルダが検出されました",
-      "detail": "このフォルダには {{fileCount}} 個の対応ファイルと {{folderCount}} 個のサブフォルダがあります。スキャンに時間がかかる場合があります。フォルダを段階的に追加すると高速にスキャンできます。",
-      "confirm": "スキャンを続行"
-    }
+  "embed": {
+    "title": "セマンティック索引",
+    "status": "{{embedded, number}} / {{total, number}} 埋め込み済み",
+    "pending": "残り {{count, number}}",
+    "run": "埋め込み（残り {{count, number}}）",
+    "running": "埋め込み中…",
+    "progress_count": "{{done, number}} / {{total, number}}",
+    "model_missing": "埋め込みモデルが見つかりません — モデルファイルを models/ フォルダーに置くか、ARSIV_EMBED_MODEL_DIR 環境変数を設定してください。",
+    "all_done": "すべてのアセットが埋め込まれました — セマンティック検索が利用できます。",
+    "done_toast": "埋め込み完了：{{embedded, number}} 件成功、{{failed, number}} 件失敗。セマンティック検索が利用可能になりました。",
+    "failed": "埋め込みに失敗しました：{{message}}"
   },
-  "refile": {
-    "structure": {
-      "byProject": "プロジェクト別",
-      "byProjectDesc": "プロジェクト名でファイルをグループ化",
-      "byCategory": "カテゴリー別",
-      "byCategoryDesc": "カテゴリーでファイルをグループ化",
-      "byType": "ファイルタイプ別",
-      "byTypeDesc": "拡張子でファイルをグループ化",
-      "byDate": "日付別",
-      "byDateDesc": "日付でファイルをグループ化"
-    },
-    "action": {
-      "copied": "コピーしました",
-      "moved": "移動しました"
-    },
-    "dialog": {
-      "selectDest": "ターゲットフォルダを選択 (ファイルはここに整理されます)"
-    },
-    "result": {
-      "success": "{{processed}} ファイルが正常に {{action}} されました。{{folders}} フォルダが作成されました。",
-      "browserMode": "{{count}} 件の参照 (.ref) ファイルが作成されました。",
-      "error": "エラー: {{message}}"
-    },
-    "summary": "{{fileCount}} ファイルが選択されました。以下の構造に従って整理されます:",
-    "preview": {
-      "title": "プレビュー ({{count}} フォルダ)"
-    },
-    "button": {
-      "copy": "コピー / 整理",
-      "move": "移動 / 整理"
-    },
-    "backupFiles": "バックアップファイル",
-    "browser": {
-      "note": "ブラウザでは、.ref 参照ファイルのみが作成されます。"
-    },
-    "processing": {
-      "title": "ファイルを整理しています...",
-      "progress": "{{current}} / {{total}} ファイル"
-    },
-    "done": {
-      "error": "操作に失敗しました",
-      "success": "操作完了！"
-    },
-    "confirm": {
-      "moveTitle": "ファイルを移動",
-      "copyTitle": "ファイルをコピー",
-      "body": "{{count}} ファイルが整理されます。",
-      "moveWarning": "警告: 移動操作により元のファイルが削除されます。この操作は元に戻せません。",
-      "confirmMove": "移動を確認",
-      "confirmCopy": "コピーを確認"
-    }
+  "rag_index": {
+    "title": "RAG インデックス（チャット）",
+    "status": "{{indexed, number}} / {{total, number}} 件インデックス済み",
+    "pending": "残り {{count, number}}",
+    "chunks": "{{count, number}} チャンク",
+    "run": "インデックス（残り {{count, number}}）",
+    "running": "インデックス作成中…",
+    "progress_count": "{{done, number}} / {{total, number}}",
+    "model_missing": "埋め込みモデルが見つかりません — RAG インデックスはテキスト埋め込みが必要です（セマンティックインデックスと同じモデル）。",
+    "all_done": "すべてのアセットがインデックスされました — チャットが利用可能です。",
+    "done_toast": "インデックス完了：{{indexed, number}} アセット、{{chunks, number}} チャンク、{{failed, number}} 失敗。",
+    "failed": "インデックス作成に失敗しました：{{message}}"
   },
-  "logViewer": {
-    "delete": {
-      "noneFound": "削除するレコードが見つかりません。",
-      "failed": "削除に失敗しました",
-      "confirm": "{{count}} 件のログレコードを削除しますか？",
-      "confirmDetail": "選択したレコードは完全に削除されます。",
-      "success": "レコードを削除しました",
-      "successDetail": "{{count}} 件のレコードが削除されました"
-    },
-    "clearAll": {
-      "confirm": "すべてのログをクリアしますか？",
-      "confirmDetail": "この操作は元に戻せません。",
-      "success": "ログをクリアしました"
-    },
-    "clearByDate": {
-      "confirm": "{{days}} 日より古いログを削除しますか？",
-      "confirmDetail": "この日付以前のレコードが削除されます。",
-      "success": "古いログをクリアしました",
-      "successDetail": "{{count}} 件のレコードを削除しました"
-    },
-    "header": {
-      "totalRecords": "合計 {{count}} 件のレコード",
-      "selected": "{{count}} 件を選択"
-    },
-    "tooltip": {
-      "deleteSelected": "選択した {{count}} 件のレコードを削除 (Delete)",
-      "refresh": "更新",
-      "clearByDate": "日付でクリア",
-      "clearAll": "すべてクリア",
-      "deselectAll": "選択解除",
-      "selectAll": "すべて選択",
-      "verifyIntegrity": "ログの整合性を検証（ハッシュチェーン）"
-    },
-    "integrity": {
-      "valid": "ログの整合性を確認しました — {{count}} 件のレコードが一貫したチェーンを形成しています。",
-      "invalid": "ログの整合性が破損しています — {{broken}}/{{total}} 件のレコードに矛盾があります。",
-      "firstBroken": "最初に破損したレコード id: {{id}}",
-      "missingHash": "{{count}} 件のレコードにハッシュがありません（旧マイグレーション待ち）。",
-      "hint": "近くに LOG_DELETED / LOG_CLEARED マーカーがない場合、外部からの改ざんが疑われます。DB ファイルがアプリ外で編集された可能性があります。",
-      "error": "検証に失敗しました: {{error}}"
-    },
-    "button": {
-      "deleteSelected": "選択項目を削除",
-      "clearByDate": "クリア"
-    },
-    "dateBar": {
-      "label": "古いレコードをクリア:",
-      "daysOld": "{{days}} 日より古い"
-    },
-    "filter": {
-      "allActions": "すべてのアクション"
-    },
-    "action": {
-      "scanStarted": "スキャン開始",
-      "scanCompleted": "スキャン完了",
-      "scanCancelled": "スキャンキャンセル",
-      "fileAdded": "ファイル追加",
-      "fileDeleted": "ファイル削除",
-      "fileRestored": "ファイル復元",
-      "settingsChanged": "設定変更",
-      "userLogin": "ユーザーログイン",
-      "userLogout": "ユーザーログアウト",
-      "dbExport": "DBエクスポート",
-      "dbImport": "DBインポート",
-      "refileCompleted": "整理完了",
-      "versionConvert": "バージョン変換",
-      "messageSent": "メッセージ送信",
-      "messageReplied": "メッセージ返信",
-      "messageDelete": "メッセージ削除"
-    },
-    "table": {
-      "empty": "ログレコードが見つかりません"
-    },
-    "col": {
-      "time": "時間",
-      "role": "ロール",
-      "action": "アクション",
-      "target": "ターゲット",
-      "result": "結果"
-    },
-    "detail": {
-      "title": "詳細",
-      "extraInfo": "追加情報",
-      "noExtra": "このエントリの追加情報はありません。",
-      "tooltip": "詳細を表示 (ダブルクリック)"
-    },
-    "footer": {
-      "selectedOf": "{{selected}} / {{total}} 選択中",
-      "showing": "{{count}} 件のレコードを表示中",
-      "hint": "クリック: 選択 | Ctrl+クリック: 複数 | Shift+クリック: 範囲 | ダブルクリック: 詳細"
-    }
-  },
-  "audit": {
-    "scanInterrupted": {
-      "noteUserClose": "スキャン中にアプリが正常に閉じられました。スキャンは中断されました。",
-      "noteUnexpected": "スキャンが完了する前にアプリが予期せず終了しました (正常終了マーカーなし)。",
-      "possibleCauses": "考えられる原因: アプリのクラッシュ · システムシャットダウン · タスクマネージャーからの終了 · ウイルス対策/セキュリティソフトウェア · 停電",
-      "cause": {
-        "app_crash": "アプリがクラッシュしました (Windows: Application Error / Event 1000)。",
-        "app_hang": "アプリが応答しなくなり、強制終了されました (Windows: Application Hang / Event 1002)。",
-        "system_shutdown": "システムがシャットダウンまたは再起動されました (Windows: Event 1074 / 6006)。",
-        "system_unexpected_reboot": "システムが予期せず再起動しました: 停電、カーネルパニックまたはブルースクリーン (Windows: Event 6008 / 41)。"
-      }
-    }
-  },
-  "aiSettings": {
-    "description": "画像検索を有効にするためのAIプロバイダーを選択して構成します。",
-    "label": {
-      "provider": "プロバイダー",
-      "ollamaUrl": "Ollama サーバー URL",
-      "visionModel": "ビジョンモデル",
-      "apiKey": "API キー"
-    },
-    "badge": {
-      "local": "🔒 ローカル / プライベート",
-      "cloud": "クラウド API"
-    },
-    "guide": {
-      "title": "セットアップガイド — 初めてご利用ですか？"
-    },
-    "hint": {
-      "defaultUrl": "デフォルトのURLを変更する必要はありません。",
-      "modelRecommendation": "GPUをお持ちの場合は llava をお勧めします。"
-    },
-    "model": {
-      "llavaDesc": "(推奨 — GPUで高速, ~4.7 GB)",
-      "moondreamDesc": "(軽量な代替, ~1.7 GB)"
-    },
-    "button": {
-      "testing": "テスト中…",
-      "test": "接続をテスト"
-    },
-    "test": {
-      "ollamaOk": "Ollamaは実行中で、接続は成功しました！",
-      "cloudOk": "API接続は成功しました！"
-    },
-    "placeholder": {
-      "apiKey": "{{provider}} APIキーを入力"
-    },
-    "section": {
-      "clip": "高度な画像インデックス作成 (CLIP)"
-    },
-    "clip": {
-      "on": "オン",
-      "off": "オフ",
-      "description": "オンの場合、システムはCLIPを使用して画像をインデックス付けします。"
-    },
-    "guide_note": {
-      "llavaNote": "LLaVA モデルには約 4.7 GB のディスク領域が必要です。"
-    },
-    "ollamaSteps": {
-      "step1Title": "Ollamaのダウンロードとインストール",
-      "step1Body": "ollama.com にアクセスし、Windows 用をダウンロードしてインストールします。インストール後、システムトレイで実行されます。",
-      "step2Title": "ビジョンモデルのダウンロード",
-      "step2Body": "スタートメニューに \"cmd\" と入力してEnterキーを押します。開いたウィンドウに以下のコマンドを貼り付けます:",
-      "step3Title": "アプリへのアクセスを許可 (CORS)",
-      "step3Body": "デフォルトでは、Ollamaはこのアプリからのリクエストを拒否します。許可するには:",
-      "step4Title": "接続をテスト",
-      "step4Body": "Ollamaがシステムトレイで実行されている場合は、下の「接続をテスト」ボタンをクリックします。"
-    },
-    "error": {
-      "invalidJson": "Ollama は無効な JSON 形式を返しました。",
-      "noVisionModel": "Ollamaは実行されていますが、ビジョンモデルがインストールされていません。セットアップガイドのステップ2に従ってください。",
-      "oldVersion": "Ollama のバージョン ({{version}}) が古すぎます。GPUの完全なサポートがない可能性があります。ollama.com から更新してください。",
-      "notRunning": "Ollama が実行されていないか、アドレスが間違っています。セットアップガイドを確認してください。",
-      "noApiKey": "API キーが入力されていません。",
-      "timeout": "接続がタイムアウトしました (15秒)。APIキーとインターネット接続を確認してください。",
-      "invalidApiKey": "API キーが無効です。正しいキーを入力したことを確認してください。"
-    },
-    "copied": "✓ コピーしました",
-    "copy": "コピー",
-    "newModelHint": "新しいモデルを追加するには:",
-    "pullModel": "モデルをダウンロード",
-    "pullModelLoading": "ダウンロード中...",
-    "pullModelSuccess": "モデルのダウンロードに成功しました！",
-    "pullModelError": "モデルのダウンロードに失敗しました",
-    "pullModelHint": "llava ~4.7 GB — ダウンロードに時間がかかる場合があります",
-    "setCors": "CORSを設定",
-    "setCorsLoading": "設定中...",
-    "setCorsSuccess": "CORSを設定しました！Ollamaを再起動してください。",
-    "setCorsError": "CORSの設定に失敗しました",
-    "setCorsHint": "Ollamaの再起動をお忘れなく",
-    "openSetupWizard": "AIセットアップウィザード",
-    "status": {
-      "title": "AIステータス",
-      "refresh": "更新",
-      "ollamaServer": "Ollamaサーバー",
-      "chatModel": "テキストモデル",
-      "visionModel": "ビジョンモデル",
-      "ready": "準備完了",
-      "missing": "未インストール",
-      "notRunning": "オフライン",
-      "pulling": "ダウンロード中...",
-      "configured": "設定済み",
-      "downloadChat": "ダウンロード",
-      "downloadVision": "ダウンロード",
-      "installHint": "Ollamaがインストールされている場合は、上の「開始」ボタンを使用してください。それ以外の場合は、ollama.com/download からダウンロードしてください。",
-      "advanced": "モデル詳細設定",
-      "chatModelHint": "RAGチャット、タグ生成、クエリ拡張用。推奨: qwen3:8b · 最低: qwen3:4b",
-      "visionModelHint": "画像分析とOCR用。デフォルト: llava",
-      "installedModels": "インストール済みモデル:",
-      "start": "開始",
-      "stop": "停止",
-      "startOllama": "Ollamaを開始",
-      "stopOllama": "Ollamaを停止",
-      "starting": "開始中...",
-      "stopping": "停止中...",
-      "chatMissing": "{{model}} が見つかりません",
-      "visionMissing": "{{model}} が見つかりません",
-      "chatAltHint": "または、インストール済みのモデルから選択できます：{{models}}"
-    }
-  },
-  "profile": {
-    "error": {
-      "imageOnly": "画像ファイルのみアップロードできます",
-      "fileTooLarge": "ファイルサイズが大きすぎます ({{size}} MB)。最大2MBです。",
-      "uploadFailed": "画像のアップロード中にエラーが発生しました",
-      "currentPasswordRequired": "現在のパスワードを入力してください",
-      "newPasswordTooShort": "新しいパスワードは3文字以上である必要があります",
-      "passwordMismatch": "新しいパスワードが一致しません",
-      "wrongPassword": "現在のパスワードが間違っています",
-      "updateFailed": "更新に失敗しました",
-      "saveFailed": "保存中にエラーが発生しました"
-    },
-    "success": {
-      "updated": "プロフィールが更新されました",
-      "passwordChanged": "パスワードが変更されました"
-    },
-    "avatar": {
-      "uploading": "アップロード中...",
-      "hint": "最大 2MB、128x128px にリサイズされます"
-    },
-    "button": {
-      "uploadPhoto": "写真をアップロード",
-      "removeAvatar": "削除",
-      "changePassword": "パスワード変更"
-    },
-    "label": {
-      "displayName": "表示名",
-      "username": "ユーザー名",
-      "role": "ロール",
-      "currentPassword": "現在のパスワード",
-      "newPassword": "新しいパスワード",
-      "confirmPassword": "新しいパスワード (確認)"
-    },
-    "placeholder": {
-      "displayName": "お名前を入力..."
-    }
-  },
-  "userMgmt": {
-    "error": {
-      "usernamePasswordRequired": "ユーザー名とパスワードが必要です",
-      "createFailed": "ユーザーを作成できませんでした",
-      "lastAdmin": "最後の管理者を降格させることはできません。最初に別の管理者を割り当ててください。",
-      "roleChangeFailed": "ロールを変更できませんでした",
-      "passwordTooShort": "パスワードは3文字以上である必要があります",
-      "passwordResetFailed": "パスワードをリセットできませんでした",
-      "cannotDeleteSelf": "自分自身を削除することはできません",
-      "cannotDeleteLastAdmin": "最後の管理者を削除することはできません",
-      "deleteFailed": "削除に失敗しました",
-      "notFounder": "創設者管理者のみがこの操作を実行できます"
-    },
-    "success": {
-      "userCreated": "ユーザーが作成されました",
-      "roleChanged": "ロールが変更されました",
-      "passwordReset": "パスワードがリセットされました",
-      "passwordResetDetail": "新しいパスワードが割り当てられました",
-      "userDeleted": "ユーザーが削除されました",
-      "avatarRemoved": "アバターが削除されました",
-      "userBlocked": "メインアーカイブへのアクセスがブロックされました",
-      "userUnblocked": "メインアーカイブへのアクセスがブロック解除されました",
-      "developerEnabled": "開発者アクセス権限が付与されました",
-      "developerDisabled": "開発者アクセス権限が取り消されました"
-    },
-    "blockNotification": {
-      "subject": "メインアーカイブアクセス制限",
-      "body": "メインアーカイブへのアクセスが管理者によって制限されました。ローカルアーカイブは引き続き使用できます。詳細は管理者にお問い合わせください。"
-    },
-    "delete": {
-      "confirm": "\"{{name}}\" を削除しますか？",
-      "confirmDetail": "このユーザーは完全に削除されます。"
-    },
-    "header": {
-      "userCount": "{{count}} ユーザー"
-    },
-    "button": {
-      "newUser": "新規ユーザー",
-      "add": "追加"
-    },
-    "form": {
-      "usernameLabel": "ユーザー名 *",
-      "usernamePlaceholder": "username",
-      "passwordLabel": "パスワード *",
-      "passwordPlaceholder": "password123",
-      "displayNameLabel": "表示名",
-      "displayNamePlaceholder": "お名前",
-      "roleLabel": "ロール",
-      "developerLabel": "開発者アクセス",
-      "newPasswordPlaceholder": "新しいパスワード"
-    },
-    "table": {
-      "empty": "登録ユーザーがいません"
-    },
-    "col": {
-      "username": "ユーザー名",
-      "displayName": "表示名",
-      "role": "ロール",
-      "createdAt": "作成日",
-      "actions": "アクション"
-    },
-    "badge": {
-      "you": "(あなた)",
-      "blocked": "ブロック中",
-      "developer": "開発者",
-      "founder": "創設者"
-    },
-    "tooltip": {
-      "resetPassword": "パスワードをリセット",
-      "removeAvatar": "アバターを削除",
-      "deleteUser": "ユーザーを削除",
-      "blockUser": "メインアーカイブへのアクセスをブロック",
-      "unblockUser": "メインアーカイブへのアクセスをブロック解除",
-      "toggleDeveloper": "開発者アクセスを切り替え"
-    },
-    "displayName": "名前"
-  },
-  "detail": {
-    "section": {
-      "colorPalette": "カラーパレット",
-      "fileInfo": "ファイル情報",
-      "formatProps": "フォーマットプロパティ",
-      "convertedFile": "バージョン変換されたファイル",
-      "docExcerpt": "ドキュメント抜粋",
-      "docIndex": "ドキュメント内容 (インデックス)",
-      "aiTags": "AI タグ",
-      "techMeta": "技術メタデータ",
-      "archStyle": "建築様式",
-      "match": "マッチ元"
-    },
-    "color": {
-      "analyzing": "分析中…",
-      "refresh": "更新"
-    },
-    "error": {
-      "copyPathFailed": "パスをコピーできませんでした。",
-      "openFileFailed": "ファイルを開けませんでした: {{error}}",
-      "openFolderFailed": "フォルダを開けませんでした: {{error}}",
-      "colorExtractFailed": "カラーパレットを抽出できませんでした: {{error}}"
-    },
-    "tag": {
-      "versionConverted": "バージョン変換済み"
-    },
-    "convert": {
-      "maxRunning": "3ds Max が現在開かれています。Max を閉じてから再試行してください。",
-      "noInstall": "適切な 3ds Max インストールが見つかりません。",
-      "successReal": "ファイルが V{{year}} に変換されました (3ds Max 使用)",
-      "successQuick": "ファイルに V{{year}} のスタンプが押されました",
-      "error": "変換エラー: {{error}}"
-    },
-    "export": {
-      "success": "{{format}} としてエクスポートされました",
-      "error": "エクスポートエラー: {{error}}",
-      "exporting": "エクスポート中...",
-      "fbxTitle": "MAX ファイルを FBX 形式でエクスポート (3ds Max が必要)",
-      "objTitle": "MAX ファイルを OBJ 形式でエクスポート (3ds Max が必要)"
-    },
-    "button": {
-      "openFile": "ファイルを開く",
-      "converting": "変換中...",
-      "downgrade": "バージョンをダウングレード",
-      "showInFolder": "フォルダに表示",
-      "copied": "コピーしました！",
-      "copyPath": "パスをコピー"
-    },
-    "convertMode": {
-      "quick": "クイック",
-      "quickDesc": "スタンプ変更",
-      "real": "リアル",
-      "realDesc": "3ds Max 使用",
-      "notFound": "Max が見つかりません",
-      "quickWarning": "バージョンスタンプを変更します。高速ですが、バージョン固有の機能に互換性がない場合があります。",
-      "realWarning": "インストールされている 3ds Max で再保存します。完全な互換性が保証されます。",
-      "detected": "{{versions}} 検出"
-    },
-    "version": {
-      "current": "← 現在"
-    },
-    "label": {
-      "size": "サイズ",
-      "type": "タイプ",
-      "category": "カテゴリー",
-      "created": "作成日",
-      "updated": "更新日",
-      "drawingDate": "図面作成日",
-      "maxVersion": "Max バージョン",
-      "maxLayers": "Max レイヤー数",
-      "maxObjects": "Max オブジェクト数",
-      "original": "オリジナル:",
-      "source": "ソース:",
-      "dwgVersion": "AutoCAD バージョン",
-      "skpVersion": "SketchUp バージョン",
-      "rvtVersion": "Revit バージョン",
-      "rvtProjectName": "プロジェクト名",
-      "rvtWorkshared": "ワークシェアリング",
-      "rvtStoreys": "階数",
-      "ifcSchema": "IFC スキーマ",
-      "ifcProjectName": "プロジェクト名",
-      "ifcBuildingName": "建物名",
-      "ifcOriginatingSystem": "作成システム",
-      "ifcEntities": "エンティティ数",
-      "ifcStoreys": "階数",
-      "ifcSpaces": "スペース数",
-      "path": "パス",
-      "layers": "レイヤー ({{count}})",
-      "blockCount": "ブロック数",
-      "renderEngine": "レンダリングエンジン",
-      "textureCount": "テクスチャ数",
-      "rooms": "部屋 ({{count}})",
-      "materials": "マテリアル",
-      "resolution": "解像度",
-      "pageCount": "ページ数",
-      "colorProfile": "カラープロファイル",
-      "imageRefs": "画像参照 ({{count}})"
-    },
-    "action": {
-      "open": "開く",
-      "showInFolder": "フォルダに表示"
-    },
-    "backup": {
-      "title": "{{count}} 個のバックアップファイル",
-      "totalSize": "合計 {{size}}"
-    },
-    "chunk": {
-      "info": "チャンク: {{index}} · ページ {{page}}"
-    },
-    "docIndex": {
-      "hasChunks": "このファイルはコンテンツがスキャンされています。{{count}} 個のチャンクレコードがあります。",
-      "noChunks": "このファイルのコンテンツチャンクが見つかりません。",
-      "garbage": "コンテンツが抽出されましたが、読み取り可能なテキストではありません。",
-      "searchHint": "検索ボックスに入力して、このファイルが結果で強調表示された場合、関連部分が「ドキュメント抜粋」として上に表示されます。",
-      "ocrHint": "ヒント: このファイルでテキスト検索を期待する場合は、アーカイブの再スキャン時に AI をオンにしてください。スキャンされたドキュメントでは Ollama による OCR が必要になる場合があります。"
-    },
-    "match": {
-      "file": "DWG ファイル内",
-      "ai": "AI 検出",
-      "meta": "メタデータ"
-    }
-  },
-  "dashboard": {
-    "stat": {
-      "totalAssets": "合計アセット",
-      "activeProjects": "アクティブプロジェクト",
-      "totalSize": "合計サイズ",
-      "indexed": "インデックス済み",
-      "partiallyIndexed": "部分インデックス済み"
-    },
-    "card": {
-      "categoryDist": "アセットタイプ分布",
-      "materialGroups": "マテリアルグループ",
-      "projectPhases": "プロジェクトフェーズ",
-      "fileFormats": "ファイル形式の分布",
-      "archStyles": "建築様式",
-      "sizeByFormat": "形式別ディスク使用量",
-      "monthlyGrowth": "月次成長（過去12ヶ月）",
-      "monthlyGrowthHint": "この期間に {{count}} 個のファイルが追加されました（作成日基準）"
-    },
-    "activity": {
-      "title": "過去7日間のアクティビティ",
-      "totalOps": "{{count}} 件の操作",
-      "topUsers": "最もアクティブなユーザー",
-      "topActions": "アクションタイプ"
-    }
-  },
-  "technical": {
-    "empty": "フィルターに一致するアセットが見つかりません。",
-    "tooltip": {
-      "sortColumn": "クリックしてソート"
-    },
-    "col": {
-      "fileName": "ファイル名",
-      "type": "タイプ",
-      "category": "カテゴリー",
-      "version": "バージョン",
-      "project": "プロジェクト",
-      "phase": "フェーズ",
-      "material": "マテリアル",
-      "size": "サイズ",
-      "score": "スコア",
-      "updated": "更新日",
-      "aiTags": "AI タグ"
-    }
-  },
-  "assetCard": {
-    "badge": {
-      "similarity": "{{score}}% 類似度",
-      "stale": "前回のスキャン以降にファイルが変更されました — 再スキャンが必要",
-      "staleShort": "古い",
-      "missing": "ディスク上にファイルが見つかりません",
-      "missingShort": "不明",
-      "version": "スキャナーが更新されました — 再スキャンするとより多くのデータが抽出されます",
-      "versionShort": "新データ"
-    },
-    "videoPreview": "ビデオプレビュー"
-  },
-  "health": {
-    "idle": "鮮度不明",
-    "error": "確認失敗",
-    "allFresh": "すべて最新",
-    "stale": "{{count}} 件のファイルが古い",
-    "missing": "{{count}} 件のファイルが見つかりません",
-    "versionOutdated": "{{count}} 件のファイルからさらにデータを抽出できます",
-    "checking": {
-      "label": "鮮度を確認中…",
-      "progress": "{{done}}/{{total}} 確認済み"
-    },
-    "modal": {
-      "title": "アーカイブ健全性レポート",
-      "recheck": "再確認",
-      "allFreshTitle": "すべてのファイルは最新です",
-      "lastCheck": "最終確認：{{time}}",
-      "summary": "{{stale}} 変更 · {{missing}} 不明 · {{version}} 更新可能",
-      "staleSection": "変更されたファイル（{{count}}）",
-      "missingSection": "見つからないファイル（{{count}}）",
-      "versionSection": "スキャナー更新（{{count}}）",
-      "versionHint": "これらのファイルは古いバージョンのスキャナーで処理されました。再スキャンでさらに多くのデータが抽出されます（ファイル自体は変更されていません）。",
-      "rescanAll": "すべて再スキャン",
-      "missingHint": "見つからないファイルの記録を消去するには、設定 → 健全性チェック を使用してください。",
-      "deltaScan": "デルタスキャン",
-      "deltaScanHint": "新しいエクストラクタのみ実行し、既存のメタデータを保持します。はるかに高速です。",
-      "legacyFormatSection": "レガシー形式のファイル（{{count}}）",
-      "legacyFormatHint": "これらのファイルは古い（バイナリ）Office 形式を使用しています。長期アーカイブのためには、最新の OOXML 同等形式への変換を推奨します。",
-      "legacyFormatChipTitle": "{{legacy}} → {{recommended}}",
-      "fixitySection": "整合性（ビット劣化）サンプルチェック",
-      "fixityHint": "ランダムサンプルでファイルハッシュを再計算し、ベースラインと比較します。一致しないファイルはディスク上で破損したか変更された可能性があります。",
-      "fixityRun": "実行",
-      "fixitySampleAria": "サンプル割合",
-      "fixityClean": "{{sampled}} ファイル確認 · {{ok}} 健全 · {{seconds}} 秒",
-      "fixityIssues": "{{sampled}} 確認 · {{mismatch}} 破損 · {{missing}} 未検出 · {{error}} エラー",
-      "fixityNoBaseline": "{{count}} ファイルにはベースラインハッシュがありません — スキップしました。",
-      "fixityStatus": {
-        "mismatch": "ハッシュ不一致 — ビット劣化の疑い",
-        "missing": "ディスク上にファイルがありません",
-        "error": "読み取り/計算エラー"
-      }
-    }
-  },
-  "errorBoundary": {
-    "title": "アプリケーションエラー",
-    "description": "予期しないエラーが発生しました。アプリを再読み込みしてみてください。",
-    "reload": "再読み込み",
-    "continue": "続行"
-  },
-  "modalError": {
-    "title": "パネルエラー",
-    "description": "このパネルで予期しないエラーが発生しました。パネルを閉じることができます。",
-    "close": "閉じる"
-  },
-  "statusBar": {
-    "mainArchive": "メインアーカイブ",
-    "localArchive": "ローカルアーカイブ",
-    "timeRemaining": "(残り約 {{time}})",
-    "itemsPerSec": "{{speed}} 項目/秒",
-    "pause": "一時停止",
-    "resume": "再開",
-    "cancelTask": "キャンセル",
-    "unreadNotifications": "{{count}} 件の未読通知",
-    "notifications": "通知",
-    "markAllRead": "すべて既読にする",
-    "clearAll": "すべてクリア",
-    "noNotifications": "通知なし",
-    "userManagement": "ユーザー管理",
-    "editProfile": "プロフィール編集",
-    "logout": "ログアウト",
-    "switchUser": "ユーザーを切り替え",
-    "reportError": "開発者に報告",
-    "errorReported": "エラーレポートが送信されました",
-    "errorReportSent": "送信済み",
-    "errorReportSubject": "エラーレポート：{{title}}",
-    "reportLimitReached": "1日のメッセージ上限に達しました",
-    "ai": {
-      "ready": "AI: 準備完了",
-      "partial": "AI: モデル未インストール",
-      "offline": "AI: Ollamaオフライン"
-    }
-  },
-  "sidebarConfig": {
-    "title": "パネル設定",
-    "description": "左側のパネルに表示される詳細、名前、順序をカスタマイズできます。",
-    "resetDefaults": "デフォルトに戻す"
-  },
-  "assetTags": {
-    "addToFavorites": "お気に入りに追加",
-    "removeFromFavorites": "お気に入りから削除",
-    "placeholder": "タグ名を入力...",
-    "createTag": "\"{{name}}\" を作成"
-  },
-  "tagManagement": {
-    "delete": "タグ \"{{name}}\" を削除",
-    "deleteConfirm": "\"{{name}}\" を削除してもよろしいですか？すべてのファイルから削除されます。"
-  },
-  "undo": {
-    "hint": "Ctrl+Z で元に戻す",
-    "undone": "元に戻しました",
-    "redone": "やり直しました"
-  },
-  "blankMenu": {
-    "section": {
-      "view": "表示",
-      "cardSize": "カードサイズ",
-      "selection": "選択",
-      "sort": "並べ替え"
-    },
-    "view": {
-      "explorer": "エクスプローラー",
-      "technical": "テクニカルリスト",
-      "dashboard": "ダッシュボード"
-    },
-    "cardSize": {
-      "small": "小",
-      "medium": "中",
-      "large": "大"
-    },
-    "selection": {
-      "selectAll": "すべて選択",
-      "clearSelection": "選択を解除 ({{count}})"
-    },
-    "sort": {
-      "name": "名前順",
-      "date": "作成日順",
-      "modified": "更新日順",
-      "type": "タイプ順",
-      "size": "サイズ順",
-      "aiScore": "ビジュアルAIスコア順",
-      "asc": "昇順",
-      "desc": "降順"
-    },
-    "rescan": "再スキャン..."
-  },
-  "contextMenu": {
-    "openFile": "ファイルを開く",
-    "showInFolder": "フォルダに表示",
-    "copyPath": "パスをコピー",
-    "pathCopied": "パスをクリップボードにコピーしました",
-    "addToFavorites": "お気に入りに追加",
-    "removeFromFavorites": "お気に入りから削除",
-    "addTags": "タグを追加...",
-    "rescan": {
-      "label": "このファイルを再スキャン",
-      "scanning": "スキャン中...",
-      "started": "再スキャン中...",
-      "done": "再スキャン完了",
-      "failed": "再スキャンに失敗しました"
-    },
-    "delete": "削除",
-    "addToSelection": "選択に追加",
-    "removeFromSelection": "選択から削除",
-    "ragExclude": "AIから非表示",
-    "ragInclude": "AIに表示",
-    "dwgSimilarity": "DWG構造類似度",
-    "findSimilar": {
-      "title": "類似検索：",
-      "high": "高類似度",
-      "normal": "標準類似度",
-      "medium": "中類似度",
-      "wide": "広範囲類似度"
-    }
-  },
-  "assetStatus": {
-    "section": "プロジェクトステータス",
-    "clientName": "クライアント",
-    "approvalStatus": "承認ステータス",
-    "versionLabel": "バージョン",
-    "deadline": "期限",
-    "clickToEdit": "クリックして編集...",
-    "status": {
-      "draft": "ドラフト",
-      "review": "レビュー中",
-      "approved": "承認済み",
-      "rejected": "却下"
-    }
-  },
-  "assetRelations": {
-    "section": "関連ファイル",
-    "type": {
-      "pdf_export": "PDF エクスポート",
-      "render_of": "レンダリング",
-      "version_of": "バージョン",
-      "project_group": "プロジェクトグループ"
-    },
-    "auto": "自動",
-    "addLink": "リンクを追加",
-    "removeLink": "リンクを削除",
-    "noLinks": "リンクなし",
-    "searchPlaceholder": "ファイル名を入力..."
-  },
-  "perfSetup": {
-    "lowTier": "低",
-    "highTier": "高",
-    "analyzed": "お使いのコンピューターが分析されました。推奨設定は以下の通りです。",
-    "cores": "{{count}} コア",
-    "lowIsFast": "低 = 高速",
-    "selectMode": "モードを選択するか、推奨を受け入れてください：",
-    "skip": "スキップ、手動で設定します",
-    "applyRecommended": "推奨設定を適用",
-    "recommended": "推奨"
-  },
-  "deletion": {
-    "confirmTitle": "\"{{fileName}}\" を削除しますか？",
-    "confirmBody": "ファイルはアーカイブから削除されます。Ctrl+Zで元に戻すことができます。",
-    "removed": "アーカイブから削除しました",
-    "removedUndo": "\"{{fileName}}\" — Ctrl+Zで元に戻せます",
-    "undone": "元に戻しました",
-    "undoneDetail": "\"{{fileName}}\" がアーカイブに復元されました (お気に入りとタグは保持されます)",
-    "label": "\"{{fileName}}\" がアーカイブから削除されました"
-  },
-  "dbAssets": {
-    "timeout": "データベースの読み込みがタイムアウトしました (90秒)。ページを再読み込みしてください。",
-    "dbError": "データベースエラー",
-    "wasmTimeout": "WASM モジュールを読み込めませんでした — タイムアウト。",
-    "initFailed": "データベースを初期化できませんでした: {{message}}",
-    "recoveryTitle": "データベースの問題を検出",
-    "recoveryDetail": "データベースファイルが破損しており、開くことができませんでした。破損したファイルは自動的にバックアップされ、アプリケーションは新しいデータベースで開始されました。以前のデータを復元するには、管理者に連絡してください。"
-  },
-  "scanReports": {
-    "title": "スキャンレポート",
-    "loading": "レポートを読み込み中...",
-    "loadingContent": "読み込み中...",
-    "empty": "まだレポートはありません。スキャン終了後、スキップまたは失敗したファイルがここに表示されます。",
-    "selectReport": "左側からレポートを選択してください",
-    "openInEditor": "エディタで開く",
-    "saveAs": "名前を付けて保存",
-    "entries": "件",
-    "unknownRoot": "（フォルダ名不明）",
-    "noEntriesFiltered": "フィルタに一致するエントリはありません",
-    "col": {
-      "path": "パス",
-      "category": "カテゴリ",
-      "reason": "理由"
-    }
-  },
-  "scanWorkflow": {
-    "started": "スキャンが開始されました",
-    "willClear": "選択したフォルダ配下のレコードがクリアされます",
-    "willAppend": "既存のデータに追加されます",
-    "willFullReset": "アーカイブ全体がリセットされ、最初からスキャンされます",
-    "fullResetConfirm": "アーカイブ全体をリセットしてもよろしいですか？",
-    "fullResetConfirmDetail": "この操作は、すべてのレコード（他のソースフォルダを含む）を永久に削除します。スキャン前に自動バックアップが作成されます。",
-    "fullResetConfirmButton": "はい、アーカイブをリセットします",
-    "modelFailed": "AI モデルを読み込めませんでした",
-    "continueWithout": "埋め込みなしで続行します",
-    "completed": "スキャンが完了しました",
-    "filesScanned": "{{count}} ファイルをスキャンしました",
-    "paused": "スキャンが一時停止しました",
-    "pausedHint": "「再開」ボタンをクリックして続行",
-    "resumed": "スキャンを再開しました",
-    "cancelled": "スキャンがキャンセルされました",
-    "cancelledByUser": "ユーザーによりスキャンが停止されました",
-    "selectFiles": "アーカイブに追加するファイルを選択",
-    "selectFolder": "スキャンするアーカイブフォルダを選択",
-    "allFiles": "すべてのファイル",
-    "reportSaved": "スキャンレポートを保存しました",
-    "reportSavedDetail": "{{count}} エントリ — {{path}}"
-  },
-  "imageSearch": {
-    "enableAiFirst": "検索インフラストラクチャをアクティブにするには、まず AI インデックス作成をオンにしてください。",
-    "noOllamaUrl": "Ollama URLが設定されていません。AI ビジョン設定で構成してください。",
-    "noApiKey": "{{provider}} API キーが入力されていません。AI ビジョン設定で構成してください。",
-    "preparing": "画像検索の準備中...",
-    "clipAnalyzing": "画像を分析中 (CLIP)...",
-    "oldIndex": "古い画像インデックス形式が検出されました。より正確な結果を得るには、CLIPをオンにしてアーカイブを再スキャンしてください。",
-    "clipPHashLow": "🔍 画像結果 (CLIP) — pHash カバレッジが低いため、再スキャンをお勧めします",
-    "clipPHash": "🔍 画像結果 (CLIP + pHash)",
-    "noClipMap": "CLIP スキャンされた画像マップが見つかりません。CLIPをオンにしてアーカイブを再スキャンしてください。",
-    "clipError": "CLIP エンジンエラー。フォールバック単語モデルに切り替えます...",
-    "analyzing": "画像を分析しています… ({{elapsed}}s)",
-    "ollamaTimeout": "Ollama が応答しません (10分)。Ollama が実行されており、moondream モデルがインストールされていることを確認してください。",
-    "apiTimeout": "API が応答しません (60秒)。インターネット接続と API 設定を確認してください。",
-    "analysisError": "画像分析エラー: {{error}}",
-    "emptyResponse": "AI モデルから空の応答が返されました。API 設定を確認してください。",
-    "searchError": "画像検索エラー: {{error}}",
-    "noMatches": "この画像に対するキーワード一致がアーカイブ内に見つかりませんでした"
-  },
-  "embeddingSearch": {
-    "error": "セマンティック検索エラー",
-    "errorDetail": "埋め込みを作成できませんでした"
-  },
-  "storageWarningHook": {
-    "storageFull": "ストレージがいっぱいです",
-    "storageFullDetail": "localStorage の制限を超えました (5-10MB)。古いスキャンをクリアしてみてください。",
-    "diskLow": "ディスク容量不足",
-    "diskLowDetail": "データベースが保存されているディスクの空き容量が不足しています。スキャンまたはインポート操作が失敗する可能性があります。",
-    "saveFailed": "データベース保存エラー",
-    "saveFailedDetail": "データベースをディスクに保存できませんでした。"
-  },
-  "notifications": {
-    "taskCompleted": "{{label}} 完了",
-    "duration": "所要時間: {{time}}",
-    "taskFailed": "{{label}} 失敗"
-  },
-  "userService": {
-    "defaultAdminName": "管理者",
-    "dbNotReady": "DBの準備ができていません",
-    "usernameRequired": "ユーザー名とパスワードが必要です",
-    "usernameTaken": "このユーザー名は既に使用されています",
-    "usernameLengthError": "ユーザー名は 3 から 32 文字の間である必要があります",
-    "passwordTooLong": "パスワードは最大 128 文字です",
-    "cannotDemoteFounder": "創設者管理者のロールは変更できません",
-    "cannotDeleteFounder": "創設者管理者は削除できません"
-  },
-  "batchActions": {
-    "tagAddFailed": "タグの追加に失敗しました",
-    "tagRemoveFailed": "タグの削除に失敗しました",
-    "updateFailed": "{{field}} を更新できませんでした",
-    "trashFailed": "ゴミ箱に移動できませんでした"
-  },
-  "exportService": {
-    "reportTitle": "ArchivistPro アーカイブレポート",
-    "createdAt": "作成日: {{date}}",
-    "indexed": "インデックス済み: {{count}}",
-    "tagged": "タグ付け済み: {{count}}",
-    "byCategory": "── カテゴリー別 ──",
-    "byFileType": "── ファイルタイプ別 ──",
-    "byProjectPhase": "── プロジェクトフェーズ別 ──",
-    "byMaterialGroup": "── マテリアルグループ別 ──"
-  },
-  "lan": {
-    "title": "LAN 共有",
-    "startServer": "サーバーを開始",
-    "stopServer": "サーバーを停止",
-    "serverRunning": "サーバー稼働中",
-    "authCode": "認証コード",
-    "regenerateCode": "コードを再生成",
-    "connect": "接続",
-    "download": "アーカイブをダウンロード",
-    "ipAddress": "IP アドレス",
-    "port": "ポート",
-    "connectionInfo": "接続情報",
-    "enterCode": "認証コードを入力してください",
-    "status": {
-      "connected": "接続済み",
-      "disconnected": "未接続",
-      "downloading": "ダウンロード中..."
-    },
-    "startServerHint": "LANでアーカイブを共有（ポート 9471）",
-    "connectHint": "他のコンピュータからアーカイブをダウンロード",
-    "integrityFailed": "ダウンロードの整合性チェックに失敗しました。再試行してください。",
-    "downloadSuccess": "アーカイブが正常にダウンロードされ、読み込まれました。",
-    "dbSize": "DBサイズ",
-    "serverHint": "他のパソコンで、設定 > ネットワーク > 接続をクリックして、上記のIPとコードを入力してください。"
-  },
-  "facets": {
-    "projectPhase": "プロジェクトフェーズ",
-    "approvalStatus": "承認ステータス",
-    "approvalStatus.draft": "ドラフト",
-    "approvalStatus.review": "レビュー中",
-    "approvalStatus.approved": "承認済み",
-    "approvalStatus.rejected": "却下",
-    "category": "アセットタイプ",
-    "materialGroup": "マテリアルグループ",
-    "colorTheme": "カラーテーマ",
-    "architecturalStyle": "建築様式"
-  },
-  "appVersion": {
-    "description": "建築ファイルアーカイブ & スマート検索"
-  },
-  "wizard": {
-    "title": "Archivist Pro セットアップウィザード",
-    "step": "ステップ {{current}} / {{total}}",
-    "next": "次へ",
-    "back": "戻る",
-    "skip": "スキップ",
-    "welcome": {
-      "title": "ようこそ！",
-      "subtitle": "Archivist Proを使い始める前に、システムを確認しましょう。",
-      "language": "言語の選択",
-      "systemCheck": "システムチェック",
-      "wasm": "WebAssembly サポート",
-      "wasmOk": "WASM サポートされています",
-      "wasmFail": "WASM がサポートされていません — アプリが実行されない可能性があります",
-      "os": "オペレーティングシステム",
-      "disk": "推定ディスク領域",
-      "diskAvailable": "空き容量 {{size}}",
-      "diskUnavailable": "情報を取得できません"
-    },
-    "checklist": {
-      "title": "必要条件",
-      "subtitle": "以下のコンポーネントのインストール状況を確認してください。",
-      "ollamaService": "Ollama サービス",
-      "ollamaRunning": "実行中",
-      "ollamaNotRunning": "実行されていないか、インストールされていません",
-      "ollamaLink": "ollama.com からダウンロード",
-      "chatModel": "チャットモデル",
-      "chatModelOk": "{{model}} インストール済み",
-      "chatModelMissing": "未インストール — ターミナルで実行：ollama pull {{model}}",
-      "visionModel": "ビジョンモデル",
-      "visionModelOk": "{{model}} インストール済み",
-      "visionModelMissing": "未インストール — ターミナルで実行：ollama pull llava",
-      "odaConverter": "ODA FileConverter",
-      "odaFound": "検出されました",
-      "odaNotFound": "見つかりません",
-      "odaLink": "opendesign.com からダウンロード",
-      "fp32Models": "WebGPU モデル (fp32)",
-      "fp32Found": "導入済み — WebGPU アクセラレーション有効",
-      "fp32NotFound": "未導入（オプション — CPU で動作）",
-      "fp32Hint": "後で 設定 > WebGPU モデル から導入できます",
-      "recheck": "再チェック",
-      "optionalNote": "これらの要件はオプションです。不足しているものは後で設定から構成できます。",
-      "checking": "チェック中..."
-    },
-    "ready": {
-      "title": "準備完了！",
-      "subtitle": "セットアップが完了しました。以下の要約情報を確認してください。",
-      "summary": "セットアップ要約",
-      "aiMode": "AI モード",
-      "aiModeLocal": "ローカル AI (Ollama)",
-      "aiModeSkip": "AI 無効",
-      "missingDeps": "不足している要件",
-      "missingDepsNone": "すべてインストール済み",
-      "missingDepsCount": "{{count}} 件不足",
-      "systemStatus": "システムステータス",
-      "allGood": "すべてのチェックに合格しました",
-      "hasWarnings": "{{count}} 件の警告があります",
-      "defaultCreds": "最初の管理者アカウント",
-      "defaultCredsHint": "次の画面で設定",
-      "changePasswordHint": "次のステップで、管理者のユーザー名とパスワード（6文字以上）を設定します。この情報は安全な場所に保管してください。",
-      "launch": "Archivist Pro を起動"
-    },
-    "dwg": {
-      "title": "DWG ファイルサポート",
-      "description": "DWG ファイルからレイヤー、ブロック、テキストを抽出するには ODA FileConverter が必要です。",
-      "detected": "ODA FileConverter が検出されました",
-      "notDetected": "ODA FileConverter が見つかりません",
-      "optional": "このステップはオプションです — 後で設定からインストールできます。",
-      "rescanNote": "以前スキャンしたDWGファイルのレイヤー/ブロックデータが不完全な場合があります。完全なデータを取得するには、それらのファイルを再スキャンしてください。"
-    }
-  },
-  "scanner": {
-    "odaNotInstalled": "完全な DWG サポートのために、設定 > DWG コンバーターから ODA FileConverter をインストールしてください。"
-  },
-  "autoRagIndex": {
-    "progress": "AI インデックス: {{current}}/{{total}}",
-    "stop": "停止"
-  },
-  "dbSaving": {
-    "label": "データベース保存中..."
-  },
-  "updater": {
-    "sectionTitle": "アップデート",
-    "currentVersion": "現在のバージョン",
-    "checking": "確認中...",
-    "available": "v{{version}} アップデートが利用可能です",
-    "checkNow": "今すぐ確認",
-    "upToDate": "最新バージョンを使用しています",
-    "checkError": "確認エラー: {{error}}",
-    "openDownload": "ダウンロード",
-    "serverNotConfigured": "アップデートサーバーが設定されていません — 下にサーバーURLを入力してください",
-    "serverUrlPlaceholder": "http://192.168.1.10:8080/archivist",
-    "serverUrlHelp": "ローカルネットワーク上のアップデートサーバーのアドレス。このURLに latest.json とインストーラーファイルが配置されている必要があります。空欄の場合、アップデート確認は行われません。",
-    "serverUrlSaved": "保存しました"
-  },
-  "duplicateFinder": {
-    "title": "重複・類似ファイル検索",
-    "checkExactHash": "完全な重複",
-    "checkSameName": "同名・異なる場所",
-    "checkVisual": "視覚的類似",
-    "checkStructural": "構造的類似 (CAD, 3D, ドキュメント)",
-    "threshold": "類似度しきい値",
-    "scan": "スキャン",
-    "scanning": "スキャン中...",
-    "largeArchiveWarning": "{{count}}ファイルでのビジュアル/構造類似スキャンは時間がかかり、メモリを消費する可能性があります。大規模アーカイブでは、まず「完全一致」のみで始めることをお勧めします。",
+  "vision_index": {
+    "title": "画像解析（AI）",
+    "hint": "各画像・図面の内容を AI がテキスト化します（種類・説明・要素・空間・画像内の文字）→ チャットと検索が画像をテキストで見つけます。",
+    "status": "{{analyzed, number}} / {{total, number}} 解析済み",
+    "pending": "残り {{count, number}}",
+    "pending_small": "そのうち {{count, number}} 件は {{kb, number}} KB 未満 — アイコン・ロゴ・スクリーンショット・素材テクスチャの可能性があります。",
+    "model": "ビジョンモデル",
+    "model_change_hint": "AI (Ollama) 設定で変更",
+    "run": "解析（残り {{count, number}}）",
+    "running": "解析中…",
+    "progress_count": "{{done, number}} / {{total, number}}",
+    "ollama_down": "Ollama にビジョンモデルがありません — 例: `ollama pull llava` で導入してください（画像内容検索に必要）。",
+    "embed_missing": "再チャンク化には埋め込みモデル（MiniLM）が必要です — 意味インデックスと同じ。",
+    "all_done": "すべての画像を解析しました。",
+    "done_toast": "画像解析完了：{{analyzed, number}} 件解析、{{failed, number}} 件失敗。チャット/検索で見つかります。",
+    "failed": "画像解析に失敗しました：{{message}}",
     "cancel": "キャンセル",
-    "cancelledPartial": "キャンセル — 部分的な結果",
-    "results": "{{groups}} グループ、{{total}} ファイル",
-    "noResults": "重複または類似ファイルは見つかりませんでした",
-    "missingHash": "ハッシュなし: {{count}} ファイル — これらは完全重複スキャンに含めることができません。",
-    "missingPhash": "{{count}} 個の画像ファイルに pHash データがありません — 視覚的類似スキャンからスキップされました",
-    "missingMetadata": "{{count}} 個の構造化ファイルにメタデータがありません — 構造的類似スキャンからスキップされました",
-    "rescan": "再スキャン",
-    "skipMissing": "スキップ",
-    "showFiles": "ファイルを表示",
-    "hideFiles": "非表示",
-    "rescanThese": "これらをスキャン",
-    "deleteSelected": "選択したものを削除 ({{count}})",
-    "keepFirst": "最新を保持し、他を削除",
-    "viewList": "リスト",
-    "viewCompare": "比較",
-    "similarity": "{{score}}% 類似",
-    "pHashDiff": "pHash 差異: {{dist}}/64 ビット → {{score}}% 類似",
-    "confirmDeleteMultiple": "{{count}} 個のファイルを完全に削除しますか？",
-    "confirmDeleteMultipleDetail": "この操作は元に戻せません。ファイルはアーカイブから削除されます。",
-    "groupExactHash": "完全な重複",
-    "groupSameName": "同名ファイル",
-    "groupVisual": "視覚的に類似",
-    "groupStructural": "構造的に類似",
-    "copiesCount": "{{count}} 個のコピー",
-    "similarCount": "{{count}} 個の類似",
-    "fileSize": "サイズ",
-    "modified": "更新日",
-    "comparePanelTitle": "比較",
-    "comparePanelHint": "リスト内のグループのカウントバッジをクリックしてください",
-    "compareDeleteLeft": "左を削除",
-    "compareDeleteRight": "右を削除",
-    "deleteSuccess": "{{count}} 個のファイルをアーカイブから削除しました",
-    "buttonTooltip": "重複を検索",
-    "confirmDeleteSingle": "\"{{name}}\" を削除しますか？",
-    "viewerDeleteHint": "管理者のみがメインアーカイブから削除できます",
-    "groupLabel": "グループ",
-    "comparePanelInstruction": "リストビューから2つのファイルの比較アイコンをクリックしてください",
-    "selectedCount": "{{count}} 件のファイルを選択中",
-    "resetCompare": "リセット",
-    "comparePending": "比較する2つ目のファイルを選択してください",
-    "andOthers": "など",
-    "structuralPerfWarning": "{{count}} 個の構造化ファイルがスキャンされます。これには数秒かかる場合があります",
-    "detailSettings": "詳細設定",
-    "advancedCriteria": "詳細条件",
-    "formatFilters": "形式フィルター",
-    "formatFiltersHint": "結果に表示するファイル形式",
-    "comparisonCriteria": "比較基準",
-    "comparisonCriteriaHint": "構造的類似に使用されるフィールド — 変更後に再スキャンしてください",
-    "generalCriteria": "一般基準",
-    "generalCriteriaHint": "同名および構造的類似モードにフィルターを追加します",
-    "formatCriteria": "形式固有の基準",
-    "formatCriteriaHint": "構造的類似のために比較するメタデータフィールド",
-    "performanceFilters": "パフォーマンスフィルター",
-    "performanceFiltersHint": "スキャン対象を絞り込んで速度を向上させます",
-    "criteriaRescanNeeded": "基準が変更されました。最新の結果を得るために再スキャンしてください",
-    "fmtCad": "CAD / 図面 (DWG, DXF)",
-    "fmtBim3d": "BIM / 3D モデル (MAX, SKP, RVT, IFC)",
-    "fmtDoc": "ドキュメント (PDF, DOCX, XLS, PPT…)",
-    "fmtImage": "画像 (JPEG, PNG, PSD…)",
-    "fmtVideo": "ビデオ (MP4)",
-    "fmtBackup": "バックアップ (BAK)",
-    "critSameSize": "同一ファイルサイズ",
-    "critModifiedWithin": "指定期間内の更新",
-    "critSameParentFolder": "同一親フォルダ名",
-    "sizeTolerance": "許容誤差",
-    "tolExact": "完全一致",
-    "tol1kb": "± 1 KB",
-    "tol1percent": "± 1%",
-    "days": "日",
-    "minFileSize": "最小ファイルサイズ",
-    "critDwgLayers": "レイヤー",
-    "critDwgBlocks": "ブロック",
-    "critDwgText": "テキスト内容",
-    "critDwgXrefs": "外部参照",
-    "critIfcStoreys": "階数",
-    "critIfcEntities": "エンティティ数",
-    "critMaxMaterials": "マテリアルリスト",
-    "critMaxRenderEngine": "レンダリングエンジン",
-    "critMaxVersion": "Max バージョン",
-    "critSkpComponents": "コンポーネント",
-    "critSkpLayers": "レイヤー",
-    "critSkpVersion": "SketchUp バージョン",
-    "critRvtStoreys": "階名",
-    "critRvtProjectName": "プロジェクト名",
-    "critOfficeTitle": "タイトル",
-    "critOfficeAuthor": "作成者",
-    "critPdfPages": "ページ数"
-  },
-  "crashReport": {
-    "title": "クラッシュレポート",
-    "empty": "クラッシュレポートはありません",
-    "clearAll": "すべてクリア",
-    "clearAllConfirm": "すべてのクラッシュレポートを削除しますか？",
-    "clearAllDetail": "この操作は元に戻せません。",
-    "delete": "削除",
-    "deleteConfirm": "このクラッシュレポートを削除しますか？",
-    "noStackTrace": "スタックトレース情報がありません",
-    "type": {
-      "react_error": "React エラー",
-      "window_error": "ウィンドウエラー",
-      "unhandled_rejection": "未処理の Promise",
-      "rust_panic": "Rust パニック"
-    },
-    "field": {
-      "component": "コンポーネント",
-      "version": "バージョン",
-      "os": "オペレーティングシステム",
-      "message": "エラーメッセージ",
-      "stackTrace": "スタックトレース"
-    }
-  },
-  "notification": {
-    "newMessage": "新しいメッセージがあります 💬",
-    "newMessages": "{{count}} 件の新しいメッセージがあります 💬",
-    "trayOpen": "ArchivistPro を開く",
-    "trayQuit": "終了",
-    "devFeedbackTitle": "新しい開発者フィードバック"
-  },
-  "batchToolbar": {
-    "ariaLabel": "一括操作ツールバー",
-    "selectedCount": "{{count}} 件のファイルを選択中",
-    "addTags": "タグを追加",
-    "selectAll": "すべて選択",
-    "clearSelection": "選択を解除",
-    "selectAllConfirmMessage": "{{count}} 件のファイルが選択されます",
-    "selectAllConfirmDetail": "表示中のすべてのファイルが選択されます。一括タグなどの操作がすべてのファイルに影響します。",
-    "confirmSelectLabel": "選択"
-  },
-  "archiveImport": {
-    "rolledBack": "インポートに失敗しました。データベースはバックアップから自動的に復元されました。",
-    "failed": "インポートに失敗しました。"
-  },
-  "batchTagModal": {
-    "title": "一括タグ追加",
-    "subtitle": "{{count}} 件のファイルに適用されます",
-    "noTags": "タグがありません。下から新しいタグを作成してください。",
-    "newTag": "新しいタグを作成",
-    "newTagPlaceholder": "タグ名...",
-    "createAndAdd": "作成して選択",
-    "willAdd": "追加するタグ",
-    "apply": "適用 ({{count}})",
-    "applying": "適用中...",
-    "noTagsSelected": "少なくとも1つのタグを選択してください",
-    "successTitle": "一括タグを適用しました",
-    "success": "{{count}} 件のファイルに {{tagCount}} 個のタグを追加しました",
-    "bulkWarning": "{{count}} 件のファイルに影響します — 注意してください"
-  },
-  "chat": {
-    "welcome": {
-      "title": "アーカイブに質問する",
-      "subtitle": "完全オフライン。回答はアーカイブ内のインデックスされたドキュメントから生成されます。",
-      "example1": "「このプロジェクトで使用されたガラスプロファイルは？」",
-      "example2": "「2024年のヴィラプロジェクトに共通するディテールは？」",
-      "example3": "「この仕様書に防火規定の条項はありますか？」"
-    },
-    "autoSync": {
-      "confirmTitle": "メタデータ更新",
-      "confirmDetail": "メタデータ形式が更新されました。{{count}} ファイルを再インデックスします。バックグラウンドで数分かかる場合があります。今すぐ開始しますか？",
-      "confirmStart": "今すぐ開始"
-    },
-    "ollama": {
-      "connected": "Ollama",
-      "disconnected": "Ollamaオフライン",
-      "checking": "Ollama接続を確認中...",
-      "notRunning": "Ollamaが実行されていません — AIチャットは利用できません",
-      "hint1": "RAGチャットにはOllamaが必要です。エンベディング機能（セマンティック検索、ビジュアル検索）はOllamaなしでも動作します。",
-      "installSteps": "インストール手順:",
-      "step1": "ollama.com/download からOllamaをダウンロードしてインストール",
-      "step2": "ターミナルで: ollama pull qwen3:8b（推奨）または ollama pull qwen3:4b（軽量）",
-      "step3": "ターミナルで: ollama serve",
-      "step4": "このパネルを再度開く"
-    },
-    "corsWarning": "CORSが設定されていません — OllamaがこのアプリにアクセスできずAIチャットが機能しない可能性があります。",
-    "scope": {
-      "all": "すべてのアーカイブ",
-      "projects": "プロジェクト",
-      "tags": "タグ"
-    },
-    "index": {
-      "missingWarning": "{{count}} 件のファイルがまだAI用にインデックスされていません。",
-      "openStatus": "インデックスステータスを開く",
-      "autoPreparing": "バックグラウンドでAIチャット用のメタデータを準備中",
-      "autoPending": "{{count}} 件のファイルのメタデータを準備します — 自動的に開始されます。",
-      "content": "コンテンツ",
-      "badgeTooltip": "Meta: メタデータインデックス済み · Content: ファイル本文インデックス済み",
-      "errors": "エラー"
-    },
-    "input": {
-      "placeholder": "アーカイブに質問 — '/visual <テキスト>' で画像検索 (Enter = 送信)"
-    },
-    "header": {
-      "title": "AIチャット"
-    },
-    "sessions": {
-      "title": "チャット",
-      "new": "新規",
-      "empty": "チャットはまだありません。「+ 新規」で開始してください。"
-    },
-    "toggle": {
-      "on": "オン",
-      "off": "オフ"
-    },
-    "queryRewrite": {
-      "label": "クエリ拡張"
-    },
-    "prepareIndex": {
-      "label": "準備...",
-      "tooltip": "AI チャット用にまだインデックス化されていないファイルを処理"
-    },
-    "phase": {
-      "searching": "ソースを検索中...",
-      "reranking": "再ランキング中...",
-      "generating": "回答を生成中...",
-      "loading_model": "言語モデルを読み込み中...",
-      "loading_vectors": "ベクトルインデックスを読み込み中...",
-      "comparing": "類似度を計算中...",
-      "metadata_search": "ファイルメタデータをスキャン中..."
-    },
-    "diagnostics": {
-      "candidates": "{{total}} 件の候補 · FTS {{fts}} · 埋め込み {{emb}}",
-      "reranked": "再ランキング後 {{count}} → LLMへ",
-      "dimMismatch": "{{skipped}} 個のチャンクをスキップ — 埋め込みの次元が不一致（クエリ {{queryDim}}、DB は {{dbDims}}）。ファイルを再インデックスしてください。"
-    },
-    "thinking": "ソースを検索し、回答を準備中...",
-    "abort": "停止",
-    "send": "送信",
-    "fallback": {
-      "reranker": "リランカーがタイムアウトしました — デフォルトのランキングが使用されました。",
-      "queryRewrite": "クエリ拡張に失敗しました — 元のクエリが使用されました。"
-    },
-    "help": {
-      "button": "ヘルプ",
-      "title": "AIチャット — 機能ガイド",
-      "glossary": "用語集（最初に理解してください）",
-      "chunkDesc": "ファイルのテキストをAIが処理できる小さな断片（約500語）に分割します。各チャンクに対して数学的な署名（エンベディング）が生成され、検索はこれに基づいて行われます。",
-      "embeddingDesc": "テキストの意味を表す384次元の数値リスト。類似したテキストのエンベディングは互いに近くなります。",
-      "metaChunkDesc": "ファイルのメタデータ（ファイル名、プロジェクト、タグ、DWGレイヤー）のみから生成される特殊なチャンク。本文テキストのないDWG/MAXファイルの検索を可能にします。",
-      "citationDesc": "回答中の「[1]」「[2]」などのマークが付いたソース。クリックするとソースファイルに移動します。",
-      "hallucination": "ハルシネーション",
-      "hallucinationDesc": "AIがソースに存在しない情報を作り出すこと。システムはキーワードチェックと厳格なプロンプトルールでこれを防止します。",
-      "llmDesc": "大規模言語モデル — 回答を生成するAIモデル。Ollama上でローカルに動作します。推奨: qwen3:8b · 最低: qwen3:4b",
-      "flowTitle": "全体の流れ",
-      "flowDesc": "質問を入力 → システムがインデックス済みファイルを検索 → 最も関連性の高いチャンクをLLMに渡す → ソース付きの回答を生成。応答はワードごとにストリーミングされます。",
-      "slashTitle": "スラッシュコマンド",
-      "slashVisualDesc": "テキストではなく画像を検索します。例: /visual 階段平面図 → CLIPセマンティックビジュアル検索。短縮形: /g",
-      "badgesTitle": "ヘッダーバッジ",
-      "badgeModel": "アクティブなOllamaモデル",
-      "badgeOllama": "接続状態（緑/赤）",
-      "badgeRerank": "オン時: 上位20チャンクを取得し、LLMが関連性の高い6つを選択。+1 LLM呼び出し、より正確な回答。オフ時: エンベディングの上位8件を直接使用。",
-      "badgeEnrich": "オン時、短いクエリはLLMによって類義語と英語の同等語で拡張されます。5語以上のクエリは具体的とみなされ、そのまま使用されます。",
-      "badgeScope": "検索範囲を絞る: 特定のプロジェクトまたはタグを選択 → そのファイルのみを検索。",
-      "indexTitle": "インデックスモーダル",
-      "indexBtn": "インデックス",
-      "indexBtnDesc": "未処理ファイルの本文テキストをチャンクに分割し、エンベディングを生成します。",
-      "metaBtn": "全メタデータを生成",
-      "metaBtnDesc": "DWG/MAXを含むすべてのアクティブファイルの「メタデータチャンク」を生成します。AIチャットの検索カバレッジをサイドバー検索に近づけます。",
-      "purgeBtn": "クリーンアップ",
-      "purgeBtnDesc": "古いバージョンの不要なチャンクレコードを削除します。ファイルには触れません。",
-      "answerTitle": "回答とソース",
-      "citationChip": "[N] file.dwg",
-      "citationChipDesc": "クリック → 関連ソースカードがフラッシュしてスクロール表示されます。アセット詳細パネルも開きます。",
-      "sourceCard": "ソースカード",
-      "sourceCardDesc": "ファイル名 + ページ + 短いプレビュー + スコア。クリック → アセット詳細を開く。",
-      "stopBtn": "停止ボタン",
-      "stopBtnDesc": "回答の途中で停止できます。部分的な回答は保存されます。",
-      "sessionTitle": "チャット管理",
-      "newSession": "+ 新規",
-      "newSessionDesc": "空白のチャットを開きます。最初のQ&Aの後、LLMがタイトルを自動生成します。",
-      "deleteSession": "x 削除",
-      "deleteSessionDesc": "チャットとすべてのメッセージを削除します。Ctrl+Zで元に戻せます。",
-      "behaviorTitle": "動作の注意事項",
-      "antiHallucination": "ハルシネーション防止",
-      "antiHallucinationDesc": "クエリのキーワードがインデックス済みファイルに見つからない場合、LLMは呼び出されず「情報が見つかりません」と返されます。",
-      "conversationCtx": "会話コンテキスト",
-      "conversationCtxDesc": "最後の4つのメッセージがPREVIOUS CONVERSATIONとしてプロンプトに追加されます。フォローアップ質問（「それは誰？」「どのプロジェクト？」）が機能します。",
-      "autoIndex": "自動インデックス",
-      "autoIndexDesc": "新しいフォルダがスキャンされると、DWGを含むすべての新しいファイルがバックグラウンドでメタデータチャンクとしてインデックスされ、チャットに対応します。"
-    },
-    "synthesis": {
-      "pickTitle": "統合用ドキュメントを選択 — ドキュメントごとのセクション + 比較",
-      "pickButton": "ドキュメントを選択",
-      "modeActive": "統合: {{count}} ドキュメント",
-      "chipBarLabel": "統合ドキュメント:",
-      "removeChip": "削除",
-      "clearAll": "統合モードを終了",
-      "exit": "終了",
-      "maxDocsWarning": "最大10ドキュメントまで選択できます"
-    },
-    "export": {
-      "button": "エクスポート",
-      "tooltip": "チャットをMarkdownでダウンロード",
-      "empty": "エクスポートするメッセージがありません"
-    },
-    "noGpu": "このマシンではGPUが検出されません。AIチャットはGPU搭載マシンでのみ利用可能です。左パネルの検索機能をご利用ください。"
-  },
-  "assetPicker": {
-    "title": "統合用ドキュメントを選択",
-    "subtitle": "各選択ドキュメントに専用セクションと比較サマリーが生成されます。",
-    "searchPlaceholder": "ファイル名またはパスで検索…",
-    "typeFilterTitle": "ファイルタイプでフィルター",
-    "allTypes": "すべてのタイプ",
-    "selectFiltered": "フィルター結果を選択",
-    "clear": "クリア",
-    "empty": "インデックス済みドキュメントがありません。まずチャット → インデックスボタンからファイルをインデックスしてください。",
-    "noResults": "検索結果がありません。",
-    "chunkCount": "インデックス済みチャンク数",
-    "selected": "選択済み",
-    "capWarning": "推奨最大数",
-    "confirmSynth": "統合 ({{count}})",
-    "confirmFocus": "フォーカス ({{count}})"
-  },
-  "visualSearch": {
-    "dwgWarning": {
-      "title": "技術図面では画像類似度の信頼性が低いです",
-      "body": "CLIPベースのビジュアル検索はDWG/DXF図面では精度が低くなります。より正確な結果を得るには、レイヤー/ブロック名のテキスト検索か、幾何形状クエリ（例:「八角形のプール」「5x10 mの矩形室」）を使用してください。"
-    }
-  },
-  "dateRange": {
-    "title": "日付範囲",
-    "from": "開始日",
-    "to": "終了日",
-    "clear": "日付フィルターをクリア"
-  },
-  "dwgSimilarity": {
-    "title": "DWG構造類似度検索",
-    "reference": "参照ファイル",
-    "searching": "類似DWGを検索中...",
-    "noResults": "類似DWGファイルが見つかりません。",
-    "filesFound": "件",
-    "topScore": "最高スコア",
-    "layers": "レイヤー",
-    "blocks": "ブロック",
-    "texts": "テキスト",
-    "shapes": "形状"
-  },
-  "booleanSearch": {
-    "hint": "ヒント：AND、OR、NOT演算子と\"引用フレーズ\"が使用可能",
-    "examples": "例：plan AND kitchen · facade OR section · hall NOT parking · \"floor plan\""
-  },
-  "shapeSearch": {
-    "title": "幾何形状検索",
-    "tab": {
-      "image": "参照画像",
-      "criteria": "プロパティで検索"
-    },
-    "dropHint": "画像をドラッグ＆ドロップするか、クリックして選択 (PNG, JPG, BMP)",
-    "dropSubHint": "画像内の幾何形状が抽出され、DWGファイル内の類似形状が検索されます",
-    "analyzing": "輪郭を分析中...",
-    "detected": "検出された形状:",
-    "vertexCount": "辺の数",
-    "minRegularity": "最小正規度",
-    "minCompactness": "最小コンパクト度",
-    "minRectangularity": "最小矩形度",
-    "compact": "密度",
-    "solid": "充填",
-    "rect": "矩形",
-    "category": "カテゴリー",
-    "allCategories": "すべて",
-    "search": "検索",
-    "includeOpen": "開いた形状も含める（ポリライン、円弧）",
-    "scoreLabel": "スコア",
-    "filesFound": "件",
-    "topScore": "最高スコア",
-    "openShapes": "件の開いた形状",
-    "noResults": "一致する幾何形状が見つかりません。DWGファイルに形状インデックスが構築されている必要があります。",
-    "noResultsHint": "結果が見つかりません。このパネルはインデックス済みのDWG/DXFファイルのみを検索します — 他のフォーマット（SKP、PDF、画像など）はこの検索に含まれません。",
-    "dwgBadgeTitle": "DWGおよびDXFファイルのみを検索します",
-    "tagFilter": "タグフィルター",
-    "showInArchive": "アーカイブで表示",
-    "assetNotFound": "アーカイブでファイルが見つかりません",
+    "stopped_toast": "停止しました：{{analyzed, number}} 件の画像を解析、残りは保留中です。",
+    "scale_warning": "大きなアーカイブ全体の解析には時間がかかります（画像ごとに AI 呼び出し）。選択または有効なフィルター範囲を推奨します。",
+    "scope_all": "保留中すべて（{{count, number}}）",
+    "scope_filter": "有効なフィルターに一致（{{count, number}}）",
+    "scope_filter_hint": "現在の表示フィルターに一致する画像のみを解析します。",
+    "scope_hint_narrow": "アーカイブで検索またはフィルターを適用して範囲を絞り、ここに戻ってください。解析はその範囲で実行されます。",
+    "scope_all_confirm_title": "待機中のすべてを解析しますか？",
+    "scope_all_confirm_message": "{{count, number}} 枚の画像それぞれに個別の AI 呼び出しが必要で、そのうち {{small, number}} 件は {{kb, number}} KB 未満です（アイコン・ロゴ・スクリーンショット・素材テクスチャの可能性）。建築以外の画像では AI が不正確な説明を生成し、それが検索に混入することがあります。推奨：フォルダーやフィルターで範囲を絞り、分割して実行してください。",
+    "scope_all_confirm_ok": "それでもすべて解析する",
+    "aborted_toast": "解析を停止しました：{{failures, number}} 件連続でエラーが発生しました。",
+    "aborted_notice": "{{failures, number}} 件連続でエラーが発生したため解析を停止しました。残りの画像は保留のままです。",
+    "unusable_notice": "過去の解析 {{total, number}} 件のうち {{count, number}} 件が現在の品質基準を下回っています：モデルが要求したラベルを出力せず、使えない自由文だけが残りました。これらの画像は「解析済み」の印が付いているためキューに戻らず、正常なモデルで直すにはまずリセットが必要です。",
+    "model_unknown": "（モデル未記録）",
+    "quality_proven": "実測済み・動作する",
+    "quality_untested": "未計測",
+    "quality_unusable": "実測済み・使える出力を出さない",
+    "breakdown_counts": "{{total, number}} 件中 {{unusable, number}} 件が基準未満",
+    "suspect_kept": "さらに {{count, number}} 件の解析は形式の基準は満たしていますが、計測で使える出力を出さなかったモデルによるものです。これらには手を触れません（形式は正しく、ルールは内容ではなく形式を見ます）— 必要ならその画像を選んで手動で再解析できます。",
+    "reset_unusable": "保留に戻す",
+    "reset_running": "リセット中…",
+    "reset_confirm_title": "使用できない解析をリセット",
+    "reset_confirm_message": "{{count, number}} 件の画像の使えない AI 記述を削除し、解析キューに戻します。正常な解析、画像種別ラベル、元ファイルには影響しません。",
+    "reset_done": "{{count, number}} 件の解析をリセットしました — これらの画像は再び解析待ちです。",
+    "reset_partial": "{{reset, number}} 件をリセット、{{failed, number}} 件が失敗しました。",
+    "reset_failed": "リセットに失敗しました：{{message}}",
+    "error_detail": "技術的な詳細",
     "error": {
-      "noPath": "ファイルパスを取得できませんでした。「ファイルを選択」ボタンを使用してください。"
+      "gpu_driver": "グラフィックスドライバーが AI エンジンと互換性がありません。ドライバーを更新するか、設定 → AI で別のモデルを選択してください。",
+      "timeout": "モデルが長時間まったく出力しませんでした — 停止またはクラッシュした可能性が高いです。Ollama とグラフィックドライバーを確認して再試行してください。（動作が遅いだけのモデルは待機するようになりました。このエラーは生成が完全に止まった場合のみ表示されます。）",
+      "ollama_down": "Ollama が起動していません。起動してから再試行してください。",
+      "context_overflow": "画像と指示がモデルの容量を超えました。より大きなコンテキストのモデルを選択してください。",
+      "model_missing": "選択したモデルが Ollama に見つかりません。設定 → AI でインストール済みのモデルを選択してください。",
+      "out_of_memory": "メモリが不足しています。より小さいモデルを選ぶか、他のアプリを閉じてください。",
+      "unusable_output": "モデルは意味のある解析を生成できず、何も保存されませんでした。画像は保留のままです — 設定 → AI でより高性能なモデルを選んで再試行してください。",
+      "write_failed": "解析は生成されましたが、アーカイブに書き込めませんでした。",
+      "other": "解析を完了できませんでした。"
     }
   },
-  "aiSetup": {
-    "title": "AIセットアップウィザード",
-    "next": "続行",
-    "back": "戻る",
-    "ready": "準備完了",
-    "notInstalled": "オフライン",
-    "starting": "開始中...",
-    "stopping": "停止中...",
-    "stop": "停止",
-    "download": "ダウンロード",
-    "pulling": "ダウンロード中...",
-    "retry": "再試行",
-    "downloaded": "ダウンロード済み",
-    "step0": {
-      "desc": "AI機能（チャット、ビジュアル検索、タグ提案）にはOllamaが必要です。Ollamaはコンピュータ上でAIモデルをローカルに実行する無料ツールです。",
-      "ollamaLabel": "Ollamaサーバー",
-      "startBtn": "Ollamaを開始",
-      "installGuide": "Ollamaがインストールされていない場合は、ollama.com/download からダウンロードしてインストールし、このステップに戻ってください。",
-      "corsBtn": "CORS権限を設定"
-    },
-    "step1": {
-      "desc": "AIには2つのモデルが必要です。テキスト質問用と画像分析用です。不足しているモデルをワンクリックでダウンロードできます。",
-      "chatLabel": "テキストモデル",
-      "chatReady": "テキストモデル準備完了",
-      "chatMissing": "テキストモデル未インストール",
-      "visionLabel": "ビジョンモデル",
-      "visionReady": "ビジョンモデル準備完了",
-      "visionMissing": "ビジョンモデル未インストール",
-      "allReady": "すべてのモデルが準備完了です！",
-      "downloadAll": "すべてダウンロード",
-      "hint": "テキストモデル ({{chatModel}}, ~2.5 GB) とビジョンモデル ({{visionModel}}, ~4.7 GB) がダウンロードされます。インターネット接続速度により数分かかる場合があります。",
-      "chatMissingModel": "{{model}} が見つかりません — ターミナルで実行：ollama pull {{model}}",
-      "altHint": "または、高度なモデル設定からインストール済みのモデルを選択できます：{{models}}",
-      "visionMissingModel": "{{model}} が見つかりません — ターミナルで実行：ollama pull {{model}}"
-    },
-    "step2": {
-      "title": "AI準備完了！",
-      "desc": "すべてのAI機能が利用可能です。アーカイブに質問したり、画像を分析したり、スマート検索を使用できます。",
-      "clipBuiltin": "バンドル済み",
-      "embedding": "テキストインデックス",
-      "embeddingBuiltin": "バンドル済み",
-      "finishBtn": "セットアップを完了"
-    }
+  "ai_vision": {
+    "title": "AI画像解析",
+    "summary_prefix": "AIはこの画像で次を認識しました:",
+    "field_elemanlar": "要素",
+    "field_mekanlar": "空間",
+    "field_ozel_terimler": "専門用語",
+    "field_anahtar_kelimeler": "キーワード",
+    "field_malzemeler": "素材",
+    "field_gorsel_turu": "画像の種類",
+    "kind_photo": "写真",
+    "kind_render": "レンダリング",
+    "kind_drawing": "技術図面",
+    "kind_texture": "テクスチャ",
+    "kind_other": "その他",
+    "ocr_label": "画像内のテキスト:",
+    "searchable_note": "この画像は内容で検索できます（例：上のキーワード）。",
+    "empty_state": "この画像はまだAIで解析されていません。解析すると内容で検索できます（例:「モスク 雲」）。",
+    "analyze": "AIで解析",
+    "reanalyze": "再解析",
+    "analyzing": "解析中…",
+    "cancel": "キャンセル",
+    "no_model": "ビジョンモデルがありません — 画像解析にはOllamaのビジョンモデル（例: llava）が必要です。",
+    "done_toast": "画像を解析しました — 内容で検索できます。",
+    "stopped_toast": "解析を停止しました。",
+    "failed": "画像解析に失敗しました: {{message}}",
+    "badge_title": "AIで解析済み",
+    "source": "🧠 {{model}} · {{date}}",
+    "source_no_date": "🧠 {{model}}"
   },
-  "aiStatus": {
-    "label": "AIステータス",
-    "title": "AIステータス",
-    "offline": "オフライン",
-    "missing": "未インストール",
-    "builtin": "バンドル済み",
-    "chatModel": "テキストモデル",
-    "visionModel": "ビジョンモデル",
-    "setupLink": "AIセットアップウィザードを開く",
-    "corsNotSet": "未設定"
-  },
-  "filterPreset": {
-    "label": "フィルタープリセット",
-    "empty": "保存されたプリセットはまだありません",
-    "saveCurrentFilters": "現在のフィルターを保存",
-    "namePlaceholder": "プリセット名..."
-  },
-  "onboarding": {
-    "skip": "スキップ",
-    "back": "戻る",
-    "next": "次へ",
-    "letsGo": "さあ始めましょう",
-    "start": "使い始める",
-    "replayTour": "ツアーを再生",
-    "welcome": {
-      "title": "Archivist Proへようこそ！",
-      "desc": "ご案内します。このクイックツアーで主な機能をご紹介します。いつでもスキップできます。"
-    },
-    "scan": {
-      "title": "ファイルをスキャンする",
-      "desc": "プロジェクトフォルダを追加してスキャンを開始します。DWG、MAX、SKP、PDFなど80以上のファイル形式が自動的に認識されてアーカイブされます。"
-    },
-    "search": {
-      "title": "スマート検索",
-      "desc": "キーワードまたはセマンティック検索でファイルを見つけます。AIインデックスを有効にすると、類似した概念も検索できます。"
-    },
-    "viewModes": {
-      "title": "表示モード",
-      "desc": "エクスプローラービューでファイルカードを、ダッシュボードで統計を、テクニカルビューで詳細テーブルを確認できます。"
-    },
-    "aiChat": {
-      "title": "AIアシスタント",
-      "desc": "アーカイブ内のファイルについて自然言語で質問してください。AIがファイルの内容を分析して回答します。"
-    },
-    "settings": {
-      "title": "設定",
-      "desc": "ユーザー管理、セキュリティ、AI設定、バックアップ、言語設定はここで行います。"
-    },
-    "done": {
-      "title": "準備完了！",
-      "desc": "基本的な操作を学びました。設定からいつでもこのツアーを再開できます。良いアーカイブライフを！"
-    }
-  },
-  "database": {
-    "lockWarningTitle": "データベースロック",
-    "lockWarningMessage": "データベースが別のプロセスによって書き込まれています。データが最新でない場合があります。"
-  },
-  "lockScreen": {
-    "message": "セッションがタイムアウトしました。続けるにはパスワードを入力してください。",
-    "passwordPlaceholder": "パスワード",
-    "unlock": "ロック解除",
-    "switchUser": "ユーザーを切り替える",
-    "wrongPassword": "パスワードが違います",
-    "error": "認証エラー"
-  },
-  "sessionWarning": {
-    "title": "セッションの期限切れ",
-    "message": "{{seconds}} 秒後に画面がロックされます。",
-    "extend": "延長"
-  },
-  "permission": {
-    "adminRequired": "この操作には管理者権限が必要です"
-  },
-  "broadcast": {
-    "title": "お知らせを送信",
-    "description": "このメッセージはすべてのユーザーに表示されます。",
-    "priority": "優先度",
-    "subject": "件名",
-    "subjectPlaceholder": "お知らせのタイトル",
-    "message": "メッセージ",
-    "messagePlaceholder": "お知らせの内容...",
-    "sendButton": "お知らせを送信",
-    "sent": "お知らせを送信しました"
-  },
-  "printReport": {
-    "title": "アーカイブレポート",
-    "print": "印刷",
-    "archiveReport": "アーカイブレポート",
-    "indexed": "インデックス済み",
-    "tagged": "タグ付き",
-    "materials": "マテリアルグループ"
-  },
-  "dropZone": {
-    "dropHere": "ここにフォルダをドロップ",
-    "dropDesc": "ファイルがスキャンされてアーカイブに追加されます",
-    "hint": "フォルダを追加",
-    "useButton": "ファイルを追加するにはスキャンボタンを使用してください。"
-  },
-  "versionTimeline": {
-    "title": "バージョン履歴",
-    "current": "現在"
-  },
-  "userBatch": {
-    "title": "CSVインポート",
-    "selectFile": "CSVファイルを選択",
-    "preview": "{{count}} 人のユーザーが見つかりました",
-    "import": "すべて追加 ({{count}})",
-    "importDone": "{{success}}/{{total}} 人のユーザーを追加しました",
-    "errorExists": "ユーザーはすでに存在します"
-  },
-  "tagManager": {
-    "title": "タグ管理",
-    "empty": "タグはまだありません",
-    "rename": "名前を変更",
-    "merge": "マージ",
-    "delete": "削除",
-    "changeColor": "色を変更",
-    "confirmDelete": "「{{name}}」タグとそのすべての関連付けが削除されます。続けますか？",
-    "confirmMerge": "「{{source}}」タグを「{{target}}」にマージします。ソースタグは削除されます。続けますか？",
-    "mergeHint": "「{{source}}」→ ターゲットタグを選択",
-    "merged": "タグをマージしました"
-  },
-  "foldersView": {
-    "empty": {
-      "title": "スキャン済みフォルダがありません",
-      "desc": "スキャンを開始してアーカイブにフォルダを追加してください。フォルダはカードとして表示されます。",
-      "scanBtn": "フォルダをスキャン"
-    },
-    "card": {
-      "fileCount": "{{count}} ファイル",
-      "noFiles": "空"
-    }
-  },
-  "xmp": {
-    "exportTitle": "このファイルのメタデータをXMPサイドカーファイルとしてエクスポート",
-    "exporting": "XMPを書き込み中...",
-    "exportSuccess": "XMPサイドカーを作成しました：{{file}}",
-    "exportError": "XMPエクスポートエラー",
-    "contextMenu": "XMPサイドカーを作成",
-    "batchExport": "すべてのXMPサイドカーを作成",
-    "batchStarted": "{{count}}件のファイルのXMPエクスポートを開始...",
-    "batchDone": "XMPエクスポート完了：{{written}}件書き込み、{{errors}}件エラー",
-    "fallbackNote": "（{{count}}ファイルが書き込み保護 — バックアップ場所に保存）",
-    "fallbackSingle": "（フォルダーが書き込み保護 — バックアップ場所に保存）",
-    "help": {
-      "title": "XMPサイドカーエクスポートとは？",
-      "body": "XMP（Extensible Metadata Platform）はAdobeが開発した国際的なメタデータ標準です。各ファイルの横に配置される.xmpファイルには、タグ、プロジェクト名、承認状況、バージョンなどの情報が含まれます。ファイルが移動されたりデータベースが削除されても、メタデータは保持されます。Adobe Bridge、Lightroom、その他のDAMツールがこのフォーマットを読み取れます。",
-      "howTo": "使い方：ファイル詳細パネルの「XMP」ボタンをクリックするか、ソースフォルダーメニューから「すべてのXMPサイドカーを作成」を選択してください。フォルダーが書き込み保護されている場合、ファイルは自動的にアプリケーションデータフォルダーに保存されます。"
-    }
-  },
-  "approval": {
-    "title": "承認キュー",
-    "pendingReview": "{{count}}件のファイルが承認待ち",
-    "approveAll": "すべて承認",
-    "rejectAll": "すべて拒否",
-    "batchDone": "{{count}}件 → {{status}}",
-    "statusChanged": "{{file}} → {{status}}",
-    "more": "件のファイル...",
-    "rejectionReason": "却下理由",
-    "rejectionReasonPlaceholder": "却下理由を入力...",
-    "history": "承認履歴"
-  },
-  "ragSensitivity": {
-    "title": "AI機密フィルター",
-    "subtitle": "機密データをAIチャットから除外",
-    "enabled": "フィルター有効 — 機密データはAIから非表示",
-    "disabled": "フィルター無効 — AIは全データにアクセス可能",
-    "activate": "有効化",
-    "categories": {
-      "title": "機密データカテゴリ",
+  "settings": {
+    "title": "設定",
+    "open": "設定",
+    "tab_general": "一般",
+    "tab_ai": "AI",
+    "tab_data": "データ",
+    "tab_maintenance": "メンテナンス",
+    "tab_scanning": "スキャン",
+    "appearance": "外観",
+    "appearance_hint": "テーマ（ライト/ダーク）とアクセントカラー",
+    "language": "言語",
+    "indexes": "検索インデックス (AI)",
+    "indexes_hint": "意味・画像検索インデックスはダッシュボードで管理します（埋め込み、状態）。",
+    "go_dashboard": "ダッシュボードへ",
+    "ai": "AI（Ollama）",
+    "ai_up": "Ollama 稼働中",
+    "ai_down": "Ollama 停止中",
+    "ai_down_hint": "チャットと画像解析には Ollama が必要です（localhost:11434）。未導入なら ollama.com から導入してください。",
+    "ai_stopped": "Ollama はインストール済みですが起動していません",
+    "ai_stopped_hint": "ローカルの Ollama が見つかりました。起動するとモデルを再確認します。",
+    "ai_not_installed": "Ollama はインストールされていません",
+    "ai_not_installed_hint": "チャットと画像解析には ollama.com から Ollama を導入してください。",
+    "ai_unreachable": "Ollama のアドレスに接続できません",
+    "ai_unreachable_hint": "設定された Ollama アドレスが応答していません。アドレスを確認してください。",
+    "ai_start": "Ollama を起動",
+    "ai_starting": "Ollama を起動中…",
+    "ai_started": "Ollama を起動しました。",
+    "ai_start_timeout": "Ollama は起動しましたが、まだ応答していません。数秒後にもう一度試してください。",
+    "ai_start_failed": "Ollama を起動できませんでした: {{message}}",
+    "ai_chat_model": "チャットモデル",
+    "ai_vision_model": "ビジョンモデル",
+    "ai_auto": "自動（推奨モデル）",
+    "ai_gpu_detected": "検出: {{gpu}} · {{vram}} GB — 推奨: {{model}}",
+    "ai_gpu_none": "GPU 未検出（CPU）— 推奨: {{model}}",
+    "ai_apply_recommended": "適用",
+    "ai_no_vision": "ビジョンモデルがありません — `ollama pull qwen2.5vl:3b`（画像解析に必要）。",
+    "ai_hint": "推奨：チャットは qwen3:8b。画像解析のモデルは自動選択されます — まず実測の出力品質、次に GPU メモリに収まるかどうか。モデルは Ollama に保存されます。",
+    "ai_vision_hint": "モデル選択はサイズではなく実測に基づきます：qwen2.5vl:3b は要求したラベルをすべて出力しましたが、llava はプロンプトを繰り返し、moondream は無意味な出力を返します — どちらの結果も破棄され、保存されません。GPU メモリに収まらないモデルは遅くなるだけで、それでも優先されます。",
+    "ai_vision_unusable": "インストール済みのビジョンモデル（選択：{{model}}）はテストで使用可能な解析を出力しませんでした — 実行しても結果は破棄され、何も保存されません。推奨：`ollama pull {{suggested}}`。",
+    "rag": "RAG チャット",
+    "rag_hint": "高度なチャット設定 — Ollama が必要。無い場合は静かにスキップされます。",
+    "rag_rerank": "LLM による再ランク",
+    "rag_rerank_hint": "取得したチャンクをモデルで関連度順に並べ替えます（順序向上、やや遅い）。",
+    "rag_query_rewrite": "クエリ拡張（LLM）",
+    "rag_query_rewrite_hint": "短い質問を類義語・専門用語で拡張します（候補が増えます）。",
+    "rag_sensitivity": "機密フィルター",
+    "rag_sensitivity_hint": "選択したカテゴリ／カスタム語の内容をチャットから隠します（財務・個人・法務・人事）。",
+    "rag_sensitivity_keywords": "カスタム語（カンマ区切り）",
+    "rag_sensitivity_keywords_ph": "例：プロジェクトコード、顧客名",
+    "sensitivity_cat": {
       "financial": "財務",
-      "personal": "個人情報",
+      "personal": "個人",
       "legal": "法務",
       "hr": "人事"
     },
-    "keywords": {
-      "title": "カスタムキーワード",
-      "placeholder": "キーワードを追加...",
-      "add": "追加",
-      "empty": "カスタムキーワードはまだありません"
+    "session_lock": "セッションロック",
+    "session_lock_hint": "この時間操作がないとアプリをロックし、続行にパスワードを求めます。この端末のみの設定です。",
+    "session_lock_never": "ロックしない",
+    "session_lock_minutes": "{{count, number}} 分後",
+    "login_lockout": "ログインロック",
+    "login_lockout_hint": "この回数のログイン失敗後、アカウントは一時的にロックされます。設定はすべてのユーザーに適用されます。",
+    "login_lockout_attempts": "失敗回数",
+    "login_lockout_duration": "ロック時間（分）",
+    "login_lockout_range": "3～20 回 · 1～120 分",
+    "login_lockout_save": "保存",
+    "login_lockout_loading": "ログインロック設定を読み込んでいます…",
+    "login_lockout_invalid": "有効なしきい値と時間を入力してください。",
+    "login_lockout_failed": "ログインロック設定を更新できませんでした。",
+    "login_lockout_saved": "ログインロック設定を保存しました。"
+  },
+  "suggestions": {
+    "title": "メイン管理者への提案",
+    "hint": "このローカルアーカイブのメイン管理者に一方向の提案を送信します。返信やスレッドは作成されません。",
+    "body": "提案の内容",
+    "placeholder": "提案を書いてください…",
+    "remaining": "残り {{count, number}} 文字",
+    "send": "送信",
+    "sent": "提案をメイン管理者に送信しました。",
+    "send_failed": "提案を送信できませんでした。",
+    "inbox": "受信した提案",
+    "inbox_failed": "受信した提案を読み込めませんでした。",
+    "empty": "提案はまだありません。",
+    "mark_read": "既読にする",
+    "resolve": "完了",
+    "resolved": "完了"
+  },
+  "ollama_addr": {
+    "title": "Ollama アドレス",
+    "hint": "Ollama サーバーのアドレス。自動的に解決されます。手動でアドレス/ポートを設定するか、このマシンで Ollama を自動検出できます。",
+    "effective": "有効なアドレス",
+    "source": "ソース: {{source}}",
+    "source_env": "環境変数",
+    "source_setting": "保存された設定",
+    "source_ollama_host": "OLLAMA_HOST",
+    "source_default": "デフォルト",
+    "ollama_host_hint": "OLLAMA_HOST: {{value}}",
+    "input_label": "カスタムアドレス",
+    "input_ph": "http://127.0.0.1:11434",
+    "save": "保存",
+    "clear": "クリア",
+    "detect": "検出",
+    "detecting": "検出中…",
+    "candidate_models": "{{n}} モデル",
+    "candidate_unreachable": "到達不可",
+    "use_this": "これを使う",
+    "recommended": "推奨",
+    "none_found": "到達可能な Ollama が見つかりませんでした。",
+    "saved_toast": "Ollama アドレスを保存しました。",
+    "cleared_toast": "Ollama アドレスをクリアしました（自動解決）。",
+    "failed": "操作に失敗しました: {{message}}"
+  },
+  "models": {
+    "title": "AI モデル",
+    "hint": "セマンティック/ビジュアル検索とチャットに必要な AI モデル（約400MB）はアプリに同梱されていません。フォルダーからインポートしてください。ファイルはアプリのローカルフォルダーにコピーされます（オフライン — インターネット不要）。",
+    "all_ready": "すべてのモデルが準備完了",
+    "some_missing": "一部のモデルが不足しています — フォルダーからインポートしてください",
+    "label_text": "テキスト（セマンティック/RAG）— MiniLM",
+    "label_clip": "ビジュアル（CLIP）",
+    "label_mclip": "多言語ビジュアル",
+    "missing_row": "不足 — このマシンで見つかりません",
+    "import_root": "インポート先",
+    "import": "モデルフォルダーを選択してインポート",
+    "importing": "インポート中…",
+    "choose_folder": "モデルフォルダーを選択",
+    "phase_scanning": "スキャン中…",
+    "phase_copying": "コピー中…",
+    "phase_validating": "検証中…",
+    "phase_done": "完了",
+    "done_toast": "インポート完了：{{imported, number}} 件追加、{{already, number}} 件は既存、{{missing, number}} 件は見つかりません。",
+    "failed": "インポートに失敗しました：{{message}}"
+  },
+  "search_mode": {
+    "not_found_title": "このクエリに強い一致はありません",
+    "not_found_hint": "フィルターを緩めるか、別の語を試してください。画像検索にはダッシュボードからモデルを取り込みます。",
+    "short_query_hint": "短い語は完全な単語だけに一致します。語頭検索には4文字以上を入力してください。",
+    "semantic_label": "意味検索",
+    "semantic_hint": "意味検索: 語句が完全に一致しなくても、意味が近いファイルを見つけます（埋め込みインデックスが必要）。",
+    "score_pct": "{{score}}%"
+  },
+  "image_embed": {
+    "title": "画像索引",
+    "status": "{{embedded, number}} / {{total, number}} 枚の画像を埋め込み済み",
+    "pending": "残り {{count, number}}",
+    "run": "埋め込み（残り {{count, number}}）",
+    "running": "埋め込み中…",
+    "progress_count": "{{done, number}} / {{total, number}}",
+    "model_missing": "CLIP モデルが見つかりません — モデルファイルを models/ フォルダーに置くか、ARSIV_CLIP_MODEL_DIR 環境変数を設定してください。",
+    "all_done": "すべての画像が埋め込まれました — 画像検索が利用できます。",
+    "done_toast": "画像の埋め込みが完了しました：{{embedded, number}} 件成功、{{failed, number}} 件失敗。",
+    "failed": "画像の埋め込みに失敗しました：{{message}}"
+  },
+  "image_kind": {
+    "title": "画像種別の分類",
+    "hint": "ラスター画像を、ファイル名・フォルダー・EXIF・サイズの手がかりから 写真 / レンダリング / テクスチャ に分類します（完全オフライン、AI モデル不要）。新しくインデックスされた画像は自動的に分類されます。このボタンは既存の画像を一括でラベル付けします。手がかりのない画像はラベルなしのままです。",
+    "run": "画像を分類",
+    "running": "分類中…",
+    "done_toast": "分類が完了しました：{{count, number}} 件の画像にラベルを付けました。",
+    "none_toast": "分類する新しい画像はありません（すべてラベル付き、または手がかりなし）。",
+    "failed": "分類に失敗しました：{{message}}"
+  },
+  "presets": {
+    "title": "保存済みフィルター",
+    "save": "保存",
+    "replace": "置き換え",
+    "save_current": "現在のフィルターを保存",
+    "name_label": "保存済みフィルター名",
+    "name_placeholder": "フィルター名…",
+    "apply": "保存済みフィルターを適用",
+    "delete": "保存済みフィルターを削除",
+    "delete_named": "「{{name}}」を削除",
+    "overwrite_hint": "同じ名前が存在します。保存すると既存のフィルターを置き換えます。",
+    "all_assets": "アーカイブ全体",
+    "collection_summary": "コレクション：{{count, number}}",
+    "project_summary": "プロジェクト：{{count, number}}",
+    "approval_summary": "承認状態：{{count, number}}",
+    "metadata_summary": "メタデータ：{{count, number}}",
+    "more": "他 {{count, number}} 件"
+  },
+  "ingest": {
+    "long_file_hint": "\u51e6\u7406\u306f\u7d99\u7d9a\u4e2d\u3067\u3059\u3002\u5927\u304d\u306a\u30d5\u30a1\u30a4\u30eb\u307e\u305f\u306f\u30ea\u30e2\u30fc\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8\u4e0a\u306e\u30d5\u30a1\u30a4\u30eb\u3092\u6e96\u5099\u3057\u3066\u3044\u307e\u3059\u3002",
+    "placeholder": "フォルダー未選択",
+    "browse": "参照...",
+    "button": "インデックス…",
+    "modal_title": "フォルダーをインデックス",
+    "choose_folder": "フォルダーを選択",
+    "choose_folders": "インデックスするフォルダー",
+    "selected_folder_count": "{{count, number}} 個のフォルダーを選択",
+    "add_folder": "フォルダーを追加…",
+    "remove_folder": "{{name}} を削除",
+    "multi_folder_hint": "別の場所からフォルダーを追加できます。入れ子の選択は自動的に統合されます。",
+    "options": "オプション",
+    "skip_unchanged": "変更なしをスキップ（増分）",
+    "auto_project": "フォルダーからプロジェクトを自動割り当て",
+    "auto_project_hint": "スキャンルート直下の最初のフォルダーがプロジェクトになります。プロジェクト未設定のファイルのみ割り当てます（既存の同名プロジェクトを再利用）。",
+    "mode": "スキャンモード",
+    "mode_merge": "マージ（既存に追加）",
+    "mode_replace": "置換（消えたファイルをゴミ箱へ）",
+    "mode_reset": "リセット（アーカイブ全消去）",
+    "replace_warning": "選択したフォルダーでディスク上に存在しなくなったファイルはゴミ箱に移動されます（復元可能）。選択したフォルダーのみが対象です。",
+    "reset_warning": "警告：アーカイブ全体が完全に削除され、その後選択したフォルダーが再インデックスされます。この操作は取り消せません。",
+    "reset_confirm_label": "確認するには「{{word}}」と入力",
+    "reset_confirm_word": "リセット",
+    "color_extract": "色抽出",
+    "run": "インデックス",
+    "run_replace": "置換",
+    "run_reset": "リセット",
+    "removed_trashed": "{{count, number}} 件のファイルをゴミ箱に移動しました",
+    "removed_purged": "{{count, number}} 件のレコードを削除しました（アーカイブをリセット）",
+    "running": "インデックス作成中…",
+    "scanning": "スキャン中…",
+    "scanning_root": "フォルダー {{current, number}} / {{total, number}} をスキャン中 · {{name}}",
+    "current_root": "ソース {{current, number}} / {{total, number}} · {{name}}",
+    "progress_count": "{{done, number}} / {{total, number}} 件",
+    "folder_count": "{{count, number}} フォルダ",
+    "recent_files": "処理済みファイル",
+    "active_files": "{{count, number}} 個のファイルを処理中",
+    "cancel": "停止",
+    "cancelling": "停止中…",
+    "reset_non_cancellable": "アーカイブ保護のため、リセット開始後は停止できません。",
+    "cancelled_note": "スキャンをキャンセルしました — 部分的な結果（それまでに索引付けされたファイルは保存されます。削除・プロジェクト割り当ては行いません）。",
+    "eta": "残り ~{{time}}",
+    "report_title": "インデックスレポート",
+    "added": "追加",
+    "updated": "更新",
+    "skipped": "スキップ",
+    "failed": "失敗",
+    "duration": "所要時間",
+    "formats": "形式の内訳",
+    "no_ext": "（拡張子なし）",
+    "warnings_title": "警告（{{count, number}}）",
+    "warnings_none": "警告なし — クリーンなスキャン。",
+    "skipped_reasons_title": "スキップ（{{count, number}}）",
+    "skipped_reasons_hint": "これらの項目はスキャン中にインデックスされませんでした（スキップ）。",
+    "skipReason": {
+      "hidden": "隠しファイル",
+      "unreadable": "読み取り不可（権限/IO）",
+      "symlink": "シンボリックリンク",
+      "system_file": "システムファイル（Thumbs.db / desktop.ini）"
     },
-    "manualCount": "{{count}}件のファイルがAIから手動で非表示"
+    "errors_title": "エラー（{{count, number}}）",
+    "new_scan": "新規スキャン",
+    "close": "閉じる",
+    "result": "{{added, number}} 追加 · {{updated, number}} 更新 · {{skipped, number}} スキップ · {{failed, number}} 失敗",
+    "warnings": "{{count, number}} 件の警告",
+    "report_truncated": "このスキャンでは項目が多すぎたため、下の警告/エラー/スキップ一覧は先頭 10,000 件に制限され、{{count, number}} 件は表示されていません。上のカウンターは完全です。",
+    "cancelling_hint": "処理中のファイルの完了を待っています — 大きな CAD ファイルでは数分かかることがあります。",
+    "minimize": "バックグラウンドで実行",
+    "chip_label": "スキャン実行中",
+    "chip_scanning": "フォルダーをスキャン中…",
+    "chip_hint": "スキャンはバックグラウンドで実行中です — クリックでウィンドウを戻します。",
+    "chip_done": "スキャン完了 — レポートを見る",
+    "chip_done_hint": "バックグラウンドのスキャンが完了しました — クリックしてレポートを表示します。",
+    "busy_title": "スキャン実行中",
+    "busy_banner": "現在別のスキャンが実行中です（フォルダーウォッチャーの自動スキャンの可能性があります）。終了後に開始できます。進行状況は上部バーのチップで確認してください。",
+    "write_locked_hint": "スキャン中は変更できません（タグ・お気に入り・ゴミ箱など）。閲覧と検索は利用でき、スキャン終了後にこれらのボタンは戻ります。"
+  },
+  "list": {
+    "loading": "読み込み中...",
+    "error": "エラー：{{message}}",
+    "empty": "アセットが見つかりません",
+    "empty_hint": "フォルダーをインデックスするか、検索を変更してください。",
+    "total": "{{count, number}} 件のアセット",
+    "page": "ページ {{page}} / {{pages}}"
+  },
+  "sort": {
+    "label": "並び替え",
+    "modified_desc": "更新日時（新しい順）",
+    "modified_asc": "更新日時（古い順）",
+    "name_asc": "名前（A-Z）",
+    "size_desc": "サイズ（大きい順）",
+    "created_desc": "作成日時（新しい順）"
+  },
+  "blank_menu": {
+    "section_view": "表示",
+    "section_card_size": "カードサイズ",
+    "section_selection": "選択",
+    "card_small": "小",
+    "card_medium": "中",
+    "card_large": "大",
+    "clear_selection": "選択を解除（{{count, number}}）"
+  },
+  "filter": {
+    "all_ext": "すべての種類"
+  },
+  "view": {
+    "folders": "フォルダー",
+    "explorer": "エクスプローラー",
+    "dashboard": "ダッシュボード",
+    "technical": "技術",
+    "chat": "チャット",
+    "remote_only_hint": "このビューはメインアーカイブでは利用できません",
+    "map": "Map",
+    "map_hint": "Files with GPS positions",
+    "map_count": "{{count, number}} locations",
+    "map_empty": "No files have GPS positions.",
+    "map_error": "Map data could not be loaded.",
+    "map_open": "Open map",
+    "map_reset": "Reset map",
+    "map_zoom_in": "Zoom in",
+    "map_zoom_out": "Zoom out",
+    "map_cluster": "{{count, number}} located files"
+  },
+  "rail": {
+    "aria": "サイドバーナビゲーション",
+    "section_views": "ビュー",
+    "section_tools": "ツール",
+    "tool_visual": "画像検索",
+    "tool_duplicate": "重複検出",
+    "tool_shape": "形状検索",
+    "help": "ヘルプ",
+    "settings": "設定",
+    "tools_remote_hint": "これらのツールはこのコンピューターのアーカイブで動作します — メインアーカイブでは利用できません。"
+  },
+  "archive_panel": {
+    "rail_label": "アーカイブ",
+    "title": "アーカイブ管理",
+    "description": "ソース、プロジェクト、ファイル整理を管理します。",
+    "sources": "ソース",
+    "organization": "整理",
+    "close": "アーカイブパネルを閉じる"
+  },  "chat": {
+    "export": {
+      "labels": {
+        "date": "日付", "model": "モデル", "scope": "範囲",
+        "allArchive": "アーカイブ全体", "customScope": "カスタム範囲",
+        "user": "ユーザー", "assistant": "アシスタント", "sources": "出典",
+        "unknown": "不明", "pagePrefix": "p.", "pageSuffix": ""
+      },
+      "button": "エクスポート",
+      "title": "チャットをMarkdownでエクスポート",
+      "done": "チャットをエクスポートしました",
+      "error": "エクスポートに失敗しました"
+    },
+    "title": "チャット (RAG)",
+    "model": "モデル",
+    "ollama_down": "Ollama が実行されていません — チャットには Ollama とモデルが必要です。ファイル一覧/挨拶は引き続き利用できます。",
+    "clear": "クリア",
+    "empty_title": "アーカイブとチャット",
+    "empty_hint": "例：「階段はどの dwg ファイルにあるか」「ヴィラ計画の保証期間は」。まず ダッシュボード → RAG インデックス で索引してください。",
+    "thinking": "考え中…",
+    "placeholder": "アーカイブに質問する…",
+    "send": "送信",
+    "stop": "停止",
+    "sources": "出典",
+    "show_more_sources": "さらに表示（{{shown, number}}/{{total, number}}）",
+    "help": {
+      "title": "チャットの仕組み",
+      "button": "チャットのヘルプ",
+      "intro": "質問はアーカイブ内のファイル名と文書本文から検索され、回答は見つかった出典のみを基に生成されます。",
+      "sec_ask": "質問するとき",
+      "scope_desc": "検索する範囲：アーカイブ全体、現在適用中のフィルター、または選択したファイル。フィルターや選択がない場合、その選択肢は無効になります。",
+      "model_desc": "回答を書くローカル言語モデル（Ollama）。一覧やファイル名の質問はモデルなしでも動作します。",
+      "sec_answer": "回答を読むとき",
+      "sources_desc": "回答の根拠となったファイル。カードをクリックすると詳細パネルで開きます。リモートアーカイブと会話中のセッションではクリックが無効になります（IDが別のアーカイブのものだからです）。",
+      "list_label": "一覧回答",
+      "list_desc": "「X はどのファイルにあるか」のような質問ではモデルを使わず、一致したファイルを直接列挙します。件数はエクスプローラーの検索と一致します。完全な一覧にはエクスプローラーをお使いください。",
+      "diag_desc": "候補が何件見つかり、どの語で検索したか——「なぜこの結果か、なぜ空か」の答えです。",
+      "stop_desc": "長い回答の生成を途中で停止します。そこまでに生成された部分は保持されます。",
+      "sec_session": "セッション",
+      "session_label": "セッション",
+      "session_desc": "各チャットは永続的で、あなただけに表示されます。タイトルは最初の質問から自動生成されます。削除したセッションはゴミ箱へ移動し、復元できます。",
+      "export_desc": "セッションを Markdown ファイルとして保存します（質問・回答・出典）。",
+      "hint": "Ollama が未インストールでも一覧とファイル名の回答は動作します。無効になるのは自由文の解釈のみです。"
+    },
+    "disclaimer": "回答はアーカイブの出典から生成されます。出典カードで確認してください。",
+    "error": "回答を生成できませんでした：{{message}}",
+    "diag_toggle": "診断",
+    "diag_tokens": "検索語",
+    "diag_no_tokens": "（一般的なクエリ）",
+    "diag_expanded": "（+{{count, number}} 辞書語）",
+    "diag_fts": "キーワード候補",
+    "diag_knn": "意味候補",
+    "diag_gated": "完全一致",
+    "diag_returned": "使用",
+    "new_session": "新しいチャット",
+    "sessions_title": "チャット",
+    "rename": "名前を変更",
+    "delete": "削除",
+    "delete_confirm": "このチャットを完全に削除しますか？",
+    "no_sessions": "まだチャットがありません",
+    "untitled": "無題のチャット",
+    "deleted_toast": "チャットを削除しました",
+    "undo": "元に戻す",
+    "restore": "復元",
+    "restored_toast": "チャットを復元しました",
+    "purge": "完全に削除",
+    "purge_confirm": "チャット «{{title}}» を完全に削除します。元に戻せません。続行しますか？",
+    "purged_toast": "チャットを完全に削除しました",
+    "trash_title": "削除したチャット",
+    "trash_empty": "削除したチャットはありません",
+    "deleted_at": "削除日: {{date}}",
+    "delete_failed": "チャットを削除できませんでした。もう一度お試しください。",
+    "persist_failed": "チャットを保存できませんでした — 会話は画面上で続きますが、履歴には書き込まれません。",
+    "restore_failed": "チャットを復元できませんでした。",
+    "purge_failed": "チャットを完全に削除できませんでした。",
+    "scope": {
+      "label": "範囲",
+      "all": "すべて",
+      "filter": "アクティブなフィルター",
+      "specific": "📎 特定のファイル",
+      "specific_count": "📎 特定のファイル ({{count, number}})",
+      "filter_disabled_hint": "アクティブなフィルターがありません — 先にアーカイブでフィルターを適用してください。",
+      "specific_disabled_hint": "ファイルが選択されていません — 先にグリッドでファイルを選択してください。"
+    },
+    "other_source": {
+      "remote": "メインアーカイブのチャット",
+      "local": "このコンピューターのチャット",
+      "open_hint": "開くとアーカイブのソースが切り替わります"
+    },
+    "cite_blocked": {
+      "source_mismatch": "このチャットは別のアーカイブのものです — ソースを混在させないため、引用は開けません。",
+      "host_mismatch": "このチャットは別のメインアーカイブのものです。現在は異なるアーカイブに接続しています — 引用は開けません。"
+    },
+    "open_other_blocked": {
+      "not_paired": "メインアーカイブに接続できません — このチャットを開くにはまず接続してください。"
+    }
+  },
+  "folders": {
+    "title": "フォルダー",
+    "count_total": "{{count, number}} 個のフォルダー",
+    "empty": "フォルダーがまだありません",
+    "empty_hint": "フォルダーをインデックスしてください。スキャンされたフォルダーがカードとして表示されます。",
+    "last_scan": "最終スキャン",
+    "view_cards": "カード",
+    "view_tree": "ツリー",
+    "expand": "展開",
+    "collapse": "折りたたむ",
+    "path_nav": "フォルダーパス",
+    "back_to_folders": "フォルダービューに戻る",
+    "ctx": {
+      "section_view": "表示",
+      "section_sort": "並べ替え",
+      "section_tree": "ツリー",
+      "tree_expand": "枝を展開",
+      "tree_collapse": "枝を折りたたむ",
+      "tree_expand_all": "すべての枝を展開",
+      "tree_collapse_all": "すべての枝を折りたたむ",
+      "tree_restore_previous": "前のツリー状態に戻す",
+      "view_explorer": "エクスプローラー",
+      "view_technical": "技術リスト",
+      "view_dashboard": "ダッシュボード",
+      "sort_name": "名前順",
+      "sort_fileCount": "ファイル数順",
+      "sort_lastScan": "最終スキャン日順",
+      "order_asc": "昇順",
+      "order_desc": "降順",
+      "rescan": "再スキャン…",
+      "rescan_done": "{{added, number}} 追加 · {{updated, number}} 更新 · {{removed, number}} 件をゴミ箱へ · {{failed, number}} 失敗",
+      "rescan_empty": "このフォルダーにインデックス対象のファイルがありません（空です）。",
+      "rescan_missing": "フォルダーが見つかりません — 移動・名前変更されたか、ドライブが接続されていない可能性があります。アーカイブは保護され、何も削除されていません。",
+      "rescan_unreadable": "フォルダーを読み取れません（権限またはディスクのエラー）。アーカイブは保護され、何も削除されていません。",
+      "rescan_failed": "再スキャンに失敗しました — アーカイブは保護されました。",
+      "open": "開く",
+      "trash": "ゴミ箱へ移動",
+      "trash_confirm": "\"{{name}}\" 内の {{count, number}} 個のファイルがゴミ箱に移動されます。元に戻せます。ディスク上のファイルには触れません。"
+    }
+  },
+  "dashboard": {
+    "filters_ignored": "現在の検索とその他のフィルターはダッシュボード集計に適用されません。グラフから詳細へ移動する前に解除されます。",
+    "clear_other_filters": "その他のフィルターを解除",
+    "title": "ダッシュボード",
+    "total_assets": "アセット総数",
+    "total_size": "合計サイズ",
+    "file_types": "ファイル種類",
+    "by_ext": "種類別の分布",
+    "size_by_format": "形式別サイズ",
+    "active_projects": "アクティブなプロジェクト",
+    "indexed": "テキスト索引済み",
+    "architectural_styles": "建築様式",
+    "material_groups": "素材グループ",
+    "activity": {
+      "title": "過去7日間のアクティビティ",
+      "total_ops": "過去7日間で{{count, number}}件の操作",
+      "top_users": "最もアクティブなユーザー",
+      "top_actions": "操作の種類"
+    },
+    "growth": "月間の増加",
+    "growth_empty": "過去 12 か月のデータがありません。",
+    "approval_queue": "承認キュー",
+    "approval_queue_hint": "状態を選択すると該当するファイルを表示します。",
+    "no_ext": "（拡張子なし）",
+    "empty": "データがまだありません",
+    "empty_hint": "フォルダーをインデックスしてください。アーカイブの統計がここに表示されます。",
+    "scope_folder": "このフォルダー: {{name}}",
+    "scope_global": "アーカイブ全体"
+  },
+  "technical": {
+    "title": "技術ビュー",
+    "sort_hint": "クリックして並べ替え",
+    "name": "名前",
+    "type": "種類",
+    "size": "サイズ",
+    "modified": "更新日時",
+    "created": "作成日時",
+    "path": "パス",
+    "empty": "アセットが見つかりません"
+  },
+  "topbar": {
+    "result_count": "{{count, number}} 件の結果",
+    "counting": "集計中…",
+    "clear_all": "すべてクリア",
+    "chip_remove": "フィルターを削除",
+    "card_size": "カードサイズ",
+    "redo": "やり直し",
+    "soon_generic": "Faz 7.x — 近日公開"
+  },
+  "facet": {
+    "no_values": "\u3053\u306e\u30a2\u30fc\u30ab\u30a4\u30d6\u306b\u306f\u307e\u3060\u5024\u304c\u3042\u308a\u307e\u305b\u3093",
+    "type": "種類",
+    "all": "すべて",
+    "favorites": "お気に入り",
+    "favorites_only": "お気に入りのみ",
+    "tags": "タグ",
+    "collections": "コレクション",
+    "date": "日付（更新）",
+    "date_from": "開始",
+    "date_to": "終了",
+    "clear": "クリア",
+    "search": "絞り込み…",
+    "show_more": "他 {{count, number}} 件を表示",
+    "show_less": "折りたたむ",
+    "clear_section": "このセクションをクリア",
+    "deadline_year": "期限の年",
+    "gorsel_turu": "画像の種類",
+    "unit_type": "単位",
+    "software_version": "ソフトウェアのバージョン",
+    "ai_analyzed": "AI画像解析の状態",
+    "ai_all": "すべて",
+    "ai_yes": "解析済み",
+    "ai_no": "未解析"
+  },
+  "facet_config": {
+    "open": "フィルターをカスタマイズ",
+    "title": "フィルターをカスタマイズ",
+    "description": "表示するフィルター項目を選び、順序や名前を変更できます。",
+    "move_up": "{{name}} を上へ移動",
+    "move_down": "{{name}} を下へ移動",
+    "visible": "{{name}} を表示",
+    "rename": "{{name}} の名前を変更",
+    "reset": "既定に戻す"
+  },
+  "ai_setup": {
+    "open": "AI セットアップウィザード",
+    "title": "AI セットアップウィザード",
+    "step1": "1. 検索モデル",
+    "step2": "2. チャットと画像解析",
+    "step3": "3. 完了",
+    "models_intro": "セマンティック検索と画像検索に必要なモデル。フォルダーからインポートします（完全オフライン）。",
+    "ollama_intro": "チャットと画像解析にはローカルの Ollama が必要です（任意）。",
+    "ollama_optional": "この手順は任意です — Ollama がなくても検索は動作します。チャットと画像解析のみ無効になります。",
+    "chat_avail": "チャットモデル：{{count, number}}",
+    "vision_avail": "画像解析モデル：{{count, number}}",
+    "done_intro": "セットアップの概要：",
+    "summary_search": "検索（セマンティック + 画像）",
+    "summary_chat": "チャット",
+    "summary_vision": "画像解析",
+    "done_hint": "不足しているものは後で 設定 → AI から完了できます。",
+    "back": "戻る",
+    "next": "次へ",
+    "skip": "スキップ",
+    "close": "閉じる"
+  },
+  "xmp": {
+    "action": "XMP を書き出し",
+    "running": "XMP を書き込み中…",
+    "done": "{{count, number}} 個の XMP サイドカーを書き出しました",
+    "done_errors": "{{ok, number}} 件書き出し、{{errors, number}} 件エラー",
+    "failed": "XMP の書き出しに失敗しました"
+  },
+  "local_archive": {
+    "section": "アーカイブ",
+    "main": "プライマリアーカイブ",
+    "create": "新規アーカイブ",
+    "rename": "名前を変更",
+    "delete": "削除",
+    "new_placeholder": "アーカイブ名…",
+    "switched": "{{name}} に切り替えました",
+    "created": "{{name}} を作成しました",
+    "deleted": "{{name}} を削除しました",
+    "delete_title": "アーカイブを削除",
+    "delete_confirm": "アーカイブ「{{name}}」を削除しますか？ファイルはゴミ箱に移動します（復元可能）。",
+    "main_only_notice": "この機能はプライマリアーカイブで管理します。左のアーカイブ切替から切り替えてください。",
+    "err": {
+      "archive_busy": "スキャン/インデックス中はアーカイブを切り替えられません。",
+      "archive_not_main": "この操作はメインアーカイブでのみ可能です。",
+      "archive_missing": "アーカイブが見つかりません。",
+      "archive_protected": "メインアーカイブは削除できません。",
+      "archive_active": "アクティブなアーカイブは削除できません。"
+    }
+  },
+  "detail": {
+    "close": "詳細パネルを閉じる",
+    "empty": "詳細を表示するアセットを選択してください",
+    "match_sources": "一致した理由",
+    "match_field": {
+      "file_name": "ファイル名",
+      "title": "タイトル",
+      "description": "説明",
+      "body": "ファイル内容",
+      "ai": "AI 分析"
+    },
+    "tabs": {
+      "preview": "プレビュー",
+      "metadata": "メタデータ",
+      "relations": "関連",
+      "chunks": "チャンク",
+      "technical": "生データ"
+    },
+    "chunks_loading": "チャンクを読み込み中…",
+    "chunks_error": "チャンクの読み込みに失敗しました。",
+    "chunks_empty": "このファイルはまだ RAG 用にインデックスされていません。ダッシュボード →「RAG インデックス（チャット）」からインデックスしてください。",
+    "chunks_total": "{{count, number}} チャンク",
+    "chunk_meta": "概要（ファイル · プロジェクト · タグ）",
+    "chunk_body": "チャンク {{n}}",
+    "chunk_page": "p. {{n}}",
+    "rag_excluded_state": "このファイルは RAG チャットから除外されています",
+    "rag_included_state": "このファイルは RAG チャットに含まれています",
+    "rag_exclude_action": "RAG から除外",
+    "rag_include_action": "RAG に含める",
+    "rag_excluded_on": "ファイルを RAG チャットから除外しました。",
+    "rag_excluded_off": "ファイルを RAG チャットに含めました。",
+    "metadata": "メタデータ",
+    "tags": "タグ",
+    "collections": "コレクション",
+    "no_metadata": "メタデータなし",
+    "no_tags": "タグなし",
+    "no_collections": "コレクションなし",
+    "path": "パス",
+    "size": "サイズ",
+    "type": "種類",
+    "created": "作成日時",
+    "modified": "更新日時",
+    "indexed": "インデックス済み",
+    "video_loading": "動画を準備しています…",
+    "video_error": "このパネルでは動画を再生できませんでした。",
+    "video_open_fallback": "「ファイルを開く」ボタンで既定のアプリをお試しください。",
+    "video_player": "{{name}} の動画プレーヤー",
+    "video_unsupported": "この動画形式はシステムプレーヤーでサポートされていません。",
+    "add_tag": "タグを追加…",
+    "remove_tag": "タグを削除",
+    "tag_color": "タグの色",
+    "clear_tag_color": "タグの色をクリア",
+    "add_to_collection": "コレクションに追加…",
+    "remove_from_collection": "コレクションから削除",
+    "add_favorite": "お気に入りに追加",
+    "remove_favorite": "お気に入りから削除"
+  },
+  "collection": {
+    "rename": "コレクションの名前を変更",
+    "rename_label": "新しいコレクション名",
+    "rename_save": "保存",
+    "rename_cancel": "キャンセル",
+    "color": "コレクションの色",
+    "clear_color": "色をクリア",
+    "delete": "コレクションを削除",
+    "drop_to_add": "ここにファイルをドロップして「{{name}}」に追加",
+    "delete_confirm": "コレクション「{{name}}」を削除しますか？（ファイルは削除されません。）"
+  },
+  "context": {
+    "copy_path": "パスをコピー",
+    "favorite": "お気に入りに追加",
+    "unfavorite": "お気に入りから削除",
+    "add_tag": "タグを追加…",
+    "add_to_collection": "コレクションに追加…",
+    "open_file": "ファイルを開く",
+    "open_failed": "ファイルを開けませんでした: {{message}}",
+    "reveal_failed": "フォルダーで表示できませんでした: {{message}}",
+    "file_missing": "ファイルが見つかりません（このマシンにない可能性があります）",
+    "show_in_folder": "フォルダーで表示",
+    "similar_images": "類似画像",
+    "find_duplicates": "このファイルの重複を検索",
+    "delete": "削除",
+    "soon": "近日公開",
+    "tag_prompt": "タグ名:",
+    "collection_prompt": "コレクション名:",
+    "viewer_hint": "この操作を行う権限がありません。"
+  },
+  "trash": {
+    "title": "ゴミ箱",
+    "restore": "復元",
+    "purge": "完全に削除",
+    "purge_confirm": "{{count, number}} 件を完全に削除しますか？この操作は元に戻せません。",
+    "empty_trash": "ゴミ箱を空にする",
+    "empty": "ゴミ箱は空です",
+    "empty_hint": "削除したアセットは、復元または完全に削除するまでここに残ります。",
+    "count": "{{count, number}} 件",
+    "trashed_at": "削除日時：{{date}}"
+  },
+  "backup": {
+    "title": "バックアップ",
+    "count": "{{count, number}} 件のバックアップ",
+    "hint": "バックアップはアーカイブの隣に保存されます。災害対策には「エクスポート」で外部ディスクへコピーしてください。",
+    "auto_hint": "選択した間隔で自動バックアップを取得します（アプリが開いていて管理者がログイン中のときのみ）。",
+    "schedule": "自動バックアップ間隔",
+    "schedule_off": "オフ",
+    "hours": "{{count, number}} 時間",
+    "max_label": "自動バックアップの最大数",
+    "manage": "バックアップを管理",
+    "create": "バックアップ",
+    "import": "インポート",
+    "restore": "復元",
+    "export": "エクスポート",
+    "delete": "削除",
+    "auto": "自動",
+    "empty": "バックアップはまだありません",
+    "empty_hint": "「バックアップ」で最初のバックアップを作成してください。",
+    "created": "バックアップを作成しました",
+    "imported": "バックアップをインポートしました",
+    "restored": "アーカイブを復元しました",
+    "exported": "バックアップをエクスポートしました",
+    "deleted": "バックアップを削除しました",
+    "restore_confirm": "「{{name}}」から復元しますか？現在のアーカイブを上書きします（取り消せません）。",
+    "delete_confirm": "バックアップ「{{name}}」を削除しますか？"
+  },
+  "batch": {
+    "select_loaded": "読み込み済みを選択（{{loaded, number}}/{{total, number}}）",
+    "selected": "{{count, number}} 件選択中",
+    "select_all": "すべて選択",
+    "clear": "クリア",
+    "bulk_favorite": "お気に入り",
+    "bulk_unfavorite": "お気に入り解除",
+    "bulk_tag": "タグ",
+    "bulk_untag": "タグを削除",
+    "bulk_collection": "コレクションに追加",
+    "bulk_uncollection": "コレクションから削除",
+    "bulk_trash": "ゴミ箱へ移動",
+    "analyze_ai": "AI で解析（{{count, number}}）",
+    "analyze_ai_running": "解析中… {{processed, number}}/{{total, number}}",
+    "analyze_ai_done": "解析完了：{{analyzed, number}} 件解析、{{failed, number}} 件失敗"
+  },
+  "reindex": {
+    "action": "再インデックス",
+    "running": "再インデックス中… {{processed, number}}/{{total, number}}",
+    "done": "{{reindexed, number}} 件更新 · {{missing, number}} 件欠落 · {{failed, number}} 件失敗",
+    "failed": "再インデックスに失敗しました"
+  },
+  "undo": {
+    "open": "元に戻す履歴",
+    "title": "元に戻す",
+    "empty": "元に戻せる操作はありません",
+    "revert": "元に戻す",
+    "reverting": "元に戻しています… {{processed, number}}/{{total, number}}",
+    "reverting_simple": "元に戻しています…",
+    "undone": "元に戻しました",
+    "items": "{{count, number}} 件",
+    "done": "{{reverted, number}} 件を戻しました · {{skipped, number}} 件スキップ · {{failed, number}} 件失敗",
+    "partial": "一部の項目を元に戻せませんでした——記録は有効のままです。問題を解決して再試行できます",
+    "failed": "元に戻せませんでした",
+    "redo": "やり直す",
+    "redoing": "やり直し中… {{processed, number}}/{{total, number}}",
+    "redoing_simple": "やり直し中…",
+    "redone": "{{reverted, number}} 件をやり直し · {{skipped, number}} 件スキップ · {{failed, number}} 件失敗",
+    "open_redo": "やり直す（直前）",
+    "redo_none": "やり直せる操作はありません",
+    "err": {
+      "already_undone": "この操作はすでに元に戻されています",
+      "not_undone": "この操作はすでに有効です（元に戻されていません）"
+    },
+    "kind": {
+      "refile_move": "移動",
+      "rename": "名前変更",
+      "organize_move": "ルール整理（移動）",
+      "project_meta_bulk": "プロジェクト状態の一括設定",
+      "favorite_add": "お気に入り追加",
+      "favorite_remove": "お気に入り解除",
+      "tag_add": "タグ追加",
+      "tag_remove": "タグ削除",
+      "collection_add": "コレクションに追加",
+      "collection_remove": "コレクションから削除",
+      "root_group_create": "グループ作成",
+      "root_group_delete": "グループ削除",
+      "root_group_rename": "グループ名変更",
+      "root_group_recolor": "グループ色変更",
+      "root_group_assign": "グループへ割り当て",
+      "trash": "ゴミ箱へ移動"
+    }
+  },
+  "refile": {
+    "rename": "名前を変更",
+    "move": "移動",
+    "moving": "移動中… {{processed, number}}/{{total, number}}",
+    "rename_title": "ファイル名を変更",
+    "rename_label": "新しい名前",
+    "rename_placeholder": "新しいファイル名",
+    "rename_done": "「{{name}}」に名前を変更しました",
+    "choose_dest": "移動先フォルダーを選択",
+    "move_done": "{{moved, number}} 件移動 · {{skipped, number}} 件スキップ · {{failed, number}} 件失敗",
+    "err": {
+      "invalid_name": "無効なファイル名です。",
+      "source_missing": "元のファイルが見つかりません。",
+      "target_exists": "移動先に同じ名前のファイルが既に存在します。",
+      "db_conflict": "データベースの競合: このパスは既に登録されています。",
+      "not_found": "アセットが見つかりません。",
+      "same_dir": "ファイルは既にこのフォルダーにあります。",
+      "io": "ファイル操作に失敗しました: {{detail}}"
+    }
+  },
+  "organize": {
+    "source_label": "ソース",
+    "source_selected": "選択したファイル ({{count, number}})",
+    "source_folder": "フォルダーを選択…",
+    "source_resolving": "フォルダーをスキャン中…",
+    "folder_prompt": "上からフォルダーを選択してください。",
+    "files_found": "{{count, number}} 件のファイルが見つかりました",
+    "folder_empty": "このフォルダーにインデックス済みのファイルはありません",
+    "folder_error": "フォルダーを読み取れませんでした。",
+    "action": "ルールで整理",
+    "title": "ファイルを整理",
+    "subtitle": "{{count, number}} 件のファイル — フォルダー構成に従って整理されます。",
+    "banner": "レベルをドラッグして並べ替えると、フォルダーツリーが即座に更新されます。ルールエンジンは Rust で動作 — プレビュー = 結果。",
+    "structure_label": "フォルダー構成",
+    "path_empty": "まだレベルがありません — すべて1つのフォルダーに移動します。下からレベルを追加してください。",
+    "leaf": "ファイル",
+    "remove_level": "削除",
+    "compose_hint": "各レベルはフォルダーの階層です。例: クライアント › ファイル種別。分類できないファイルは 00-クライアントなし / 00-その他 に入ります。",
+    "dim": {
+      "ext": "ファイル種別",
+      "client": "クライアント",
+      "tag": "タグ",
+      "approval": "承認状態",
+      "version": "バージョン",
+      "year": "納期年"
+    },
+    "mode_label": "操作",
+    "mode_move": "移動",
+    "mode_copy": "コピー",
+    "root_label": "移動先ルートフォルダー",
+    "choose_root": "移動先ルートを選択…",
+    "pick": "選択…",
+    "no_root": "移動先ルートが未選択です。",
+    "preview_title": "プレビュー",
+    "preview_loading": "プレビューを準備中…",
+    "preview_empty": "プレビューするファイルがありません。",
+    "count_summary": "{{folders, number}} フォルダー · {{files, number}} ファイル",
+    "file_count": "{{count, number}} 件",
+    "more": "+{{count, number}} 件",
+    "run_move": "移動して整理",
+    "run_copy": "コピーして整理",
+    "running": "整理中… {{processed, number}}/{{total, number}}",
+    "summary": "{{moved, number}} 完了 · {{skipped, number}} 件スキップ · {{failed, number}} 件失敗",
+    "err": {
+      "invalid_structure": "無効な整理ディメンションです。",
+      "invalid_mode": "無効な操作モードです。",
+      "invalid_dest": "無効な移動先フォルダーです。",
+      "dest_create_failed": "移動先フォルダーを作成できませんでした。"
+    }
+  },
+  "picker": {
+    "tag_title": "タグを追加",
+    "collection_title": "コレクションに追加",
+    "remove_tag_title": "タグを削除",
+    "remove_collection_title": "コレクションから削除",
+    "tag_placeholder": "タグを入力または選択…",
+    "collection_placeholder": "コレクションを入力または選択…",
+    "remove_tag_placeholder": "削除するタグを選択…",
+    "remove_collection_placeholder": "外すコレクションを選択…",
+    "create": "「{{name}}」を作成"
+  },
+  "toast": {
+    "favorite_added": "お気に入りに追加しました",
+    "favorite_removed": "お気に入りから削除しました",
+    "favorite_failed": "お気に入りを更新できませんでした",
+    "favorites_added": "{{count, number}} 件をお気に入りに追加しました",
+    "favorites_removed": "{{count, number}} 件をお気に入りから削除しました",
+    "tag_added": "タグ「{{name}}」を追加しました",
+    "tag_removed": "タグ「{{name}}」を削除しました",
+    "tag_failed": "タグを更新できませんでした",
+    "tag_color_set": "タグの色を更新しました",
+    "tag_color_cleared": "タグの色をクリアしました",
+    "tag_color_failed": "タグの色を更新できませんでした",
+    "tags_added": "{{count, number}} 件にタグ「{{name}}」を追加しました",
+    "tags_removed": "{{count, number}} 件からタグ「{{name}}」を削除しました",
+    "collection_added": "「{{name}}」に追加しました",
+    "collection_removed": "コレクションから削除しました",
+    "collection_failed": "コレクションを更新できませんでした",
+    "collection_renamed": "コレクション名を変更しました",
+    "collection_rename_failed": "コレクション名を変更できませんでした",
+    "collection_color_set": "コレクションの色を変更しました",
+    "collection_color_cleared": "コレクションの色をクリアしました",
+    "collection_color_failed": "コレクションの色を変更できませんでした",
+    "collection_added_many": "{{count, number}} 件を「{{name}}」に追加しました",
+    "collection_removed_many": "{{count, number}} 件を「{{name}}」から削除しました",
+    "collection_deleted": "コレクション「{{name}}」を削除しました",
+    "trashed": "{{count, number}} 件をゴミ箱に移動しました",
+    "trash_failed": "ゴミ箱に移動できませんでした",
+    "restored": "復元しました",
+    "purged": "{{count, number}} 件を完全に削除しました",
+    "password_changed": "パスワードを更新しました",
+    "dismiss": "閉じる",
+    "path_copied": "パスをクリップボードにコピーしました。",
+    "path_copy_failed": "パスをコピーできませんでした（クリップボードへのアクセスが拒否されました）。"
+  },
+  "health": {
+    "stale_reindex_hint": "変更されたファイルは1件ずつ再インデックスできます。欠落したファイルが自動削除されることはありません。",
+    "staleness_current": "ファイルは最新",
+    "staleness_issues": "鮮度の問題 {{count, number}} 件",
+    "staleness_summary": "鮮度: 変更 {{stale, number}} · 欠落 {{missing, number}} · オフライン {{offline, number}}",
+    "schema": "スキーマ v{{v}}",
+    "assets": "{{count, number}} 件のアセット",
+    "ok": "正常",
+    "broken": "破損",
+    "title": "データ健全性",
+    "hint": "データベースの整合性を確認し、孤立行を整理します。",
+    "orphans": "孤立行",
+    "clean": "クリーン",
+    "repair": "修復",
+    "repairing": "修復中…",
+    "repair_done": "{{removed, number}} 件の孤立行を整理しました",
+    "repair_failed": "修復に失敗しました: {{message}}",
+    "staleness_title": "アーカイブの鮮度",
+    "staleness_hint": "元ファイルがディスク上に存在し、変更されていないかを点検します（破壊的操作なし）。",
+    "check": "点検",
+    "checking": "点検中…",
+    "stale": "変更あり",
+    "stale_missing": "欠落",
+    "stale_offline": "オフライン",
+    "stale_offline_hint": "オフライン：ルートにアクセスできません（ドライブ未接続の可能性）— ファイルは削除されていません。",
+    "stale_fresh": "アーカイブは最新です — すべての元ファイルが存在します。",
+    "fixity_title": "コンテンツ整合性",
+    "fixity_hint": "コンテンツ破損（ビットロット）検出 — mtime を変えずに静かに破損していないか。高コスト → 標本抽出。",
+    "fixity_sample": "標本 %",
+    "fixity_sampled": "抽出数",
+    "fixity_run": "チェック実行",
+    "fixity_clean": "標本は正常です（{{sampled, number}} 件を確認）。",
+    "fixity_mismatch": "不一致",
+    "fixity_mismatch_hint": "ビットロットの疑い：内容が静かに破損した可能性 — バックアップから復元してください。",
+    "kind_stale": "変更あり",
+    "kind_missing": "欠落",
+    "kind_offline": "オフライン",
+    "kind_mismatch": "不一致",
+    "kind_no_baseline": "基準なし",
+    "office_title": "旧 Office 形式",
+    "office_hint": "有効な DOC/XLS/PPT 系ファイルの署名を検査します。変換や削除は行いません。",
+    "office_run": "形式を検査",
+    "office_checked": "検査済み",
+    "office_legacy": "旧バイナリ",
+    "office_mismatch": "拡張子の不一致",
+    "office_unknown": "未認識",
+    "office_clean": "Office 形式は整合しています（{{checked, number}} ファイルを検査）。",
+    "office_legacy_hint": "旧バイナリ Office ファイルは使用できます。必要に応じて Office で最新の OOXML として保存し直してください。",
+    "office_mismatch_hint": "拡張子と内容が一致しないか、Office 署名がありません。ファイルを確認してください。"
+  },
+  "role": {
+    "label": "ロール",
+    "admin": "管理者",
+    "editor": "編集者",
+    "viewer": "閲覧者"
+  },
+  "permission": {
+    "admin_required": "この操作には管理者権限が必要です。",
+    "editor_required": "この操作には編集者権限が必要です。"
+  },
+  "auth": {
+    "loading": "読み込み中…",
+    "logout": "ログアウト",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "confirm_password": "パスワード（確認）",
+    "login": {
+      "title": "ログイン",
+      "subtitle": "続行するにはログインしてください。",
+      "cta": "ログイン",
+      "busy": "ログイン中…"
+    },
+    "setup": {
+      "title": "初期設定",
+      "subtitle": "最初の管理者（admin）アカウントを作成します。",
+      "cta": "アカウントを作成",
+      "busy": "作成中…"
+    },
+    "change": {
+      "title": "パスワード変更",
+      "subtitle": "アカウントのパスワードを更新します。",
+      "forced_hint": "続行する前にパスワードを変更する必要があります。",
+      "old": "現在のパスワード",
+      "new": "新しいパスワード",
+      "cta": "パスワードを更新",
+      "busy": "更新中…"
+    },
+    "error": {
+      "bad_credentials": "ユーザー名またはパスワードが正しくありません。",
+      "locked": "アカウントは一時的にロックされています。後でもう一度お試しください。",
+      "username_taken": "そのユーザー名は既に使用されています。",
+      "username_required": "ユーザー名は必須です。",
+      "password_required": "パスワードは必須です。",
+      "invalid_role": "無効なロールです。",
+      "last_admin": "最後の管理者は削除または降格できません。",
+      "forbidden": "この操作を行う権限がありません。",
+      "no_session": "有効なセッションがありません。もう一度ログインしてください。",
+      "mismatch": "パスワードが一致しません。",
+      "unknown": "不明なエラーが発生しました。",
+      "too_short": "パスワードは {{count, number}} 文字以上にしてください。",
+      "password_too_short": "パスワードは 6 文字以上にしてください。"
+    }
+  },
+  "users": {
+    "title": "ユーザー",
+    "add": "追加",
+    "empty": "ユーザーがいません",
+    "you": "あなた",
+    "founder": "メイン管理者",
+    "delete": "削除",
+    "reset_password": "パスワードをリセット",
+    "reset_confirm": "リセット",
+    "new_password": "新しいパスワード",
+    "col_username": "ユーザー名",
+    "col_role": "ロール",
+    "col_actions": "操作",
+    "import_csv": "Import CSV",
+    "csv_hint": "Header: username,password,role",
+    "csv_preview": "Preview ({{count, number}} users)",
+    "csv_import": "Import {{count, number}} users",
+    "csv_result": "{{created, number}} created, {{failed, number}} failed.",
+    "csv_read_error": "CSV header must be username,password,role."
+  },
+  "common": {
+    "prev": "前へ",
+    "next": "次へ",
+    "back": "戻る",
+    "continue": "続行",
+    "close": "閉じる",
+    "retry": "再試行",
+    "ok": "OK",
+    "save": "保存",
+    "cancel": "キャンセル"
+  },
+  "onboarding": {
+    "title": "アーカイブへようこそ",
+    "progress": "ステップ {{current}} / {{total}}",
+    "skip": "ツアーをスキップ",
+    "start": "開始",
+    "restart_title": "クイックガイド",
+    "restart_hint": "必要なときにいつでも基本の流れを開き直せます。",
+    "restart": "ガイドを表示",
+    "step_explore_title": "アーカイブを閲覧",
+    "step_explore_body": "左のレールで表示を切り替えます。エクスプローラーではファイルをカードで表示します。",
+    "step_search_title": "検索して絞り込む",
+    "step_search_body": "上部の検索でファイル名または内容を探し、左のフィルターで結果を絞り込みます。",
+    "step_organize_title": "ファイルを整理",
+    "step_organize_body": "書き込み権限がある場合は、複数選択、コンテキストメニュー、コレクションでファイルを整理できます。",
+    "step_settings_title": "設定とヘルプ",
+    "step_settings_body": "左の設定からスキャン、AI、メンテナンスの項目にアクセスできます。? キーでキーボードショートカットを確認できます。"
+  },
+  "lang": {
+    "label": "言語",
+    "tr": "Türkçe",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語",
+    "ar": "العربية"
+  },
+  "theme": {
+    "light": "ライトテーマ",
+    "dark": "ダークテーマ",
+    "accent": "アクセントカラー",
+    "accent_indigo": "インディゴ",
+    "accent_amber": "アンバー",
+    "accent_lime": "ライム",
+    "accent_teal": "ティール"
+  },
+  "scan_concurrency": {
+    "title": "スキャン並列度",
+    "hint": "スキャン中に同時に処理するファイル数（ハッシュ＋抽出）。データベースへの書き込みは常に逐次で、これは読み取り/抽出のみを並列化します。ストレージの種類で選択してください：HDDは低め、NVMeは高め。",
+    "auto": "自動（推奨）",
+    "hdd": "HDD（低）",
+    "ssd": "SSD（中）",
+    "nvme": "NVMe（高）"
+  },
+  "oda_concurrency": {
+    "title": "ODA（DWG→DXF）並列度",
+    "hint": "ODAFileConverter で同時に DXF へ変換する DWG の数。一般のスキャン並列度とは別です：ODA はサブプロセスを起動し、ファイルを一時フォルダーにコピーします → ボトルネックは CPU ではなくサブプロセスとディスクの競合なので、低めに保ちます。ODA が未インストールの場合は無効です（DWG は生スキャンにフォールバック）。",
+    "recommended": "推奨（既定）"
+  },
+  "system_info": {
+    "title": "マシン診断",
+    "hint": "アーカイブ DB があるディスク、このマシンの LAN アドレス、ビルド詳細を表示します。元のフォルダーは別のディスクにある場合があります。",
+    "app_version": "アプリ",
+    "build": "ビルド",
+    "features": "ビルドフラグ",
+    "hostname": "マシン",
+    "local_ip": "ローカル IP",
+    "archive_disk": "アーカイブ ディスク",
+    "disk_usage": "空き {{free}} / {{total}}",
+    "disk_unavailable": "取得できません",
+    "archive_path": "アーカイブの場所",
+    "refresh": "更新"
+  },
+  "process_priority": {
+    "title": "アプリのプロセス優先度",
+    "hint": "ArchivistPro プロセスだけに影響します。バックグラウンドを選ぶと、スキャンや AI の実行中に他のアプリへより多くの CPU 時間を譲ります。",
+    "normal": "通常",
+    "background": "バックグラウンド",
+    "active_normal": "有効: 通常の優先度。",
+    "active_background": "有効: バックグラウンド / 通常未満の優先度。",
+    "error": "プロセス優先度を変更できませんでした。設定は適用されていません。"
+  },
+  "watch": {
+    "title": "ライブ監視",
+    "hint": "スキャン済みのルートフォルダー内でのファイルの追加/変更/削除を自動検出し、通知を表示します。スキャンしたフォルダーはリストに追加されます。",
+    "enabled": "フォルダーの変更を監視",
+    "enabled_hint": "オフの場合、変更は手動スキャン時にのみ認識されます。",
+    "auto_rescan": "変更検出時に自動で再スキャン",
+    "auto_rescan_hint": "60秒間新しい変更がなければ、そのフォルダーを自動で再スキャンします（マージ。何も削除されません）。既定：オフ。",
+    "roots": "監視中のフォルダー",
+    "add_folder": "フォルダーを追加",
+    "no_roots": "監視中のフォルダーはまだありません。フォルダーをスキャンするか、ここで追加してください。",
+    "remove": "削除",
+    "changed": "{{folder}} で変更を検出しました。",
+    "rescan_done": "{{folder}} を再スキャンしました。",
+    "rescan_failed": "{{folder}} の自動スキャンに失敗しました。",
+    "watch_failed_folder_missing": "{{count, number}} 個のフォルダーを監視できません：{{folders}} — 見つからないか、アクセスできません（削除・移動・名前変更、またはネットワーク／外付けドライブが未接続）。これらの変更は検出されません。",
+    "watch_failed_permission": "{{count, number}} 個のフォルダーを監視できません：{{folders}} — アクセスが拒否されました。フォルダーの権限を確認してください。変更は検出されません。",
+    "watch_failed_watch_limit": "{{count, number}} 個のフォルダーを監視できません：{{folders}} — OS の監視上限に達しました。上限を引き上げるか、監視するルートを減らしてください。",
+    "watch_failed_forbidden": "{{count, number}} 個のフォルダーを監視できません：{{folders}} — この操作には管理者権限が必要です。",
+    "watch_failed_other": "{{count, number}} 個のフォルダーを監視できません：{{folders}} — 変更は検出されません。技術的な詳細：{{message}}"
+  },
+  "setup_check": {
+    "title": "セットアップ確認",
+    "hint": "このコンピューターが画像解析に対応できるかを確認します。技術的な知識は不要です — 不足があれば何をすべきかを表示します。",
+    "checking": "確認中…",
+    "recheck": "再確認",
+    "unavailable": "確認を実行できませんでした。",
+    "technical_detail": "技術的な詳細",
+    "driver_unknown": "バージョン不明",
+    "overall_ok": "準備完了",
+    "overall_warn": "動作しますが注意",
+    "overall_fail": "準備できていません",
+    "gpu_ok": "グラフィックカード：{{gpu}} · {{vram}} GB · ドライバー {{driver}}。",
+    "gpu_none": "NVIDIA のグラフィックカードまたはドライバーが見つかりません。解析は CPU で実行され、1 枚あたり数分かかることがあります。",
+    "gpu_unreadable": "グラフィックカードの情報を読み取れませんでした — ドライバーが不完全な可能性があります。解析は試せます。",
+    "ollama_ok": "Ollama は動作しています（{{base}}）。",
+    "ollama_down": "Ollama が動作していません（{{base}}）。画像解析には必須です — 起動するか、設定でアドレスを修正してください。",
+    "vision_ok": "画像モデル：{{model}} — 計測済み、使える出力を生成します。",
+    "vision_untested": "画像モデル：{{model}} — 未計測です。下の試行で動作するか確認できます。",
+    "vision_unusable": "画像モデル：{{model}} — 計測済みですが使える出力を生成しません。解析は動いても何も保存されません。次を導入してください：ollama pull {{suggested}}",
+    "vision_none": "画像モデルが未インストールです。次を導入してください：ollama pull {{suggested}}",
+    "embed_ok": "ローカル検索モデルは準備できています。",
+    "embed_missing": "ローカル検索モデル（MiniLM）がありません。解析結果を検索可能にできません。設定 → AI からモデルファイルを取り込んでください。",
+    "pending": "解析待ちの画像：{{count, number}}",
+    "trial": "1 枚で試す",
+    "trial_hint": "実際のアーカイブ画像を解析します。何も保存されません。",
+    "trial_running": "試行中…（数分かかることがあります）",
+    "trial_ok": "動作します：{{model}} · {{seconds}} 秒 · {{fields, number}} 項目を生成。",
+    "trial_error": "{{model}} の試行に失敗：{{reason}}",
+    "trial_unusable": "{{model}} は応答しましたが必要な形式ではありません — このモデルの解析は保存されません。別のモデルを導入してください。",
+    "trial_unusable_proven": "{{model}} は動作していますが、試した {{count, number}} 枚では必要な形式を生成しませんでした。モデルは一部の画像（特にロゴやブランド）の説明を拒否することがあります — モデルを変える必要はありません。別の画像で試してください。",
+    "trial_attempts": "{{total, number}} 枚を試し、{{ok, number}} 枚が成功しました。",
+    "trial_estimate": "この速度なら、待機中の {{count, number}} 枚におよそ {{hours}} 時間かかります（{{samples, number}} 枚で計測した概算）。一度にではなく、フォルダーや選択ごとに分けて実行してください。",
+    "trial_sample": "「{{file}}」の生成結果：{{sample}}",
+    "trial_busy": "現在、画像解析が実行中です。試行の前に停止してください。",
+    "trial_no_sample": "試す画像がありません — 解析待ちの画像がありません。",
+    "trial_failed": "試行を実行できませんでした。"
+  },
+  "legacy": {
+    "title": "以前のバージョンが見つかりました",
+    "installed": "ArchivistPro {{version}} がこのコンピューターにインストールされています。",
+    "version_unknown": "（バージョン不明）",
+    "data_found": "以前のバージョンのデータが残っています：アーカイブファイル {{archives, number}} 個 · {{size}} · ファイル記録 {{assets}} 件。",
+    "assets_unknown": "読み取れない件数の",
+    "keep_warning": "取り込みが完了して確認が済むまで、以前のバージョンをアンインストールせず、このフォルダーも削除しないでください。2 つのプログラムは並行して使用できます。",
+    "hint": "下のボタンで旧バージョンのデータ（ファイル記録、AI 解析、タグ、お気に入り、コレクション、フォルダー）をこのプログラムに移せます。",
+    "last_import": "前回の移行: {{when}} — 新規 {{inserted}} 件を追加、{{existing}} 件は既にありました。AI 解析 {{ai}} 件を引き継ぎました。",
+    "hint_done": "移行は完了しました。元データは削除されないため、旧バージョンのデータがディスクに残っている間はこのカードが表示され続けます — 移行が行われなかったという意味ではありません。すべて揃っていることを確認した後、旧バージョンを削除するかどうかはご自身の判断です。",
+    "import": {
+      "title": "旧バージョンからデータを取り込む",
+      "start": "データを H3 へ移す…",
+      "again": "再移行…",
+      "pick_hint": "取り込むアーカイブファイルを選択してください。実際のアーカイブは通常「メイン」ラベルの最大のものです。",
+      "no_candidates": "取り込めるアーカイブファイルが見つかりませんでした。",
+      "kind_main": "メイン",
+      "kind_local": "ローカル",
+      "kind_extra": "追加アーカイブ",
+      "kind_scan": "検出",
+      "locked_hint": "H2 が開いている可能性 — 閉じてください",
+      "trashed": "H2 のごみ箱内",
+      "asset_count": "{{count, number}} 件のファイル記録",
+      "inv_assets": "ファイル記録",
+      "inv_deleted": "ごみ箱内",
+      "inv_ai": "AI 解析あり",
+      "inv_thumbs": "プレビューあり",
+      "inv_tags": "タグ割り当て",
+      "inv_favorites": "お気に入り",
+      "inv_collections": "コレクション",
+      "inv_roots": "フォルダールート",
+      "inv_project": "プロジェクト状態あり",
+      "inv_no_curated": "このアーカイブに手作業のデータ（タグ・お気に入り・コレクション）は見つかりませんでした — それでもファイル記録と AI 解析は取り込めます。",
+      "not_carried": "移行できないもの：ユーザーパスワード（暗号化方式が異なる — ユーザー: {{users}}。H3 で再作成してください）とチャット履歴（{{chats}} セッション）。",
+      "opt_deleted": "ごみ箱の記録も移す（H3 のごみ箱に表示）",
+      "opt_thumbnails": "旧プレビューを一時的に移す（再スキャンで高品質版に置換）",
+      "run_dry": "まず試す（何も書き込まない）",
+      "running_dry": "試行中…",
+      "stage_assets": "ファイル記録",
+      "stage_roots": "フォルダー",
+      "stage_collections": "コレクション",
+      "dry_title": "試行結果 — 適用すると正確に以下が行われます：",
+      "confirm_body": "適用前に自動バックアップを取得します（設定 → バックアップから復元可能）。処理は繰り返し可能：中断しても再実行は安全です。",
+      "apply": "取り込む",
+      "applying": "取り込み中…",
+      "done_title": "取り込みが完了しました。",
+      "users_note": "ユーザーは移行できませんでした（パスワード暗号化が異なる）：{{users}}。必要なら H3 で再作成してください。",
+      "rescan_hint": "次はフォルダーをスキャンしてください：本文テキスト・指紋・高品質プレビューはスキャンで生成され、移した AI 解析とタグは保持されます。",
+      "handoff": "旧アーカイブのフォルダールートも引き継ぎました：{{roots}} 個のルートを追加し、{{pending}} 件がスキャン待ちです。どのフォルダーが何件待っているかは下の一覧で確認できます。アクセスできないドライブには印が付きます。",
+      "review_roots": "フォルダーを確認してスキャン…",
+      "res_inserted": "新規ファイル記録",
+      "res_existing": "既存（変更なし）",
+      "res_deleted_carried": "ごみ箱へ移動",
+      "res_deleted_conflicts": "ごみ箱競合（H3 側を維持）",
+      "res_duplicates": "H2 の重複行（最新を採用）",
+      "res_ai": "AI 解析を移行",
+      "res_ai_skipped": "AI スキップ（H3 に既存）",
+      "res_ai_thin": "AI スキップ（内容が薄い）",
+      "res_gorsel_turu": "メディア種別を移行",
+      "res_tags": "タグ",
+      "res_favorites": "お気に入り",
+      "res_collections": "コレクション",
+      "res_collection_items": "コレクション所属",
+      "res_project_meta": "プロジェクト状態",
+      "res_roots": "フォルダールート",
+      "res_groups": "ルートグループ",
+      "res_root_tags": "ルートタグ",
+      "res_thumbnails": "プレビュー",
+      "res_bad_times": "日付が壊れた記録（それでも移行）",
+      "res_errors": "エラー（記録をスキップ）"
+    }
+  },
+  "recovery": {
+    "restored": "データベースが破損していたため、最新のバックアップ（{{snapshot}}）から自動的に復元しました。破損ファイルは安全に保存されています。",
+    "fresh": "データベースが破損していたため、クリーンなデータベースで起動しました。破損ファイルは保存されています（{{quarantined}}）。データは「設定 → バックアップ」から復元できます。"
+  },
+  "location": {
+    "foreign_with_host": "リモートの場所：このアーカイブは {{host}} でインデックス化されました。ソースファイルはこのマシン（{{current}}）でアクセスできません（サンプル {{accessible, number}}/{{sampled, number}}）。プレビューモード — 安全のため、破壊的スキャン（置換/リセット）はブロックされます。",
+    "foreign_no_host": "リモートの場所：ソースファイルはこのマシン（{{current}}）でアクセスできません（サンプル {{accessible, number}}/{{sampled, number}}）。プレビューモード — 安全のため、破壊的スキャン（置換/リセット）はブロックされます。",
+    "dismiss": "閉じる"
+  },
+  "bgTask": {
+    "rescan": "再スキャン中",
+    "reindex": "再インデックス中",
+    "analyze": "AI 画像解析",
+    "progress": "{{label}} · {{processed, number}}/{{total, number}}",
+    "multiple": "{{count, number}} 件のバックグラウンド処理を実行中",
+    "stop": "停止",
+    "stopping": "停止中…"
+  },
+  "autoIndex": {
+    "title": "AI 自動インデックス",
+    "hint": "スキャン完了後、新規/変更ファイルはバックグラウンドで自動的に AI 用に準備されます（テキスト埋め込み、画像マッチング、チャット用の分割）。アプリを閉じても中断した所から再開します。視覚コンテンツ解析（Ollama）は含まれません。それは別で任意です。",
+    "toggle": "スキャン後に自動で AI インデックス",
+    "toggle_hint": "オフの場合、これらの手順は各パネルから手動でのみ開始します。",
+    "active": "実行中…",
+    "skipped": "{{count, number}} 件のファイルをスキップしました（インデックス化できません）。",
+    "retry": "再試行",
+    "retrying": "再試行中…",
+    "retry_done": "スキップされた {{count, number}} 件を消去しました — 次回に再試行します。",
+    "retry_none": "再試行するスキップ記録はありません。",
+    "retry_failed": "処理に失敗しました：{{message}}",
+    "enable_failed": "設定を変更できませんでした：{{message}}",
+    "stop": "停止",
+    "stop_failed": "停止できませんでした：{{message}}",
+    "starting": "AI インデックスを開始しています…",
+    "progress": "{{stage}} · {{processed, number}}/{{total, number}}",
+    "stage": {
+      "text": "テキスト",
+      "image": "画像",
+      "chunk": "RAG（テキスト分割）"
+    },
+    "done": "AI インデックス完了：テキスト {{embedded, number}} · 画像 {{imageEmbedded, number}} · チャンク {{chunked, number}} を準備しました。",
+    "done_skipped": "AI インデックス完了：テキスト {{embedded, number}} · 画像 {{imageEmbedded, number}} · チャンク {{chunked, number}} · スキップ {{skipped, number}}。",
+    "stopped": "AI インデックスを停止しました：テキスト {{embedded, number}} · 画像 {{imageEmbedded, number}} · チャンク {{chunked, number}}。",
+    "stopped_skipped": "AI インデックスを停止しました：テキスト {{embedded, number}} · 画像 {{imageEmbedded, number}} · チャンク {{chunked, number}} · スキップ {{skipped, number}}。"
+  },
+  "aiIndexReset": {
+    "title": "AI インデックスを再構築",
+    "hint": "再生成可能なセマンティックテキストベクトル、視覚 CLIP ベクトル、RAG チャンクと、それら3段階のスキップ記録だけを消去します。ファイル、メタデータ、サムネイル、通常検索、任意の視覚分析は保持されます。",
+    "reset": "インデックスを消去して再構築",
+    "resetting": "インデックスを消去中…",
+    "confirm_title": "AI インデックスを消去しますか？",
+    "confirm_message": "セマンティック検索、視覚検索、チャットのインデックスが再生成されます。元のファイルと視覚 AI 分析は削除されません。",
+    "done": "AI インデックスを消去しました：テキストベクトル {{textVectors, number}} 件・画像ベクトル {{imageVectors, number}} 件・RAG チャンク {{chunks, number}} 件・スキップ記録 {{skipped, number}} 件。自動インデックスが有効な場合、再構築を開始しました。",
+    "failed": "AI インデックスを消去できませんでした：{{message}}"
+  },
+  "relations": {
+    "detect_title": "関連の検出",
+    "detect_hint": "同じ基本名を持つ異なるファイル（例: plan.dwg ↔ plan.pdf ↔ plan.jpg）を自動的に関連付けます。既存/手動のリンクは保持します。",
+    "detect": "関連を検出",
+    "detecting": "スキャン中…",
+    "detect_done": "{{created, number}} 件の関連を作成しました（{{groups, number}} グループ）",
+    "detect_failed": "関連の検出に失敗しました: {{message}}",
+    "title": "関連",
+    "about": "関連: このファイルにつながる他のファイル — 複製・バージョン・外部参照 (XREF)・派生（DWG からの PDF/レンダリング）・バックアップ（.bak/.dwl → ソース）。",
+    "loading": "関連を読み込み中…",
+    "error": "関連の読み込みに失敗しました。",
+    "empty": "このファイルには関連がありません。",
+    "kind": {
+      "duplicate": "重複",
+      "version": "バージョン",
+      "xref": "外部参照",
+      "derived": "派生",
+      "backup": "バックアップ"
+    },
+    "outgoing_hint": "このファイルが元 → 関連ファイル",
+    "incoming_hint": "関連ファイルが元 → このファイル",
+    "add": "関連を追加",
+    "add_cancel": "キャンセル",
+    "remove": "関連を削除",
+    "search_placeholder": "リンクするファイルを検索…",
+    "search_empty": "一致するファイルなし",
+    "target_select": "対象ファイルを選択",
+    "kind_select": "関連の種類",
+    "added": "関連を追加しました。",
+    "removed": "関連を削除しました。",
+    "add_error": "関連の追加に失敗しました。",
+    "remove_error": "関連の削除に失敗しました。"
+  },
+  "crash": {
+    "title": "クラッシュレポート",
+    "hint": "アプリ内パニック（クラッシュ）の記録——メッセージ・場所・時刻・スレッド。診断用の読み取り専用。新しい順。",
+    "open": "クラッシュレポートを開く",
+    "count": "{{count, number}} 件",
+    "clear": "消去",
+    "cleared": "クラッシュレポートを消去しました",
+    "clear_failed": "消去に失敗しました",
+    "loading": "読み込み中…",
+    "empty": "クラッシュ記録なし",
+    "empty_hint": "朗報——パニックは捕捉されていません。",
+    "backtrace": "バックトレース"
+  },
+  "scanReport": {
+    "title": "スキャンレポート",
+    "hint": "各フォルダースキャン（インデックス作成）の永続レポート — 追加/更新/スキップ/失敗、形式の内訳、警告とエラー。読み取り専用。新しい順。",
+    "open": "スキャンレポートを開く",
+    "count": "{{count, number}} 件のレポート",
+    "clear": "履歴を消去",
+    "clear_confirm": "すべてのスキャンレポートを削除しますか？この操作は元に戻せません。",
+    "cleared": "スキャンレポートを消去しました",
+    "clear_failed": "消去に失敗しました",
+    "loading": "読み込み中…",
+    "empty": "スキャンレポートはまだありません",
+    "empty_hint": "フォルダーをインデックスするとレポートがここに蓄積されます。",
+    "select_hint": "詳細を表示するにはスキャンを選択してください。",
+    "save": "名前を付けて保存",
+    "save_txt": ".txt",
+    "save_json": ".json",
+    "export_ok": "レポートを保存しました",
+    "export_failed": "レポートを保存できませんでした",
+    "added": "追加",
+    "updated": "更新",
+    "skipped": "スキップ",
+    "failed": "失敗",
+    "warnings_badge": "{{count, number}} 件の警告",
+    "errors_badge": "{{count, number}} 件のエラー",
+    "skipped_badge": "{{count, number}} 件スキップ",
+    "mode": {
+      "merge": "マージ",
+      "replace": "置換",
+      "reset": "リセット"
+    }
+  },
+  "audit": {
+    "title": "監査ログ",
+    "hint": "破壊的操作および管理操作の監査証跡（実行者・日時・操作・対象・詳細）。読み取り専用 — 新しい順。",
+    "open": "監査ログを開く",
+    "count": "{{count, number}} 件",
+    "loading": "読み込み中…",
+    "empty": "監査記録がありません",
+    "empty_hint": "破壊的／管理操作が行われると、ここに記録が表示されます。",
+    "col_time": "日時",
+    "col_user": "ユーザー",
+    "col_action": "操作",
+    "col_target": "対象",
+    "col_detail": "詳細",
+    "prev": "前へ",
+    "next": "次へ",
+    "page": "ページ {{page}} / {{pages}}",
+    "action": {
+      "trash": "ごみ箱へ移動",
+      "restore": "復元",
+      "purge": "完全に削除",
+      "collection_delete": "コレクションを削除",
+      "collection_rename": "コレクション名を変更",
+      "collection_recolor": "コレクションの色を変更",
+      "ingest_replace": "スキャン：置換",
+      "ingest_reset": "スキャン：リセット",
+      "user_create": "ユーザーを作成",
+      "user_delete": "ユーザーを削除",
+      "user_set_role": "ロールを変更",
+      "auth_lockout_policy": "ログインロックのポリシーを変更",
+      "user_reset_password": "パスワードをリセット",
+      "password_change": "パスワードを変更",
+      "setup_admin": "初期管理者の設定",
+      "relation_add": "関連を追加",
+      "relation_remove": "関連を削除",
+      "login": "サインイン",
+      "reindex": "再インデックスしました",
+      "db_repair": "データベースを修復しました",
+      "archive_export": "アーカイブをエクスポートしました",
+      "archive_import": "アーカイブをインポートしました",
+      "refile": "移動／名前変更",
+      "project_meta_bulk": "プロジェクト状態を一括更新しました",
+      "undo": "操作を元に戻しました",
+      "ai_index_reset": "AI インデックスを再構築"
+    }
+  },
+  "dedup": {
+    "title": "重複ファインダー",
+    "hint": "重複ファイルや類似ファイル（内容が同一・同名・視覚的に類似）を検出し、不要なコピーをゴミ箱へ移動します。",
+    "modes": "スキャンモード",
+    "mode_exact": "完全一致（同一内容）",
+    "mode_exact_hint": "内容がバイト単位で同一のファイル（内容ハッシュ）。",
+    "mode_same_name": "同名",
+    "mode_same_name_hint": "同じファイル名を持つファイル（内容は異なる場合あり）。",
+    "mode_visual": "視覚的に類似",
+    "mode_visual_hint": "見た目が似ている画像（知覚ハッシュ / pHash）。",
+    "mode_structural": "構造が類似（図面）",
+    "mode_structural_hint": "同一/類似のジオメトリを持つ DWG/DXF 図面（形状比較）。",
+    "threshold_structural_hint": "高 = より厳格（非常に類似した図面のみ）。形状セットの重複率。",
+    "threshold": "類似度のしきい値",
+    "threshold_hint": "高い＝より厳格（非常に似た画像のみ）。低い＝より緩い（候補が増える）。",
+    "threshold_value": "{{pct}}%",
+    "help": {
+      "title": "重複ファインダーの仕組み",
+      "button": "重複ファインダーのヘルプ",
+      "intro": "同じ成果物の複数のコピーを見つけ、アーカイブを整理できます。スキャンは読み取り専用で、指示しない限りファイルは移動されません。",
+      "sec_flow": "流れ",
+      "step_modes_label": "1 · モードを選ぶ",
+      "step_modes_desc": "複数のモードを同時に有効にでき、結果は 1 つの一覧にまとまります。各モードが何を探すかは、その枠の下に書かれています。",
+      "step_scan_label": "2 · スキャン",
+      "step_scan_desc": "選択したモードは 1 回のスキャンでまとめて実行されます。しきい値スライダーは類似モードにのみ影響します（高い＝厳しく、候補が減ります）。",
+      "step_review_label": "3 · 確認",
+      "step_review_desc": "各グループが 1 つのコピー集合です。ファイルをクリックすると右側に詳細が開きます。パネルは閉じないので、並べて比較できます。",
+      "sec_safety": "安全性",
+      "trash_label": "ゴミ箱へ移動",
+      "trash_desc": "完全削除ではありません——ファイルはゴミ箱へ移動し、復元できます。削除には編集者以上の権限が必要です。",
+      "keep_label": "残されるコピー",
+      "stop_label": "停止",
+      "stop_desc": "大きなアーカイブのスキャンには時間がかかる場合があります。停止すると安全に中止され、途中のレポートは作成されず、ファイルも変更されません。",
+      "keep_desc": "「残りをゴミ箱へ」はグループの先頭ファイルを残し、それ以外を移動します。個別に処理したい場合は、各行にゴミ箱ボタンがあります。",
+      "hint": "すべてのグループが本当の重複とは限りません。特に類似モードでは、ゴミ箱へ移す前に結果を確認してください。"
+    },
+    "scan": "スキャン",
+    "scanning": "スキャン中…",
+    "no_mode": "スキャンモードを1つ以上選択してください。",
+    "start_hint": "モードを選択して「スキャン」を押してください。",
+    "seeded_for": "検索対象: {{name}}",
+    "seed_empty": "このファイルの重複は見つかりませんでした",
+    "seed_empty_hint": "選択したモードには、このファイルを含む重複グループがありません。",
+    "summary": "{{groups, number}} グループ / {{files, number}} ファイル",
+    "score": "一致度 {{score}}%",
+    "members": "{{count, number}} ファイル",
+    "kind": {
+      "exact_hash": "完全一致",
+      "same_name": "同名",
+      "visual_similar": "視覚的に類似",
+      "structural_similar": "構造類似"
+    },
+    "keep_first": "最初のコピー（保持）",
+    "trash_rest": "残りをゴミ箱へ",
+    "trash_rest_confirm": "このグループから {{count, number}} 件のファイルをゴミ箱へ移動しますか？ 最初のファイルは保持されます。（復元可能）",
+    "trash_member": "このファイルをゴミ箱へ",
+    "trashed": "{{count, number}} 件のコピーをゴミ箱へ移動しました",
+    "trash_failed": "ゴミ箱へ移動できませんでした",
+    "open_asset": "詳細で開く",
+    "empty": "重複は見つかりませんでした",
+    "empty_hint": "選択したモードでは重複や類似ファイルはありません。",
+    "error": "スキャンに失敗しました: {{message}}",
+    "cancelling": "停止中…",
+    "elapsed": "{{seconds}} 秒",
+    "cancelled_toast": "スキャンを停止しました — 結果は生成されていません。",
+    "scanning_slow_hint": "視覚的・構造的な比較はファイル数に応じて急激に増えます。大きなアーカイブでは数分かかることがあります。",
+    "stop": "停止"
+  },
+  "shape": {
+    "title": "形状検索 (DWG · DXF)",
+    "open": "形状検索",
+    "open_hint": "画像をアップロードするか、パラメータで DWG/DXF の幾何形状を検索",
+    "tab": {
+      "image": "画像をアップロード",
+      "criteria": "特徴で検索",
+      "composite": "図面で"
+    },
+    "drop_hint": "画像をドラッグ＆ドロップ、またはクリックして選択",
+    "drop_sub_hint": "PNG · JPG · BMP · TIFF — 主要な閉形状を検出します",
+    "analyzing": "検出中…",
+    "detected": "検出された形状:",
+    "detected_vertices": "{{count, number}} 頂点",
+    "metric": {
+      "compact": "コンパクト",
+      "solid": "充実度",
+      "rect": "矩形度"
+    },
+    "include_open": "開いた形状も含める",
+    "search": "検索",
+    "vertex_count": "頂点数",
+    "vertex_tolerance": "許容差 (±)",
+    "min_regularity": "最小 規則性",
+    "min_compactness": "最小 コンパクト度",
+    "min_rectangularity": "最小 矩形度",
+    "category": "カテゴリ",
+    "top_k": "結果件数",
+    "polygon": {
+      "triangle": "三角形",
+      "quad": "四角形",
+      "pentagon": "五角形",
+      "hexagon": "六角形",
+      "heptagon": "七角形",
+      "octagon": "八角形",
+      "nonagon": "九角形",
+      "decagon": "十角形",
+      "dodecagon": "十二角形",
+      "generic": "{{count, number}}角形",
+      "regular": "正{{name}}"
+    },
+    "category_label": {
+      "TUMU": "すべて",
+      "HAVUZ": "プール",
+      "DUVAR": "壁",
+      "KAPI": "扉",
+      "PENCERE": "窓",
+      "KOLON": "柱",
+      "KIRIS": "梁",
+      "MERDIVEN": "階段",
+      "DOSEME": "スラブ",
+      "CATI": "屋根",
+      "DIGER": "その他"
+    },
+    "result_count": "{{count, number}} 件",
+    "top_score": "最高 {{score}}",
+    "start_hint_image": "画像をアップロードすると、検出された形状に最も類似する DWG/DXF ファイルが一覧表示されます。",
+    "start_hint_criteria": "条件を設定して「検索」を押してください。",
+    "start_hint_composite": "参照図面を選択し、「検索」を押すと、その図面に最も重なる他の図面が表示されます。",
+    "composite_no_selection": "まずリストから DWG/DXF 図面を選択し、このタブに戻ってください。",
+    "composite_reference": "参照図面：{{name}}",
+    "composite_not_drawing": "選択したファイルは DWG/DXF 図面ではありません — 結果が空になる場合があります。",
+    "composite_min_score": "最小重なり (%)",
+    "empty": "一致する形状が見つかりません",
+    "empty_hint": "条件を緩めるか、開いた形状を含めてください。アーカイブに形状インデックス付きの DWG/DXF が必要です。",
+    "image_too_large": "画像が大きすぎます ({{size}})。{{max}} 未満の画像を使用してください。",
+    "error": "形状検索に失敗しました: {{message}}"
+  },
+  "visual_search": {
+    "title": "ビジュアル検索",
+    "open": "ビジュアル検索",
+    "open_hint": "画像を言葉で説明して検索: 「赤いソファ」「木製ファサード」 — CLIP テキスト→画像",
+    "placeholder": "画像を検索: 「赤いソファ」「木製ファサード」…",
+    "search": "検索",
+    "searching": "検索中…",
+    "sensitivity": "感度",
+    "sensitivity_hint": "しきい値未満（類似度が低い）の結果は非表示になります。下げるとより多く表示されます。",
+    "hidden_count": "{{count, number}} 件がしきい値未満で非表示",
+    "result_count": "{{count, number}} 件",
+    "top_score": "最高 {{score}}%",
+    "score_pct": "{{score}}%",
+    "start_hint": "画像を言葉で説明してください — アーカイブの画像が類似度の高い順に採点されます。例: 「赤いソファ」「木製ファサード」「夜の外観」。",
+    "no_match": "しきい値以上の一致がありません — 感度を下げるか、別の言葉を試してください。",
+    "model_missing": "ビジュアル検索を使うには、ダッシュボードから CLIP モデルをインポートしてください。",
+    "setup_model": "ビジュアル検索には CLIP モデルが必要です。設定 → AI → AI モデル から一度インポートしてください。以降は自動的に準備されます。",
+    "setup_embed": "画像はまだ検索用に準備されていません。自動インデックスが有効なら走査時に自動準備されます。または 設定 → AI → 画像インデックス で「埋め込み」を実行してください。",
+    "error": "ビジュアル検索に失敗しました: {{message}}"
+  },
+  "archive": {
+    "title": "アーカイブ移行（エクスポート/インポート）",
+    "hint": "アーカイブ全体を単一の .archivistpro ファイルにエクスポートし、別のマシンへ移動します。インポートは現在のアーカイブを完全に置き換えます（先に自動で安全バックアップを取得）。",
+    "export": "エクスポート",
+    "exporting": "エクスポート中…",
+    "import": "インポート",
+    "reading": "読み込み中…",
+    "file_type": "ArchivistPro アーカイブ",
+    "export_title": "アーカイブをエクスポート",
+    "import_title": "インポートするアーカイブを選択",
+    "export_done": "アーカイブをエクスポートしました：{{count, number}} 件 · {{size}}",
+    "export_failed": "エクスポートに失敗しました: {{message}}",
+    "peek_failed": "無効なアーカイブファイル: {{message}}",
+    "phase_preparing": "準備中…",
+    "phase_copying": "コピー中…",
+    "phase_writingManifest": "マニフェストを書き込み中…",
+    "phase_validating": "検証中…",
+    "phase_backingUp": "安全バックアップを取得中…",
+    "phase_restoring": "復元中…",
+    "phase_remapping": "パスを再マッピング中…",
+    "phase_verifying": "ファイルを検証中…",
+    "phase_done": "完了",
+    "modal_title": "アーカイブをインポート",
+    "preview": "アーカイブのプレビュー",
+    "source_host": "ソースマシン",
+    "created_at": "作成日時",
+    "asset_count": "項目数",
+    "schema_version": "スキーマバージョン",
+    "foreign_host": "このアーカイブは別のマシン（{{host}}）で作成されました。パスがこのマシンに一致しない場合があります。下で再マッピングしてください。",
+    "destructive_warning": "インポートは現在のアーカイブを完全に置き換えます。事前に自動で安全バックアップを取得します。失敗した場合はアーカイブが復元されます。",
+    "remap_title": "パスの再マッピング",
+    "remap_enabled": "パスを再マッピング",
+    "remap_enabled_hint": "オフにすると、パスはアーカイブのまま保持されます（ファイルが同じ場所にある場合に適しています）。",
+    "remap_all_under": "すべて1つのフォルダー配下に",
+    "remap_all_under_hint": "親フォルダーを選ぶと、各ソースルートがその配下に自身の名前でマッピングされます。",
+    "old_root": "旧ルート",
+    "root_count": "{{count, number}} 件",
+    "new_root_ph": "新しいルートフォルダー（空 → 変更なし）",
+    "browse": "参照",
+    "choose_target": "新しいルートフォルダーを選択",
+    "choose_parent": "親フォルダーを選択",
+    "no_roots": "ソースルート情報がありません。パスはアーカイブのままインポートされます。",
+    "cancel": "キャンセル",
+    "import_confirm": "現在のアーカイブは完全に置き換えられます（先に安全バックアップを取得）。インポートを続行しますか？",
+    "importing": "インポート中…",
+    "import_done": "インポート完了：{{count, number}} 件を取り込み · {{remapped, number}} 個のパスを再マッピング · {{found, number}}/{{checked, number}} ファイルを検出。",
+    "import_missing": "{{missing, number}} 件のファイルがこのマシンで見つかりませんでした。再マッピング設定を確認してください。",
+    "import_rolled_back": "インポートに失敗しました。アーカイブは保持されました（安全バックアップから復元）。",
+    "import_failed": "インポートに失敗しました: {{message}}",
+    "merge": "統合",
+    "merge_card": "統合",
+    "merge_modal_title": "アーカイブを統合",
+    "merge_additive_note": "このアーカイブの項目は現在のアーカイブに追加されます。ソースファイルは変更されず、既存の項目は保持されます。",
+    "merge_disposition": "重複コンテンツ",
+    "disp_skip": "重複をスキップ",
+    "disp_skip_hint": "同じコンテンツが既に存在する場合はスキップします（既定）。",
+    "disp_import_all": "すべてコピー",
+    "disp_import_all_hint": "重複も新しい ID で追加されます。同じファイルパスのみスキップされます。",
+    "merge_preview": "統合のプレビュー",
+    "merge_counts": "ソース：{{totalSource, number}} 件 · 重複 {{duplicateCount, number}} 件 · パス競合 {{pathCollisionCount, number}} 件",
+    "merge_phase_validating": "検証中…",
+    "merge_phase_backingUp": "安全バックアップを取得中…",
+    "merge_phase_merging": "統合中…",
+    "merge_phase_done": "完了",
+    "merge_confirm": "このアーカイブの項目が現在のアーカイブに追加されます（ソースは変更されません）。統合を続行しますか？",
+    "merge_done": "統合完了：{{merged, number}} 件を統合 · 重複 {{skippedDuplicate, number}} 件をスキップ · パス競合 {{skippedPathConflict, number}} 件 · タグ {{tagsReconciled, number}} 件 · コレクション {{collectionsReconciled, number}} 件を調整。",
+    "merge_failed": "統合に失敗しました: {{message}}",
+    "extract": "抽出",
+    "extract_card": "抽出",
+    "extract_modal_title": "フィルターしたアーカイブを抽出",
+    "extract_active_filter": "アクティブなフィルター（抽出するサブセット）",
+    "extract_no_filter": "フィルターなし — アーカイブ全体が抽出されます。",
+    "extract_count": "{{count, number}} 件を抽出します",
+    "extract_dest": "出力先ファイル",
+    "extract_choose_dest": "出力先の .archivistpro を選択",
+    "extract_mode": "ソースアーカイブ",
+    "extract_copy": "コピー（ソースは変更されません）",
+    "extract_copy_hint": "一致する項目は新しいアーカイブにコピーされます。現在のアーカイブはそのまま残ります。",
+    "extract_move": "移動（ソースからごみ箱へ）",
+    "extract_move_hint": "コピーが成功した後、抽出された項目はソースからごみ箱へ移動されます — 取り消し可能。",
+    "extract_move_confirm": "抽出された項目はソースアーカイブからごみ箱へ移動されます（コピー成功後。取り消し可能）。続行しますか？",
+    "extract_phase_preparing": "準備中…",
+    "extract_phase_copying": "コピー中…",
+    "extract_phase_pruning": "フィルター適用中…",
+    "extract_phase_removing": "ソース項目をごみ箱へ移動中…",
+    "extract_phase_done": "完了",
+    "extract_done": "{{extracted, number}} 件を抽出しました",
+    "extract_removed": "{{removed, number}} 件をソースからごみ箱へ移動しました",
+    "extract_failed": "抽出に失敗しました: {{message}}"
+  },
+  "roots": {
+    "title": "ソースフォルダー",
+    "open": "ソースフォルダーを管理",
+    "count": "{{count, number}} 個のフォルダー",
+    "tab_roots": "ソースフォルダー",
+    "tab_trash": "フォルダーごみ箱",
+    "loading": "読み込み中…",
+    "load_error": "ソースフォルダーを読み込めませんでした",
+    "empty": "ソースフォルダーがまだありません",
+    "empty_hint": "フォルダーをスキャンするか、「フォルダーを追加」で追加してください。",
+    "add_folder": "フォルダーを追加",
+    "added_toast": "フォルダーを追加しました",
+    "already_exists": "このフォルダーは既にリストにあります",
+    "rename": "ラベルを編集",
+    "last_scan": "最終スキャン: {{date}}",
+    "never_scanned": "未スキャン",
+    "never_scanned_hint": "— 内容はまだアーカイブに取り込まれていません",
+    "scan": "スキャン",
+    "scan_now_title": "今すぐスキャンしますか？",
+    "scan_now_message": "「{{label}}」をソースフォルダーとして追加しましたが、内容はまだスキャンされていません — ファイルはアーカイブに表示されません。今すぐスキャンしますか？（後からフォルダーカードの「スキャン」ボタンでも実行できます。）",
+    "file_count": "{{count, number}} 件のファイル",
+    "pending_count": "{{count, number}} 件がスキャン待ち",
+    "unreachable": "フォルダーにアクセスできません",
+    "unreachable_hint": "ドライブが接続されていないか、フォルダーが移動されています。スキャンはこのフォルダーを処理できません。「置換」モードでスキャンすると、ここの記録はゴミ箱に移動されます。",
+    "summary_pending": "{{roots, number}} 個のフォルダーがスキャン待ち — 合計 {{files, number}} 件",
+    "summary_unreachable": "{{count, number}} 個のフォルダーにアクセスできません",
+    "scan_all_pending": "スキャン待ちの {{count, number}} 個をスキャン…",
+    "group": "グループ",
+    "no_group": "グループなし",
+    "favorite": "お気に入りに追加",
+    "unfavorite": "お気に入りから削除",
+    "add_tag": "タグを追加…",
+    "remove_tag": "タグを削除",
+    "status_removed": "リストから除外",
+    "remove": "リストから除外",
+    "remove_confirm": "「{{label}}」をソースリストから除外しますか？ファイルは削除されません。ソースリストから外れるだけです。",
+    "removed_toast": "フォルダーをリストから除外しました",
+    "reactivate": "再有効化",
+    "reactivated_toast": "フォルダーを再有効化しました",
+    "trash_action": "ごみ箱へ移動",
+    "trash_confirm": "「{{label}}」をごみ箱へ移動しますか？配下の {{count, number}} 件のファイルもごみ箱へ移動し非表示になります。（元に戻せます。）",
+    "trashed_toast": "{{count, number}} 件のファイルをごみ箱へ移動しました",
+    "watch_off": "監視されていません",
+    "watch_off_folder_missing": "見つからないか、アクセスできません — 削除・移動・名前変更された可能性、またはネットワーク／外付けドライブが未接続の可能性があります。ここでの変更はインデックスに入りません。",
+    "watch_off_permission": "アクセスが拒否されました — フォルダーの権限を確認してください。ここでの変更はインデックスに入りません。",
+    "watch_off_watch_limit": "OS の監視上限に達しました — 上限を引き上げるか、監視するルートを減らしてください。",
+    "watch_off_forbidden": "監視の開始には管理者権限が必要です。",
+    "watch_off_other": "監視を開始できませんでした — 技術的な詳細はバッジにカーソルを合わせてください。",
+    "watch_retry": "再試行",
+    "watch_retry_ok": "「{{label}}」の監視を再開しました。",
+    "watch_retry_failed": "監視を開始できませんでした：{{reason}}",
+    "groups": {
+      "title": "グループ",
+      "all": "すべてのフォルダー",
+      "ungrouped": "グループなし",
+      "new": "新規グループ",
+      "name_placeholder": "グループ名",
+      "create": "作成",
+      "created_toast": "グループを作成しました",
+      "rename": "グループ名を変更",
+      "save": "保存",
+      "cancel": "キャンセル",
+      "delete": "削除",
+      "delete_confirm": "グループ「{{name}}」を削除しますか？フォルダーは残り、グループの割り当てのみ解除されます。",
+      "deleted_toast": "グループを削除しました",
+      "empty": "グループがまだありません"
+    },
+    "trash": {
+      "empty": "フォルダーごみ箱は空です",
+      "restore": "復元",
+      "restored_toast": "{{count, number}} 件のファイルを復元しました",
+      "purge": "完全に削除",
+      "purge_confirm": "フォルダー「{{label}}」と配下の {{count, number}} 件のファイルが完全に削除されます。元に戻せません。続行しますか？",
+      "purged_toast": "{{count, number}} 件のファイルを完全に削除しました",
+      "deleted_at": "ごみ箱へ移動: {{date}}"
+    }
+  },
+  "exit": {
+    "reload_disabled": "再読み込みは無効です — 進行中の作業を失わないためです。",
+    "confirm_title": "アプリケーションを終了しますか？",
+    "confirm_message": "進行中のスキャンやインデックス作成は中断されます。終了しますか？",
+    "confirm_quit": "終了",
+    "quit_failed": "アプリケーションを終了できませんでした。もう一度お試しください。"
+  },
+  "lock": {
+    "title": "セッションがロックされました",
+    "subtitle": "続行するには {{username}} のパスワードを入力してください。",
+    "unlock": "ロック解除",
+    "switch_user": "ユーザーを切り替え",
+    "wrong_password": "パスワードが正しくありません。",
+    "warning_title": "まもなくロックされます",
+    "warning_message": "操作がないため {{seconds}} 秒後にロックされます。",
+    "extend": "ログインを維持",
+    "lock_now": "今すぐロック"
+  },
+  "tag_manager": {
+    "open": "タグを管理",
+    "title": "タグを管理",
+    "hint": "これらの操作はタグ自体を変更し、すべてのファイルに同時に影響します。個別のファイルからタグを外すには詳細パネルを使用してください。",
+    "empty": "ユーザータグはまだありません。",
+    "rename": "名前を変更",
+    "delete": "削除",
+    "renamed": "タグの名前を変更しました: \"{{old}}\" → \"{{new}}\"",
+    "rename_failed": "名前を変更できませんでした: {{message}}",
+    "deleted": "タグ \"{{name}}\" を削除しました（{{count, number}} 件のファイルから除去）。「元に戻す」で復元できます。",
+    "delete_failed": "タグを削除できませんでした: {{message}}",
+    "delete_confirm_title": "タグ \"{{name}}\" を削除しますか？",
+    "delete_confirm_message": "このタグは {{count, number}} 件のファイルから除去されます。ファイル自体は変更されず、操作は元に戻せます。"
   }
 }

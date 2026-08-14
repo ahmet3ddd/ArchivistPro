@@ -1,0 +1,75 @@
+# Arsiv-H3 — Cargo workspace (cok-crate).
+# Neden workspace: H2'nin tek dev `app` crate'i 6.23 GB rlib uretip rustc'nin
+# 4 GB metadata sinirini asarak release build'i cokertiyordu. Workspace bunu
+# yapisal cozer (paralel derleme + zorunlu modul siniri). Bkz docs/ARCHITECTURE.md.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/archivist-db",
+    "crates/archivist-extract",
+    "crates/archivist-thumbnail",
+    "crates/archivist-extract-text",
+    "crates/archivist-extract-image",
+    "crates/archivist-extract-cad",
+    "crates/archivist-ingest",
+    "crates/archivist-embed",
+    "crates/archivist-server",
+    "crates/archivist-h2import",
+    "src-tauri",
+]
+
+[workspace.package]
+edition = "2021"
+license = "Proprietary"
+authors = ["Ahmet Candoken"]
+rust-version = "1.88"
+
+# Dev-build hizi: bagimliliklari (ve dep olan is-crate'lerimizi) dev profilinde de OPTIMIZE et.
+# NEDEN: `tauri dev` uygulamayi DEBUG derler; CPU-yogun gorsel isleri (JPEG decode, phash DCT,
+# resize/k-means) optimizesiz 20-30x yavas → buyuk-gorselli klasor ingest'i DAKIKALAR surer.
+# OLCULDU (4134x7677 = 31.7MP JPEG): debug 29.9s/dosya vs release 1.15s/dosya. opt-level=2 bunlari
+# release-hizina getirir. Rust fast-math KULLANMAZ → float sonuclari BIREBIR AYNI (phash/dedup
+# DEGISMEZ, yalniz hiz). Ust-crate (archivist bin) opt-level 0 kalir (debug-edilebilir). Bedel:
+# ilk derleme BIR KEZ uzar (deps opt ile yeniden derlenir; sonra cache'lenir).
+[profile.dev.package."*"]
+opt-level = 2
+
+# Tum workspace'te paylasilan bagimliliklar — tek noktadan surum yonetimi.
+[workspace.dependencies]
+# `limits`: SQLite calisma-zamani sinirlarini okuma/degistirme (`SQLITE_LIMIT_VARIABLE_NUMBER`).
+# Yalniz TEST'te kullanilir — oto-proje atamasinin id-parcalamasi, siniri gecici olarak dusurup
+# gercek 33 binlik veri uretmeden dogrulanabilsin diye (aksi halde tek test 6 dk suruyordu).
+rusqlite = { version = "0.32", features = ["bundled", "functions", "backup", "limits"] }
+sqlite-vec = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+# Faz 2 cikarim aile-crate bagimliliklari (H2'de kanitlanmis surumler).
+pdf-extract = "0.10"
+cfb = "0.14"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+encoding_rs = "0.8"
+quick-xml = "0.39"
+tempfile = "3"
+image = { version = "0.24", default-features = false, features = ["jpeg", "png", "bmp", "tiff", "tga", "pnm", "gif"] }
+kamadak-exif = "0.5"
+winreg = "0.55"
+base64 = "0.22"
+archivist-db = { path = "crates/archivist-db" }
+archivist-extract = { path = "crates/archivist-extract" }
+archivist-thumbnail = { path = "crates/archivist-thumbnail" }
+archivist-extract-text = { path = "crates/archivist-extract-text" }
+archivist-extract-image = { path = "crates/archivist-extract-image" }
+archivist-extract-cad = { path = "crates/archivist-extract-cad" }
+archivist-ingest = { path = "crates/archivist-ingest" }
+archivist-embed = { path = "crates/archivist-embed" }
+archivist-server = { path = "crates/archivist-server" }
+archivist-h2import = { path = "crates/archivist-h2import" }
+# İngest: fixity-hash + ozyineli tarama.
+blake3 = "1"
+walkdir = "2"
+# LAN sunucu (S1-S2 salt-okuma dagitim/bildirim) — H2 lan_server.rs kanitli iskeleti (senkron
+# tiny_http, tokio'suz; H3'un senkron rusqlite/komut modeliyle uyumlu). getrandom = 8-hane auth kodu.
+tiny_http = "0.12"
+getrandom = "0.2"

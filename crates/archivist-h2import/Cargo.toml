@@ -1,0 +1,28 @@
+# archivist-h2import — H2 (ArchivistPro ≤3.2.2) veritabanindan H3'e KAYIPSIZ veri aktarimi.
+#
+# Neden ayri crate: (1) workspace ilkesi — H2-okuma yeni bir is alani, archivist-db'nin
+# H3-sema katmanina yabanci-sema endisesi sokulmaz; (2) saf rusqlite (H2 sql.js dosyalari
+# standart SQLite'tir, WASM gerekmez) → Tauri'siz hizli fixture testleri (test-first).
+# Komut katmani ince kabuk olarak src-tauri/src/h2_import_commands.rs'te yasar
+# (archive_share.rs + archive_share_commands.rs ayrimiyla ayni desen).
+[package]
+name = "archivist-h2import"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+archivist-db = { workspace = true }
+rusqlite = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+base64 = { workspace = true }
+# H2 inline thumbnail'ini (data:image/...;base64) dogrulayip boyutunu okumak icin —
+# bozuk gorsel baytlari asset_thumbnails'a SIZMASIN (UI kirilir), gecersizse atla+rapor.
+image = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

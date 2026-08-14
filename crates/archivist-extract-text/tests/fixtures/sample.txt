@@ -1,0 +1,3 @@
+Arsiv-H3 ornek metin dosyasi.
+Bu dosya golden-file testi icin kullanilir.
+Mimari arsiv yonetimi.

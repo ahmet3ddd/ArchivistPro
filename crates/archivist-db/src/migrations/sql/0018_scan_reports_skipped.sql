@@ -1,0 +1,11 @@
+-- 0018: scan_reports.skipped_reasons — walker seviyesinde ATLANAN girdiler (④-C atlanan-sebep).
+--
+-- 0017'deki type_counts/warnings/errors JSON kolonlari doluydu; `skipped` yalniz bir SAYI idi
+-- (degismemis dosyalar). Bu kolon, tarama sirasinda WALKER seviyesinde atlanan (indekslenMEYEN)
+-- girdileri sebebiyle saklar → "Tarama Raporlari" paneli "atlanan" bolumu.
+--
+--   skipped_reasons : [[path, code], ...]   (code = "hidden" | "unreadable" | "symlink";
+--                                             frontend'de yerellestirilir: ingest.skipReason.<code>)
+--
+-- DEFAULT '[]': mevcut (0017 doneminden kalan) satirlar gecerli bos JSON dizisi alir (geriye-uyum).
+ALTER TABLE scan_reports ADD COLUMN skipped_reasons TEXT NOT NULL DEFAULT '[]';

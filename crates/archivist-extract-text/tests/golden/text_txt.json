@@ -1,0 +1,12 @@
+{
+  "text": "Arsiv-H3 ornek metin dosyasi.\nBu dosya golden-file testi icin kullanilir.\nMimari arsiv yonetimi.\n",
+  "fields": {
+    "char_count": 97,
+    "encoding_hint": "UTF-8",
+    "has_bom": false,
+    "is_utf8": true,
+    "line_count": 3,
+    "preview": "Arsiv-H3 ornek metin dosyasi.\nBu dosya golden-file testi icin kullanilir.\nMimari arsiv yonetimi.",
+    "word_count": 13
+  }
+}

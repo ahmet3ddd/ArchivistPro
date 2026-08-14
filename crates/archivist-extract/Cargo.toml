@@ -1,0 +1,15 @@
+[package]
+name = "archivist-extract"
+version = "0.1.0"
+description = "Arsiv-H3 cikarim cekirdegi — Extractor trait, plugin/registry, ortak Extracted cikti sozlesmesi (sifir agir bagimlilik)."
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# Cekirdek KASTEN hafif: yalniz veri-sozlesme + hata + golden JSON.
+# Agir parse bagimliliklari (image, cfb, zip, pdf-extract...) aile crate'lerinde.
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

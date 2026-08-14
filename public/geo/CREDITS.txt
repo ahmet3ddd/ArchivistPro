@@ -1,0 +1,2 @@
+countries-50m.json
+  Natural Earth country boundaries (public domain), sourced via world-atlas.

@@ -1,24 +1,41 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import tr from './locales/tr.json';
-import en from './locales/en.json';
-import zh from './locales/zh.json';
-import ja from './locales/ja.json';
-import ar from './locales/ar.json';
+// i18n kurulumu — 5 dil (tr varsayilan · en · zh · ja · ar) + RTL.
+// Kullanici-gorunur metin `t('anahtar')` ile. Dil secimi localStorage'da kalici;
+// dil degisince <html> dir/lang guncellenir (ar → rtl). (H2 pariti: 5 dil + RTL.)
 
-/** RTL dilleri — document.dir ayarı için */
-export const RTL_LANGUAGES = new Set(['ar']);
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-/** Dil değiştirince hem i18n hem de document dir/lang güncellenir */
-export function applyLanguage(lng: string): void {
-  const dir = RTL_LANGUAGES.has(lng) ? 'rtl' : 'ltr';
-  document.documentElement.dir = dir;
-  document.documentElement.lang = lng;
+import ar from "./locales/ar.json";
+import en from "./locales/en.json";
+import ja from "./locales/ja.json";
+import tr from "./locales/tr.json";
+import zh from "./locales/zh.json";
+
+export const SUPPORTED_LANGS = ["tr", "en", "zh", "ja", "ar"] as const;
+export type Lang = (typeof SUPPORTED_LANGS)[number];
+
+const STORAGE_KEY = "archivist_language";
+
+function initialLang(): Lang {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && (SUPPORTED_LANGS as readonly string[]).includes(saved)) {
+      return saved as Lang;
+    }
+  } catch {
+    // localStorage erisilemez → varsayilana dus.
+  }
+  return "tr";
 }
 
-const savedLng = (typeof localStorage !== 'undefined' && localStorage.getItem('archivist_language')) || 'tr';
+// <html lang> + <html dir> guncelle. i18n.dir() RTL dilleri (ar/he/fa...) icin "rtl" doner.
+function applyDocumentLang(lng: string): void {
+  const root = document.documentElement;
+  root.setAttribute("lang", lng);
+  root.setAttribute("dir", i18n.dir(lng));
+}
 
-i18n.use(initReactI18next).init({
+void i18n.use(initReactI18next).init({
   resources: {
     tr: { translation: tr },
     en: { translation: en },
@@ -26,12 +43,23 @@ i18n.use(initReactI18next).init({
     ja: { translation: ja },
     ar: { translation: ar },
   },
-  lng: savedLng,
-  fallbackLng: 'tr',
-  interpolation: { escapeValue: false },
+  lng: initialLang(),
+  fallbackLng: "en",
+  supportedLngs: [...SUPPORTED_LANGS],
+  interpolation: { escapeValue: false }, // React zaten kacis yapar
 });
 
-// Başlangıçta kaydedilmiş dile göre dir/lang ayarla
-applyLanguage(savedLng);
+// Dil degisince: secimi kalici yap + <html> dir/lang guncelle.
+i18n.on("languageChanged", (lng) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, lng);
+  } catch {
+    // kalicilik kritik degil — sessizce gec.
+  }
+  applyDocumentLang(lng);
+});
+
+// Ilk yuklemede mevcut dili uygula (init sonrasi dogru dir/lang).
+applyDocumentLang(i18n.language);
 
 export default i18n;

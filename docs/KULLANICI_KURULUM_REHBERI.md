@@ -1,139 +1,40 @@
-# ArchivistPro — Son Kullanıcı Kurulum Rehberi
+# ArchivistPro — Kurulum Rehberi
 
-**Sürüm:** 2.2.1 | **Platform:** Windows 10/11 (64-bit)
+> **Sürüm:** 3.3.3 · **Güncelleme:** 2026-08-14 · **Platform:** Windows 10/11 (64-bit)
+>
+> Diğer diller: [English](KULLANICI_KURULUM_REHBERI_EN.md) · [العربية](KULLANICI_KURULUM_REHBERI_AR.md) · [日本語](KULLANICI_KURULUM_REHBERI_JA.md) · [中文](KULLANICI_KURULUM_REHBERI_ZH.md)
 
----
-
-## 1. Sistem Gereksinimleri
-
-| Gereksinim | Minimum | Önerilen |
-|---|---|---|
-| İşletim Sistemi | Windows 10 (64-bit) | Windows 11 (64-bit) |
-| RAM | 4 GB | 8 GB+ |
-| Disk Alanı | 2 GB boş alan | 5 GB+ |
-| İşlemci | x64 uyumlu herhangi bir CPU | 4+ çekirdek |
-
-> Node.js, Rust veya başka bir geliştirici aracı **gerekmez** — yalnızca Windows kurulumu yeterlidir.
+Bu sayfa hızlı özettir. Adım adım ekran anlatımı isterseniz:
+**[Yeni başlayanlar için rehber](KULLANICI_KURULUM_ACEMI.md)** ·
+**[Sistem yöneticileri için rehber](KULLANICI_KURULUM_PRO.md)**
 
 ---
 
-## 2. Kurulum Dosyasını İndirin
+## Hızlı kurulum (5 adım)
 
-- GitHub Releases sayfasına gidin: `https://github.com/ahmet3ddd/ArchivistPro/releases/latest`
-- **`ArchivistPro_*_x64_en-US.msi`** (MSI, önerilen) veya **`ArchivistPro_*_x64-setup.exe`** (EXE) dosyasını indirin.
+1. **İndirin:** [Releases sayfasından](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
+   **`ArchivistPro_3.3.3_x64-setup.exe`** dosyasını indirin (önerilen kurucu budur;
+   MSI, makine düzeyine *ayrı* bir kopya kurar — yalnız bilinçli tercihse kullanın).
+2. **Kurun:** İndirilen dosyayı çalıştırın. Windows SmartScreen uyarısı çıkarsa
+   **"Ek bilgi → Yine de çalıştır"** deyin (paket kod imzasızdır, bu uyarı normaldir).
+3. **İlk açılış:** "İlk kurulum" ekranında ilk yönetici (admin) hesabınızı oluşturun,
+   sonra bu hesapla giriş yapın.
+4. **Arşivinizi kurun:** **Kaynak Klasörler → Klasör ekle** ile proje klasörünüzü
+   gösterin ve **Tara** deyin. Dosyalarınız yerinden taşınmaz; program yalnız
+   indeksler (DWG, MAX, IFC, RVT, SKP, PDF dahil 95+ format tanınır).
+5. **Eski sürümden mi geliyorsunuz?** ArchivistPro 3.2.2 (eski nesil) kuruluysa
+   3.3.3 **yan yana** kurulur. Eski sürümü **kaldırmayın**; verinizi
+   **Ayarlar → Genel → "Önceki sürüm bulundu"** kartındaki aktarma sihirbazıyla taşıyın.
 
-> `.sig` uzantılı dosyaları indirmenize gerek yoktur; bunlar otomatik güncelleme doğrulaması içindir.
-
----
-
-## 3. Kurulumu Çalıştırın
-
-1. İndirilen `.msi` veya `.exe` dosyasına çift tıklayın.
-2. Windows'un "Bu uygulamanın PC'nizde değişiklik yapmasına izin vermek istiyor musunuz?" sorusuna **Evet** deyin.
-3. Sihirbazı takip ederek **İleri → Yükle → Son** adımlarını tamamlayın.
-4. Kurulum tamamlandığında ArchivistPro masaüstü kısayolundan veya Başlat menüsünden açılır.
-
-> **SmartScreen uyarısı alırsanız:** "Daha fazla bilgi" → "Yine de çalıştır" seçeneğine tıklayın. Bu uyarı kod imzalama sertifikası henüz aktif olmadığı için görünmektedir; uygulama güvenlidir.
-
----
-
-## 4. İlk Çalıştırma — Kurulum Sihirbazı (5 Adım)
-
-Uygulama ilk kez açıldığında **tek seferlik** bir kurulum sihirbazı çalışır (~5 dakika).
-
-### Adım 1 — Dil & Sistem Kontrolü
-- Arayüz dilini seçin: **Türkçe** veya **English**.
-- Uygulama donanımınızı ve Windows sürümünüzü otomatik olarak kontrol eder.
-
-### Adım 2 — Donanım Tespiti
-- CPU, RAM ve performans ölçümü yapılarak AI için uygun donanım seviyesi belirlenir.
-- Belirlenen seviyeyi (Düşük / Orta / Yüksek) kendiniz de değiştirebilirsiniz.
-
-### Adım 3 — AI Kurulumu *(isteğe bağlı)*
-- Bilgisayarınızda **Ollama** çalışıyorsa otomatik tespit edilir ve yerel AI etkinleştirilir.
-- Ollama yüklü değilse bu adımı atlayabilirsiniz; AI özellikleri olmadan uygulama tam çalışır.
-
-### Adım 4 — DWG Desteği *(isteğe bağlı)*
-- **ODA FileConverter** kuruluysa otomatik tespit edilir ve gelişmiş DWG önizlemesi etkinleştirilir.
-- Kurulu değilse sihirbaz üzerinden tek tıkla kurabilir ya da bu adımı atlayabilirsiniz.
-
-### Adım 5 — Özet & Hazır
-- Seçilen ayarların özeti gösterilir; her şey doğruysa **Başla** düğmesine tıklayın.
+**AI özellikleri (isteğe bağlı):** Arama, tarama ve önizleme AI'sız tam çalışır.
+Anlamsal/görsel arama ve sohbet isterseniz **Ayarlar → AI → AI Kurulum Sihirbazı**'nı
+kullanın (ayrıntı: [acemi rehberi §8](KULLANICI_KURULUM_ACEMI.md) ve
+[pro rehberi](KULLANICI_KURULUM_PRO.md)).
 
 ---
 
-## 5. İlk Giriş — Yönetici Hesabı Oluşturma
+## Bağlantılar
 
-Sihirbazdan sonra, kullanıcı veritabanı boş olduğu için **ilk yönetici hesabı** oluşturma ekranı açılır.
-
-1. Bir **kullanıcı adı** girin.
-2. Bir **şifre** belirleyin (en az 6 karakter).
-3. Şifreyi onaylayın ve **Hesabı Oluştur** düğmesine tıklayın.
-4. Oluşturulan kimlik bilgileriyle giriş yapın.
-
-> Şifrenizi unutmanız durumunda kurtarma anahtarı otomatik olarak şu konuma kaydedilir:
-> `C:\Users\<KullanıcıAdı>\AppData\Roaming\com.archivistpro.desktop\recovery.key`
-
----
-
-## 6. İlk Kullanım — Klasör Tarama
-
-Giriş yaptıktan sonra uygulamayı kullanmaya hazırsınız:
-
-1. Sol paneldeki **Tara** düğmesine tıklayın.
-2. Arşivlemek istediğiniz klasörü seçin (DWG, RVT, MAX, IFC, PDF vb. içeren).
-3. Tarama tamamlandığında dosyalar otomatik olarak dizine eklenir ve önizlemeler oluşturulur.
-
----
-
-## 7. İsteğe Bağlı: Ollama Kurulumu (AI Özellikleri)
-
-AI destekli arama ve OCR özelliklerini kullanmak istiyorsanız:
-
-1. `https://ollama.com` adresinden Ollama'yı indirin ve kurun.
-2. Komut satırını açın ve bir görüntü modeli yükleyin:
-   ```
-   ollama pull llava
-   ```
-3. Ollama arka planda çalışırken ArchivistPro'yu yeniden başlatın; AI özellikleri otomatik aktif olur.
-
-> Ollama kurulu olmadan uygulama **tam işlevsel** çalışmaya devam eder; yalnızca LLM tabanlı arama ve OCR devre dışı kalır.
-
-> **Not:** Görsel benzerlik araması (CLIP) ek kurulum gerektirmez. İlk taramada AI modeli (~87 MB) otomatik indirilir ve sonraki kullanımlarda önbellekten yüklenir. Bu özellik Ollama'dan bağımsız çalışır.
-
----
-
-## 8. İsteğe Bağlı: ODA FileConverter Kurulumu (Gelişmiş DWG)
-
-DWG dosyalarından daha kaliteli önizleme ve metadata almak istiyorsanız:
-
-1. `https://dl.opendesign.com` adresinden ODA FileConverter'ı indirin.
-2. İndirilen kurulum dosyasını çalıştırın ve tamamlayın.
-3. ArchivistPro'yu yeniden başlatın; DWG desteği otomatik tespit edilir.
-
-> Bu adım tamamen isteğe bağlıdır; ArchivistPro yerleşik DWG okuyucusuyla da çalışır.
-
----
-
-## 9. Otomatik Güncellemeler
-
-- Yeni bir sürüm yayınlandığında uygulama sizi bildirim ile uyarır.
-- **Ayarlar → Güncellemeler** bölümünden güncel sürümü manuel olarak da kontrol edebilirsiniz.
-- Güncelleme indirildikten sonra uygulamayı yeniden başlatmanız yeterlidir.
-
----
-
-## 10. Sorun Giderme
-
-| Sorun | Çözüm |
-|---|---|
-| Uygulama açılmıyor | Antivirüs yazılımının ArchivistPro'yu engellediğini kontrol edin; gerekirse istisna ekleyin. |
-| SmartScreen uyarısı | "Daha fazla bilgi" → "Yine de çalıştır" seçeneğini kullanın. |
-| DWG önizlemesi yok | ODA FileConverter kurulumunu kontrol edin (Adım 8). |
-| AI özellikleri çalışmıyor | Ollama'nın arka planda çalıştığından emin olun (`ollama serve`). |
-| Şifremi unuttum | `%APPDATA%\com.archivistpro.desktop\recovery.key` dosyasını kullanın. |
-| Tarama çok yavaş | Tarama sırasında diğer ağır programları kapatın; RAM artırımı performansı iyileştirir. |
-
----
-
-*Geliştirici belgelerine ulaşmak için `docs/DEVELOPER_GUIDE.md` dosyasına bakın.*
+- Sürüm notları: [CHANGELOG](../CHANGELOG.md)
+- Sorun bildirme: [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
+- Yol haritası: [ROADMAP](ROADMAP.md)

@@ -1,252 +1,155 @@
-# ArchivistPro — Installation Guide (For Beginners)
+# ArchivistPro — Installation Guide for Beginners
 
-> **Version:** 3.0.0 | **Date:** 2026-05-23 | **Platform:** Windows 10/11 (64-bit)
+> **Version:** 3.3.3 · **Updated:** 2026-08-14 · **Platform:** Windows 10/11 (64-bit)
 >
-> This guide is for you if this is your first time installing a program
-> on your computer or if you have limited installation experience. Each
-> step is shown with a screenshot; no jargon, no assumed knowledge.
->
-> For a more concise / technical summary, see
-> **[Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_EN.md)**.
+> This guide is written step by step for people who don't install software often.
+> For a shorter, technical summary see the **[system administrator's guide](INSTALL_PRO_EN.md)**.
 
----
+## 1. What is ArchivistPro?
 
-## 1. Preparation
+A **fully offline** desktop archive manager for architecture and design archives.
+It scans your project folders and gives you search by file name and content,
+previews, duplicate finding and (optionally) AI-assisted search.
+**Your files stay where they are** — the app never moves, copies or uploads them.
 
-### 1.1. Is your computer ready?
+## 2. Before you start — requirements
 
-Before installing ArchivistPro, check whether your computer meets these
-requirements. Most modern PCs comfortably exceed them.
+| Requirement | Status |
+|---|---|
+| Windows 10 or 11 (64-bit) | Required |
+| WebView2 Runtime | Usually already present on up-to-date Windows; the installer fetches it if missing |
+| Internet | Only for downloading; the app itself works offline |
+| Administrator rights | **Not needed** — the app installs into your user account |
 
-| Requirement | Minimum | Recommended |
-|---|---|---|
-| Operating System | Windows 10 (64-bit) | Windows 11 (64-bit) |
-| RAM (memory) | 4 GB | 8 GB or more |
-| Free disk space | 2 GB | 5 GB or more |
-| Processor (CPU) | x64 architecture (most Intel / AMD) | 4 cores or more |
-| Display | 1366×768 pixels | 1920×1080 or higher |
+## 3. Download
 
-> **How do I check my computer's specs?**
->
-> 1. Press `Windows key + R` together.
-> 2. In the small dialog, type `msinfo32` and click **OK**.
-> 3. Under "System Summary" you will see the OS, processor, and RAM.
-
-### 1.2. Administrator rights
-
-To install the program you must be logged in to Windows as an
-**administrator**. If you use a company computer and see "administrator
-permission required", contact your IT department.
-
-### 1.3. Internet connection
-
-Internet is needed **only to download the installer**. Once installed,
-ArchivistPro **runs offline** — your files are never sent outside your
-computer.
-
----
-
-## 2. Download the Installer
-
-1. Open your web browser (Chrome, Edge, Firefox).
-2. Go to:
+1. Open this address in your browser:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
-3. Under "**Assets**" you see the files. Download **one** of these:
+2. Under **Assets**, download:
    - **`ArchivistPro_3.3.3_x64-setup.exe`** ← Recommended
-   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternative
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternative (installs a **separate**
+     machine-level copy; use only if you know why you want it)
+3. The file usually lands in your **Downloads** folder.
 
-> **MSI vs EXE:** Both install the same program. MSI is more common and
-> easier to manage on company computers. Either is fine.
+> 💡 To verify the download you can compare its SHA-256 hash with the table on
+> the release page (optional).
 
-> **If your browser warns you:** A message like "This file is rarely
-> downloaded; are you sure?" may appear. Click **Keep** or **Allow** to
-> continue.
+## 4. Install
 
----
+1. Double-click **`ArchivistPro_3.3.3_x64-setup.exe`**.
+2. Windows **SmartScreen** may show a blue warning ("Windows protected your PC").
+   This happens because the package is not code-signed and is expected:
+   click **"More info"**, then **"Run anyway"**.
+3. Follow the setup wizard (the defaults are fine).
+4. Installation finishes in seconds and you can start the app.
 
-## 3. Run the Installer
+> ℹ️ When the app opens you'll see the version number (**v3.3.3**) next to the
+> title in the top-left corner — a quick way to confirm you installed the right
+> version.
 
-1. **Double-click** the file you downloaded (`ArchivistPro_3.3.3_x64-setup.exe`).
-   Usually it's in your **Downloads** folder.
-2. Windows may ask: "*Do you want to allow this app to make changes to
-   your device?*" → choose **Yes**.
-3. In the installer window:
-   - Click **Next**
-   - Read and accept the license, then **Next**
-   - Leave the install location at the default
-     (`C:\Program Files\ArchivistPro\`) and click **Next**
-   - Click **Install**
-4. Wait a few seconds. When "Setup complete" appears, click **Finish**.
+## 5. First launch
 
-> **If you see a SmartScreen warning:** A blue screen titled "Windows
-> protected your PC" may appear. This is because the application is in
-> the code-signing process. Do this:
->
-> 1. Click "**More info**".
-> 2. Click "**Run anyway**".
+1. On first launch you'll see the **"Initial setup"** screen: *"Create the first
+   administrator (admin) account."* Pick a username and a password (at least 6
+   characters) and click **"Create account"**.
+   > ⚠️ Write this password down — it is stored only on this computer; there is
+   > **no** "forgot my password" email.
+2. **Sign in** with the account you just created.
+3. A short welcome tour appears. Take the 30-second tour with **Start** or click
+   **"Skip tour"** — you can reopen it later from Settings ("Show guide").
 
-After installation, an **ArchivistPro** shortcut appears on your
-desktop. You can also open it from the Start menu.
+## 6. Set up your archive: add a folder and scan
 
----
+1. Open **Source Folders** from the left rail.
+2. Click **"Add folder"** and choose the folder that holds your projects
+   (e.g. `D:\Projects`).
+3. The app asks **"Scan now?"** — click **Scan**.
+   - If **"Auto-assign projects from folders"** is enabled in the scan options,
+     first-level folder names under the root become project names (recommended).
+4. Scan time depends on archive size (tens of thousands of files → minutes;
+   ~100k files → on the order of half an hour). A scan report appears when done.
+5. Subsequent scans are **much faster**: unchanged files are skipped.
 
-## 4. First Launch — Setup Wizard
+What gets scanned? **All your files** are archived (except hidden and system
+files, which the report lists as "skipped"). **95+ formats** — including DWG,
+MAX, IFC, RVT, SKP, PDF, Office and image/video files — are specially
+recognized: content text, previews and technical metadata are extracted.
 
-When you first open the program, a **5-step setup wizard** greets you.
-It only shows up once. Roughly 3-5 minutes.
+## 7. Coming from the legacy version (3.2.2)?
 
-### Step 1 — Language & System Check
+ArchivistPro 3.2.2 and earlier is the **legacy generation**; 3.3.3 does not
+replace it in place — it installs **side by side**. Your data is safe; migrate
+like this:
 
-- Choose the interface language: **English** (you can change it any
-  time from **Settings**).
-- The program automatically checks your hardware. If there are no
-  errors, click **Next**.
+1. ⚠️ **Do NOT uninstall** the old version or delete its data (until the import
+   is done and verified).
+2. In the new app open **Settings → General**; you'll see the **"Previous
+   version found"** card.
+3. Click **"Import data from previous version"**. The wizard lists the archive
+   files it found — your real archive is usually the one labeled **'main'** and
+   the largest.
+4. First run **"Dry run (writes nothing)"**: it shows exactly what would happen.
+5. Click **"Import"**. An automatic backup is taken first; if the process is
+   interrupted, running it again is safe.
+   - **Migrated:** file records, AI analyses, tags, favorites, collections, folders.
+   - **Not migrated:** user passwords (recreate accounts in the new app) and
+     chat history.
+6. After the import, **re-scan your folders** — high-quality previews and content
+   text are produced by scanning; migrated tags and AI analyses are preserved.
 
-### Step 2 — Hardware Detection
+> ℹ️ The card does not disappear after the import (the source data is never
+> deleted) — it now shows a **"Last import: …"** line. This does not mean the
+> import didn't run.
 
-- The program inspects your processor and memory, and determines your
-  performance level:
-  - **Low** — for slower computers, with limited AI features
-  - **Medium** — a good balance for daily use (recommended)
-  - **High** — for fast computers, with all AI features
-- Leaving the program's recommendation is usually correct. Click
-  **Next**.
+## 8. AI features (optional)
 
-### Step 3 — AI Setup (Optional)
+The app is fully functional without AI: scanning, name/content search, previews
+and the duplicate finder all work. Set up AI if you also want:
 
-For the **AI Chat** feature, ArchivistPro needs AI support. You have
-3 options here:
+- **Semantic search** (free-form queries like "timber facade detail") and
+  **Visual Search**
+- **Chat** (ask questions about your archive) and **vision analysis** (AI tags
+  your images)
 
-| Option | Advantage | Disadvantage |
-|---|---|---|
-| **Local AI (Ollama)** | Fully offline, private; data stays put | Need to install Ollama separately |
-| **Cloud AI** | Fast, no install | Internet required, API key needed |
-| **Skip** | Easiest | AI features will not work |
+Setup: **Settings → AI → AI Setup Wizard**
 
-Tip: choose **Local AI**. The wizard sends you to
-[ollama.com](https://ollama.com/download); download and install Ollama,
-then return to ArchivistPro and click **"Check Again"**.
+1. **Search models:** imported from a folder (fully offline).
+2. **Chat & vision (optional):** requires the free [Ollama](https://ollama.com)
+   app. Without Ollama, search still works; only chat and vision stay off.
+3. Afterwards, **Settings → AI → Setup check** shows your GPU/Ollama/model
+   status.
 
-If you want to skip AI for now, choose **Skip**. You can enable it
-later from **Settings > AI**.
+> 💡 An NVIDIA GPU speeds AI up but is not required. If you have one, keep its
+> driver up to date.
 
-### Step 4 — DWG Support (Optional)
+## 9. Frequently asked questions
 
-If your archive contains DWG (AutoCAD drawing) files, you should
-install a small helper called **ODA File Converter**. It lets
-ArchivistPro understand the contents of DWG files (layers, blocks,
-text).
+**Are my files copied or moved?**
+No. The app only builds an index; your files stay in place. Removing a folder
+from the list doesn't delete files either.
 
-- If ODA is detected, it's automatic → **Next**.
-- If not, click "**Download & Install**", or skip this step.
+**Do I need internet?**
+No. Only for downloading (and optionally installing Ollama); daily use is fully
+offline. None of your data is sent anywhere.
 
-### Step 5 — Summary & Ready
+**How do I update?**
+Download and run the new version's `setup.exe` — it upgrades your 3.3.x install
+in place; your data is preserved.
 
-A summary of your choices is shown. If everything looks correct, click
-**Start**.
+**If I uninstall, is my archive deleted?**
+No. The archive database stays on disk; reinstalling picks up where you left off.
 
----
+**I forgot my password — what now?**
+Another admin account can reset it. If you are the only admin and the password
+is lost, there is no recovery — keep your password somewhere safe.
 
-## 5. Create Your Admin Account
+## 10. Help
 
-After the wizard you see the **Admin account creation** screen. **You
-create this account** — there is no preset username/password in the
-program.
-
-1. **Username** — Choose a username (e.g., "ahmet" or "boss").
-   3-32 characters.
-2. **Password** — Choose a strong password. Don't forget this.
-   - At least 6 characters (12+ recommended)
-   - Mix of letters and numbers is good
-3. **Confirm password** — Type the same password again.
-4. Click **Create Account**.
-
-> **If you forget your password:** The program automatically creates a
-> "recovery key" file and stores it at:
-> `C:\Users\<YourName>\AppData\Roaming\com.archivistpro.desktop\recovery.key`
->
-> **Back up this file** to a safe place (copy to a USB drive, or email
-> it to yourself). If you forget your password, you can reset it with
-> this file.
-
----
-
-## 6. Add Your First Files
-
-When the program opens you see an empty screen. To add files to your
-archive:
-
-1. In the left panel, click **"Scan & Index Folder"**.
-2. Select the folder where your architectural files live (e.g.,
-   `D:\Projects`).
-3. Click **"Start Scan"**.
-4. The scan starts automatically — a progress bar appears. Duration
-   depends on the number of files (1000 files ≈ 5 minutes).
-
-When the scan finishes, your files appear in the main list. You can
-now search, tag, and sort them.
+- In-app help: the **Help** button on the left rail (press **?** for shortcuts)
+- Report an issue: **https://github.com/ahmet3ddd/ArchivistPro/issues**
+  ("I didn't understand this screen" is a perfectly valid report)
+- Release notes: [CHANGELOG](../CHANGELOG.md)
 
 ---
 
-## 7. Frequently Asked Questions (FAQ)
-
-### I upgraded from an older version to v3.0.0, what happens to my files?
-
-On first launch your old archive is **automatically migrated to the
-new V3 architecture**. It takes a few seconds. Your data is safe — a
-backup file (`archivist_premigrate_v3.db.bak`) is kept automatically
-for rollback.
-
-### Can I use the program without internet?
-
-Yes. Internet is not required after installation. If you chose Local
-AI (Ollama), AI also works offline. If you chose Cloud AI, internet
-is only needed for that feature.
-
-### Can I move my files to another computer?
-
-Yes. In **Settings > Network > Export / Report** you can export your
-archive as a `.archivistpro` file. Take that file to the new computer
-and use **"Import (.archivistpro)"** to load it.
-
-### How does backup work?
-
-The program automatically takes a backup before every scan (the last 5
-are kept). You can take and restore manual backups from **Settings >
-Storage**. With v3.0.0, backups include both `archivist.db` and
-`archivist_vec.db` **together**.
-
-### The installer failed, what do I do?
-
-1. Right-click the downloaded file → **Properties** → find the
-   "**Unblock**" checkbox if present → tick it → **OK**.
-2. Try the installer again.
-3. If it still fails, your antivirus may be blocking; add ArchivistPro
-   to the exceptions list.
-4. If the problem persists, file an issue at GitHub:
-   https://github.com/ahmet3ddd/ArchivistPro/issues
-
-### How do I uninstall the program?
-
-Open Windows **Settings > Apps > Installed apps**, find
-"**ArchivistPro**" → **Uninstall**. Your data remains in this folder
-(delete manually if you want to wipe it):
-`C:\Users\<YourName>\AppData\Roaming\com.archivistpro.desktop\`
-
----
-
-## 8. More Information
-
-- **In-app:** Press **F1** or click the **? Help** icon at the bottom
-  left. You will find 4 tabs: User Guide, Admin Guide (if you have
-  rights), What Can I Do?, Release Notes.
-- **Pro installation:** for silent install, network deployment,
-  environment variables, etc., see
-  [Professional Install Guide](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/INSTALL_PRO_EN.md).
-- **Release notes:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [All release assets](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
-
-Happy archiving! 🎯
-
----
-
-*This guide is updated as the program evolves. Last update: 2026-05-23 (v3.0.0).*
+*This guide is updated together with the app. Last update: 2026-08-14 (v3.3.3).*

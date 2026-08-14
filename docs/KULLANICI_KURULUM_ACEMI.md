@@ -1,251 +1,157 @@
-# ArchivistPro — Kurulum Rehberi (Yeni Başlayanlar İçin)
+# ArchivistPro — Yeni Başlayanlar İçin Kurulum Rehberi
 
-> **Sürüm:** 3.0.0 | **Tarih:** 2026-05-23 | **Platform:** Windows 10/11 (64-bit)
+> **Sürüm:** 3.3.3 · **Güncelleme:** 2026-08-14 · **Platform:** Windows 10/11 (64-bit)
 >
-> Bu rehber bilgisayarınıza ilk kez bir program kuruyorsanız ya da kurulum
-> deneyiminiz az ise sizin içindir. Her adım ekran görüntüsüyle anlatılır;
-> teknik terim yok, çok şey bilmenize gerek yok.
->
-> Daha hızlı/teknik bir özet istiyorsanız:
-> **[Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/KULLANICI_KURULUM_PRO.md)** dosyasına bakın.
+> Bu rehber bilgisayar kurulumlarına alışkın olmayanlar için adım adım yazılmıştır.
+> Daha kısa/teknik bir özet için: **[Sistem yöneticileri rehberi](KULLANICI_KURULUM_PRO.md)**
 
----
+## 1. ArchivistPro nedir?
 
-## 1. Hazırlık
+Mimarlık ve tasarım arşivleri için **tamamen çevrimdışı** çalışan bir masaüstü
+arşiv programıdır. Proje klasörlerinizi tarar; dosya adına ve içeriğe göre arama,
+önizleme, kopya bulma ve (isterseniz) yapay zekâ destekli arama sunar.
+**Dosyalarınız olduğu yerde kalır** — program hiçbir dosyayı taşımaz, kopyalamaz
+ve internete göndermez.
 
-### 1.1. Bilgisayarınız uygun mu?
+## 2. Başlamadan önce — gereksinimler
 
-ArchivistPro'yu kurmadan önce bilgisayarınızın şu özelliklere sahip olup
-olmadığını kontrol edin. Çoğu modern bilgisayar bu gereksinimleri rahatça
-karşılar.
+| Gereksinim | Durum |
+|---|---|
+| Windows 10 veya 11 (64-bit) | Zorunlu |
+| WebView2 Runtime | Güncel Windows'ta genellikle zaten kurulu; yoksa kurucu kendisi indirir |
+| İnternet | Yalnız indirme sırasında; program çevrimdışı çalışır |
+| Yönetici (admin) yetkisi | **Gerekmez** — kurulum kullanıcı hesabınıza yapılır |
 
-| Özellik | Olması gereken minimum | Önerilen |
-|---|---|---|
-| İşletim Sistemi | Windows 10 (64-bit) | Windows 11 (64-bit) |
-| RAM (bellek) | 4 GB | 8 GB ve üzeri |
-| Boş disk alanı | 2 GB | 5 GB ve üzeri |
-| İşlemci (CPU) | x64 mimari (çoğu Intel / AMD) | 4 çekirdek ve üzeri |
-| Ekran | 1366×768 piksel | 1920×1080 ve üzeri |
+## 3. İndirme
 
-> **Bilgisayarımın özelliklerini nereden öğrenirim?**
->
-> 1. Klavyeden `Windows tuşu + R` aynı anda basın.
-> 2. Açılan küçük pencereye `msinfo32` yazın ve **Tamam** tıklayın.
-> 3. "Sistem Özeti" altında işletim sistemi, işlemci ve RAM bilgileri görünür.
-
-### 1.2. Yönetici hakkı
-
-Programı kurmak için Windows'a **yönetici hesabıyla** giriş yapmış olmanız
-gerekir. Şirket bilgisayarı kullanıyorsanız ve "yönetici izni gerekiyor"
-uyarısı görüyorsanız, bilgi işlem birimine başvurun.
-
-### 1.3. İnternet bağlantısı
-
-Sadece **kurulum dosyasını indirmek için** internete ihtiyaç vardır.
-Kurulum tamamlandıktan sonra ArchivistPro **internetsiz çalışır** —
-dosyalarınız bilgisayarınızdan dışarı gönderilmez.
-
----
-
-## 2. Kurulum Dosyasını İndirin
-
-1. İnternet tarayıcınızı (Chrome, Edge, Firefox) açın.
-2. Şu adrese gidin:
+1. Tarayıcınızda şu adresi açın:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
-3. "**Assets**" başlığı altında dosyaları görürsünüz. Şu iki dosyadan
-   **birini** seçip indirin:
+2. **Assets** başlığı altındaki dosyalardan şunu indirin:
    - **`ArchivistPro_3.3.3_x64-setup.exe`** ← Önerilen
-   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternatif
+   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternatif (makine düzeyine **ayrı** kopya
+     kurar; ne yaptığınızı biliyorsanız kullanın)
+3. Dosya genellikle **İndirilenler** klasörüne iner.
 
-> **MSI ile EXE arasındaki fark:** İkisi de aynı programı kurar. MSI
-> daha yaygın kullanılır ve şirket bilgisayarlarında daha kolay yönetilir.
-> Hangisini indirdiğiniz fark etmez.
+> 💡 Dosyanın bozulmadan indiğini doğrulamak isterseniz release sayfasındaki
+> SHA-256 tablosuyla karşılaştırabilirsiniz (zorunlu değildir).
 
-> **Tarayıcıdan uyarı gelirse:** "Bu dosya nadiren indirilir; emin misiniz?"
-> tarzı bir uyarı görebilirsiniz. **Sakla** veya **İzin Ver** tıklayarak
-> indirmeye devam edin.
+## 4. Kurulum
 
----
+1. İndirdiğiniz **`ArchivistPro_3.3.3_x64-setup.exe`** dosyasına çift tıklayın.
+2. Windows **SmartScreen** mavi bir uyarı gösterebilir ("Windows kişisel
+   bilgisayarınızı korudu"). Bu, paketin kod imzası olmamasından kaynaklanır ve
+   beklenen bir durumdur: **"Ek bilgi"** yazısına, sonra **"Yine de çalıştır"**
+   düğmesine tıklayın.
+3. Kurulum sihirbazını takip edin (varsayılan ayarlar uygundur).
+4. Kurulum saniyeler içinde biter ve programı başlatabilirsiniz.
 
-## 3. Kurulumu Çalıştırın
+> ℹ️ Program açılınca sol üstte, başlığın yanında sürüm numarasını (**v3.3.3**)
+> görürsünüz — doğru sürümü kurduğunuzu buradan teyit edebilirsiniz.
 
-1. İndirdiğiniz dosyaya (`ArchivistPro_3.3.3_x64-setup.exe`) **çift
-   tıklayın**. Genelde **İndirilenler** klasöründe bulunur.
-2. Windows size sorabilir: "*Bu uygulamanın PC'nizde değişiklik yapmasına
-   izin vermek istiyor musunuz?*" → **Evet** seçin.
-3. Açılan kurulum penceresinde:
-   - **İleri** tıklayın
-   - Lisans sözleşmesini okuyup **Kabul Ediyorum**, sonra **İleri**
-   - Kurulum konumunu varsayılan bırakın (`C:\Program Files\ArchivistPro\`)
-     ve **İleri**
-   - **Yükle** tıklayın
-4. Birkaç saniye bekleyin. "Kurulum tamamlandı" mesajı geldiğinde **Son**
-   tıklayın.
+## 5. İlk açılış
 
-> **SmartScreen uyarısı gelirse:** "Windows PC'nizi korudu" başlıklı mavi
-> bir ekran çıkabilir. Bu uygulama dijital imza sürecinde olduğu için bu
-> uyarı görülebilir. Şu adımı izleyin:
->
-> 1. "**Daha fazla bilgi**" bağlantısına tıklayın.
-> 2. "**Yine de çalıştır**" düğmesine tıklayın.
+1. İlk açılışta **"İlk kurulum"** ekranı gelir: *"İlk yönetici (admin) hesabını
+   oluşturun."* Bir kullanıcı adı ve parola (en az 6 karakter) belirleyip
+   **"Hesabı oluştur"** deyin.
+   > ⚠️ Bu parolayı not edin — parola tamamen bu bilgisayarda saklanır,
+   > "parolamı unuttum" e-postası YOKTUR.
+2. Oluşturduğunuz hesapla **giriş yapın**.
+3. Karşınıza kısa bir tanıtım turu çıkar (**"Arşive hoş geldiniz"**). **Başla**
+   ile 30 saniyede gezebilir ya da **"Turu atla"** diyebilirsiniz — sonradan
+   Ayarlar'daki **"Rehberi göster"** ile yeniden açılır.
 
-Kurulum bittikten sonra masaüstünde **ArchivistPro** simgesi belirir. Aynı
-zamanda Başlat menüsünden de açabilirsiniz.
+## 6. Arşivinizi kurun: klasör ekleyin ve taratın
 
----
+1. Sol şeritten **Kaynak Klasörler** bölümünü açın.
+2. **"Klasör ekle"** düğmesiyle proje arşivinizin bulunduğu klasörü seçin
+   (örneğin `D:\Projeler`).
+3. Program **"Şimdi taransın mı?"** diye sorar — **Tara** deyin.
+   - Tarama seçeneklerinde **"Klasörden otomatik proje ata"** işaretliyse, kök
+     klasörün altındaki ilk klasör adları proje adı olarak atanır (önerilir).
+4. Tarama süresi arşiv boyutuna bağlıdır (on binlerce dosya ~dakikalar,
+   yüz bin dosya ~yarım saat mertebesi). Bittiğinde bir tarama raporu görürsünüz.
+5. Sonraki taramalar **çok daha hızlıdır**: değişmeyen dosyalar atlanır.
 
-## 4. İlk Açılış — Kurulum Sihirbazı
+Ne tarandı? **Bütün dosyalarınız** arşive alınır (gizli ve sistem dosyaları
+hariç — bunlar raporda "atlanan" bölümünde listelenir). DWG, MAX, IFC, RVT, SKP,
+PDF, Office ve görüntü/video dahil **95+ format** özel olarak tanınır: içerik
+metni, önizleme ve teknik bilgiler çıkarılır.
 
-Programı ilk kez açtığınızda **5 adımlık bir kurulum sihirbazı** sizi
-karşılar. Bu sadece bir kez gösterilir. Yaklaşık 3-5 dakika sürer.
+## 7. Eski sürümden (3.2.2) mi geliyorsunuz?
 
-### Adım 1 — Dil & Sistem Kontrolü
+ArchivistPro 3.2.2 ve öncesi **eski nesil** bir programdır; 3.3.3 onun yerine
+geçmez, **yan yana** kurulur. Verileriniz güvende — şöyle taşıyın:
 
-- Arayüz dilini seçin: **Türkçe** seçin (sonra **Ayarlar** üzerinden
-  istediğiniz zaman değiştirebilirsiniz).
-- Program donanımınızı otomatik olarak kontrol eder. Hata yoksa **İleri**
-  tıklayın.
+1. ⚠️ **Eski sürümü ve verisini KALDIRMAYIN** (aktarım bitip siz doğrulayana kadar).
+2. Yeni programda **Ayarlar → Genel** bölümüne gidin; **"Önceki sürüm bulundu"**
+   kartını göreceksiniz.
+3. Karttaki **"Önceki sürümden veri aktar"** düğmesine tıklayın. Sihirbaz,
+   bulduğu arşiv dosyalarını listeler — gerçek arşiviniz genellikle **'ana'**
+   etiketli ve en büyük olandır.
+4. Önce **"Önce dene (hiçbir şey yazmaz)"** ile deneme yapın: uygulanırsa tam
+   olarak ne olacağını gösterir.
+5. **"Aktar"** deyin. İşlem öncesi otomatik yedek alınır; işlem yarıda kesilirse
+   yeniden çalıştırmak güvenlidir.
+   - **Taşınanlar:** dosya kayıtları, AI analizleri, etiketler, favoriler,
+     koleksiyonlar, klasörler.
+   - **Taşınamayanlar:** kullanıcı parolaları (yeni programda yeniden oluşturun)
+     ve sohbet geçmişi.
+6. Aktarımdan sonra klasörlerinizi **yeniden taratın** — kaliteli önizlemeler ve
+   içerik metni taramayla oluşur; taşınan etiket ve AI analizleri korunur.
 
-### Adım 2 — Donanım Tespiti
+> ℹ️ Aktarımdan sonra kart kaybolmaz (kaynak veri silinmediği için) — kartta
+> artık **"Son aktarım: …"** satırı görünür. Bu, aktarımın yapılmadığı anlamına
+> gelmez.
 
-- Program işlemcinizi ve belleğinizi inceler, performans düzeyinizi
-  belirler:
-  - **Düşük** — yavaş bilgisayarlar için, sınırlı AI özellikleri
-  - **Orta** — günlük kullanım için iyi denge (önerilen)
-  - **Yüksek** — hızlı bilgisayarlar için, tüm AI özellikleri aktif
-- Programın önerisini bırakmanız genelde doğrudur. **İleri** tıklayın.
+## 8. AI özellikleri (isteğe bağlı)
 
-### Adım 3 — AI Kurulumu (İsteğe Bağlı)
+Program AI'sız tam çalışır: tarama, dosya adı/içerik araması, önizleme, kopya
+bulucu hepsi açıktır. Şunları da isterseniz AI kurulumu yapın:
 
-ArchivistPro'nun **AI Sohbet** özelliği için yapay zekâ desteği gerekir.
-Bu adımda 3 seçeneğiniz var:
+- **Anlamsal arama** ("ahşap cephe detayı" gibi serbest aramalar) ve **Görsel Arama**
+- **Sohbet** (arşive soru sorma) ve **görsel analiz** (AI'nın görselleri etiketlemesi)
 
-| Seçenek | Avantajı | Dezavantajı |
-|---|---|---|
-| **Yerel AI (Ollama)** | Tamamen offline, gizli; bilgileriniz dışarı çıkmaz | Ollama programını ayrı kurmanız gerek |
-| **Bulut AI** | Hızlı, kurulum gerekmez | İnternet gerekir, API anahtarı satın almak gerek |
-| **Atla** | En kolay | AI özellikleri çalışmaz |
+Kurulum: **Ayarlar → AI → AI Kurulum Sihirbazı**
 
-Tavsiye: **Yerel AI** seçin. Kurulum sihirbazı sizi
-[ollama.com](https://ollama.com/download) adresine yönlendirir; Ollama'yı
-indirip kurun. Sonra ArchivistPro'ya geri dönüp **"Tekrar Kontrol Et"**
-tıklayın.
+1. **Arama modelleri:** bir klasörden içe aktarılır (tamamen çevrimdışı).
+2. **Sohbet & görsel analiz (opsiyonel):** ücretsiz [Ollama](https://ollama.com)
+   programı gerekir. Ollama olmadan arama çalışır; yalnız sohbet ve görsel analiz
+   kapalı kalır.
+3. Sonunda **Ayarlar → AI → Kurulum kontrolü** ile GPU/Ollama/model durumunuzu
+   görebilirsiniz.
 
-AI'yi şimdi atlamak isterseniz **Atla** seçin. Daha sonra **Ayarlar > AI**
-menüsünden açabilirsiniz.
+> 💡 NVIDIA ekran kartı AI'yı hızlandırır ama şart değildir. Ekran kartınız varsa
+> sürücüsünün güncel olmasına dikkat edin.
 
-### Adım 4 — DWG Desteği (İsteğe Bağlı)
+## 9. Sık sorulan sorular
 
-Eğer arşivinizde DWG (AutoCAD çizim) dosyaları varsa, **ODA File Converter**
-adlı küçük bir yardımcı program kurmanız önerilir. Bu DWG dosyalarının
-içeriğini (katmanlar, bloklar, metin) ArchivistPro'nun anlamasını sağlar.
+**Dosyalarım kopyalanıyor/taşınıyor mu?**
+Hayır. Program yalnız bir dizin (indeks) oluşturur; dosyalarınız yerinde kalır.
+Bir klasörü listeden çıkarmak da dosyaları silmez.
 
-- ODA kuruluysa otomatik tespit edilir → **İleri**
-- Kurulu değilse "**İndir ve Kur**" tıklayın, ya da bu adımı atlayın
+**İnternet gerekiyor mu?**
+Hayır. Yalnız indirme (ve isterseniz Ollama kurulumu) için gerekir; günlük
+kullanım tamamen çevrimdışıdır. Hiçbir veriniz dışarı gönderilmez.
 
-### Adım 5 — Özet & Hazır
+**Güncelleme nasıl yapılır?**
+Yeni sürümün `setup.exe`'sini indirip çalıştırın — mevcut 3.3.x kurulumunuzu
+yerinde yükseltir, verileriniz korunur.
 
-Seçtiğiniz ayarların özeti gösterilir. Hepsi doğruysa **Başla** tıklayın.
+**Programı kaldırırsam arşivim silinir mi?**
+Hayır. Program kaldırılınca arşiv veritabanınız diskte kalır; yeniden kurunca
+kaldığınız yerden devam edersiniz.
 
----
+**Parolamı unuttum, ne yapabilirim?**
+Başka bir yönetici hesabı varsa o sıfırlayabilir. Tek yönetici sizseniz ve parola
+kayıpsa kurtarma yolu yoktur — parolanızı güvenli bir yerde saklayın.
 
-## 5. Yönetici Hesabı Oluşturma
+## 10. Yardım
 
-Sihirbazdan sonra **yönetici hesabı** oluşturma ekranı çıkar. Bu hesabı
-**siz oluşturursunuz** — programda hazır bir kullanıcı adı/şifre **yoktur**.
-
-1. **Kullanıcı adı** — Kendinize bir kullanıcı adı verin (örn. "ahmet"
-   ya da "patron"). 3-32 karakter arası olmalı.
-2. **Şifre** — Güçlü bir şifre belirleyin. Bunu unutmamanız önemli.
-   - En az 6 karakter (12+ önerilir)
-   - Harf + sayı karışık iyi olur
-3. **Şifreyi onayla** — Aynı şifreyi tekrar yazın.
-4. **Hesabı Oluştur** tıklayın.
-
-> **Şifrenizi unutursanız ne olur?** Program otomatik olarak bir
-> "kurtarma anahtarı" oluşturup şu konuma kaydeder:
-> `C:\Users\<KullanıcıAdı>\AppData\Roaming\com.archivistpro.desktop\recovery.key`
->
-> Bu dosyayı güvenli bir yerde **yedekleyin** (USB belleğe kopyalayın ya
-> da kişisel e-postanıza ekleyin). Şifrenizi unutursanız bu dosyadan
-> sıfırlayabilirsiniz.
-
----
-
-## 6. İlk Dosyalarınızı Ekleyin
-
-Program açılınca boş bir ekran görürsünüz. Arşivinize dosya eklemek için:
-
-1. Sol panelde **"Klasör Tara ve İndeksle"** butonuna tıklayın.
-2. Mimari dosyalarınızın bulunduğu klasörü seçin (örn. `D:\Projeler`).
-3. **"Taramayı Başlat"** tıklayın.
-4. Tarama otomatik başlar — ekranda ilerleme çubuğu görünür. Süre
-   klasördeki dosya sayısına göre değişir (1000 dosya ~5 dakika).
-
-Tarama bittiğinde dosyalarınız ana ekrandaki listede görünür. Şimdi
-aramaya, etiketlemeye, sıralamaya başlayabilirsiniz.
+- Uygulama içi yardım: sol şeritteki **Yardım** düğmesi (kısayollar için **?** tuşu)
+- Sorun bildirme: **https://github.com/ahmet3ddd/ArchivistPro/issues**
+  ("şu ekranı anlamadım" da geçerli bir başlıktır)
+- Sürüm notları: [CHANGELOG](../CHANGELOG.md)
 
 ---
 
-## 7. Sık Sorulanlar (SSS)
-
-### Eski bir sürümden v3.0.0'a geçtim, dosyalarıma ne olacak?
-
-Programı ilk açtığınızda eski arşiviniz **otomatik olarak yeni V3
-mimarisine taşınır**. Bu birkaç saniye sürer. Verileriniz güvende —
-geriye dönüş için yedek dosya (`archivist_premigrate_v3.db.bak`)
-otomatik tutulur.
-
-### Programı internetsiz kullanabilir miyim?
-
-Evet. Kurulum dışında internet **gerekmez**. AI özellikleri için Yerel AI
-(Ollama) seçtiyseniz tamamen offline çalışır. Bulut AI seçtiyseniz
-sadece o özellik için internet gerekir.
-
-### Dosyalarımı başka bir bilgisayara taşıyabilir miyim?
-
-Evet. Programın **Ayarlar > Ağ > Dışa Aktar / Rapor** menüsünden
-arşivinizi `.archivistpro` formatında dışa aktarabilirsiniz. Bu dosyayı
-yeni bilgisayara taşıyıp **"Import (.archivistpro)"** ile içe
-aktarabilirsiniz.
-
-### Yedekleme nasıl çalışır?
-
-Program her tarama öncesi otomatik yedek alır (son 5 yedek tutulur).
-**Ayarlar > Depolama** menüsünden elle yedek almak ve geri yüklemek
-mümkündür. v3.0.0 sonrası yedekler hem `archivist.db` hem
-`archivist_vec.db` dosyalarını **birlikte** yedekler.
-
-### Kurulum hata verdi, ne yapayım?
-
-1. İndirdiğiniz dosyayı sağ tıklayın → **Özellikler** → "**Engellemeyi
-   Kaldır**" işaretini bulup işaretleyin → **Tamam**.
-2. Tekrar çift tıklayıp kurmayı deneyin.
-3. Hâlâ çalışmıyorsa antivirüs programınız engellemiş olabilir; antivirüse
-   ArchivistPro'yu istisna olarak ekleyin.
-4. Sorun devam ederse GitHub Issues sayfasına yazın:
-   https://github.com/ahmet3ddd/ArchivistPro/issues
-
-### Programı kaldırmak istiyorum, nasıl?
-
-Windows **Ayarlar > Uygulamalar > Yüklü uygulamalar** menüsünden
-"**ArchivistPro**"yu bulun → **Kaldır**. Veriler şu klasörde kalır
-(silmek için elle silebilirsiniz):
-`C:\Users\<KullanıcıAdı>\AppData\Roaming\com.archivistpro.desktop\`
-
----
-
-## 8. Daha Fazla Bilgi
-
-- **Uygulama içinde:** **F1** tuşuna basın veya sol alttaki **? Yardım**
-  ikonuna tıklayın. 4 sekme bulacaksınız: Kullanım Kılavuzu, Yönetici
-  Kılavuzu (yetkiniz varsa), Ne Yapabilirim?, Sürüm Notları.
-- **Profesyonel kurulum:** Sessiz kurulum, ağ deployment, ortam
-  değişkenleri vb. için [Profesyonel Kurulum Rehberi](https://github.com/ahmet3ddd/ArchivistPro/blob/main/docs/KULLANICI_KURULUM_PRO.md)
-- **Sürüm değişiklikleri:** [CHANGELOG.md](https://github.com/ahmet3ddd/ArchivistPro/blob/main/CHANGELOG.md) · [Tüm dağıtım dosyaları](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
-
-İyi çalışmalar! 🎯
-
----
-
-*Bu rehber program geliştikçe güncellenir. Son güncelleme: 2026-05-23 (v3.0.0).*
+*Bu rehber programla birlikte güncellenir. Son güncelleme: 2026-08-14 (v3.3.3).*

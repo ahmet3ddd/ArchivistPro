@@ -1,139 +1,38 @@
-# ArchivistPro — 最终用户安装指南
+# ArchivistPro — 安装指南
 
-**版本：** 2.2.1 | **平台：** Windows 10/11（64 位）
+> **版本:** 3.3.3 · **更新日期:** 2026-08-14 · **平台:** Windows 10/11 (64 位)
+>
+> 其他语言: [Türkçe](KULLANICI_KURULUM_REHBERI.md) · [English](KULLANICI_KURULUM_REHBERI_EN.md) · [العربية](KULLANICI_KURULUM_REHBERI_AR.md) · [日本語](KULLANICI_KURULUM_REHBERI_JA.md)
 
----
-
-## 1. 系统要求
-
-| 要求 | 最低配置 | 推荐配置 |
-|---|---|---|
-| 操作系统 | Windows 10（64 位） | Windows 11（64 位） |
-| 内存 | 4 GB | 8 GB+ |
-| 磁盘空间 | 2 GB 可用空间 | 5 GB+ |
-| 处理器 | 任意 x64 兼容 CPU | 4 核心以上 |
-
-> **无需** Node.js、Rust 或任何开发工具 — 标准 Windows 安装即可。
+本页为快速摘要。分步详细说明请见:
+**[新手指南](INSTALL_BEGINNER_ZH.md)** ·
+**[系统管理员指南](INSTALL_PRO_ZH.md)**
 
 ---
 
-## 2. 下载安装程序
+## 快速安装（5 步）
 
-- 访问 GitHub Releases 页面：`https://github.com/ahmet3ddd/ArchivistPro/releases/latest`
-- 下载 **`ArchivistPro_*_x64_en-US.msi`**（MSI，推荐）或 **`ArchivistPro_*_x64-setup.exe`**（EXE）。
+1. **下载:** 打开 [Releases 页面](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)，
+   下载 **`ArchivistPro_3.3.3_x64-setup.exe`**（推荐的安装程序；MSI 会在机器级
+   安装一个*独立*副本 — 只有明确需要时才使用）。
+2. **安装:** 运行下载的文件。如果出现 Windows SmartScreen 警告，点击
+   **「更多信息 → 仍要运行」**（安装包未签名，该警告属正常现象）。
+3. **首次启动:** 在「初始设置」界面创建第一个管理员 (admin) 账户，然后用它登录。
+4. **建立档案库:** 在 **源文件夹 → 添加文件夹** 中指定项目文件夹，点击 **扫描**。
+   您的文件不会被移动 — 程序只做索引（可识别 95 种以上格式，包括 DWG、MAX、
+   IFC、RVT、SKP、PDF）。
+5. **从旧版本迁移?** 如果已安装 ArchivistPro 3.2.2（旧一代），3.3.3 会**并列
+   安装**。**请勿卸载**旧版本；通过 **设置 → 常规 → 「发现先前版本」** 卡片中的
+   导入向导迁移数据。
 
-> 无需下载 `.sig` 文件；这些文件仅用于自动更新验证。
-
----
-
-## 3. 运行安装程序
-
-1. 双击下载的 `.msi` 或 `.exe` 文件。
-2. 当 Windows 询问"是否允许此应用对您的设备进行更改？"时，点击 **是**。
-3. 按向导提示完成：**下一步 → 安装 → 完成**。
-4. 安装完成后，可通过桌面快捷方式或开始菜单启动 ArchivistPro。
-
-> **若出现 SmartScreen 警告：** 点击"更多信息" → "仍然运行"。该警告是因代码签名证书尚未激活而显示；程序本身是安全的。
-
----
-
-## 4. 首次启动 — 设置向导（5 步）
-
-首次打开程序时，会运行一个**一次性**设置向导（约 5 分钟）。
-
-### 第 1 步 — 语言与系统检测
-- 选择界面语言：**土耳其语** 或 **英语**。
-- 程序自动检测您的硬件和 Windows 版本。
-
-### 第 2 步 — 硬件检测
-- 通过 CPU、内存和性能测量确定适合 AI 的硬件等级。
-- 您可以自行更改检测到的等级（低 / 中 / 高）。
-
-### 第 3 步 — AI 设置 *（可选）*
-- 若您的电脑上正在运行 **Ollama**，系统会自动检测并启用本地 AI。
-- 若未安装 Ollama，可跳过此步骤；程序在没有 AI 功能的情况下仍可完整运行。
-
-### 第 4 步 — DWG 支持 *（可选）*
-- 若已安装 **ODA FileConverter**，系统会自动检测并启用高级 DWG 预览。
-- 若未安装，可通过向导一键安装，也可跳过此步骤。
-
-### 第 5 步 — 摘要与就绪
-- 显示所选设置的摘要；确认无误后点击 **开始**。
+**AI 功能（可选）:** 不启用 AI 时，搜索、扫描和预览均完整可用。若需要语义/
+视觉搜索和聊天，请使用 **设置 → AI → AI 设置向导**（详见
+[新手指南 §8](INSTALL_BEGINNER_ZH.md) 和 [管理员指南](INSTALL_PRO_ZH.md)）。
 
 ---
 
-## 5. 首次登录 — 创建管理员账户
+## 链接
 
-向导完成后，由于用户数据库为空，会出现创建**第一个管理员账户**的界面。
-
-1. 输入**用户名**。
-2. 设置**密码**（至少 6 个字符）。
-3. 确认密码并点击 **创建账户**。
-4. 使用刚创建的凭据登录。
-
-> 若忘记密码，恢复密钥会自动保存至：
-> `C:\Users\<用户名>\AppData\Roaming\com.archivistpro.desktop\recovery.key`
-
----
-
-## 6. 首次使用 — 扫描文件夹
-
-登录后即可开始使用程序：
-
-1. 点击左侧面板中的 **扫描** 按钮。
-2. 选择要归档的文件夹（包含 DWG、RVT、MAX、IFC、PDF 等文件）。
-3. 扫描完成后，文件会自动建立索引并生成预览图。
-
----
-
-## 7. 可选：安装 Ollama（AI 功能）
-
-若要使用 AI 驱动的搜索和 OCR 功能：
-
-1. 从 `https://ollama.com` 下载并安装 Ollama。
-2. 打开命令提示符，拉取视觉模型：
-   ```
-   ollama pull llava
-   ```
-3. 在 Ollama 于后台运行时重启 ArchivistPro；AI 功能将自动激活。
-
-> 不安装 Ollama，程序依然**完整运行**；仅基于 LLM 的搜索和 OCR 功能不可用。
-
-> **注意：** 视觉相似搜索（CLIP）无需额外设置。首次扫描时，AI 模型（约 87 MB）会自动下载，后续使用从缓存加载。此功能独立于 Ollama 运行。
-
----
-
-## 8. 可选：安装 ODA FileConverter（高级 DWG 支持）
-
-若要获取 DWG 文件更高质量的预览和元数据：
-
-1. 从 `https://dl.opendesign.com` 下载 ODA FileConverter。
-2. 运行下载的安装程序并完成安装。
-3. 重启 ArchivistPro；DWG 支持将自动检测。
-
-> 此步骤完全可选；ArchivistPro 内置 DWG 阅读器，不安装也可正常使用。
-
----
-
-## 9. 自动更新
-
-- 新版本发布时，程序会通过通知提醒您。
-- 也可在 **设置 → 更新** 中手动检查最新版本。
-- 更新下载完成后，重启程序即可。
-
----
-
-## 10. 故障排除
-
-| 问题 | 解决方法 |
-|---|---|
-| 程序无法启动 | 检查杀毒软件是否阻止了 ArchivistPro；如有必要，请添加例外。 |
-| SmartScreen 警告 | 点击"更多信息" → "仍然运行"。 |
-| 无 DWG 预览 | 检查 ODA FileConverter 安装情况（第 8 步）。 |
-| AI 功能不可用 | 确保 Ollama 在后台运行（`ollama serve`）。 |
-| 忘记密码 | 在登录界面使用 `%APPDATA%\com.archivistpro.desktop\recovery.key` 文件。 |
-| 扫描速度很慢 | 扫描期间关闭其他占用资源较多的程序；增加内存可提升性能。 |
-
----
-
-*如需开发者文档，请参阅 `docs/DEVELOPER_GUIDE.md`。*
+- 版本说明: [CHANGELOG](../CHANGELOG.md)
+- 报告问题: [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
+- 路线图: [ROADMAP](ROADMAP.md)

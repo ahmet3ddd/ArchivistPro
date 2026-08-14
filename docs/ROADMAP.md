@@ -2,42 +2,30 @@
 
 Bu dosya projenin nereye gittiğini anlatır. Amaç söz vermek değil, yönü şeffaf tutmak: neyin sırada olduğu kadar **neyin bilinçli olarak ertelendiği** de burada yazılı.
 
-Ayrıntılı teknik borç listesi ve karar gerekçeleri için: [`docs/dev/TODO.md`](dev/TODO.md)
 Sürüm sürüm ne değiştiği için: [`CHANGELOG.md`](../CHANGELOG.md)
 
 ---
 
-## Bugün nerede
+## Bugün nerede (v3.3.3)
 
-Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, anlamsal arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde tamamlanmış, test paketi yeşil.
+Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (900+ Rust testi + arayüz testleri) yeşil.
 
-Şu anki mimari **on binler mertebesinde dosya** için tasarlandı. Bu ölçekte rahat çalışıyor; yüz binler ve üzeri için mimari değişiklik gerekiyor (aşağıya bakın).
+3.3.x hattı, uygulamanın **yeniden yazılmış yeni nesil kod tabanıdır:** veriyi Rust tarafı sahiplenir, arşiv tarayıcı belleğinde değil diskte native SQLite'ta tutulur; AI/embedding hesaplamaları da tarayıcıda değil Rust tarafında koşar. Bu mimari **on binlerce dosyalık gerçek arşivlerle doğrulandı** ve yüz binler ölçeği hedefiyle tasarlandı — eski neslin (3.2.x) "yüz binler için mimari değişiklik gerekiyor" sınırı bu hatta aşıldı.
+
+**Eski nesil (3.2.2 ve öncesi) kullanıcıları için:** 3.3.x yerinde yükseltme değildir; yan yana kurulur, eski arşiv **Ayarlar → İçe Aktarma** sihirbazıyla taşınır. Geliştirme yeni kod tabanında sürüyor; 3.2.x hattına yeni özellik planlanmıyor.
 
 ---
 
 ## Sırada
 
 **Kullanıcı tarafında**
-- DWG'nin yeni sürümlerinde (R2004+) katman bilgisi çıkarımı şu an sınırlı — arayüzde bunun açıkça belirtilmesi, ardından tam destek
-- Kurulum akışındaki tekrar eden "görüldü" bayraklarının tek bir yere indirilmesi
+- Görsel ağırlıklı arşivlerde AI ile içerik analizi/etiketlemenin kapsam seçilerek (klasör/proje bazlı) ve kaldığı yerden devam edebilir biçimde yaygınlaştırılması — metin içermeyen dosyalarda aramanın ana kaldıracı bu.
+- DWG'nin yeni sürümlerinde (R2004+) katman bilgisi çıkarımı şu an sınırlı — önce arayüzde bunun açıkça belirtilmesi, ardından tam destek.
+- Uygulama içi güncelleme bildirimi (yeni sürüm çıktığında haber verme).
 
 **Kod tarafında**
-- Rust katmanı için birim test paketi (şu an testlerin tamamı arayüz tarafında)
-- Üretim derlemesinde kalan konsol çıktılarının temizlenmesi
-
----
-
-## Büyük adım: yüz binlerce dosya ölçeği
-
-Bu ayrı bir dalda yürüyen, mevcut sürümü bozmadan ilerleyen bir çalışma. Ana konular:
-
-- **Arama indeksi** — şu anki arama tüm vektörleri belleğe alıp tek tek karşılaştırıyor. Milyon dosya ölçeğinde yaklaşık indeks (ANN) yapısına geçilmesi gerekiyor.
-- **Veritabanı katmanı** — veritabanının tamamının tarayıcı belleğine yüklenmesi büyük arşivlerde tavana vuruyor. Diskten tembel okuma yapan bir yapıya geçiş planlanıyor.
-- **Çoklu arşivde yazma** — yazma işlemleri şu an tek sırada; beş üzeri arşivde tıkanıyor. Arşiv başına bağlantı havuzu gerekiyor.
-- **Toplu işleme** — etiket önerisi şu an dosya başına bir model çağrısı yapıyor; büyük arşivlerde kuyruk ve toplu istek şart.
-- **Büyük listelerin çizimi** — on binden fazla öğede liste ve ızgaraların tamamının sanallaştırılması.
-
-Bu değişikliklerin bir kısmı geriye dönük uyumsuz. Bu yüzden ana dalda denenmiyor; hazır olduğunda ayrı bir sürüm olarak gelecek.
+- Vektör (anlamsal/görsel) aramanın çok büyük arşivlerde yaklaşık indekse (ANN) taşınması — bugünkü yapı doğru sonucu veriyor, hedef milyonlar ölçeğinde de hızlı kalması.
+- Uzun süren işlerin (toplu AI analizi gibi) kalıcı iş kuyruğuna bağlanması.
 
 ---
 
@@ -46,6 +34,7 @@ Bu değişikliklerin bir kısmı geriye dönük uyumsuz. Bu yüzden ana dalda de
 - **Bulut senkronizasyonu yok.** Projenin varlık sebebi dosyaların yerelde kalması. Ağ üzerinden paylaşım yerel ağ içinde kalır.
 - **Hesap ve abonelik sistemi yok.** Uygulama internete bağlanmadan çalışır; bunu bozacak bir özellik eklenmez.
 - **macOS / Linux şu an planda değil.** Tauri bunu teknik olarak mümkün kılıyor ama önizleme üretimi Windows'a özgü bileşenlere dayanıyor. İlgi olursa yeniden değerlendirilir.
+- **Her dosyaya otomatik AI analizi yok.** Milyonlarca dosyalık arşivde "hepsini tara" yaklaşımı günlerce sürer; bunun yerine kapsam seçimli, durdurulup devam ettirilebilir analiz tercih ediliyor.
 - **Küçük optimizasyonlar ertelendi.** Ölçülmemiş bir performans sorununu çözmek yerine, gerçekten yaşanan tıkanmalar öncelikli.
 
 ---

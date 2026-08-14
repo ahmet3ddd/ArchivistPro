@@ -48,8 +48,6 @@ computer.
 
 ## 2. Download the Installer
 
-![GitHub Releases page](img/install/github-releases.png)
-
 1. Open your web browser (Chrome, Edge, Firefox).
 2. Go to:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
@@ -67,8 +65,6 @@ computer.
 ---
 
 ## 3. Run the Installer
-
-![Installer wizard](img/install/installer-wizard.png)
 
 1. **Double-click** the file you downloaded (`ArchivistPro_3.3.3_x64-setup.exe`).
    Usually it's in your **Downloads** folder.
@@ -96,8 +92,6 @@ desktop. You can also open it from the Start menu.
 
 ## 4. First Launch — Setup Wizard
 
-![Setup wizard step 1](img/install/wizard-step-1.png)
-
 When you first open the program, a **5-step setup wizard** greets you.
 It only shows up once. Roughly 3-5 minutes.
 
@@ -109,8 +103,6 @@ It only shows up once. Roughly 3-5 minutes.
   errors, click **Next**.
 
 ### Step 2 — Hardware Detection
-
-![Hardware detection](img/install/wizard-step-2.png)
 
 - The program inspects your processor and memory, and determines your
   performance level:
@@ -150,16 +142,12 @@ text).
 
 ### Step 5 — Summary & Ready
 
-![Wizard final step](img/install/wizard-step-5.png)
-
 A summary of your choices is shown. If everything looks correct, click
 **Start**.
 
 ---
 
 ## 5. Create Your Admin Account
-
-![Admin setup](img/install/admin-setup.png)
 
 After the wizard you see the **Admin account creation** screen. **You
 create this account** — there is no preset username/password in the
@@ -188,16 +176,12 @@ program.
 When the program opens you see an empty screen. To add files to your
 archive:
 
-![Scan folder button](img/install/scan-folder-button.png)
-
 1. In the left panel, click **"Scan & Index Folder"**.
 2. Select the folder where your architectural files live (e.g.,
    `D:\Projects`).
 3. Click **"Start Scan"**.
 4. The scan starts automatically — a progress bar appears. Duration
    depends on the number of files (1000 files ≈ 5 minutes).
-
-![Scan progress](img/install/scan-progress.png)
 
 When the scan finishes, your files appear in the main list. You can
 now search, tag, and sort them.

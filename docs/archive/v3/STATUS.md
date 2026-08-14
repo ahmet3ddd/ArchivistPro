@@ -1,3 +1,5 @@
+> ⚠️ **TARİHSEL BELGE** — eski nesil kod tabani (3.2.x hatti) donemi. Icerik o donemin durumunu anlatir ve guncel surumu YANSITMAZ. Guncel bilgi icin depo kokundeki README ve CHANGELOG dosyalarina bakin.
+
 # v3-architecture — DURUM & DEVAM (git-tracked, makineler arası senkron)
 
 > Bu dosya **lokal oto-hafızanın yerine geçer** (oto-hafıza makineler arası senkron DEĞİL, yalnız git).

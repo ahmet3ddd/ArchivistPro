@@ -1,3 +1,5 @@
+> ⚠️ **TARİHSEL BELGE** — eski nesil kod tabani (3.2.x hatti) donemi. Icerik o donemin durumunu anlatir ve guncel surumu YANSITMAZ. Guncel bilgi icin depo kokundeki README ve CHANGELOG dosyalarina bakin.
+
 # ArchivistPro — Sürüm Bump Kontrol Listesi (Release Checklist)
 
 Bu doküman her yeni sürüm dağıtımı öncesinde **adım adım** yapılması gereken

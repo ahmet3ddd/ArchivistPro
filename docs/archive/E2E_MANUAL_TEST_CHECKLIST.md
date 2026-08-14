@@ -1,3 +1,5 @@
+> ⚠️ **TARİHSEL BELGE** — eski nesil kod tabani (3.2.x hatti) donemi. Icerik o donemin durumunu anlatir ve guncel surumu YANSITMAZ. Guncel bilgi icin depo kokundeki README ve CHANGELOG dosyalarina bakin.
+
 # ArchivistPro — E2E Manuel Test Checklist
 
 > **Tarih:** 2026-04-25

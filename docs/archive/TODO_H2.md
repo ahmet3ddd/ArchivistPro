@@ -1,3 +1,5 @@
+> ⚠️ **TARİHSEL BELGE** — eski nesil kod tabani (3.2.x hatti) donemi. Icerik o donemin durumunu anlatir ve guncel surumu YANSITMAZ. Guncel bilgi icin depo kokundeki README ve CHANGELOG dosyalarina bakin.
+
 # ArchivistPro — Yapılacaklar ve Bilinçli Olarak Ertelenenler
 
 Bu dosya iki listeyi bir arada tutar:

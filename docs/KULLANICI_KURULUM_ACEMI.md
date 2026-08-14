@@ -49,8 +49,6 @@ dosyalarınız bilgisayarınızdan dışarı gönderilmez.
 
 ## 2. Kurulum Dosyasını İndirin
 
-![GitHub Releases sayfası](img/install/github-releases.png)
-
 1. İnternet tarayıcınızı (Chrome, Edge, Firefox) açın.
 2. Şu adrese gidin:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
@@ -70,8 +68,6 @@ dosyalarınız bilgisayarınızdan dışarı gönderilmez.
 ---
 
 ## 3. Kurulumu Çalıştırın
-
-![Kurulum sihirbazı](img/install/installer-wizard.png)
 
 1. İndirdiğiniz dosyaya (`ArchivistPro_3.3.3_x64-setup.exe`) **çift
    tıklayın**. Genelde **İndirilenler** klasöründe bulunur.
@@ -100,8 +96,6 @@ zamanda Başlat menüsünden de açabilirsiniz.
 
 ## 4. İlk Açılış — Kurulum Sihirbazı
 
-![Kurulum sihirbazı 1. adım](img/install/wizard-step-1.png)
-
 Programı ilk kez açtığınızda **5 adımlık bir kurulum sihirbazı** sizi
 karşılar. Bu sadece bir kez gösterilir. Yaklaşık 3-5 dakika sürer.
 
@@ -113,8 +107,6 @@ karşılar. Bu sadece bir kez gösterilir. Yaklaşık 3-5 dakika sürer.
   tıklayın.
 
 ### Adım 2 — Donanım Tespiti
-
-![Donanım tespiti](img/install/wizard-step-2.png)
 
 - Program işlemcinizi ve belleğinizi inceler, performans düzeyinizi
   belirler:
@@ -153,15 +145,11 @@ içeriğini (katmanlar, bloklar, metin) ArchivistPro'nun anlamasını sağlar.
 
 ### Adım 5 — Özet & Hazır
 
-![Sihirbaz son adım](img/install/wizard-step-5.png)
-
 Seçtiğiniz ayarların özeti gösterilir. Hepsi doğruysa **Başla** tıklayın.
 
 ---
 
 ## 5. Yönetici Hesabı Oluşturma
-
-![Yönetici hesabı oluşturma](img/install/admin-setup.png)
 
 Sihirbazdan sonra **yönetici hesabı** oluşturma ekranı çıkar. Bu hesabı
 **siz oluşturursunuz** — programda hazır bir kullanıcı adı/şifre **yoktur**.
@@ -188,15 +176,11 @@ Sihirbazdan sonra **yönetici hesabı** oluşturma ekranı çıkar. Bu hesabı
 
 Program açılınca boş bir ekran görürsünüz. Arşivinize dosya eklemek için:
 
-![Klasör tarama butonu](img/install/scan-folder-button.png)
-
 1. Sol panelde **"Klasör Tara ve İndeksle"** butonuna tıklayın.
 2. Mimari dosyalarınızın bulunduğu klasörü seçin (örn. `D:\Projeler`).
 3. **"Taramayı Başlat"** tıklayın.
 4. Tarama otomatik başlar — ekranda ilerleme çubuğu görünür. Süre
    klasördeki dosya sayısına göre değişir (1000 dosya ~5 dakika).
-
-![Tarama ilerleme](img/install/scan-progress.png)
 
 Tarama bittiğinde dosyalarınız ana ekrandaki listede görünür. Şimdi
 aramaya, etiketlemeye, sıralamaya başlayabilirsiniz.

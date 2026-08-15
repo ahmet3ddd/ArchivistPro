@@ -49,14 +49,28 @@ export function ToastItem({ toast }: { toast: Toast }) {
       role={toast.kind === "error" ? "alert" : "status"}
       // Baslangic-kenari serieti: inline stil (Tailwind sira-cakismasini eler; RTL-guvenli).
       style={{ borderInlineStartWidth: "2px", borderInlineStartColor: k.edge }}
-      className="pointer-events-auto flex items-start gap-2.5 rounded-lg border border-border
+      className="pointer-events-auto flex flex-col gap-1.5 rounded-lg border border-border
                  bg-bg-secondary/95 px-3.5 py-2.5 shadow-xl backdrop-blur-lg
                  animate-toast-in motion-reduce:animate-none"
     >
-      <span className={`mt-0.5 shrink-0 text-sm leading-none ${k.color}`} aria-hidden="true">
-        {k.icon}
-      </span>
-      <p className="flex-1 break-words text-sm text-text-primary">{toast.message}</p>
+      {/* Ust satir: ikon + metin + kapat. Eylem butonu AYRI SATIRDA durur (asagida) — ayni
+          satirda `shrink-0` olarak dururken uzun etiketli bir eylem ("Bu görselleri göster")
+          metne ~100px birakiyor ve cumleyi satir basina birkac kelimelik okunmaz bir sutuna
+          ceviriyordu (kullanici ekran goruntusu 2026-08-15). */}
+      <div className="flex items-start gap-2.5">
+        <span className={`mt-0.5 shrink-0 text-sm leading-none ${k.color}`} aria-hidden="true">
+          {k.icon}
+        </span>
+        <p className="flex-1 break-words text-sm text-text-primary">{toast.message}</p>
+        <button
+          type="button"
+          onClick={() => dismiss(toast.id)}
+          aria-label={t("toast.dismiss")}
+          className="-me-1 shrink-0 px-1 leading-none text-text-muted transition hover:text-text-primary"
+        >
+          ×
+        </button>
+      </div>
       {toast.action && (
         <button
           type="button"
@@ -64,20 +78,13 @@ export function ToastItem({ toast }: { toast: Toast }) {
             toast.action?.onClick();
             dismiss(toast.id);
           }}
-          className="-my-0.5 shrink-0 self-center rounded-md border border-border px-2 py-1 text-xs
+          // Metnin altinda, ikon sutunu kadar iceriden (ms-[1.375rem]) → goz hizasi korunur.
+          className="ms-[1.375rem] self-start rounded-md border border-border px-2 py-1 text-xs
                      font-medium text-accent transition hover:bg-accent/10"
         >
           {toast.action.label}
         </button>
       )}
-      <button
-        type="button"
-        onClick={() => dismiss(toast.id)}
-        aria-label={t("toast.dismiss")}
-        className="-me-1 shrink-0 px-1 leading-none text-text-muted transition hover:text-text-primary"
-      >
-        ×
-      </button>
     </div>
   );
 }

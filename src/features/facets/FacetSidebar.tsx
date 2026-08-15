@@ -30,6 +30,7 @@ import { FilterPresets } from "../filters/FilterPresets";
 import { useToast } from "../toast/useToast";
 import { useBulkActions } from "../explorer/useBulkActions";
 import { isAssetCollectionDrag, readAssetCollectionDrag } from "../assets/assetCollectionDrag";
+import { useFailedAttemptFilter } from "./aiAttempt";
 import { FacetEmptyState, FacetRow, FacetSection } from "./FacetSection";
 import { FacetConfigModal } from "./FacetConfigModal";
 import { loadCollapsed, saveCollapsed } from "./facetCollapse";
@@ -89,6 +90,9 @@ export function FacetSidebar() {
   const toggleDeadlineYear = useUiStore((s) => s.toggleDeadlineYear);
   const aiAnalyzed = useUiStore((s) => s.aiAnalyzed);
   const setAiAnalyzed = useUiStore((s) => s.setAiAnalyzed);
+  // "Denendi, sonuc alinamadi" — cop-korumasinin eledigi gorseller (bkz `aiAttempt`). Ayni radyo
+  // grubunda durur ama tri-state DEGIL, genel metadata filtresidir → secim/temizleme birlikte.
+  const failedAttempts = useFailedAttemptFilter();
   const gorselTuru = useUiStore((s) => s.gorselTuru);
   const setGorselTuru = useUiStore((s) => s.setGorselTuru);
   const bumpFacets = useUiStore((s) => s.bumpFacets);
@@ -144,6 +148,9 @@ export function FacetSidebar() {
     ? Math.min(total, Math.max(0, aiAnalysisStatus.analyzed))
     : null;
   const notAnalyzedCount = analyzedCount == null ? null : Math.max(0, total - analyzedCount);
+  // "Denendi, sonuc alinamadi" — `notAnalyzedCount`un ALT KUMESI (ondan cikarilmaz: gorseller
+  // gercekten hala analizsizdir; bu satir yalniz onlarin BULUNABILIR kismini gosterir).
+  const attemptFailedCount = aiAnalysisStatus?.attemptFailed ?? null;
   const extFacets = extFacetsAll.filter((f) => f.value != null);
   const gorselTuruRows = gorselTuruFacets.filter((f) => f.value != null && f.count > 0);
 
@@ -291,32 +298,57 @@ export function FacetSidebar() {
             title={facetLabel("aiAnalysis", t("facet.ai_analyzed"))}
             collapsed={collapsed.aiAnalysis ?? false}
             onToggle={() => toggleSection("aiAnalysis")}
-            activeCount={aiAnalyzed == null ? 0 : 1}
-            onClear={() => setAiAnalyzed(null)}
+            activeCount={aiAnalyzed == null && !failedAttempts.active ? 0 : 1}
+            onClear={() => {
+              setAiAnalyzed(null);
+              failedAttempts.clear();
+            }}
             clearLabel={clearSection}
           >
             <div role="radiogroup" aria-label={t("facet.ai_analyzed")} className="px-1 pb-1">
               <AiAnalysisOption
                 testId="ai-analysis-option-all"
-                checked={aiAnalyzed == null}
+                checked={aiAnalyzed == null && !failedAttempts.active}
                 label={t("facet.ai_all")}
                 count={total}
-                onChange={() => setAiAnalyzed(null)}
+                onChange={() => {
+                  failedAttempts.clear();
+                  setAiAnalyzed(null);
+                }}
               />
               <AiAnalysisOption
                 testId="ai-analysis-option-analyzed"
                 checked={aiAnalyzed === true}
                 label={t("facet.ai_yes")}
                 count={analyzedCount}
-                onChange={() => setAiAnalyzed(true)}
+                onChange={() => {
+                  failedAttempts.clear();
+                  setAiAnalyzed(true);
+                }}
               />
               <AiAnalysisOption
                 testId="ai-analysis-option-not-analyzed"
-                checked={aiAnalyzed === false}
+                checked={aiAnalyzed === false && !failedAttempts.active}
                 label={t("facet.ai_no")}
                 count={notAnalyzedCount}
-                onChange={() => setAiAnalyzed(false)}
+                onChange={() => {
+                  failedAttempts.clear();
+                  setAiAnalyzed(false);
+                }}
               />
+              {/* **Denendi, sonuc alinamadi** — cop-korumasinin eledigi gorseller (kullanici
+                  itirazi 2026-08-15). "Analiz edilmemis"in ALT KUMESIDIR: bu gorseller hala
+                  bekleyendir, ama artik BULUNABILIRLER → secip daha yetenekli bir modelle
+                  yeniden denemek mumkun. Sayi 0 iken satir gizlenir (bos vaat gosterme). */}
+              {(attemptFailedCount ?? 0) > 0 && (
+                <AiAnalysisOption
+                  testId="ai-analysis-option-attempt-failed"
+                  checked={failedAttempts.active}
+                  label={t("facet.ai_attempt_failed")}
+                  count={attemptFailedCount}
+                  onChange={failedAttempts.show}
+                />
+              )}
             </div>
           </FacetSection>,
         )}

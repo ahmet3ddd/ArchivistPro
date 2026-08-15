@@ -6,9 +6,9 @@ Sürüm sürüm ne değiştiği için: [`CHANGELOG.md`](../CHANGELOG.md)
 
 ---
 
-## Bugün nerede (v3.3.3)
+## Bugün nerede (v3.4.0)
 
-Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (900+ Rust testi + arayüz testleri) yeşil.
+Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (920+ Rust testi + arayüz testleri) yeşil.
 
 3.3.x hattı, uygulamanın **yeniden yazılmış yeni nesil kod tabanıdır:** veriyi Rust tarafı sahiplenir, arşiv tarayıcı belleğinde değil diskte native SQLite'ta tutulur; AI/embedding hesaplamaları da tarayıcıda değil Rust tarafında koşar. Bu mimari **on binlerce dosyalık gerçek arşivlerle doğrulandı** ve yüz binler ölçeği hedefiyle tasarlandı — eski neslin (3.2.x) "yüz binler için mimari değişiklik gerekiyor" sınırı bu hatta aşıldı.
 

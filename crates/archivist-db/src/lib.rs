@@ -80,8 +80,8 @@ pub use query::{
     ProjectMetaOut, TagRef, ThumbnailData, DOMINANT_COLORS_METADATA_KEY,
 };
 pub use image::{
-    AnalysisScope, PendingAnalysis, PendingImageEmbed, IMAGE_EMBED_DIM, IMAGE_REGION_COUNT,
-    IMAGE_REGION_STRIDE,
+    AnalysisScope, PendingAnalysis, PendingImageEmbed, AI_ATTEMPT_FAILED_KEY, IMAGE_EMBED_DIM,
+    IMAGE_REGION_COUNT, IMAGE_REGION_STRIDE,
 };
 pub use image_kind::{classify_image_kind, is_raster_image_ext, ImageKind, RASTER_IMAGE_EXTS};
 pub use index_skips::IndexStage;

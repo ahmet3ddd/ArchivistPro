@@ -13,7 +13,9 @@ export function ToastContainer() {
   return (
     <div
       aria-live="polite"
-      className="pointer-events-none fixed bottom-4 end-4 z-[100] flex w-80 max-w-[calc(100vw-2rem)] flex-col gap-2"
+      // w-96: eski `w-80` (320px) tek cumlelik bildirimler icin yeterliydi; analiz raporu gibi
+      // cok cumleli metinlerde satirlar asiri kisaliyordu. max-w dar pencerede tasmayi onler.
+      className="pointer-events-none fixed bottom-4 end-4 z-[100] flex w-96 max-w-[calc(100vw-2rem)] flex-col gap-2"
     >
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} />

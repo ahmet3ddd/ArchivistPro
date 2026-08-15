@@ -101,6 +101,11 @@ pub struct ImageAnalysisStatusDto {
     pub small_file_bytes: i64,
     /// Embedlenebilir evren (analyzed + pending).
     pub total: i64,
+    /// **Denendi, sonuc alinamadi**: cop-korumasinin eledigi ve `ai_attempt_failed` ile isaretlenen
+    /// aktif asset sayisi. `pending`in ALT KUMESIDIR (bu varliklar hala bekleyendir) — toplama
+    /// EKLENMEZ. Sidebar'daki dorduncu radyo satirinin sayisi budur; kullanici o satirla tam bu
+    /// gorselleri secip daha yetenekli bir modelle yeniden deneyebilir.
+    pub attempt_failed: i64,
     /// MiniLM (re-chunk) modeli hazir mi — analiz sonrasi yeniden-chunk icin gerekir.
     pub embed_ready: bool,
     pub active: bool,
@@ -157,6 +162,18 @@ pub struct ImageAnalysisReportDto {
     /// **Devre kesici**: art arda bu kadar hata gorulup kosu KENDILIGINDEN durdurulduysa dolu
     /// (`None` → devre kesici devreye girmedi). UI bunu "durduruldu, nedeni su" diye gosterir.
     pub aborted_after_consecutive_failures: Option<u32>,
+    /// `failed` icinden **cop-korumasinin eledigi** (`unusable_output`) sayisi — model yanit verdi
+    /// ama sonuc kullanilamadi, dosya arsive YAZILMADI ve bekleyen kaldi. Ayri tutulur cunku UI
+    /// cumlesi bunlari "kaydedilenler"le birlikte oranlar ("60 gorselden 55'i kaydedildi, 5'i
+    /// icin sonuc alinamadi") ve bu 5'in `ai_attempt_failed` filtresinde bulunacagini soyler.
+    /// Diger basarisizliklar (servis/surucu/yazma) bu sayiya GIRMEZ.
+    pub unusable: i64,
+    /// Kosuda kullanilan modelin OLCULMUS kalite sinifi (`proven` | `untested` | `unusable`;
+    /// bkz `ollama::vision_quality`). UI tavsiyeyi buna gore secer: kanitlanmis bir modelde
+    /// "daha yetenekli model secin" demek YANLIS yonlendirmedir (kullanici itirazi 2026-08-15).
+    pub model_quality: String,
+    /// Kosuda kullanilan model etiketi — rapor cumlesinde gecer ("qwen2.5vl:3b bu 5 gorselde…").
+    pub model: String,
 }
 
 /// Ollama'da yuklu VISION modelleri (gorsel-analiz model secici; UI). Ollama/vision yoksa Err.
@@ -606,12 +623,14 @@ pub fn image_analysis_status(
     let pending_small = db
         .pending_analysis_small_count(&archivist_db::AnalysisScope::All, SMALL_FILE_BYTES)
         .map_err(|e| e.to_string())?;
+    let attempt_failed = db.failed_attempt_count().map_err(|e| e.to_string())?;
     Ok(ImageAnalysisStatusDto {
         analyzed,
         pending,
         pending_small,
         small_file_bytes: SMALL_FILE_BYTES,
         total: analyzed + pending,
+        attempt_failed,
         embed_ready: resolve_model_dir().is_ok(),
         active: VISION_ACTIVE.load(Ordering::SeqCst),
         progress: live_progress_slot()
@@ -714,6 +733,10 @@ pub async fn run_image_analysis(
     };
     let start = Instant::now();
     let (mut analyzed, mut failed, mut processed, mut after_id) = (0i64, 0i64, 0i64, 0i64);
+    // Basarisizligin `unusable_output` (model cop uretti → dosya bekleyen kaldi) kismi AYRI sayilir:
+    // rapor cumlesi "5'i icin sonuc alinamadi, 55'i kaydedildi" diyebilsin diye (kullanici itirazi
+    // 2026-08-15: tek satirlik kirmizi uyari TUM kosu bosa gitmis izlenimi veriyordu).
+    let mut unusable = 0i64;
     let mut last_emit: Option<Instant> = None;
     let mut sample_error: Option<String> = None;
     let mut error_kind: Option<String> = None;
@@ -825,6 +848,25 @@ pub async fn run_image_analysis(
                         // varlik BEKLEYEN kalir ve calisan bir modelle sonradan analiz edilebilir.
                         // (Onceden: cop `ai_aciklama` olarak yazilir, damga basilir, aranabilir
                         // govdeye girerdi → kalici kirlilik + telafisiz.)
+                        //
+                        // **ISARET** (kullanici itirazi 2026-08-15): eleme SESSIZ kalmamali. Varlik
+                        // bekleyen KALIR (yukaridaki gerekce degismedi) ama `ai_attempt_failed`
+                        // isaretiyle GORUNUR olur → kullanici "AI görsel analiz durumu → Denendi,
+                        // sonuç alınamadı" filtresiyle tam o gorselleri secip daha yetenekli bir
+                        // modelle yeniden deneyebilir. Isaretleme BASARISIZ olursa kosu durmaz
+                        // (gorunurluk kaybi < analiz kaybi) — yalniz konsola dusulur.
+                        {
+                            let db = state.db.lock().map_err(|e| e.to_string())?;
+                            if let Err(e) = db.mark_analysis_attempt_failed(
+                                p.id,
+                                "unusable_output",
+                                &model_used,
+                                crate::backup_commands::now_ms() as i64,
+                            ) {
+                                eprintln!("[vision] deneme isareti yazilamadi ({}): {e}", p.file_name);
+                            }
+                        }
+                        unusable += 1;
                         failure = Some((
                             format!("{}: model anlamli bir analiz uretmedi", p.file_name),
                             "unusable_output",
@@ -902,6 +944,9 @@ pub async fn run_image_analysis(
         stopped,
         error_kind,
         aborted_after_consecutive_failures: aborted_after,
+        unusable,
+        model_quality: ollama::vision_quality(&model_used).code().to_string(),
+        model: model_used,
     })
 }
 
@@ -983,6 +1028,8 @@ mod tests {
             pending_small: 5,
             small_file_bytes: 20 * 1024,
             total: 20,
+            // "Denendi, sonuc alinamadi" da bekleyenin ALT kumesidir (ayni gerekce).
+            attempt_failed: 2,
             embed_ready: true,
             active: true,
             progress: Some(ImageAnalysisProgressDto {
@@ -997,6 +1044,8 @@ mod tests {
         assert_eq!(value["progress"]["currentPath"], "C:/x/a.jpg");
         assert!(value.get("embedReady").is_some());
         assert!(value.get("embed_ready").is_none());
+        // Sidebar'in dorduncu AI-durum satiri bu alandan beslenir (camelCase sozlesmesi).
+        assert_eq!(value["attemptFailed"], 2);
     }
 
     #[test]

@@ -8,6 +8,7 @@ import { useCollections, useProjects } from "../../hooks/useFacets";
 import { basename } from "../../lib/format";
 import { anyFilterActive, useUiStore } from "../../store/useUiStore";
 import { approvalStatusLabel } from "../assets/detail/projectStatus";
+import { AI_ATTEMPT_FAILED_KEY, isFailedAttemptFilterActive } from "../facets/aiAttempt";
 import { gorselTuruLabelKey } from "../facets/gorselTuruMeta";
 import { METADATA_FACETS } from "../facets/MetadataFacetSection";
 
@@ -175,8 +176,22 @@ export function FilterChips() {
           clearLabel={t("topbar.chip_remove")}
         />
       ))}
+      {/* "Denendi, sonuc alinamadi" — teknik anahtar (`ai_attempt_failed: 1`) yerine AI-durum
+          faceti ile AYNI insan-okur etiket; kaldirmak filtreyi tumuyle dusurur. */}
+      {isFailedAttemptFilterActive(metadata) && (
+        <Chip
+          label={t("facet.ai_attempt_failed")}
+          onClear={() => clearMetadataKey(AI_ATTEMPT_FAILED_KEY)}
+          clearLabel={t("topbar.chip_remove")}
+        />
+      )}
       {Object.keys(metadata)
-        .filter((k) => metadata[k]?.length && !METADATA_FACETS.some((m) => m.key === k))
+        .filter(
+          (k) =>
+            metadata[k]?.length &&
+            k !== AI_ATTEMPT_FAILED_KEY &&
+            !METADATA_FACETS.some((m) => m.key === k),
+        )
         .map((k) => (
           <Chip
             key={k}

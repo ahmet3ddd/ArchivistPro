@@ -28,6 +28,10 @@ export interface ImageAnalysisStatus {
   /** `pendingSmall` esigi (bayt). Metin sunucudan gelir → esik degisirse ekran kendiliginden uyar. */
   smallFileBytes: number;
   total: number;
+  /** **Denendi, sonuc alinamadi**: cop-korumasinin eledigi ve `ai_attempt_failed` ile isaretlenen
+   *  asset sayisi. `pending`in ALT KUMESI (bu varliklar hala bekleyendir) → `total`a EKLENMEZ.
+   *  Sidebar'daki dorduncu AI-durum satirinin sayisi budur. */
+  attemptFailed: number;
   embedReady: boolean;
   active: boolean;
   progress: ImageAnalysisProgress | null;
@@ -56,6 +60,15 @@ export interface ImageAnalysisReport {
   /** Devre kesici: ard arda bu kadar hata olunca kosu KENDILIGINDEN durduysa dolu. `null`/yok →
    *  devre kesici devreye girmedi. */
   abortedAfterConsecutiveFailures?: number | null;
+  /** `failed` icinden cop-korumasinin eledigi (`unusable_output`) sayisi: model yanit verdi ama
+   *  sonuc kullanilamadi → dosya YAZILMADI, bekleyen kaldi ve `ai_attempt_failed` ile isaretlendi.
+   *  Rapor cumlesi bunu "kaydedilenler"le oranlar; diger hatalar (servis/surucu/yazma) girmez. */
+  unusable?: number | null;
+  /** Kosuda kullanilan modelin OLCULMUS kalite sinifi — tavsiye buna gore secilir (kanitlanmis
+   *  modelde "daha yetenekli model secin" demek yanlis yonlendirmedir). */
+  modelQuality?: "proven" | "untested" | "unusable" | string | null;
+  /** Kosuda kullanilan model etiketi (rapor cumlesinde gecer). */
+  model?: string | null;
 }
 
 /** `ImageAnalysisReport.errorKind` icin bilinen siniflar (sunucu `vision::classify_vision_error`

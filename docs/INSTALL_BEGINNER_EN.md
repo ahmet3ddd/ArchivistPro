@@ -1,6 +1,6 @@
 # ArchivistPro — Installation Guide for Beginners
 
-> **Version:** 3.3.3 · **Updated:** 2026-08-14 · **Platform:** Windows 10/11 (64-bit)
+> **Version:** 3.4.0 · **Updated:** 2026-08-15 · **Platform:** Windows 10/11 (64-bit)
 >
 > This guide is written step by step for people who don't install software often.
 > For a shorter, technical summary see the **[system administrator's guide](INSTALL_PRO_EN.md)**.
@@ -26,8 +26,8 @@ previews, duplicate finding and (optionally) AI-assisted search.
 1. Open this address in your browser:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 2. Under **Assets**, download:
-   - **`ArchivistPro_3.3.3_x64-setup.exe`** ← Recommended
-   - `ArchivistPro_3.3.3_x64_en-US.msi` ← Alternative (installs a **separate**
+   - **`ArchivistPro_3.4.0_x64-setup.exe`** ← Recommended
+   - `ArchivistPro_3.4.0_x64_en-US.msi` ← Alternative (installs a **separate**
      machine-level copy; use only if you know why you want it)
 3. The file usually lands in your **Downloads** folder.
 
@@ -36,14 +36,14 @@ previews, duplicate finding and (optionally) AI-assisted search.
 
 ## 4. Install
 
-1. Double-click **`ArchivistPro_3.3.3_x64-setup.exe`**.
+1. Double-click **`ArchivistPro_3.4.0_x64-setup.exe`**.
 2. Windows **SmartScreen** may show a blue warning ("Windows protected your PC").
    This happens because the package is not code-signed and is expected:
    click **"More info"**, then **"Run anyway"**.
 3. Follow the setup wizard (the defaults are fine).
 4. Installation finishes in seconds and you can start the app.
 
-> ℹ️ When the app opens you'll see the version number (**v3.3.3**) next to the
+> ℹ️ When the app opens you'll see the version number (**v3.4.0**) next to the
 > title in the top-left corner — a quick way to confirm you installed the right
 > version.
 
@@ -77,7 +77,7 @@ recognized: content text, previews and technical metadata are extracted.
 
 ## 7. Coming from the legacy version (3.2.2)?
 
-ArchivistPro 3.2.2 and earlier is the **legacy generation**; 3.3.3 does not
+ArchivistPro 3.2.2 and earlier is the **legacy generation**; 3.4.0 does not
 replace it in place — it installs **side by side**. Your data is safe; migrate
 like this:
 
@@ -152,4 +152,4 @@ is lost, there is no recovery — keep your password somewhere safe.
 
 ---
 
-*This guide is updated together with the app. Last update: 2026-08-14 (v3.3.3).*
+*This guide is updated together with the app. Last update: 2026-08-15 (v3.4.0).*

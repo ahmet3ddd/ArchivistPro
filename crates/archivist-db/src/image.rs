@@ -30,6 +30,12 @@ use crate::Db;
 /// (burada tekrar tanimli: db ONNX'e bagli degil).
 pub const IMAGE_EMBED_DIM: usize = 512;
 
+/// "AI analizi DENENDI ama sonuc kullanilamadi" isaretinin EAV anahtari (deger sabit `"1"`).
+/// TEK dogruluk kaynagi: Rust yazar (`mark_analysis_attempt_failed`), frontend AYNI anahtarla
+/// genel metadata faceti uzerinden filtreler/sayar (`src/features/facets` — anahtar orada da
+/// sabittir; ikisi degisirse birlikte degismeli).
+pub const AI_ATTEMPT_FAILED_KEY: &str = "ai_attempt_failed";
+
 /// Cok-bolge CLIP: bir gorsel `IMAGE_REGION_COUNT` uzamsal BOLGE olarak embedlenir (global +
 /// center + top-left + top-right + bottom-center). Metin→gorsel aramada asset basina BOLGE-MAX
 /// cosine → kompozisyon ("cami VE bulut birlikte") global-tek-vektorden cok daha iyi calisir
@@ -325,6 +331,62 @@ impl Db {
         tx.execute("UPDATE assets_fts SET ai = '' WHERE asset_id = ?1", params![asset_id])?;
         tx.commit()?;
         Ok(())
+    }
+
+    /// **BASARISIZ analiz denemesi** isareti (cop-korumasi eledi) — `ai_analyzed` damgasi YOK.
+    ///
+    /// Gerekce (kullanici itirazi 2026-08-15): cop-korumasi elenen varligi sessizce "bekleyen"
+    /// birakiyordu. Kullanicinin ekraninda 83.675 analizsiz varlik varken elenen 5 tanesi o yigina
+    /// karisiyor → "bekliyor" teknik olarak dogru ama kullanici ONLARI bir daha BULAMIYOR, dolayisi
+    /// ile "ne yaparsam duzelir"in cevabi yoktu. Bu isaret onlari GORUNUR ve SECILEBILIR yapar
+    /// (genel metadata faceti; `ai_attempt_failed` anahtari → sifir ek Rust filtre kodu).
+    ///
+    /// **`ai_analyzed` YAZILMAZ** (kasitli): varlik bekleyen kalmaya devam eder → daha yetenekli bir
+    /// modelle yeniden analiz edilebilir. Isaret yalnizca "denendi, sonuc alinamadi" bilgisidir.
+    ///
+    /// **FTS'e girmez**: aranabilir govde (`assets_fts.ai`) DOKUNULMAZ — bir basarisizlik kaydi arama
+    /// sonucunu kirletmemeli. Anahtarlar `ai_` on-ekli oldugundan (a) basarili bir analiz geldiginde
+    /// `set_ai_metadata`'nin `ai\_%` DELETE'i bunlari otomatik temizler, (b) re-ingest korur
+    /// (write.rs `ai_` haric tutar). Idempotent: onceki deneme kaydi ustune yazilir.
+    pub fn mark_analysis_attempt_failed(
+        &self,
+        asset_id: i64,
+        kind: &str,
+        model: &str,
+        at_ms: i64,
+    ) -> Result<(), DbError> {
+        let tx = self.conn.unchecked_transaction()?;
+        tx.execute(
+            r"DELETE FROM asset_metadata WHERE asset_id = ?1 AND key LIKE 'ai\_attempt\_%' ESCAPE '\'",
+            params![asset_id],
+        )?;
+        let mut ins = tx.prepare(
+            "INSERT INTO asset_metadata(asset_id, key, value_text, value_num) VALUES (?1, ?2, ?3, NULL)",
+        )?;
+        // Marker degeri sabit "1" (facet TEK satir gosterir); NEDEN ayri anahtarda durur → facet
+        // sayisi siniflara bolunmez ama teknik iz (hangi sinif/model/ne zaman) kaybolmaz.
+        ins.execute(params![asset_id, AI_ATTEMPT_FAILED_KEY, "1"])?;
+        ins.execute(params![asset_id, "ai_attempt_kind", kind])?;
+        ins.execute(params![asset_id, "ai_attempt_model", model])?;
+        ins.execute(params![asset_id, "ai_attempt_at", at_ms.to_string()])?;
+        drop(ins);
+        tx.commit()?;
+        Ok(())
+    }
+
+    /// "Denendi, sonuc alinamadi" aktif asset sayisi (isaret VAR, `ai_analyzed` YOK).
+    /// `ai_analyzed` dislamasi savunma amaclidir: basarili analiz zaten isareti siler, ama eski/yarim
+    /// kayitlarda ikisi bir arada bulunursa varlik "analizli" sayilmali (sayim cift gosterilmemeli).
+    pub fn failed_attempt_count(&self) -> Result<i64, DbError> {
+        Ok(self.conn.query_row(
+            "SELECT count(*) FROM asset_metadata m
+             JOIN assets a ON a.id = m.asset_id AND a.deleted_at IS NULL
+             WHERE m.key = ?1
+               AND NOT EXISTS (SELECT 1 FROM asset_metadata m2
+                               WHERE m2.asset_id = a.id AND m2.key = 'ai_analyzed')",
+            params![AI_ATTEMPT_FAILED_KEY],
+            |r| r.get(0),
+        )?)
     }
 
     /// AI-analizi olan (en az `ai_analyzed`) aktif asset sayisi.

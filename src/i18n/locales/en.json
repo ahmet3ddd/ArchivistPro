@@ -314,9 +314,16 @@
       "context_overflow": "The image and instructions exceeded the model's capacity. Choose a model with a larger context.",
       "model_missing": "The selected model was not found in Ollama. Pick an installed model under Settings → AI.",
       "out_of_memory": "Not enough memory. Choose a smaller model or close other applications.",
-      "unusable_output": "The model could not produce a meaningful analysis, so nothing was saved. The images are still pending — pick a more capable model under Settings → AI and try again.",
+      "unusable_output": "The model could not produce a meaningful analysis, so nothing was saved. The images were left untouched and are marked “attempted, no result”.",
       "write_failed": "The analysis was produced but could not be written to the archive.",
       "other": "The analysis could not be completed."
+    },
+    "unusable": {
+      "partial": "{{analyzed, number}} of {{total, number}} images were analyzed and saved to the archive. For {{unusable, number}} the model produced no usable result: those images were NOT written to the archive, their files were left untouched, and they are marked “attempted, no result”.",
+      "none": "Nothing was saved — analyzing the {{unusable, number}} selected image(s) produced no usable result. The files were left untouched; they are marked “attempted, no result”.",
+      "advice_proven": "The selected model ({{model}}) is a measured-good one for this job; these images are most likely undescribable (logos, blank or very small images, plain text screens). Retrying may not help — you do not have to switch models.",
+      "advice_weak": "The selected model ({{model}}) is measured as inadequate for this job. Pick a more capable model under Settings → AI and retry these images.",
+      "show_action": "Show these images"
     }
   },
   "ai_vision": {
@@ -877,7 +884,8 @@
     "ai_analyzed": "AI visual analysis status",
     "ai_all": "All",
     "ai_yes": "Analyzed",
-    "ai_no": "Not analyzed"
+    "ai_no": "Not analyzed",
+    "ai_attempt_failed": "Attempted, no result"
   },
   "facet_config": {
     "open": "Customize filters",

@@ -25,7 +25,10 @@ import { buildListOpts, dateToEpoch } from "../../hooks/listOpts";
 import { useIpcQuery } from "../../hooks/useIpcQuery";
 import { useSession } from "../../hooks/useSession";
 import { useUiStore } from "../../store/useUiStore";
-import { visionErrorKey } from "../settings/visionErrors";
+import { useFailedAttemptFilter } from "../facets/aiAttempt";
+import type { VisionOutcomeNotice } from "../settings/visionErrors";
+import { visionOutcomeNotice } from "../settings/visionErrors";
+import { useVisionOutcomeToast } from "../settings/useVisionOutcomeToast";
 import { useToast } from "../toast/useToast";
 
 function baseName(p: string): string {
@@ -33,9 +36,10 @@ function baseName(p: string): string {
   return parts[parts.length - 1] || p;
 }
 
-/** Son kosunun basarisizlik ozeti: anlasilir sinif + ham detay + devre-kesici bilgisi. */
+/** Son kosunun basarisizlik ozeti: anlasilir (SAYILI) cumle + ham detay + devre-kesici bilgisi. */
 interface VisionFailure {
-  kind: string;
+  /** Kosu raporundan uretilen bildirim (metin anahtarlari + sayilar + ton). */
+  notice: VisionOutcomeNotice;
   detail: string | null;
   /** Devre kesici devreye girdiyse ard arda gelen hata sayisi; yoksa `null`. */
   abortedAfter: number | null;
@@ -47,6 +51,8 @@ export function VisionAnalysisCard({ model }: { model: string }) {
   const toast = useToast();
   const bumpData = useUiStore((s) => s.bumpData);
   const bumpFacets = useUiStore((s) => s.bumpFacets);
+  const failedAttempts = useFailedAttemptFilter();
+  const notifyVisionOutcome = useVisionOutcomeToast();
 
   const [tick, setTick] = useState(0);
   const { data, loading, error, refetch } = useIpcQuery<ImageAnalysisStatus>(
@@ -239,8 +245,9 @@ export function VisionAnalysisCard({ model }: { model: string }) {
         const report = await ipc.runImageAnalysis(model, scope, (p) => setProgress(p));
         const abortedAfter = report.abortedAfterConsecutiveFailures ?? null;
         if (abortedAfter) {
-          // Devre kesici: "basarili" gostermek yaniltici olurdu — kosu yarida kesildi.
-          toast.error(t("vision_index.aborted_toast", { failures: abortedAfter }));
+          // Devre kesici: "basarili" gostermek yaniltici olurdu — kosu yarida kesildi. Durdurma
+          // cumlesi bildirimin ON-EKI olarak gelir; ardindan elenen dosyalarin ne oldugu + eylem.
+          notifyVisionOutcome(report);
         } else if (report.stopped) {
           toast.info(t("vision_index.stopped_toast", { analyzed: report.analyzed }));
         } else {
@@ -251,7 +258,7 @@ export function VisionAnalysisCard({ model }: { model: string }) {
         setFailure(
           report.failed > 0
             ? {
-                kind: (report.errorKind as string | undefined) ?? "other",
+                notice: visionOutcomeNotice(report),
                 detail: report.sampleError ?? null,
                 abortedAfter,
               }
@@ -268,7 +275,7 @@ export function VisionAnalysisCard({ model }: { model: string }) {
         setTick((x) => x + 1);
       }
     },
-    [model, t, toast, bumpData, bumpFacets],
+    [model, t, toast, bumpData, bumpFacets, notifyVisionOutcome],
   );
 
   // Aktif kosuyu durdur ("İptal") — backend bayrak set eder, kosu araya girip biter (rapor stopped=true).
@@ -444,13 +451,32 @@ export function VisionAnalysisCard({ model }: { model: string }) {
               />
             )}
             {failure && !running && (
-              <div className="flex flex-col gap-1.5 rounded-md border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-danger">
+              // Ton bildirimin kendisinden gelir: bir kismi kaydedilmisse bu bir HATA paneli degil,
+              // bilgi panelidir (kullanici itirazi 2026-08-15 — kirmizi seride "hepsi bosa gitti"
+              // okunuyordu).
+              <div
+                className={
+                  failure.notice.kind === "error"
+                    ? "flex flex-col gap-1.5 rounded-md border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-danger"
+                    : "flex flex-col gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-2 text-xs text-text-secondary"
+                }
+              >
                 {failure.abortedAfter !== null && (
                   <p className="font-medium">
                     {t("vision_index.aborted_notice", { failures: failure.abortedAfter })}
                   </p>
                 )}
-                <p>{t(visionErrorKey(failure.kind))}</p>
+                <p>
+                  {t(failure.notice.key, failure.notice.params)}
+                  {failure.notice.adviceKey
+                    ? ` ${t(failure.notice.adviceKey, failure.notice.params)}`
+                    : ""}
+                </p>
+                {failure.notice.markedForRetry && (
+                  <button type="button" className={filterBtn} onClick={failedAttempts.show}>
+                    {t("vision_index.unusable.show_action")}
+                  </button>
+                )}
                 {failure.detail && (
                   <details>
                     <summary className="cursor-pointer text-text-secondary">

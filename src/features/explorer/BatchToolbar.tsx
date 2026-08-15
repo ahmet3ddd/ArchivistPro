@@ -18,7 +18,7 @@ import { BulkProjectStatusModal } from "../assets/detail/BulkProjectStatusModal"
 import { ProjectAssignModal } from "../projects/ProjectAssignModal";
 import { useBgTaskStore } from "../bgtask/bgTaskStore";
 import { getDefaultVisionModel } from "../settings/aiSettings";
-import { visionErrorKey } from "../settings/visionErrors";
+import { useVisionOutcomeToast } from "../settings/useVisionOutcomeToast";
 import { OrganizeModal } from "../refile/OrganizeModal";
 import { useRefileMove } from "../refile/useRefileMove";
 import { useToast } from "../toast/useToast";
@@ -51,6 +51,7 @@ export function BatchToolbar({
   const { t } = useTranslation();
   const { canWrite, isAdmin } = useSession();
   const toast = useToast();
+  const notifyVisionOutcome = useVisionOutcomeToast();
   const selectedIds = useUiStore((s) => s.selectedIds);
   const setSelectedMany = useUiStore((s) => s.setSelectedMany);
   const clearSelected = useUiStore((s) => s.clearSelected);
@@ -176,8 +177,11 @@ export function BatchToolbar({
       );
       const abortedAfter = report.abortedAfterConsecutiveFailures ?? null;
       if (abortedAfter) {
-        // Devre kesici kosuyu yarida kesti → "tamamlandi" gostermek yaniltici olurdu.
-        toast.error(t("vision_index.aborted_toast", { failures: abortedAfter }));
+        // Devre kesici kosuyu yarida kesti → "tamamlandi" gostermek yaniltici olurdu. AMA yalniz
+        // "art arda N hata" demek de yetmez (canli dogrulama 2026-08-15): o N dosyaya ne oldugu,
+        // isaretlendikleri ve nerede bulunacaklari da soylenmeli → bildirim tek yerden uretilir
+        // (durdurma cumlesi on-ek olarak icinde).
+        notifyVisionOutcome(report);
       } else if (report.stopped) {
         toast.info(t("vision_index.stopped_toast", { analyzed: report.analyzed }));
       } else {
@@ -186,7 +190,9 @@ export function BatchToolbar({
         );
       }
       // Ham Ollama govdesi DEGIL, anlasilir sinif cumlesi (ham metin `tauri dev` konsolunda).
-      if (report.failed > 0 && !abortedAfter) toast.error(t(visionErrorKey(report.errorKind)));
+      // Eleme (`unusable_output`) durumunda cumle SAYILI kurulur ve elenen gorselleri gosteren
+      // bir eylem butonu tasir — "bekliyor" demek yerine BEKLEYENI gosterir.
+      if (report.failed > 0 && !abortedAfter) notifyVisionOutcome(report);
       bumpData(); // analiz edilenler artik aranabilir → liste tazelensin
       bumpFacets(); // vision-etiketleri facet'lere yansisin
     } catch (e: unknown) {

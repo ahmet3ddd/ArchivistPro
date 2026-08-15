@@ -5,6 +5,37 @@ kaynağı budur.** Format [Keep a Changelog](https://keepachangelog.com/tr/1.0.0
 tabanlıdır; sürüm numaralandırması [Semantic Versioning](https://semver.org/)
 kurallarına göre ilerler.
 
+## [3.4.0] — 2026-08-15 — Görsel Analizinde Şeffaflık
+
+AI görsel analizi bir görseli betimleyemediğinde ne olduğunu **görünür** kılan
+sürüm. Davranış değişmedi — kullanılamaz bir analiz arşive hâlâ yazılmaz — ama
+artık hangi görsellerin elendiği bulunabiliyor, bildirimler sayı veriyor ve
+tavsiye seçili modelin ölçülmüş kalitesine göre değişiyor. Veri biçimi
+değişmedi; mevcut arşivler olduğu gibi açılır.
+
+### Eklenen (Added)
+- **"Denendi, sonuç alınamadı" filtresi:** modelin kullanılabilir sonuç
+  üretemediği görseller işaretlenir ve sol taraftaki *AI görsel analiz durumu*
+  bölümünden tek tıkla listelenir. Bu görseller analiz sırasında beklemeye
+  devam eder; daha yetenekli bir modelle yeniden denenebilirler.
+- Analiz bildirimlerinde **"Bu görselleri göster"** düğmesi — filtreyi doğrudan
+  o görsellere daraltır.
+
+### Değişen (Changed)
+- Analiz koşusu bildirimi artık **sayı veriyor**: "60 görselden 55'i analiz
+  edilip arşive kaydedildi, 5 tanesinde…". Önceki tek tip uyarı, koşunun
+  büyük kısmı başarılı olsa bile tüm işin boşa gittiği izlenimini veriyordu.
+- Bir görsel bile kaydedildiyse bildirim hata değil **bilgi** tonunda gösterilir.
+- Tavsiye cümlesi modelin **ölçülmüş kalitesine** göre ayrışır: kanıtlanmış bir
+  model kullanılıyorsa "model değiştirin" denmez; bazı görsellerin (logo, boş
+  ya da çok küçük görüntü, düz metin ekranı) betimlenemeyeceği söylenir.
+- Devre kesici koşuyu yarıda kestiğinde artık yalnızca "art arda N hata"
+  denmiyor; elenen dosyaların akıbeti ve ne yapılabileceği de bildiriliyor.
+
+### Düzeltilen (Fixed)
+- Uzun bildirim metinleri, yanlarındaki eylem düğmesi yüzünden satır başına
+  birkaç kelimeye sıkışıp okunamaz hale geliyordu; düğme artık metnin altında.
+
 ## [3.3.3] — 2026-08-13 — Yeni Nesil Kod Tabanı (H3)
 
 Bu sürüm, uygulamanın yeniden yazılmış **yeni nesil kod tabanının** ilk halka

@@ -353,3 +353,108 @@ fn dominant_colors_survive_all_asset_row_paths() {
         .unwrap();
     assert_palette(image.items.iter().find(|row| row.id == colored).unwrap());
 }
+
+// ---------------------------------------------------------------------------
+// "Denendi, sonuc alinamadi" isareti (`ai_attempt_failed`) — cop-korumasi elemesi.
+//
+// Gerekce (kullanici itirazi 2026-08-15): cop-korumasi elenen gorseli sessizce bekleyen
+// birakiyordu; kullanici 83 binlik analizsiz yigin icinde onlari bir daha BULAMIYORDU. Isaret
+// (a) varligi BEKLEYEN birakmali (yeniden analiz mumkun kalsin), (b) aranabilir govdeyi
+// KIRLETMEMELI, (c) basarili analiz gelince KENDILIGINDEN silinmeli.
+// ---------------------------------------------------------------------------
+
+/// Isaret varligi ANALIZLI yapmaz: `ai_analyzed` yok → bekleyen sayimda KALIR (yeniden denenebilir).
+#[test]
+fn failed_attempt_marker_keeps_asset_pending() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let before = db.pending_analysis_count().unwrap();
+
+    db.mark_analysis_attempt_failed(a, "unusable_output", "qwen2.5vl:3b", 1_700_000_000_000)
+        .unwrap();
+
+    assert_eq!(db.analyzed_count().unwrap(), 0, "isaret ANALIZ degildir");
+    assert_eq!(db.pending_analysis_count().unwrap(), before, "varlik bekleyen KALMALI");
+    assert_eq!(db.failed_attempt_count().unwrap(), 1);
+    assert!(!db.get_asset(a).unwrap().unwrap().asset.ai_analyzed);
+}
+
+/// Isaret genel metadata faceti ile SECILEBILIR olmali (UI'daki "denendi, sonuc alinamadi"
+/// filtresinin dayanagi) — bu sayede kullanici tam o gorselleri isaretleyip yeniden deneyebilir.
+#[test]
+fn failed_attempt_marker_is_filterable_and_countable() {
+    use archivist_db::MetaFilter;
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let failed = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let untouched = seed(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    db.mark_analysis_attempt_failed(failed, "unusable_output", "qwen2.5vl:3b", 1).unwrap();
+
+    let page = db
+        .list_assets(&ListOpts {
+            page_size: 50,
+            metadata: vec![MetaFilter {
+                key: archivist_db::AI_ATTEMPT_FAILED_KEY.to_string(),
+                values: vec!["1".into()],
+            }],
+            ..Default::default()
+        })
+        .unwrap();
+    let ids: Vec<i64> = page.items.iter().map(|r| r.id).collect();
+    assert_eq!(ids, vec![failed], "yalniz denenip elenen gorsel donmeli");
+    assert!(!ids.contains(&untouched));
+
+    let facets = db.metadata_facets(archivist_db::AI_ATTEMPT_FAILED_KEY, 10).unwrap();
+    let count: i64 = facets.iter().map(|f| f.count).sum();
+    assert_eq!(count, 1, "facet sayimi UI radyo satirini besler");
+}
+
+/// Basarili analiz gelince isaret KENDILIGINDEN silinir (`set_ai_metadata`'nin `ai\_%` DELETE'i) →
+/// "denendi, sonuc alinamadi" listesi bayat kalmaz.
+#[test]
+fn successful_analysis_clears_failed_attempt_marker() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    db.mark_analysis_attempt_failed(a, "unusable_output", "moondream", 1).unwrap();
+    assert_eq!(db.failed_attempt_count().unwrap(), 1);
+
+    mark_analyzed(&db, a);
+
+    assert_eq!(db.failed_attempt_count().unwrap(), 0, "basarili analiz isareti temizlemeli");
+    assert_eq!(db.analyzed_count().unwrap(), 1);
+}
+
+/// Isaret ARANABILIR govdeye (assets_fts.ai) girmez — bir basarisizlik kaydi arama sonucunu
+/// kirletmemeli (`ai_model`/`ai_analyzed_at` ile ayni gerekce).
+#[test]
+fn failed_attempt_marker_stays_out_of_search_body() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    db.mark_analysis_attempt_failed(a, "unusable_output", "qwen2.5vl:3b", 1).unwrap();
+
+    for needle in ["unusable_output", "qwen2.5vl"] {
+        let hits = db
+            .list_assets(&ListOpts {
+                page_size: 50,
+                query: Some(needle.into()),
+                ..Default::default()
+            })
+            .unwrap();
+        assert!(hits.items.is_empty(), "{needle} aramaya SIZMAMALI");
+    }
+}
+
+/// Tekrar tekrar denenirse kayit BIRIKMEZ (idempotent): son deneme ustune yazar.
+#[test]
+fn failed_attempt_marker_is_idempotent() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    db.mark_analysis_attempt_failed(a, "unusable_output", "moondream", 1).unwrap();
+    db.mark_analysis_attempt_failed(a, "unusable_output", "qwen2.5vl:3b", 2).unwrap();
+
+    assert_eq!(db.failed_attempt_count().unwrap(), 1);
+    let detail = db.get_asset(a).unwrap().unwrap();
+    let model = detail.metadata.iter().find(|m| m.key == "ai_attempt_model").unwrap();
+    assert_eq!(model.value_text.as_deref(), Some("qwen2.5vl:3b"), "son deneme kalmali");
+    let markers = detail.metadata.iter().filter(|m| m.key.starts_with("ai_attempt_")).count();
+    assert_eq!(markers, 4, "anahtar seti birikmemeli (failed/kind/model/at)");
+}

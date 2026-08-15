@@ -17,7 +17,7 @@ import type { AssetRow, MetaEntry } from "../../../ipc/client";
 import { ipc } from "../../../ipc/client";
 import { useUiStore } from "../../../store/useUiStore";
 import { getDefaultVisionModel } from "../../settings/aiSettings";
-import { visionErrorKey } from "../../settings/visionErrors";
+import { useVisionOutcomeToast } from "../../settings/useVisionOutcomeToast";
 import { useToast } from "../../toast/useToast";
 
 interface Props {
@@ -99,6 +99,7 @@ function ChipField({ label, items }: { label: string; items: string[] }) {
 export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
   const { t, i18n } = useTranslation();
   const toast = useToast();
+  const notifyVisionOutcome = useVisionOutcomeToast();
   const { isAdmin } = useSession();
   const bumpData = useUiStore((s) => s.bumpData);
   const bumpFacets = useUiStore((s) => s.bumpFacets);
@@ -143,8 +144,10 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
       if (report.stopped) {
         toast.info(t("ai_vision.stopped_toast"));
       } else if (report.failed > 0) {
-        // Ham Ollama/HTTP govdesi yerine anlasilir sinif cumlesi (bkz `visionErrors`).
-        toast.error(t(visionErrorKey(report.errorKind)));
+        // Ham Ollama/HTTP govdesi yerine anlasilir SAYILI cumle (bkz `visionErrors`). Tek gorselde
+        // de aynidir: "kaydedilen olmadi, dosyaya dokunulmadi, isaretlendi" — belirsiz bir
+        // "sonuc kaydedilmedi" yerine ne oldugu ve ne yapilabilecegi soylenir.
+        notifyVisionOutcome(report);
       } else {
         toast.success(t("ai_vision.done_toast"));
       }
@@ -158,7 +161,7 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
       runningRef.current = false;
       setRunning(false);
     }
-  }, [asset.id, t, toast, onRefetch, bumpData, bumpFacets]);
+  }, [asset.id, t, toast, onRefetch, bumpData, bumpFacets, notifyVisionOutcome]);
 
   const cancel = useCallback(() => {
     void ipc.stopImageAnalysis().catch(() => undefined);

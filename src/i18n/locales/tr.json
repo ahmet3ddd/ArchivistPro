@@ -312,9 +312,16 @@
       "context_overflow": "Görsel ve yönerge modelin kapasitesini aştı. Daha geniş kapasiteli bir model seçin.",
       "model_missing": "Seçili model Ollama'da bulunamadı. Ayarlar → AI'dan yüklü bir model seçin.",
       "out_of_memory": "Bellek yetmedi. Daha küçük bir model seçin veya açık uygulamaları kapatın.",
-      "unusable_output": "Model anlamlı bir analiz üretemedi; sonuç kaydedilmedi. Görseller bekliyor — Ayarlar → AI'dan daha yetenekli bir model seçip yeniden deneyin.",
+      "unusable_output": "Model anlamlı bir analiz üretemedi; sonuç kaydedilmedi. Görsellere dokunulmadı ve «denendi, sonuç alınamadı» olarak işaretlendiler.",
       "write_failed": "Analiz üretildi ama arşive yazılamadı.",
       "other": "Analiz tamamlanamadı."
+    },
+    "unusable": {
+      "partial": "{{total, number}} görselden {{analyzed, number}} tanesi analiz edilip arşive kaydedildi. {{unusable, number}} tanesinde model kullanılabilir bir sonuç üretemedi: o görseller arşive YAZILMADI, dosyalarına dokunulmadı ve «denendi, sonuç alınamadı» olarak işaretlendi.",
+      "none": "Kaydedilen olmadı — seçilen {{unusable, number}} görselin analizinden kullanılabilir sonuç çıkmadı. Dosyalara dokunulmadı; «denendi, sonuç alınamadı» olarak işaretlendiler.",
+      "advice_proven": "Seçili model ({{model}}) bu iş için ölçülmüş-sağlam bir modeldir; bu görseller büyük olasılıkla betimlenemeyecek türdendir (logo, boş ya da çok küçük görüntü, düz metin ekranı). Yeniden denemek sonuç vermeyebilir — model değiştirmek zorunda değilsiniz.",
+      "advice_weak": "Seçili model ({{model}}) bu iş için ölçülmüş-yetersiz. Ayarlar → AI'dan daha yetenekli bir model seçip bu görselleri yeniden deneyin.",
+      "show_action": "Bu görselleri göster"
     }
   },
   "ai_vision": {
@@ -875,7 +882,8 @@
     "ai_analyzed": "AI görsel analiz durumu",
     "ai_all": "Tümü",
     "ai_yes": "Analiz edilmiş",
-    "ai_no": "Analiz edilmemiş"
+    "ai_no": "Analiz edilmemiş",
+    "ai_attempt_failed": "Denendi, sonuç alınamadı"
   },
   "facet_config": {
     "open": "Filtreleri özelleştir",

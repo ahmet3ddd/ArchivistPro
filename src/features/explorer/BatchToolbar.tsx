@@ -184,6 +184,11 @@ export function BatchToolbar({
         notifyVisionOutcome(report);
       } else if (report.stopped) {
         toast.info(t("vision_index.stopped_toast", { analyzed: report.analyzed }));
+      } else if ((report.skippedNoPreview ?? 0) > 0) {
+        // Secilen dosyalarin bir kismi (ya da tumu) onizlemesiz → kuyruga hic girmedi.
+        // "0 analiz edildi, 0 basarisiz" demek BASARI gibi okunurdu (kullanici bulgusu
+        // 2026-08-16) → ne oldugunu ve ne yapilacagini soyleyen bildirim.
+        notifyVisionOutcome(report);
       } else {
         toast.success(
           t("batch.analyze_ai_done", { analyzed: report.analyzed, failed: report.failed }),

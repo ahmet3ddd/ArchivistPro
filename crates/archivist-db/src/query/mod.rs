@@ -333,8 +333,10 @@ pub struct ListOpts {
     pub path_prefix: Option<String>,
     /// AI vision-analiz durumuna gore TRI-STATE filtre: **None = filtre yok** (varsayilan;
     /// absent/yok gelirse serde default None) · **Some(true) = yalniz analizli** (`ai_analyzed`
-    /// marker'i olanlar) · **Some(false) = yalniz analizsiz**. Frontend snake_case `ai_analyzed`
-    /// gonderir (alan yoksa → None). Diger facet'lerle AND (facet-arasi kesisim).
+    /// marker'i olanlar) · **Some(false) = yalniz HIC ANALIZE GIRMEMIS gorseller** (analizsiz +
+    /// denenmemis + thumbnail'i olan + vision-skip'siz; marker'in duz degili DEGIL — gerekce
+    /// `FILTER_FRAG` doc'unda). Frontend snake_case `ai_analyzed` gonderir (alan yoksa → None).
+    /// Diger facet'lerle AND (facet-arasi kesisim).
     #[serde(default)]
     pub ai_analyzed: Option<bool>,
     /// Gorsel MEDYA turu faceti — **tekil** deger filtresi (`ai_gorsel_turu` EAV token'i):
@@ -410,8 +412,19 @@ pub(crate) const DOMINANT_COLORS_EXPR: &str =
 /// `%`/`_`/`\` → `\X`) bir on-ek; NULL = filtre yok. `ESCAPE '\'` ile literal eslesme garanti.
 ///
 /// **`:ai_analyzed` TRI-STATE** (Option<bool> → Option<i64>): NULL = filtre yok (varsayilan) ·
-/// 1 = yalniz analizli (`ai_analyzed` marker VAR) · 0 = yalniz analizsiz (marker YOK). Fragman
-/// `(EXISTS(...)) = (:ai_analyzed = 1)` her zaman-var; param NULL iken kisa-devre eder.
+/// 1 = yalniz analizli (`ai_analyzed` marker VAR) · 0 = **"hic analize girmemis"** — bkz asagi.
+/// Fragman `CASE WHEN :ai_analyzed = 1` her zaman-var; param NULL iken kisa-devre eder.
+///
+/// ⚠️ **0 dali marker'in duz DEGILI DEGILDIR** (kullanici itirazi 2026-08-16). Once oyleydi ve
+/// sidebar'daki "Analiz edilmemis" satiri, (a) denenip cop-korumasinca elenmis gorselleri ve
+/// (b) thumbnail'i olmadigi icin gorsel-analize ASLA giremeyecek PDF/DWG gibi dosyalari da
+/// donduruyordu — satirin vaadi ise "hic analize girmemis GORSELLER"di. 0 dali artik
+/// `pending_count_with(never_attempted = true)` ile BIREBIR ayni kumeyi kurar:
+/// analiz yok · `ai_attempt_failed` isareti yok · thumbnail VAR · vision-skip'siz (+ FILTER_FRAG'in
+/// bas kosulu `deleted_at IS NULL`). Sayi ile filtrenin ayni seyi gostermesi bu esitlige baglidir;
+/// biri degisirse digeri de degismeli (`ai_status.rs` testleri ikisini birlikte kilitler).
+/// "Denendi, sonuc alinamadi" ayri bir satirdir ve GENEL metadata filtresiyle (`:metadata`,
+/// `ai_attempt_failed`) calisir → ikisi artik kesismez (birbirini dislayan bolme).
 ///
 /// **`:gorsel_turu` TEKIL** (Option<String>): NULL = filtre yok (varsayilan) · dolu iken yalniz
 /// `ai_gorsel_turu` EAV degeri esit (`= :gorsel_turu`) asset'ler (`Fotoğraf`|`Render`|`Doku`).
@@ -457,8 +470,16 @@ pub(crate) const FILTER_FRAG: &str = "a.deleted_at IS NULL
         AND (:version IS NULL OR a.version_label IN (SELECT value FROM json_each(:version)))
         AND (:dyear IS NULL OR substr(a.deadline, 1, 4) IN (SELECT value FROM json_each(:dyear)))
         AND (:path_prefix IS NULL OR a.path LIKE :path_prefix || '%' ESCAPE '\\')
-        AND (:ai_analyzed IS NULL OR (EXISTS (SELECT 1 FROM asset_metadata m2
-                WHERE m2.asset_id = a.id AND m2.key = 'ai_analyzed')) = (:ai_analyzed = 1))
+        AND (:ai_analyzed IS NULL OR CASE WHEN :ai_analyzed = 1
+                THEN EXISTS (SELECT 1 FROM asset_metadata m2
+                        WHERE m2.asset_id = a.id AND m2.key = 'ai_analyzed')
+                ELSE NOT EXISTS (SELECT 1 FROM asset_metadata m2
+                        WHERE m2.asset_id = a.id
+                          AND m2.key IN ('ai_analyzed', 'ai_attempt_failed'))
+                     AND EXISTS (SELECT 1 FROM asset_thumbnails th WHERE th.asset_id = a.id)
+                     AND NOT EXISTS (SELECT 1 FROM index_skips s
+                        WHERE s.asset_id = a.id AND s.stage = 'vision')
+                END)
         AND (:gorsel_turu IS NULL OR EXISTS (SELECT 1 FROM asset_metadata mg
                 WHERE mg.asset_id = a.id AND mg.key = 'ai_gorsel_turu' AND mg.value_text = :gorsel_turu))
         AND (:metadata IS NULL OR NOT EXISTS (
@@ -567,7 +588,8 @@ pub(crate) struct FilterBinds {
     mod_before: Option<i64>,
     path_prefix: Option<String>,
     /// Tri-state AI-analiz filtresi: None → NULL (filtre yok) · Some(true) → 1 (yalniz analizli) ·
-    /// Some(false) → 0 (yalniz analizsiz). `FILTER_FRAG` `:ai_analyzed` dali bunu tuketir.
+    /// Some(false) → 0 (yalniz hic analize girmemis gorseller; bkz `FILTER_FRAG` doc'u).
+    /// `FILTER_FRAG` `:ai_analyzed` dali bunu tuketir.
     ai_analyzed: Option<i64>,
     /// Gorsel medya turu filtresi (tekil): None → NULL (filtre yok) · Some(token) → yalniz o
     /// `ai_gorsel_turu` EAV degeri. `FILTER_FRAG` `:gorsel_turu` dali bunu tuketir (parametre).
@@ -703,5 +725,18 @@ mod tests {
         assert_eq!(escape_like_prefix(Some("/50%")).as_deref(), Some(r"/50\%"));
         // Ters-bolu once gelir (kendisi de escape).
         assert_eq!(escape_like_prefix(Some(r"C:\x")).as_deref(), Some(r"C:\\x"));
+    }
+
+    /// `FILTER_FRAG`'in `:ai_analyzed = 0` dali iki anahtari SABIT olarak gomer (const bir `&str`
+    /// oldugu icin `format!` kullanilamaz). Bu test o gomulu metinleri asil sabitlere baglar →
+    /// biri yeniden adlandirilirsa filtre sessizce hicbir seyi eslememeye baslamak yerine
+    /// derleme-sonrasi ilk testte patlar.
+    #[test]
+    fn filter_frag_ai_branch_matches_constants() {
+        assert_eq!(crate::AI_ATTEMPT_FAILED_KEY, "ai_attempt_failed");
+        assert_eq!(crate::index_skips::IndexStage::Vision.as_str(), "vision");
+        assert!(FILTER_FRAG.contains("'ai_analyzed', 'ai_attempt_failed'"));
+        assert!(FILTER_FRAG.contains("s.stage = 'vision'"));
+        assert!(FILTER_FRAG.contains("FROM asset_thumbnails th"));
     }
 }

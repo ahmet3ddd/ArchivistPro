@@ -143,6 +143,10 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
       });
       if (report.stopped) {
         toast.info(t("ai_vision.stopped_toast"));
+      } else if ((report.skippedNoPreview ?? 0) > 0) {
+        // Bu dosyanin onizlemesi yok → analiz kuyruguna hic girmedi. Sessizce "tamamlandi"
+        // demek yerine nedenini ve cozumunu soyle (kullanici bulgusu 2026-08-16).
+        notifyVisionOutcome(report);
       } else if (report.failed > 0) {
         // Ham Ollama/HTTP govdesi yerine anlasilir SAYILI cumle (bkz `visionErrors`). Tek gorselde
         // de aynidir: "kaydedilen olmadi, dosyaya dokunulmadi, isaretlendi" — belirsiz bir

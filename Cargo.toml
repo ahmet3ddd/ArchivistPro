@@ -52,7 +52,12 @@ zip = { version = "2", default-features = false, features = ["deflate"] }
 encoding_rs = "0.8"
 quick-xml = "0.39"
 tempfile = "3"
-image = { version = "0.24", default-features = false, features = ["jpeg", "png", "bmp", "tiff", "tga", "pnm", "gif"] }
+# ⚠️ `default-features = false` → BURADA SAYILMAYAN her format SESSIZCE decode edilemez.
+# webp + ico 2026-08-16'da eklendi: kullanicinin arsivinde 45 webp ve 9 ico dosyasinin
+# hicbirinde onizleme yoktu ve neden gorunmuyordu — extension listesine eklemek YETMEZ,
+# feature de acik olmali. Yeni bir raster format destegi eklerken ikisi birlikte gider
+# (bkz `ImageExtractor::extensions` + `image_formats_cover_declared_extensions` testi).
+image = { version = "0.24", default-features = false, features = ["jpeg", "png", "bmp", "tiff", "tga", "pnm", "gif", "webp", "ico"] }
 kamadak-exif = "0.5"
 winreg = "0.55"
 base64 = "0.22"

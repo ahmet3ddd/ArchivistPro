@@ -1,6 +1,6 @@
 # ArchivistPro — システム管理者向けインストールガイド
 
-> **バージョン:** 3.4.0 · **更新日:** 2026-08-15 · **プラットフォーム:** Windows 10/11 (64-bit)
+> **バージョン:** 3.5.0 · **更新日:** 2026-08-16 · **プラットフォーム:** Windows 10/11 (64-bit)
 >
 > 手順を追った説明は **[初心者向けガイド](INSTALL_BEGINNER_JA.md)** へ。
 
@@ -8,10 +8,10 @@
 
 ```powershell
 # ユーザーレベル・サイレント (推奨):
-ArchivistPro_3.4.0_x64-setup.exe /S
+ArchivistPro_3.5.0_x64-setup.exe /S
 
 # マシンレベル (意図的な選択 — 下の表を参照):
-msiexec /i ArchivistPro_3.4.0_x64_en-US.msi /qn
+msiexec /i ArchivistPro_3.5.0_x64_en-US.msi /qn
 ```
 
 コア機能 (スキャン、全文検索、プレビュー、重複検出) は**単一 exe で完全
@@ -133,4 +133,4 @@ DWG のレイヤー/ブロック抽出が充実します。なくても内蔵の
   [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - ソースコード: https://github.com/ahmet3ddd/ArchivistPro
 
-*最終更新: 2026-08-15 (v3.4.0)。*
+*最終更新: 2026-08-16 (v3.5.0)。*

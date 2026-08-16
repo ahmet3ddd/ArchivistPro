@@ -350,9 +350,17 @@ export async function installTauriMock(page: Page, opts: TauriMockOptions = {}):
       image_analysis_status: () => {
         const active = d.assets.filter((asset) => !trashed.has(asset.id));
         const analyzed = active.filter((asset) => Boolean(asset.ai_analyzed)).length;
+        const pending = active.length - analyzed;
+        // Gercek sunucu gibi: "denendi, sonuc alinamadi" bekleyenin bir ALT KUMESI ama "analiz
+        // edilmemis"ten AYRIDIR (ikisi kesismez). Mock veride isaretli asset yok → 0.
+        const attemptFailed = active.filter((asset) =>
+          Boolean((asset as { ai_attempt_failed?: unknown }).ai_attempt_failed),
+        ).length;
         return {
           analyzed,
-          pending: active.length - analyzed,
+          pending,
+          pendingNeverAttempted: pending - attemptFailed,
+          attemptFailed,
           total: active.length,
           embedReady: true,
         };

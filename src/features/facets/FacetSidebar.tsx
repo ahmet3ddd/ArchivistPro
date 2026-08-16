@@ -144,12 +144,16 @@ export function FacetSidebar() {
   };
 
   const total = extFacetsAll.reduce((sum, f) => sum + f.count, 0);
-  const analyzedCount = aiAnalysisStatus
-    ? Math.min(total, Math.max(0, aiAnalysisStatus.analyzed))
-    : null;
-  const notAnalyzedCount = analyzedCount == null ? null : Math.max(0, total - analyzedCount);
-  // "Denendi, sonuc alinamadi" — `notAnalyzedCount`un ALT KUMESI (ondan cikarilmaz: gorseller
-  // gercekten hala analizsizdir; bu satir yalniz onlarin BULUNABILIR kismini gosterir).
+  // AI-durum satirlarinin sayilari SUNUCUDAN gelir; hicbiri baska bir sayidan CIKARILARAK
+  // turetilmez (kullanici itirazi 2026-08-16). Onceden "analiz edilmemis" = `total - analyzed`
+  // idi ve iki ayri hata yapiyordu: (a) denenip cop-korumasinca elenmis gorselleri de sayiyordu,
+  // (b) thumbnail'i olmadigi icin gorsel-analize ASLA giremeyecek PDF/DWG gibi dosyalari da
+  // sayiyordu. Her satirin sayisi artik kendi filtresinin dondurdugu kumeyle BIREBIR ayni
+  // (`ai_status.rs` → `ai_status_counts_match_their_filters` bunu kilitler).
+  const analyzedCount = aiAnalysisStatus?.analyzed ?? null;
+  // "Analiz edilmemis" = HIC ANALIZE GIRMEMIS. "Denendi, sonuc alinamadi" artik bunun icinde
+  // DEGIL — ikisi birbirini dislar ve toplamlari bekleyen kumeyi verir.
+  const notAnalyzedCount = aiAnalysisStatus?.pendingNeverAttempted ?? null;
   const attemptFailedCount = aiAnalysisStatus?.attemptFailed ?? null;
   const extFacets = extFacetsAll.filter((f) => f.value != null);
   const gorselTuruRows = gorselTuruFacets.filter((f) => f.value != null && f.count > 0);
@@ -306,11 +310,15 @@ export function FacetSidebar() {
             clearLabel={clearSection}
           >
             <div role="radiogroup" aria-label={t("facet.ai_analyzed")} className="px-1 pb-1">
+              {/* "Tumu" = bu facet'te FILTRE YOK → sayisi arsiv toplamidir (tiklaninca gelen
+                  liste de odur). Bilerek diger uc satirin toplami DEGILDIR: onlar yalniz
+                  gorsel-analize girebilen evreni boler, bu satir tum dosyalari kapsar. */}
               <AiAnalysisOption
                 testId="ai-analysis-option-all"
                 checked={aiAnalyzed == null && !failedAttempts.active}
                 label={t("facet.ai_all")}
                 count={total}
+                hint={t("facet.ai_all_hint")}
                 onChange={() => {
                   failedAttempts.clear();
                   setAiAnalyzed(null);
@@ -321,6 +329,7 @@ export function FacetSidebar() {
                 checked={aiAnalyzed === true}
                 label={t("facet.ai_yes")}
                 count={analyzedCount}
+                hint={t("facet.ai_yes_hint")}
                 onChange={() => {
                   failedAttempts.clear();
                   setAiAnalyzed(true);
@@ -331,21 +340,25 @@ export function FacetSidebar() {
                 checked={aiAnalyzed === false && !failedAttempts.active}
                 label={t("facet.ai_no")}
                 count={notAnalyzedCount}
+                hint={t("facet.ai_no_hint")}
                 onChange={() => {
                   failedAttempts.clear();
                   setAiAnalyzed(false);
                 }}
               />
               {/* **Denendi, sonuc alinamadi** — cop-korumasinin eledigi gorseller (kullanici
-                  itirazi 2026-08-15). "Analiz edilmemis"in ALT KUMESIDIR: bu gorseller hala
-                  bekleyendir, ama artik BULUNABILIRLER → secip daha yetenekli bir modelle
-                  yeniden denemek mumkun. Sayi 0 iken satir gizlenir (bos vaat gosterme). */}
+                  itirazi 2026-08-15). Bu gorseller hala BEKLEYENDIR (yeniden denenebilirler),
+                  ama artik "Analiz edilmemis"in ICINDE DEGIL onun YANINDA sayilirlar (itiraz
+                  2026-08-16): "analiz edilmemis" satiri yalniz HIC denenmemisleri gosterir, bu
+                  satir yalniz denenip elenmisleri → ikisi kesismez, toplamlari bekleyen kumedir.
+                  Sayi 0 iken satir gizlenir (bos vaat gosterme). */}
               {(attemptFailedCount ?? 0) > 0 && (
                 <AiAnalysisOption
                   testId="ai-analysis-option-attempt-failed"
                   checked={failedAttempts.active}
                   label={t("facet.ai_attempt_failed")}
                   count={attemptFailedCount}
+                  hint={t("facet.ai_attempt_failed_hint")}
                   onChange={failedAttempts.show}
                 />
               )}
@@ -667,14 +680,26 @@ interface AiAnalysisOptionProps {
   checked: boolean;
   label: string;
   count: number | null;
+  /** Sayinin NEYI olctugunu aciklayan ipucu (tooltip). Satirlar farkli evrenleri sayar
+   *  ("Tumu" tum arsivi, digerleri yalniz gorsel-analize girebilen dosyalari) → aradaki
+   *  farki sormak zorunda kalmadan okunabilsin. */
+  hint?: string;
   onChange: () => void;
 }
 
 /** Dar sidebar'da kirpilmayan, sayili ve yerlesik klavye davranisli radio satiri. */
-function AiAnalysisOption({ testId, checked, label, count, onChange }: AiAnalysisOptionProps) {
+function AiAnalysisOption({
+  testId,
+  checked,
+  label,
+  count,
+  hint,
+  onChange,
+}: AiAnalysisOptionProps) {
   return (
     <label
       data-testid={testId}
+      title={hint}
       className={`flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors
         ${checked ? "bg-accent/20 text-accent" : "text-text-secondary hover:bg-bg-tertiary"}`}
     >

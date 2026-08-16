@@ -322,6 +322,11 @@
       "advice_proven": "Seçili model ({{model}}) bu iş için ölçülmüş-sağlam bir modeldir; bu görseller büyük olasılıkla betimlenemeyecek türdendir (logo, boş ya da çok küçük görüntü, düz metin ekranı). Yeniden denemek sonuç vermeyebilir — model değiştirmek zorunda değilsiniz.",
       "advice_weak": "Seçili model ({{model}}) bu iş için ölçülmüş-yetersiz. Ayarlar → AI'dan daha yetenekli bir model seçip bu görselleri yeniden deneyin.",
       "show_action": "Bu görselleri göster"
+    },
+    "no_preview": {
+      "partial": "{{total, number}} görselden {{analyzed, number}} tanesi analiz edildi. {{skipped, number}} dosya ise analize HİÇ girmedi: bu dosyaların önizlemesi (küçük resmi) yok — görsel analizi önizleme üzerinden çalışır.",
+      "none": "Hiçbir şey analiz edilmedi. Seçilen {{skipped, number}} dosyanın önizlemesi (küçük resmi) yok; görsel analizi önizleme üzerinden çalıştığı için bu dosyalar analiz kuyruğuna hiç girmedi.",
+      "advice": "Bunlar genelde uygulamaya önizleme desteği eklenmeden önce indekslenmiş video/görsellerdir. Dosyalar seçiliyken «Yeniden indeksle» deyin: önizleme üretilir, sonra AI analizi çalışır. Önizlemesi hiç üretilemeyen biçimler (ör. svg) analiz dışıdır."
     }
   },
   "ai_vision": {
@@ -881,9 +886,13 @@
     "software_version": "Yazılım sürümü",
     "ai_analyzed": "AI görsel analiz durumu",
     "ai_all": "Tümü",
+    "ai_all_hint": "Bu filtre kapalı: arşivdeki tüm dosyalar. Alttaki satırlar yalnızca görsel analize girebilen dosyaları böler, bu yüzden toplamları bu sayıdan küçüktür.",
     "ai_yes": "Analiz edilmiş",
+    "ai_yes_hint": "AI betimi kaydedilmiş görseller.",
     "ai_no": "Analiz edilmemiş",
-    "ai_attempt_failed": "Denendi, sonuç alınamadı"
+    "ai_no_hint": "Henüz hiç analize girmemiş görseller. Denenip sonuç alınamayanlar buraya dahil değildir — onlar kendi satırındadır.",
+    "ai_attempt_failed": "Denendi, sonuç alınamadı",
+    "ai_attempt_failed_hint": "Model yanıt verdi ama sonuç kullanılamadı; dosyaya hiçbir şey yazılmadı. Hâlâ bekliyorlar: seçip daha yetenekli bir modelle yeniden deneyebilirsiniz."
   },
   "facet_config": {
     "open": "Filtreleri özelleştir",

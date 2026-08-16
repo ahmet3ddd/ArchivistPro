@@ -22,6 +22,11 @@ export type AnalysisScope =
 export interface ImageAnalysisStatus {
   analyzed: number;
   pending: number;
+  /** `pending`in **hic denenmemis** kismi (`attemptFailed` dusulmus). Sidebar'daki "Analiz
+   *  edilmemis" satirinin sayisi BUDUR — `total - analyzed` DEGIL (o, denenip elenmisleri ve
+   *  gorsel-analize hic giremeyecek PDF/DWG'leri de sayiyordu; kullanici itirazi 2026-08-16).
+   *  `ListOpts { ai_analyzed: false }` filtresiyle BIREBIR ayni kumeyi olcer. */
+  pendingNeverAttempted: number;
   /** Bekleyenlerin `smallFileBytes` altinda kalan kismi — ikon/logo/doku/ekran goruntusu olma
    *  ihtimali yuksek dosyalar. GORUNURLUK icin; hicbir sey elenmez, kosuyu kullanici planlar. */
   pendingSmall: number;
@@ -30,7 +35,8 @@ export interface ImageAnalysisStatus {
   total: number;
   /** **Denendi, sonuc alinamadi**: cop-korumasinin eledigi ve `ai_attempt_failed` ile isaretlenen
    *  asset sayisi. `pending`in ALT KUMESI (bu varliklar hala bekleyendir) → `total`a EKLENMEZ.
-   *  Sidebar'daki dorduncu AI-durum satirinin sayisi budur. */
+   *  Sidebar'daki dorduncu AI-durum satirinin sayisi budur.
+   *  `pendingNeverAttempted + attemptFailed === pending` (bekleyenin tam bolunmesi). */
   attemptFailed: number;
   embedReady: boolean;
   active: boolean;
@@ -69,6 +75,12 @@ export interface ImageAnalysisReport {
   modelQuality?: "proven" | "untested" | "unusable" | string | null;
   /** Kosuda kullanilan model etiketi (rapor cumlesinde gecer). */
   model?: string | null;
+  /** **Secildi ama analiz edilemedi**: onizlemesi (thumbnail) olmadigi icin analiz kuyruguna hic
+   *  giremeyen secili dosya sayisi. Ne `analyzed`e ne `failed`a girer → bu alan olmadan kosu
+   *  "0 analiz edildi, 0 basarisiz" ile BASARI gibi kapaniyordu (kullanici bulgusu 2026-08-16:
+   *  142 mp4 secildi, hicbir sey olmadi ve hicbir sey de soylenmedi). Yalniz acik SECIM
+   *  kapsaminda dolar. */
+  skippedNoPreview?: number | null;
 }
 
 /** `ImageAnalysisReport.errorKind` icin bilinen siniflar (sunucu `vision::classify_vision_error`

@@ -93,6 +93,14 @@ pub struct ImageAnalysisStatusDto {
     pub analyzed: i64,
     /// Thumbnail'i olan ama analiz edilmemis aktif asset (kalan is).
     pub pending: i64,
+    /// `pending`in **hic denenmemis** kismi: `ai_attempt_failed` isaretliler DUSULMUS hali.
+    /// Sidebar'daki "Analiz edilmemis" satirinin sayisi budur ve `ListOpts { ai_analyzed: false }`
+    /// filtresinin dondurdugu kumeyle BIREBIR ayni kosullara sahiptir (bkz `FILTER_FRAG`) →
+    /// satirdaki sayi ile tiklaninca gelen liste ayni buyuklukte olur.
+    ///
+    /// `pending_never_attempted + attempt_failed == pending` (denenmisler hala bekleyendir) →
+    /// dort radyo satirindan ucu artik birbirini DISLAYAN bir bolme olusturur.
+    pub pending_never_attempted: i64,
     /// Bekleyenlerin **kucuk-dosya** kismi (`< SMALL_FILE_BYTES`) — ikon/logo/doku/ekran goruntusu
     /// olma ihtimali yuksek olanlar. GORUNURLUK icindir, eleme DEGIL (bkz
     /// `pending_analysis_small_count`). Kullanici kosuyu buna bakarak planlar.
@@ -174,6 +182,14 @@ pub struct ImageAnalysisReportDto {
     pub model_quality: String,
     /// Kosuda kullanilan model etiketi — rapor cumlesinde gecer ("qwen2.5vl:3b bu 5 gorselde…").
     pub model: String,
+    /// **Secildi ama analiz edilemedi**: kullanicinin ACIKCA sectigi dosyalardan onizlemesi
+    /// (thumbnail) olmayan ya da vision adiminda kalici atlanmis olanlarin sayisi. Kuyruk bunlari
+    /// hic almaz → ne `analyzed`e ne `failed`a girerler.
+    ///
+    /// Bu alan olmadan kosu "0 analiz edildi, 0 basarisiz" ile BASARI tonunda kapaniyordu
+    /// (kullanici bulgusu 2026-08-16: 142 mp4 secildi, hicbir sey olmadi, hicbir sey de
+    /// soylenmedi). Yalniz `Ids` kapsaminda doldurulur; "tumu"/filtre kapsaminda 0.
+    pub skipped_no_preview: i64,
 }
 
 /// Ollama'da yuklu VISION modelleri (gorsel-analiz model secici; UI). Ollama/vision yoksa Err.
@@ -624,9 +640,12 @@ pub fn image_analysis_status(
         .pending_analysis_small_count(&archivist_db::AnalysisScope::All, SMALL_FILE_BYTES)
         .map_err(|e| e.to_string())?;
     let attempt_failed = db.failed_attempt_count().map_err(|e| e.to_string())?;
+    let pending_never_attempted =
+        db.pending_never_attempted_count().map_err(|e| e.to_string())?;
     Ok(ImageAnalysisStatusDto {
         analyzed,
         pending,
+        pending_never_attempted,
         pending_small,
         small_file_bytes: SMALL_FILE_BYTES,
         total: analyzed + pending,
@@ -727,9 +746,19 @@ pub async fn run_image_analysis(
     let dir = resolve_model_dir()?; // MiniLM (re-chunk) hazir mi — erken hata.
     let model_used = resolve_vision_model(&model);
 
-    let total = {
+    // Kapsamin BEKLEYEN kismi (kuyrugun gercekten isleyecegi is) ve — acik secimde — kuyrugun
+    // hic ALAMAYACAGI kismi birlikte olculur. Ikincisi olmadan "0 analiz edildi, 0 basarisiz"
+    // basari gibi okunuyordu (bkz `not_analyzable_selection_count`).
+    let (total, skipped_no_preview) = {
         let db = state.db.lock().map_err(|e| e.to_string())?;
-        db.pending_analysis_count_scoped(&scope).map_err(|e| e.to_string())?
+        let pending = db.pending_analysis_count_scoped(&scope).map_err(|e| e.to_string())?;
+        let skipped = match &scope {
+            AnalysisScope::Ids(ids) => {
+                db.not_analyzable_selection_count(ids).map_err(|e| e.to_string())?
+            }
+            _ => 0,
+        };
+        (pending, skipped)
     };
     let start = Instant::now();
     let (mut analyzed, mut failed, mut processed, mut after_id) = (0i64, 0i64, 0i64, 0i64);
@@ -947,6 +976,7 @@ pub async fn run_image_analysis(
         unusable,
         model_quality: ollama::vision_quality(&model_used).code().to_string(),
         model: model_used,
+        skipped_no_preview,
     })
 }
 
@@ -1024,6 +1054,8 @@ mod tests {
         let status = ImageAnalysisStatusDto {
             analyzed: 12,
             pending: 8,
+            // Bekleyenin BOLUNMESI: 6 hic denenmemis + 2 denenip elenmis = 8.
+            pending_never_attempted: 6,
             // Kirilim bekleyenin ALT kumesidir — toplama eklenmez, `pending` icinden sayilir.
             pending_small: 5,
             small_file_bytes: 20 * 1024,
@@ -1046,6 +1078,13 @@ mod tests {
         assert!(value.get("embed_ready").is_none());
         // Sidebar'in dorduncu AI-durum satiri bu alandan beslenir (camelCase sozlesmesi).
         assert_eq!(value["attemptFailed"], 2);
+        // "Analiz edilmemis" satiri artik `total - analyzed` ile turetilmez, BU alandan beslenir.
+        assert_eq!(value["pendingNeverAttempted"], 6);
+        // Bolme butunlugu: iki alt satirin toplami bekleyeni verir (ustuste binme yok).
+        assert_eq!(
+            value["pendingNeverAttempted"].as_i64().unwrap() + value["attemptFailed"].as_i64().unwrap(),
+            value["pending"].as_i64().unwrap()
+        );
     }
 
     #[test]

@@ -92,7 +92,7 @@ dependencies = [
 
 [[package]]
 name = "archivist"
-version = "3.4.0"
+version = "3.5.0"
 dependencies = [
  "archivist-db",
  "archivist-embed",
@@ -172,6 +172,7 @@ dependencies = [
  "image",
  "kamadak-exif",
  "serde_json",
+ "tempfile",
  "windows",
 ]
 

@@ -1,6 +1,6 @@
 # ArchivistPro — インストールガイド
 
-> **バージョン:** 3.4.0 · **更新日:** 2026-08-15 · **プラットフォーム:** Windows 10/11 (64-bit)
+> **バージョン:** 3.5.0 · **更新日:** 2026-08-16 · **プラットフォーム:** Windows 10/11 (64-bit)
 >
 > 他の言語: [Türkçe](KULLANICI_KURULUM_REHBERI.md) · [English](KULLANICI_KURULUM_REHBERI_EN.md) · [العربية](KULLANICI_KURULUM_REHBERI_AR.md) · [中文](KULLANICI_KURULUM_REHBERI_ZH.md)
 
@@ -13,7 +13,7 @@
 ## クイックインストール (5 ステップ)
 
 1. **ダウンロード:** [Releases ページ](https://github.com/ahmet3ddd/ArchivistPro/releases/latest)
-   から **`ArchivistPro_3.4.0_x64-setup.exe`** を入手します (推奨インストーラー。
+   から **`ArchivistPro_3.5.0_x64-setup.exe`** を入手します (推奨インストーラー。
    MSI はマシンレベルに*別の*コピーをインストールするため、意図がある場合のみ使用)。
 2. **インストール:** ダウンロードしたファイルを実行します。Windows SmartScreen の
    警告が出たら **「詳細情報 → 実行」** をクリックします (パッケージは未署名のため、
@@ -25,7 +25,7 @@
    アプリはインデックスを作るだけです (DWG・MAX・IFC・RVT・SKP・PDF など
    95 以上の形式を認識)。
 5. **旧バージョンからの移行?** ArchivistPro 3.2.2 (旧世代) がインストール済みの
-   場合、3.4.0 は**並行して**インストールされます。旧バージョンを**アンインストール
+   場合、3.5.0 は**並行して**インストールされます。旧バージョンを**アンインストール
    しないでください**。データは **設定 → 一般 → 「以前のバージョンが見つかりました」**
    カードのインポートウィザードで移行します。
 

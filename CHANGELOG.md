@@ -5,6 +5,47 @@ kaynağı budur.** Format [Keep a Changelog](https://keepachangelog.com/tr/1.0.0
 tabanlıdır; sürüm numaralandırması [Semantic Versioning](https://semver.org/)
 kurallarına göre ilerler.
 
+## [3.5.0] — 2026-08-16 — Sayılar Ne Diyorsa O
+
+Ekrandaki her sayının, tıklanınca gelen listeyle **aynı şeyi** söylemesine
+odaklanan sürüm. Üç yerde sayı ile gerçek ayrışıyordu: "analiz edilmemiş"
+sayacı, önizlemesi hiç üretilmeyen iki dosya biçimi ve hiç çalışmadığı hâlde
+"başarılı" diye kapanan bir AI taraması. Veri biçimi değişmedi; mevcut
+arşivler olduğu gibi açılır.
+
+### Eklenen (Added)
+- **WebP ve ICO dosyalarının önizlemesi artık üretiliyor.** Bu iki biçim hiçbir
+  çıkarıcı tarafından sahiplenilmiyordu; dosyalar sessizce önizlemesiz kalıyor
+  ve — görsel analizi önizleme üzerinden çalıştığı için — AI taramasına da hiç
+  girmiyordu. Hiçbir uyarı da çıkmıyordu.
+- *AI görsel analiz durumu* satırlarında, hangi kümeyi saydıklarını açıklayan
+  ipuçları (fare ile üzerine gelince).
+
+### Düzeltilen (Fixed)
+- **"Analiz edilmemiş" artık gerçekten hiç analize girmemişleri sayıyor.** Bu
+  satır iki şeyi yanlış kapsıyordu: (1) denenip sonuç alınamayan görseller de
+  içindeydi, (2) sayı tüm arşivden hesaplandığı için küçük resmi olmayan — yani
+  görsel analize hiç giremeyecek — çizim ve belge dosyalarını da içeriyordu.
+  Artık dört satırın üçü birbirini dışlayan bir bölme oluşturur ve her satırın
+  **sayısı, tıklanınca gelen listeyle birebir aynıdır**.
+- **Seçilen dosyalar analiz edilemediğinde koşu artık "başarılı" demiyor.**
+  Önizlemesi olmayan dosyalar analiz kuyruğuna hiç giremez; eskiden bu durum
+  *"0 görsel analiz edildi, 0 başarısız"* diye başarı tonunda kapanıyor,
+  kartlarda hiçbir şey değişmiyordu. Artık kaç dosyanın neden atlandığı ve ne
+  yapılacağı (dosyaları seçip **Yeniden indeksle**) söyleniyor.
+
+### Değişen (Changed)
+- *"Analiz edilmemiş"* filtresiyle başlatılan kapsamlı bir analiz koşusu, daha
+  önce denenip elenmiş görselleri atlar; onlar kendi satırından seçilip daha
+  yetenekli bir modelle yeniden denenir. Bu, iki satırın birbirini dışlamasının
+  doğal sonucudur.
+
+> ℹ️ **Mevcut arşivler için:** videoların ve webp/ico dosyalarının önizlemesi
+> **geriye dönük oluşturulmaz.** İlgili dosyaları seçip **Yeniden indeksle**
+> deyin — önizleme üretilir, ardından AI görsel analizi de çalışır ve kartta ✨
+> işareti belirir. Yeniden indeksleme etiketleri, favorileri, koleksiyonları ve
+> mevcut AI verilerini korur; dosyalarınıza dokunmaz.
+
 ## [3.4.0] — 2026-08-15 — Görsel Analizinde Şeffaflık
 
 AI görsel analizi bir görseli betimleyemediğinde ne olduğunu **görünür** kılan

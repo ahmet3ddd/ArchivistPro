@@ -6,9 +6,9 @@ Sürüm sürüm ne değiştiği için: [`CHANGELOG.md`](../CHANGELOG.md)
 
 ---
 
-## Bugün nerede (v3.4.0)
+## Bugün nerede (v3.5.0)
 
-Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (920+ Rust testi + arayüz testleri) yeşil.
+Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (930 Rust testi + 224 arayüz testi + 21 uçtan uca test) yeşil.
 
 3.3.x hattı, uygulamanın **yeniden yazılmış yeni nesil kod tabanıdır:** veriyi Rust tarafı sahiplenir, arşiv tarayıcı belleğinde değil diskte native SQLite'ta tutulur; AI/embedding hesaplamaları da tarayıcıda değil Rust tarafında koşar. Bu mimari **on binlerce dosyalık gerçek arşivlerle doğrulandı** ve yüz binler ölçeği hedefiyle tasarlandı — eski neslin (3.2.x) "yüz binler için mimari değişiklik gerekiyor" sınırı bu hatta aşıldı.
 
@@ -35,6 +35,8 @@ Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulm
 - **Hesap ve abonelik sistemi yok.** Uygulama internete bağlanmadan çalışır; bunu bozacak bir özellik eklenmez.
 - **macOS / Linux şu an planda değil.** Tauri bunu teknik olarak mümkün kılıyor ama önizleme üretimi Windows'a özgü bileşenlere dayanıyor. İlgi olursa yeniden değerlendirilir.
 - **Her dosyaya otomatik AI analizi yok.** Milyonlarca dosyalık arşivde "hepsini tara" yaklaşımı günlerce sürer; bunun yerine kapsam seçimli, durdurulup devam ettirilebilir analiz tercih ediliyor.
+- **SVG önizlemesi yok.** Vektör çizimleri görüntüye çevirmek yeni bir bileşen gerektiriyor; arşivlerde payı küçük olduğu için şimdilik yapılmadı. Bu dosyalar listelenir ve aranır, yalnızca önizlemeleri (ve dolayısıyla AI görsel analizleri) yoktur.
+- **Önizlemeler geriye dönük üretilmez.** Önizleme desteği yeni bir biçime eklendiğinde, o biçimden daha önce indekslenmiş dosyalar kendiliğinden güncellenmez; kullanıcı ilgili dosyaları seçip "Yeniden indeksle" der. Tüm arşivi sessizce yeniden taramak, saatler sürecek bir işi kullanıcıya sormadan başlatmak olurdu.
 - **Küçük optimizasyonlar ertelendi.** Ölçülmemiş bir performans sorununu çözmek yerine, gerçekten yaşanan tıkanmalar öncelikli.
 
 ---

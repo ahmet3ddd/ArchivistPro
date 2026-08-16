@@ -422,7 +422,54 @@ impl Db {
     /// olurdu → erken don). `Filter` FTS `query`'yi yok sayar (facet-tabanli kapsam). `count ==
     /// `assets_without_analysis_scoped` batch enumerasyonu` (ayni WHERE → tutarli).
     pub fn pending_analysis_count_scoped(&self, scope: &AnalysisScope) -> Result<i64, DbError> {
-        self.pending_count_with(scope, None)
+        self.pending_count_with(scope, None, false)
+    }
+
+    /// **Secilip de analiz edilemeyecek** asset sayisi: kullanicinin ACIKCA sectigi id'lerden
+    /// analiz sonucu OLMAYAN *ve* bekleyen kumeye de GIRMEYENler — yani onizlemesi (thumbnail)
+    /// olmayan ya da vision adiminda kalici atlanmis dosyalar.
+    ///
+    /// **Neden var (kullanici bulgusu 2026-08-16).** Kullanici mp4 dosyalarini secip "AI ile tara"
+    /// dedi; kosu bitti, bildirim "0 analiz edildi, 0 basarisiz" diyerek BASARI tonunda kapandi ve
+    /// kartlarda hicbir sey degismedi. Cunku analiz kuyrugu (`assets_without_analysis_scoped`)
+    /// thumbnail'i olan dosyalari cekiyor; onizlemesi olmayan secim SESSIZCE dusuyordu. Sessiz
+    /// dusme, kullaniciya "yapildi" demenin en kotu bicimidir. Bu sayac raporun icine girer →
+    /// UI "N dosya analiz edilemedi: onizlemesi yok" diyebilir.
+    ///
+    /// ⚠️ Yalniz ACIK SECIM (id listesi) icin anlamlidir: "tumu"/filtre kapsaminda kullanici zaten
+    /// "analiz edilebilecekleri" kastediyordur, orada her PDF'i saymak gurultu olurdu.
+    /// Zaten analizli secimler bu sayiya GIRMEZ (onlar atlanir ama bu bir kayip degildir).
+    pub fn not_analyzable_selection_count(&self, ids: &[i64]) -> Result<i64, DbError> {
+        if ids.is_empty() {
+            return Ok(0);
+        }
+        let stage = IndexStage::Vision.as_str();
+        let json = serde_json::to_string(ids).map_err(|e| DbError::Invalid(e.to_string()))?;
+        Ok(self.conn.query_row(
+            "SELECT count(*) FROM assets a
+             WHERE a.deleted_at IS NULL
+               AND a.id IN (SELECT value FROM json_each(?1))
+               AND NOT EXISTS (SELECT 1 FROM asset_metadata m
+                               WHERE m.asset_id = a.id AND m.key = 'ai_analyzed')
+               AND (NOT EXISTS (SELECT 1 FROM asset_thumbnails th WHERE th.asset_id = a.id)
+                    OR EXISTS (SELECT 1 FROM index_skips s
+                               WHERE s.asset_id = a.id AND s.stage = ?2))",
+            params![json, stage],
+            |r| r.get(0),
+        )?)
+    }
+
+    /// Bekleyenlerin **hic denenmemis** kismi: `pending` eksi `ai_attempt_failed` isaretliler.
+    ///
+    /// **Neden ayri sayac (kullanici itirazi 2026-08-16).** Sidebar'daki "Analiz edilmemis" satiri
+    /// `total - analyzed` ile hesaplaniyordu; bu hem denenip elenmisleri hem de hic thumbnail'i
+    /// olmayan (asla gorsel-analize giremeyecek) PDF/DWG gibi dosyalari iceriyordu. Satirin vaadi
+    /// "hic analize girmemis gorseller"dir → sayi da tam onu olcmeli. CIKARMA ile turetilmez
+    /// (`pending - attempt_failed`): `failed_attempt_count` thumbnail/vision-skip kosulu aramaz,
+    /// dolayisiyla aradaki fark negatife kayabilir ve sayi kendi filtresiyle tutmazdi. Bu sayac,
+    /// `FILTER_FRAG`'in `:ai_analyzed = 0` dalinin dondurdugu kumeyle BIREBIR ayni kosullari kurar.
+    pub fn pending_never_attempted_count(&self) -> Result<i64, DbError> {
+        self.pending_count_with(&AnalysisScope::All, None, true)
     }
 
     /// Bekleyen kumenin **kucuk-dosya** kismi: `size_bytes < max_bytes`.
@@ -442,16 +489,20 @@ impl Db {
         scope: &AnalysisScope,
         max_bytes: i64,
     ) -> Result<i64, DbError> {
-        self.pending_count_with(scope, Some(max_bytes))
+        self.pending_count_with(scope, Some(max_bytes), false)
     }
 
-    /// Iki sayacin ORTAK govdesi. Tek yerde durur cunku "bekleyen" tanimi (thumbnail var ·
-    /// analizsiz · vision-skip'siz · cop disi) ikisinde de AYNI olmali; ayri yazilsalardi biri
+    /// Uc sayacin ORTAK govdesi. Tek yerde durur cunku "bekleyen" tanimi (thumbnail var ·
+    /// analizsiz · vision-skip'siz · cop disi) ucunde de AYNI olmali; ayri yazilsalardi biri
     /// degisince kirilim toplami tutmaz, kullaniciya celiskili iki sayi gosterirdik.
+    ///
+    /// `never_attempted` = true iken kume `ai_attempt_failed` isaretlilerden de arindirilir
+    /// (bkz `pending_never_attempted_count`) → "hic analize girmemis" alt kumesi.
     fn pending_count_with(
         &self,
         scope: &AnalysisScope,
         max_bytes: Option<i64>,
+        never_attempted: bool,
     ) -> Result<i64, DbError> {
         if scope.is_empty_ids() {
             return Ok(0);
@@ -465,12 +516,19 @@ impl Db {
         } else {
             ""
         };
+        // Anahtar listesi SABITTEN gelir (kullanici girdisi degil) → gomulmesi guvenli; `IN` ile
+        // asset_metadata PK'si (asset_id, key) tek aramada calisir.
+        let blocking_keys = if never_attempted {
+            format!("'ai_analyzed', '{AI_ATTEMPT_FAILED_KEY}'")
+        } else {
+            "'ai_analyzed'".to_string()
+        };
         let sql = format!(
             "SELECT count(*) FROM assets a
              WHERE a.deleted_at IS NULL
                AND EXISTS (SELECT 1 FROM asset_thumbnails th WHERE th.asset_id = a.id)
                AND NOT EXISTS (SELECT 1 FROM asset_metadata m
-                               WHERE m.asset_id = a.id AND m.key = 'ai_analyzed')
+                               WHERE m.asset_id = a.id AND m.key IN ({blocking_keys}))
                AND NOT EXISTS (SELECT 1 FROM index_skips s
                                WHERE s.asset_id = a.id AND s.stage = :stage)
                {size_frag}

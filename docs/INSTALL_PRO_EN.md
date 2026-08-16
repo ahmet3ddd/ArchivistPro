@@ -1,6 +1,6 @@
 # ArchivistPro — Installation Guide for System Administrators
 
-> **Version:** 3.4.0 · **Updated:** 2026-08-15 · **Platform:** Windows 10/11 (64-bit)
+> **Version:** 3.5.0 · **Updated:** 2026-08-16 · **Platform:** Windows 10/11 (64-bit)
 >
 > For a step-by-step walkthrough see the **[beginner's guide](INSTALL_BEGINNER_EN.md)**.
 
@@ -8,10 +8,10 @@
 
 ```powershell
 # Per-user, unattended (recommended):
-ArchivistPro_3.4.0_x64-setup.exe /S
+ArchivistPro_3.5.0_x64-setup.exe /S
 
 # Machine-level (deliberate choice — read the table below):
-msiexec /i ArchivistPro_3.4.0_x64_en-US.msi /qn
+msiexec /i ArchivistPro_3.5.0_x64_en-US.msi /qn
 ```
 
 Core usage (scanning, FTS search, previews, duplicate finder) runs **fully
@@ -136,4 +136,4 @@ Download from the ODA website (free, requires registration).
   [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - Source code: https://github.com/ahmet3ddd/ArchivistPro
 
-*Last update: 2026-08-15 (v3.4.0).*
+*Last update: 2026-08-16 (v3.5.0).*

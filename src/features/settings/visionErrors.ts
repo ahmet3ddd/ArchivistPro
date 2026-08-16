@@ -71,6 +71,10 @@ export interface VisionOutcomeNotice {
  *   GECMEZ (canli dogrulama 2026-08-15: `llava` ile kosuda ekranda yalniz "Analiz durduruldu:
  *   art arda 3 hata." yaziyordu → o 3 dosyaya ne oldugu, isaretlendikleri ve nerede bulunacaklari
  *   soylenmiyordu; kullanicinin sordugu sorunun aynisi bu yolda geri gelmisti).
+ * - **Onizlemesi olmayan secim** (`skippedNoPreview`) kuyruga HIC girmez → ne `analyzed`e ne
+ *   `failed`a yazilir. Bu dal olmadan kosu "0 analiz edildi, 0 basarisiz" ile BASARI tonunda
+ *   kapaniyordu (kullanici bulgusu 2026-08-16: 142 mp4 secildi, hicbir sey olmadi ve hicbir sey
+ *   de soylenmedi). Cumle ne oldugunu ve NE YAPILACAGINI (yeniden indeksle → onizleme uret) soyler.
  */
 export function visionOutcomeNotice(report: ImageAnalysisReport): VisionOutcomeNotice {
   const analyzed = Math.max(0, report.analyzed);
@@ -78,6 +82,22 @@ export function visionOutcomeNotice(report: ImageAnalysisReport): VisionOutcomeN
   const total = analyzed + failed;
   const abortedAfter = report.abortedAfterConsecutiveFailures ?? null;
   const prefixKey = abortedAfter ? "vision_index.aborted_toast" : null;
+  const skipped = Math.max(0, report.skippedNoPreview ?? 0);
+
+  // Onizlemesizlik bir kosu ARIZASI degildir (model hic cagrilmadi) → hata siniflandirmasindan
+  // ONCE ele alinir, ama yalniz baska bir basarisizlik YOKKEN: karisik bir kosuda gercek hata
+  // cumlesi onceliklidir (o daha acil), onizlemesizlik onun kuyruguna eklenir.
+  if (skipped > 0 && failed === 0 && !abortedAfter) {
+    return {
+      prefixKey: null,
+      key: analyzed > 0 ? "vision_index.no_preview.partial" : "vision_index.no_preview.none",
+      adviceKey: "vision_index.no_preview.advice",
+      params: { analyzed, failed, total, skipped },
+      // Hicbir sey analiz edilemediyse kullanicinin bekledigi is HIC olmadi → hata tonu.
+      kind: analyzed > 0 ? "info" : "error",
+      markedForRetry: false,
+    };
+  }
   // Eski surum sunucu `unusable` gondermez → tum basarisizliklari eleme say (sinif zaten
   // `unusable_output`); yeni sunucuda karisik koşuda yalniz elenen kismi sayar.
   const unusable = Math.max(0, report.unusable ?? failed);

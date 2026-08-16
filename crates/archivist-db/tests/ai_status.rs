@@ -12,12 +12,25 @@
 //! Saf-SQL yollari (sqlite-vec kNN birim-vektorlerle) → ONNX/model gerekmez.
 
 use archivist_db::{
-    AssetInput, Db, ImageKind, IngestData, ListOpts, IMAGE_EMBED_DIM, TEXT_EMBED_DIM,
-    DOMINANT_COLORS_METADATA_KEY,
+    AssetInput, Db, ImageKind, IngestData, ListOpts, ThumbnailInput, IMAGE_EMBED_DIM,
+    TEXT_EMBED_DIM, DOMINANT_COLORS_METADATA_KEY,
 };
 
 /// Bir asset ingest et (ext kontrollu) → id. Gorsel gercekligi: bos-ish govde.
+/// ⚠️ Thumbnail YOK → gorsel-analiz evreninin DISINDADIR (bkz `seed_image`).
 fn seed(db: &mut Db, path: &str, name: &str, ext: &str) -> i64 {
+    seed_with(db, path, name, ext, false)
+}
+
+/// Thumbnail'i OLAN bir gorsel ingest et → id. `seed`den farki: gorsel-analize GIREBILIR
+/// (thumbnail, `pending`/`ai_analyzed=false` kosullarinin on sartidir). "Analiz edilmemis"
+/// semantigini test eden her sey bunu kullanmali — thumbnail'siz `seed` artik o filtrenin
+/// disindadir (PDF/DWG gibi asla analize giremeyecek dosyalarin temsilcisi).
+fn seed_image(db: &mut Db, path: &str, name: &str, ext: &str) -> i64 {
+    seed_with(db, path, name, ext, true)
+}
+
+fn seed_with(db: &mut Db, path: &str, name: &str, ext: &str, thumb: bool) -> i64 {
     let input = AssetInput {
         path,
         file_name: name,
@@ -30,12 +43,15 @@ fn seed(db: &mut Db, path: &str, name: &str, ext: &str) -> i64 {
         created_at: 1,
         modified_at: 1,
     };
+    // Icerigi onemsiz — varlik/yokluk test edilen tek sey (kosullar EXISTS ile bakar).
+    let bytes = [0xFFu8, 0xD8, 0xFF];
     let data = IngestData {
         fts_body: Some("govde metni"),
         metadata: &[],
         auto_tags: &[],
         phash: None,
-        thumbnail: None,
+        thumbnail: thumb
+            .then_some(ThumbnailInput { mime: "image/jpeg", width: 8, height: 8, bytes: &bytes }),
     };
     db.ingest(&input, &data).unwrap()
 }
@@ -92,12 +108,12 @@ fn get_asset_fills_ai_analyzed() {
     assert!(!db.get_asset(plain).unwrap().unwrap().asset.ai_analyzed);
 }
 
-/// TRI-STATE filtre: None=hepsi · Some(true)=yalniz analizli · Some(false)=yalniz analizsiz.
+/// TRI-STATE filtre: None=hepsi · Some(true)=yalniz analizli · Some(false)=hic analize girmemis.
 #[test]
 fn ai_analyzed_filter_is_tri_state() {
     let mut db = Db::open_in_memory_migrated().unwrap();
-    let analyzed = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
-    let plain = seed(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    let analyzed = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let plain = seed_image(&mut db, "/a/2.jpg", "2.jpg", "jpg");
     mark_analyzed(&db, analyzed);
 
     let ids = |opt: Option<bool>| -> Vec<i64> {
@@ -116,16 +132,16 @@ fn ai_analyzed_filter_is_tri_state() {
     both.sort_unstable();
     assert_eq!(ids(None), both, "None → filtre yok (ikisi de)");
     assert_eq!(ids(Some(true)), vec![analyzed], "Some(true) → yalniz analizli");
-    assert_eq!(ids(Some(false)), vec![plain], "Some(false) → yalniz analizsiz");
+    assert_eq!(ids(Some(false)), vec![plain], "Some(false) → hic analize girmemis");
 }
 
 /// total sayimi da tri-state filtreye uyar (count + page SQL AYNI FILTER_FRAG → tutarli).
 #[test]
 fn ai_analyzed_filter_total_count_matches() {
     let mut db = Db::open_in_memory_migrated().unwrap();
-    let a1 = seed(&mut db, "/a/1.jpg", "1.jpg", "jpg");
-    let a2 = seed(&mut db, "/a/2.jpg", "2.jpg", "jpg");
-    let _p = seed(&mut db, "/a/3.jpg", "3.jpg", "jpg");
+    let a1 = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let a2 = seed_image(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    let _p = seed_image(&mut db, "/a/3.jpg", "3.jpg", "jpg");
     mark_analyzed(&db, a1);
     mark_analyzed(&db, a2);
 
@@ -406,6 +422,160 @@ fn failed_attempt_marker_is_filterable_and_countable() {
     let facets = db.metadata_facets(archivist_db::AI_ATTEMPT_FAILED_KEY, 10).unwrap();
     let count: i64 = facets.iter().map(|f| f.count).sum();
     assert_eq!(count, 1, "facet sayimi UI radyo satirini besler");
+}
+
+// ---------------------------------------------------------------------------
+// "Analiz edilmemis" = HIC ANALIZE GIRMEMIS (kullanici itirazi 2026-08-16).
+//
+// Sidebar'daki satir once `total - analyzed` ile hesaplaniyordu; hem denenip elenmisleri hem de
+// gorsel-analize ASLA giremeyecek dosyalari (thumbnail'siz PDF/DWG, vision-skip'li) iceriyordu.
+// Satirin vaadi "hic analize girmemis gorseller"dir → hem SAYI hem FILTRE tam onu vermeli ve
+// ikisi BIREBIR ayni kumeyi kurmali (biri digerinden sapmasin diye ayni testte kilitlenir).
+// ---------------------------------------------------------------------------
+
+/// Ana bulgu: "denendi, sonuc alinamadi" gorselleri "analiz edilmemis" filtresine SIZMAZ.
+#[test]
+fn not_analyzed_filter_excludes_failed_attempts() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let never = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let tried = seed_image(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    db.mark_analysis_attempt_failed(tried, "unusable_output", "moondream", 1).unwrap();
+
+    let page = db
+        .list_assets(&ListOpts { page_size: 50, ai_analyzed: Some(false), ..Default::default() })
+        .unwrap();
+    let ids: Vec<i64> = page.items.iter().map(|r| r.id).collect();
+    assert_eq!(ids, vec![never], "denenip elenen gorsel 'analiz edilmemis'te GORUNMEMELI");
+    assert_eq!(page.total, 1, "total da ayni kumeyi saymali (count SQL = page SQL)");
+
+    // Ama varlik hala BEKLEYENDIR — kendi satirindan bulunup yeniden denenebilir olmali.
+    assert_eq!(db.pending_analysis_count().unwrap(), 2, "denenen hala bekleyen kalir");
+    assert_eq!(db.failed_attempt_count().unwrap(), 1);
+}
+
+/// Gorsel-analize hic giremeyecek dosyalar (thumbnail YOK) satirin disindadir — kullanici
+/// "analiz edilmemis"e tiklayip DWG/PDF yigini gormemeli.
+#[test]
+fn not_analyzed_filter_excludes_files_without_thumbnail() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let image = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let _dwg = seed(&mut db, "/a/2.dwg", "2.dwg", "dwg"); // thumbnail yok → analiz evreni disi
+    let _pdf = seed(&mut db, "/a/3.pdf", "3.pdf", "pdf");
+
+    let page = db
+        .list_assets(&ListOpts { page_size: 50, ai_analyzed: Some(false), ..Default::default() })
+        .unwrap();
+    let ids: Vec<i64> = page.items.iter().map(|r| r.id).collect();
+    assert_eq!(ids, vec![image], "yalniz analize GIREBILECEK gorsel donmeli");
+    assert_eq!(page.total, 1);
+}
+
+/// Vision adiminda kalici olarak atlanmis (index_skips) gorsel de "bekleyen is" degildir.
+#[test]
+fn not_analyzed_filter_excludes_vision_skipped() {
+    use archivist_db::IndexStage;
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let live = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let skipped = seed_image(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    db.record_index_skip(skipped, IndexStage::Vision, "thumbnail decode").unwrap();
+
+    let page = db
+        .list_assets(&ListOpts { page_size: 50, ai_analyzed: Some(false), ..Default::default() })
+        .unwrap();
+    assert_eq!(page.items.iter().map(|r| r.id).collect::<Vec<_>>(), vec![live]);
+}
+
+/// **Bolme butunlugu.** Sidebar'in dort satiri artik birbirini dislar ve her satirin SAYISI
+/// kendi FILTRESININ dondurdugu kume buyuklugune esittir. Bu testin kirilmasi, kullaniciya
+/// tiklayinca baska bir sayi gosteren bir ekran demektir.
+#[test]
+fn ai_status_counts_match_their_filters() {
+    use archivist_db::MetaFilter;
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let analyzed = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg");
+    let _never_a = seed_image(&mut db, "/a/2.jpg", "2.jpg", "jpg");
+    let _never_b = seed_image(&mut db, "/a/3.jpg", "3.jpg", "jpg");
+    let tried = seed_image(&mut db, "/a/4.jpg", "4.jpg", "jpg");
+    let _dwg = seed(&mut db, "/a/5.dwg", "5.dwg", "dwg"); // analiz evreni disi
+    mark_analyzed(&db, analyzed);
+    db.mark_analysis_attempt_failed(tried, "unusable_output", "moondream", 1).unwrap();
+
+    let total_for = |opts: ListOpts| db.list_assets(&opts).unwrap().total;
+
+    // 1) "Analiz edilmis" — sayac == filtre.
+    assert_eq!(db.analyzed_count().unwrap(), 1);
+    assert_eq!(
+        total_for(ListOpts { page_size: 50, ai_analyzed: Some(true), ..Default::default() }),
+        1
+    );
+
+    // 2) "Analiz edilmemis" (hic denenmemis) — sayac == filtre. ESAS DUZELTME BURASI:
+    //    eski `total - analyzed` 4 verirdi (denenen + dwg dahil); dogrusu 2.
+    assert_eq!(db.pending_never_attempted_count().unwrap(), 2);
+    assert_eq!(
+        total_for(ListOpts { page_size: 50, ai_analyzed: Some(false), ..Default::default() }),
+        2
+    );
+
+    // 3) "Denendi, sonuc alinamadi" — sayac == filtre (genel metadata faceti).
+    assert_eq!(db.failed_attempt_count().unwrap(), 1);
+    assert_eq!(
+        total_for(ListOpts {
+            page_size: 50,
+            metadata: vec![MetaFilter {
+                key: archivist_db::AI_ATTEMPT_FAILED_KEY.to_string(),
+                values: vec!["1".into()],
+            }],
+            ..Default::default()
+        }),
+        1
+    );
+
+    // 4) Bolme: hic-denenmemis + denenip-elenmis == bekleyen (ustuste binme/bosluk yok).
+    assert_eq!(
+        db.pending_never_attempted_count().unwrap() + db.failed_attempt_count().unwrap(),
+        db.pending_analysis_count().unwrap(),
+        "bekleyen kume tam ikiye bolunmeli"
+    );
+}
+
+/// **Secildi ama analiz edilemez** (kullanici bulgusu 2026-08-16): kullanici mp4'leri secip
+/// "AI ile tara" dedi; onizlemesi (thumbnail) olmayan dosyalar analiz kuyruguna HIC girmedigi
+/// icin kosu "0 analiz / 0 hata" dondu ve ekranda BASARI yazdi. Bu sayac, sessizce dusen secimi
+/// gorunur kilar → UI "N dosya analiz edilemedi: onizlemesi yok" diyebilir.
+#[test]
+fn not_analyzable_selection_is_counted_not_silently_dropped() {
+    use archivist_db::IndexStage;
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let image = seed_image(&mut db, "/a/1.jpg", "1.jpg", "jpg"); // analiz EDILEBILIR
+    let video = seed(&mut db, "/a/2.mp4", "2.mp4", "mp4"); // thumbnail YOK → kuyruga giremez
+    let doc = seed(&mut db, "/a/3.pdf", "3.pdf", "pdf"); // thumbnail YOK
+    let skipped = seed_image(&mut db, "/a/4.jpg", "4.jpg", "jpg"); // thumbnail VAR ama vision-skip
+    let analyzed = seed_image(&mut db, "/a/5.jpg", "5.jpg", "jpg"); // ZATEN analizli
+    db.record_index_skip(skipped, IndexStage::Vision, "thumbnail decode").unwrap();
+    mark_analyzed(&db, analyzed);
+
+    let all = [image, video, doc, skipped, analyzed];
+    assert_eq!(
+        db.not_analyzable_selection_count(&all).unwrap(),
+        3,
+        "onizlemesiz 2 dosya + vision-skip'li 1 dosya = 3 (analiz edilebilen ve ZATEN analizli sayilmaz)"
+    );
+
+    // Zaten analizli bir secim "analiz edilemez" DEGILDIR — atlanir ama bu bir kayip degil.
+    assert_eq!(db.not_analyzable_selection_count(&[analyzed]).unwrap(), 0);
+    // Analiz edilebilir secim de sayilmaz (o gercekten kuyruga girer).
+    assert_eq!(db.not_analyzable_selection_count(&[image]).unwrap(), 0);
+    // Bos secim → 0 (bos `IN ()` SQL hatasi olmadan erken doner).
+    assert_eq!(db.not_analyzable_selection_count(&[]).unwrap(), 0);
+
+    // Kuyruk gercekten bu dosyalari ALMIYOR mu — sayac ile davranis ayni sey mi?
+    let scope = archivist_db::AnalysisScope::Ids(all.to_vec());
+    assert_eq!(
+        db.pending_analysis_count_scoped(&scope).unwrap(),
+        1,
+        "kuyruk yalniz analiz edilebilen tek gorseli alir"
+    );
 }
 
 /// Basarili analiz gelince isaret KENDILIGINDEN silinir (`set_ai_metadata`'nin `ai\_%` DELETE'i) →

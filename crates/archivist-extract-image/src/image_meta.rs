@@ -20,8 +20,13 @@ impl Extractor for ImageExtractor {
     fn id(&self) -> &'static str {
         "image"
     }
+    /// ⚠️ Bu liste ile kok `Cargo.toml`'daki `image` **feature** listesi BIRLIKTE gider:
+    /// `image` `default-features = false` ile derlenir → burada sayilan ama feature'i acik
+    /// olmayan bir uzanti, decode edilemedigi icin ONIZLEMESIZ kalir (kullanici bulgusu
+    /// 2026-08-16: `webp`/`ico` iki listede de yoktu → 54 dosya sessizce onizlemesizdi).
+    /// `image_formats_cover_declared_extensions` testi ikisini birbirine baglar.
     fn extensions(&self) -> &'static [&'static str] {
-        &["jpg", "jpeg", "png", "bmp", "tif", "tiff", "tga", "gif", "psd"]
+        &["jpg", "jpeg", "png", "bmp", "tif", "tiff", "tga", "gif", "psd", "webp", "ico"]
     }
     fn max_size(&self) -> u64 {
         MAX_IMAGE_SIZE
@@ -430,6 +435,58 @@ mod tests {
     fn lab_dist_known() {
         assert_eq!(lab_dist_sq(&[50.0, 10.0, -5.0], &[50.0, 10.0, -5.0]), 0.0);
         assert!((lab_dist_sq(&[0.0, 0.0, 0.0], &[3.0, 4.0, 0.0]) - 25.0).abs() < 1e-10);
+    }
+
+    /// **Regresyon kilidi (kullanici bulgusu 2026-08-16).** `image` kok `Cargo.toml`'da
+    /// `default-features = false` ile derlenir. `webp`/`ico` uzantilari `extensions()`'ta da
+    /// feature listesinde de yoktu → kullanicinin arsivindeki 45 webp + 9 ico dosyasi
+    /// ONIZLEMESIZ kaliyor, hicbir uyari da cikmiyordu (cikarici bulunamadigi icin hat hic
+    /// baslamiyordu). Iki liste birbirine BAGLI: burada sayilan her uzantinin decoder'i
+    /// derlemede acik olmali. Feature kapatilirsa asagidaki tip referanslari DERLENMEZ.
+    #[test]
+    fn image_formats_cover_declared_extensions() {
+        // psd elle cozulur (image crate PSD bilmez) → format eslesmesi aranmaz.
+        for ext in ImageExtractor.extensions().iter().filter(|e| **e != "psd") {
+            assert!(
+                image::ImageFormat::from_extension(ext).is_some(),
+                "{ext}: `image` bu uzantiyi bir formata eslemiyor"
+            );
+        }
+        // Decoder'lar gercekten derlemede mi? (feature kapaliysa bu tipler YOKTUR → derleme hatasi)
+        #[allow(dead_code)]
+        fn decoders_are_compiled_in() {
+            type _Webp<'a> = image::codecs::webp::WebPDecoder<&'a [u8]>;
+            type _Ico<'a> = image::codecs::ico::IcoDecoder<&'a [u8]>;
+            type _Gif<'a> = image::codecs::gif::GifDecoder<&'a [u8]>;
+        }
+    }
+
+    /// ICO ucu uctan uca: gercek bir .ico yazilir → `ImageExtractor` onu decode edip
+    /// thumbnail + boyut uretmeli. (webp decoder'i 0.24'te encode edemedigimiz icin yalniz
+    /// yukaridaki derleme-kilidi ile korunur; ico tam tur atabildigi icin burada kanitlanir.)
+    #[test]
+    fn ico_files_get_a_thumbnail() {
+        use image::codecs::ico::IcoEncoder;
+        use image::{ColorType, ImageEncoder};
+
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("simge.ico");
+        let pixels: Vec<u8> = (0..16 * 16).flat_map(|i| [i as u8, 40, 200, 255]).collect();
+        let file = std::fs::File::create(&path).unwrap();
+        IcoEncoder::new(file)
+            .write_image(&pixels, 16, 16, ColorType::Rgba8)
+            .unwrap();
+
+        let out = ImageExtractor
+            .extract(&ExtractInput {
+                path: path.clone(),
+                ext: "ico".to_string(),
+                size_bytes: std::fs::metadata(&path).unwrap().len(),
+            })
+            .unwrap();
+
+        assert!(out.thumbnail.is_some(), "ico onizlemesi uretilmeli: {:?}", out.warnings);
+        assert!(out.phash.is_some(), "ico icin phash (dedup) da uretilmeli");
     }
 
     #[test]

@@ -185,6 +185,55 @@ describe("visionOutcomeNotice", () => {
     expect(n.kind).toBe("error");
   });
 
+  // ── Onizlemesi olmayan secim (kullanici bulgusu 2026-08-16) ──────────────────
+  // 142 mp4 secilip "AI ile tara" dendi; dosyalarin onizlemesi (thumbnail) olmadigi icin
+  // analiz kuyruguna HIC girmediler → rapor 0 analiz / 0 hata dondu ve ekranda "basarili"
+  // yazdi. Sessiz basari, kullaniciya "yapildi" demenin en kotu bicimidir.
+
+  it("onizlemesiz secimde SESSIZ BASARI yerine aciklayici cumle uretir", () => {
+    const n = visionOutcomeNotice(report({ analyzed: 0, failed: 0, skippedNoPreview: 142 }));
+    expect(n.key).toBe("vision_index.no_preview.none");
+    expect(n.kind).toBe("error"); // kullanicinin bekledigi is HIC olmadi
+    expect(n.params).toMatchObject({ skipped: 142, analyzed: 0 });
+    expect(n.adviceKey).toBe("vision_index.no_preview.advice"); // ne yapilacagi da soylenir
+    // Bu dosyalar `ai_attempt_failed` ile ISARETLENMEZ (denenmediler) → o filtreye goturme vaadi YOK.
+    expect(n.markedForRetry).toBe(false);
+  });
+
+  it("karisik secimde (bir kismi analiz edildi) ton bilgi olur ama atlananlar SOYLENIR", () => {
+    const n = visionOutcomeNotice(report({ analyzed: 8, failed: 0, skippedNoPreview: 3 }));
+    expect(n.key).toBe("vision_index.no_preview.partial");
+    expect(n.kind).toBe("info");
+    expect(n.params).toMatchObject({ analyzed: 8, skipped: 3 });
+  });
+
+  it("GERCEK bir hata varken onizlemesizlik cumleyi GASPETMEZ (hata daha acil)", () => {
+    const n = visionOutcomeNotice(
+      report({ analyzed: 0, failed: 2, errorKind: "ollama_down", skippedNoPreview: 5 }),
+    );
+    expect(n.key).toBe("vision_index.error.ollama_down");
+  });
+
+  it("devre kesici kestiyse de onizlemesizlik cumleyi gaspetmez", () => {
+    const n = visionOutcomeNotice(
+      report({
+        analyzed: 0,
+        failed: 3,
+        unusable: 3,
+        errorKind: "unusable_output",
+        abortedAfterConsecutiveFailures: 3,
+        skippedNoPreview: 5,
+      }),
+    );
+    expect(n.prefixKey).toBe("vision_index.aborted_toast");
+    expect(n.key).toBe("vision_index.unusable.none");
+  });
+
+  it("onizlemesiz secim YOKKEN eski davranis aynen korunur", () => {
+    const n = visionOutcomeNotice(report({ analyzed: 0, failed: 0, skippedNoPreview: 0 }));
+    expect(n.key).not.toContain("no_preview");
+  });
+
   it("uretilen TUM anahtarlarin tr + en karsiligi var", () => {
     for (const key of [
       "vision_index.unusable.partial",
@@ -192,6 +241,9 @@ describe("visionOutcomeNotice", () => {
       "vision_index.unusable.advice_proven",
       "vision_index.unusable.advice_weak",
       "vision_index.unusable.show_action",
+      "vision_index.no_preview.partial",
+      "vision_index.no_preview.none",
+      "vision_index.no_preview.advice",
       "facet.ai_attempt_failed",
     ]) {
       expect(typeof lookup(tr, key), `tr: ${key}`).toBe("string");

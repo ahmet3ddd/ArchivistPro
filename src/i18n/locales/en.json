@@ -324,6 +324,11 @@
       "advice_proven": "The selected model ({{model}}) is a measured-good one for this job; these images are most likely undescribable (logos, blank or very small images, plain text screens). Retrying may not help — you do not have to switch models.",
       "advice_weak": "The selected model ({{model}}) is measured as inadequate for this job. Pick a more capable model under Settings → AI and retry these images.",
       "show_action": "Show these images"
+    },
+    "no_preview": {
+      "partial": "{{analyzed, number}} of {{total, number}} images were analyzed. {{skipped, number}} file(s) never entered analysis: they have no preview (thumbnail) — visual analysis works from the preview.",
+      "none": "Nothing was analyzed. The {{skipped, number}} selected file(s) have no preview (thumbnail); since visual analysis works from the preview, they never entered the queue.",
+      "advice": "These are usually videos/images indexed before preview support was added. With the files selected, choose “Re-index”: a preview is generated, then AI analysis can run. Formats that can never get a preview (e.g. svg) stay out of analysis."
     }
   },
   "ai_vision": {
@@ -883,9 +888,13 @@
     "software_version": "Software version",
     "ai_analyzed": "AI visual analysis status",
     "ai_all": "All",
+    "ai_all_hint": "This filter is off: every file in the archive. The rows below split only the files that can enter visual analysis, so they add up to less than this number.",
     "ai_yes": "Analyzed",
+    "ai_yes_hint": "Images with a stored AI description.",
     "ai_no": "Not analyzed",
-    "ai_attempt_failed": "Attempted, no result"
+    "ai_no_hint": "Images that have never entered analysis. Ones that were attempted without a usable result are not counted here — they have their own row.",
+    "ai_attempt_failed": "Attempted, no result",
+    "ai_attempt_failed_hint": "The model replied but the result was unusable, so nothing was written. They are still pending: select them and retry with a more capable model."
   },
   "facet_config": {
     "open": "Customize filters",

@@ -268,6 +268,11 @@
     "rebuild_cleared": "تم حذف {{count, number}} مقطع قديم — جارٍ إعادة الفهرسة…"
   },
   "vision_index": {
+    "attempt_marks_notice": "{{count, number}} صورة مُعلَّمة بـ«جُرِّبت دون نتيجة». لا يمنع هذا التعليم إعادة التحليل؛ وقد يكون خطأ مؤقّت في نموذج بإصدار أقدم قد تركه.",
+    "attempt_marks_clear": "مسح التعليمات",
+    "attempt_marks_clearing": "جارٍ المسح…",
+    "attempt_marks_cleared": "تم مسح {{count, number}} تعليم. حُفظت نتائج التحليل والوسوم.",
+    "attempt_marks_failed": "تعذّر مسح التعليمات: {{message}}",
     "title": "تحليل الصور (AI)",
     "hint": "يُحوّل الذكاء الاصطناعي محتوى كل صورة/رسم إلى نص (النوع، الوصف، العناصر، الفراغات، النص الظاهر) ← تجدها الدردشة والبحث بالنص.",
     "status": "{{analyzed, number}} / {{total, number}} تم تحليلها",

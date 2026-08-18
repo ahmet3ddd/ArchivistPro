@@ -270,6 +270,11 @@
     "rebuild_cleared": "{{count, number}} old chunks deleted — re-indexing…"
   },
   "vision_index": {
+    "attempt_marks_notice": "{{count, number}} images are marked “tried, no result”. This mark does not block re-analysis; a transient model error in an older version may also have left it.",
+    "attempt_marks_clear": "Clear marks",
+    "attempt_marks_clearing": "Clearing…",
+    "attempt_marks_cleared": "{{count, number}} marks cleared. Analysis output and tags were preserved.",
+    "attempt_marks_failed": "Marks could not be cleared: {{message}}",
     "title": "Image Analysis (AI)",
     "hint": "Each image/drawing's content is turned into text by AI (type, description, elements, spaces, on-image text) → chat and search find images by TEXT.",
     "status": "{{analyzed, number}} / {{total, number}} analyzed",

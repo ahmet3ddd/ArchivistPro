@@ -542,6 +542,7 @@ fn post_vision_chat(
     let started = Instant::now();
     let reader = BufReader::new(resp.into_reader());
     let mut full = String::new();
+    let mut completed = false;
     for line in reader.lines() {
         let line = match line {
             Ok(l) => l,
@@ -552,9 +553,17 @@ fn post_vision_chat(
                     "Ollama vision hatasi: model {idle_secs} sn boyunca hic yanit uretmedi (timed out)"
                 ));
             }
-            Err(e) => return Err(format!("Ollama vision hatasi: akis kesildi: {e}")),
+            // Akis ORTASINDA okuma hatasi (timeout degil) = karsi taraf yaniti tamamlamadan
+            // dustu. Yerel Ollama'da bunun anlami model calistiricisinin olmesidir → `done:true`
+            // gelmeden kapanmayla AYNI sinif (`stream_aborted`): gecici, yeniden denenebilir.
+            Err(e) => {
+                return Err(format!(
+                    "Ollama vision hatasi: akis kesildi (stream_aborted): {e}"
+                ))
+            }
         };
         if consume_vision_stream_line(&line, &mut full)? {
+            completed = true;
             break;
         }
         // Emniyet supabi — normalde devreye girmez (bkz VISION_MAX_TOTAL_SECS).
@@ -563,6 +572,24 @@ fn post_vision_chat(
                 "Ollama vision hatasi: analiz mutlak sinirini asti ({max_total_secs} sn; timed out)"
             ));
         }
+    }
+    // **YARIDA KESILEN AKIS** — `done:true` GORULMEDEN akis bitti (kullanici bulgusu 2026-08-18).
+    //
+    // Olculdu: qwen2.5vl:3b belirli (gorsel-icerik x 768px) birlesimlerinde model calistiricisini
+    // dusuruyor; Ollama `{"message":{"content":"@@@@..."},"done":false}` dondurup akisi kapatiyor
+    // (`prompt_eval_count` = 0 → istem HIC islenmemis). Ayni gorsel 384px'te ya da llava ile
+    // sorunsuz; yani kalici bir "model bu gorseli betimleyemiyor" durumu DEGIL.
+    //
+    // Eskiden bu sessizce kabul ediliyordu: cop metin modelin TAM cevabi sanilir, `parse_vision_
+    // response` etiket bulamaz, varlik `unusable_output` ile KALICI "denendi, sonuc alinamadi"
+    // isaretini alirdi. Yani TASIMA katmani cokmesi MODEL KALITESI sorunu gibi raporlaniyordu.
+    // Artik ayri bir hata: cagiran kucultulmus gorselle yeniden dener, varligi damgalamaz.
+    if !completed {
+        return Err(format!(
+            "Ollama vision hatasi: model calistiricisi yaniti yarida kesti \
+             (stream_aborted; done:true gelmedi, {} karakter alindi)",
+            full.chars().count()
+        ));
     }
     Ok(full)
 }
@@ -625,6 +652,47 @@ mod tests {
             }
         });
         format!("http://127.0.0.1:{port}")
+    }
+
+    /// **GERCEK saha kusurunun benzetimi (2026-08-18).** 200 + tek NDJSON satiri (`done:false`,
+    /// icerik cop) yollar ve baglantiyi KAPATIR — Ollama'nin model calistiricisi coktugunde
+    /// yaptigi tam olarak budur (olculdu: `prompt_eval_count` yok, `done_reason` yok).
+    fn spawn_aborting_ollama() -> String {
+        use std::io::Write;
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").expect("dinleyici acilamadi");
+        let port = listener.local_addr().unwrap().port();
+        std::thread::spawn(move || {
+            if let Ok((mut sock, _)) = listener.accept() {
+                let _ = sock.write_all(
+                    b"HTTP/1.1 200 OK\r\nContent-Type: application/x-ndjson\r\n\
+                      Connection: close\r\n\r\n\
+                      {\"message\":{\"content\":\"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\"},\"done\":false}\n",
+                );
+                let _ = sock.flush();
+                // done:true YOK. Yazma yonunu DUZGUN kapat → istemci TEMIZ EOF gorur (Ollama'nin
+                // gercek davranisi). Sert kapatma baska bir dal (baglanti sifirlama) olurdu.
+                let _ = sock.shutdown(std::net::Shutdown::Write);
+                std::thread::sleep(std::time::Duration::from_millis(300));
+            }
+        });
+        format!("http://127.0.0.1:{port}")
+    }
+
+    /// `done:true` GORULMEDEN akis biterse cop metin BASARI sayilmamali.
+    ///
+    /// Kilitledigi kusur: eskiden bu sessizce `Ok("@@@@...")` donuyordu → `parse_vision_response`
+    /// etiket bulamiyor → varlik KALICI "denendi, sonuc alinamadi" damgasi aliyordu. Yani TASIMA
+    /// katmani cokmesi MODEL KALITESI sorunu gibi raporlaniyordu. Artik `stream_aborted` hatasi:
+    /// cagiran kucultulmus gorselle yeniden dener ve varligi damgalamaz.
+    #[test]
+    fn aborted_stream_is_an_error_not_a_usable_answer() {
+        let base = spawn_aborting_ollama();
+        let err = post_vision_chat(&base, serde_json::json!({"model": "x"}), 5, 30)
+            .expect_err("yarida kesilen akis Err olmali");
+        assert!(err.contains("stream_aborted"), "kararli isaret bekleniyordu: {err}");
+        assert_eq!(crate::vision::classify_vision_error(&err), "stream_aborted");
+        // Cop metin cagirana SIZMAMALI (yoksa "model bunu uretti" diye raporlanir).
+        assert!(!err.contains("@@@@@@@@@@"), "cop metin hata mesajina kopyalanmamali: {err}");
     }
 
     /// Baglanti KURULUR ve HTTP 200 gelir, ama tek token uretilmez → sessizlik tavani cagriyi

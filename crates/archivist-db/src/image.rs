@@ -374,6 +374,46 @@ impl Db {
         Ok(())
     }
 
+    /// "Denendi, sonuc alinamadi" isaretlerini TEMIZLE. Temizlenen asset sayisini doner.
+    ///
+    /// `ids` bos ise TUM isaretler silinir; doluysa yalniz o varliklarinkiler.
+    ///
+    /// **Neden gerekli (kullanici bulgusu 2026-08-18):** isaret, GECICI bir hatada da basiliyordu —
+    /// Ollama model calistiricisi yaniti yarida kestiginde (`done:true` gelmeden akis biter) cop
+    /// metin modelin cevabi sanilip `unusable_output` damgasi yaziliyordu. Olculdu: ayni gorseller
+    /// kucultulmus boyutta ya da baska modelle sorunsuz analiz ediliyor → damga HAKSIZDI.
+    /// Cagri yolu duzeltildi (artik gecici hata damgalamaz); bu fonksiyon **gecmiste haksiz
+    /// damgalanmislari** geri alir.
+    ///
+    /// Yalniz `ai_attempt_*` anahtarlarina dokunur: `ai_analyzed` ve gercek analiz ciktilari
+    /// (`ai_aciklama` vb.) KORUNUR. Varlik zaten "bekleyen" sayiliyordu (`assets_without_analysis`
+    /// isarete BAKMAZ) → bu islem yeniden analizi acmaz, yalniz yanlis GORUNURLUGU kaldirir.
+    pub fn clear_analysis_attempt_marks(&self, ids: &[i64]) -> Result<i64, DbError> {
+        let tx = self.conn.unchecked_transaction()?;
+        let n = if ids.is_empty() {
+            tx.execute(
+                r"DELETE FROM asset_metadata WHERE key LIKE 'ai\_attempt\_%' ESCAPE '\'",
+                [],
+            )?
+        } else {
+            let mut total = 0usize;
+            // SQLITE_MAX_VARIABLE_NUMBER'a takilmamak icin parcala (projects.rs deseni).
+            for chunk in ids.chunks(500) {
+                let holes = std::iter::repeat_n("?", chunk.len()).collect::<Vec<_>>().join(",");
+                let sql = format!(
+                    r"DELETE FROM asset_metadata
+                      WHERE key LIKE 'ai\_attempt\_%' ESCAPE '\' AND asset_id IN ({holes})"
+                );
+                let params = rusqlite::params_from_iter(chunk.iter());
+                total += tx.execute(&sql, params)?;
+            }
+            total
+        };
+        tx.commit()?;
+        // Her varlik icin 4 satir yazilir (failed/kind/model/at) → asset sayisina cevir.
+        Ok((n as i64 + 3) / 4)
+    }
+
     /// "Denendi, sonuc alinamadi" aktif asset sayisi (isaret VAR, `ai_analyzed` YOK).
     /// `ai_analyzed` dislamasi savunma amaclidir: basarili analiz zaten isareti siler, ama eski/yarim
     /// kayitlarda ikisi bir arada bulunursa varlik "analizli" sayilmali (sayim cift gosterilmemeli).

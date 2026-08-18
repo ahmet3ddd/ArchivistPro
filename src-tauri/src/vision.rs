@@ -158,9 +158,20 @@ pub(crate) fn classify_vision_error(err: &str) -> &'static str {
         "model_missing"
     } else if e.contains("out of memory") || e.contains("insufficient memory") {
         "out_of_memory"
+    } else if is_stream_aborted_text(&e) {
+        "stream_aborted"
     } else {
         "other"
     }
+}
+
+/// Model calistiricisi yaniti YARIDA kesti mi (`done:true` gelmeden akis bitti)?
+///
+/// GECICI bir hatadir — ayni gorsel kucultulunce ya da baska modelle sorunsuz analiz edilir
+/// (olculdu 2026-08-18: qwen2.5vl:3b bir fotografta 768px'te 10/10 dusuyor, 384px'te 0/6).
+/// Bu yuzden varlik KALICI "denendi, sonuc alinamadi" damgasi ALMAZ; cagiran yeniden dener.
+pub(crate) fn is_stream_aborted_text(lowercased: &str) -> bool {
+    lowercased.contains("stream_aborted")
 }
 
 /// Baglam-penceresi asimi metni mi (siniflandirici + `vision_commands` lean-retry tetigi ayni

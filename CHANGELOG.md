@@ -5,6 +5,34 @@ kaynağı budur.** Format [Keep a Changelog](https://keepachangelog.com/tr/1.0.0
 tabanlıdır; sürüm numaralandırması [Semantic Versioning](https://semver.org/)
 kurallarına göre ilerler.
 
+## [3.6.1] — 2026-08-18 — Görsel Analizi Yarıda Kesilince Dosya Suçlanmıyor
+
+Görsel analizinin bir kısım dosyada sessizce başarısız olmasını ve o dosyaların
+haksız yere "denendi, sonuç alınamadı" diye işaretlenmesini düzelten sürüm.
+Veri biçimi değişmedi; yeni veritabanı güncellemesi yoktur.
+
+### Düzeltilen (Fixed)
+- **Model yanıtı yarıda kesilince analiz artık "başarısız dosya" sayılmıyor.**
+  AI görsel analizinde model bazen yanıtı tamamlayamadan düşüyor; geriye anlamsız
+  bir metin (`@@@@…`) kalıyordu. Uygulama bunu **modelin tam cevabı** sanıyor,
+  içinde beklediği alanları bulamayınca da dosyayı kalıcı olarak *"denendi, sonuç
+  alınamadı"* diye işaretliyordu. Yani bağlantı düzeyindeki geçici bir kesinti,
+  dosyanın ya da modelin suçu gibi raporlanıyordu. Artık bu durum ayrı bir geçici
+  hata olarak tanınıyor ve dosya işaretlenmiyor.
+- **Aynı görsel otomatik olarak daha küçük boyutta yeniden deneniyor.** Kesinti
+  ölçülebilir biçimde görselin gönderim boyutuna bağlı: aynı fotoğraf büyük
+  boyutta her seferinde düşerken küçültülmüş hâlinde sorunsuz analiz ediliyor.
+  Kesinti olursa görsel bir kez daha, küçültülmüş olarak gönderilir.
+- Analiz sırasındaki hata açıklaması artık *"model bu görseli betimlemeyi
+  reddetmiş olabilir"* demiyor; kesintiyi olduğu gibi bildiriyor.
+
+### Eklenen (Added)
+- **"İşaretleri temizle"** (Pano → Görsel Analizi, yönetici). Önceki sürümlerde
+  geçici kesinti yüzünden *"denendi, sonuç alınamadı"* işareti almış dosyaların
+  işaretini kaldırır. Analiz çıktılarına, etiketlere ve dosyalarınıza dokunmaz;
+  bu dosyalar zaten yeniden analiz edilebilir durumdaydı, işaret yalnızca listeyi
+  şişiriyordu.
+
 ## [3.6.0] — 2026-08-18 — Metnin Tamamı Aramaya Girsin
 
 Belge içeriğinin yalnızca bir kısmının aramaya girdiği bir kusurun düzeltildiği

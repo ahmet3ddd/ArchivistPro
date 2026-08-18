@@ -628,3 +628,46 @@ fn failed_attempt_marker_is_idempotent() {
     let markers = detail.metadata.iter().filter(|m| m.key.starts_with("ai_attempt_")).count();
     assert_eq!(markers, 4, "anahtar seti birikmemeli (failed/kind/model/at)");
 }
+
+// ── "Denendi, sonuc alinamadi" isaretini GERI ALMA (kullanici bulgusu 2026-08-18) ──
+//
+// Isaret GECICI bir hatada da basiliyordu: Ollama model calistiricisi yaniti yarida kestiginde
+// (`done:true` gelmeden akis biter) cop metin modelin cevabi sanilip `unusable_output` damgasi
+// yaziliyordu. Olculdu: ayni gorseller kucultulmus boyutta sorunsuz analiz ediliyor → damga
+// HAKSIZDI. Cagri yolu duzeltildi; bu fonksiyon gecmiste haksiz damgalanmislari geri alir.
+#[test]
+fn clear_attempt_marks_removes_only_attempt_keys() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed_image(&mut db, "/p/a.jpg", "a.jpg", "jpg");
+    let b = seed_image(&mut db, "/p/b.jpg", "b.jpg", "jpg");
+    let c = seed_image(&mut db, "/p/c.jpg", "c.jpg", "jpg");
+
+    db.mark_analysis_attempt_failed(a, "unusable_output", "qwen2.5vl:3b", 1).unwrap();
+    db.mark_analysis_attempt_failed(b, "unusable_output", "qwen2.5vl:3b", 1).unwrap();
+    db.mark_analysis_attempt_failed(c, "unusable_output", "qwen2.5vl:3b", 1).unwrap();
+    // c'nin GERCEK analizi de olsun → temizlik ona DOKUNMAMALI.
+    db.set_ai_metadata(c, &[("ai_aciklama", "gercek betim".to_string())]).unwrap();
+    assert_eq!(db.failed_attempt_count().unwrap(), 2, "c analizli → sayima girmez");
+
+    // ① Kapsamli temizlik: yalniz a.
+    assert_eq!(db.clear_analysis_attempt_marks(&[a]).unwrap(), 1);
+    assert_eq!(db.failed_attempt_count().unwrap(), 1, "yalniz b kalmali");
+
+    // ② Analiz ciktisi KORUNDU.
+    let detail = db.get_asset(c).unwrap().unwrap();
+    assert!(
+        detail.metadata.iter().any(|m| m.key == "ai_aciklama"),
+        "gercek analiz ciktisi silinmemeli"
+    );
+
+    // ③ Temizlik yeniden analizi ACMAZ/KAPATMAZ — kuyruk zaten isarete bakmaz.
+    let pending: Vec<i64> =
+        db.assets_without_analysis(0, 100).unwrap().into_iter().map(|p| p.id).collect();
+    assert!(pending.contains(&a), "a temizlikten once de sonra da bekleyen");
+    assert!(pending.contains(&b), "b hala bekleyen (isareti duruyor)");
+    assert!(!pending.contains(&c), "c analizli → bekleyen degil");
+
+    // ④ Tumunu temizle.
+    assert_eq!(db.clear_analysis_attempt_marks(&[]).unwrap(), 1, "kalan tek isaret (b)");
+    assert_eq!(db.failed_attempt_count().unwrap(), 0);
+}

@@ -347,6 +347,14 @@ export const aiChatIpc = {
   resetUnusableAnalyses: (): Promise<ResetAnalysesReport> =>
     invoke<ResetAnalysesReport>("reset_unusable_analyses"),
 
+  /** "Denendi, sonuç alınamadı" İŞARETLERİNİ temizle (admin). Temizlenen varlık sayısını döner;
+   *  `ids` boş → hepsi. Analiz çıktılarına ve `ai_analyzed` damgasına DOKUNMAZ — bu varlıklar
+   *  zaten bekleyendi (kuyruk işarete bakmaz), işaret yalnızca görünürlük içindir.
+   *  Gerekçe: 2026-08-18 öncesi sürümlerde GEÇİCİ bir model-çalıştırıcı çökmesi varlıkları
+   *  haksız yere damgalıyordu. */
+  clearAnalysisAttemptMarks: (ids: number[]): Promise<number> =>
+    invoke<number>("clear_analysis_attempt_marks", { ids }),
+
   /** Bir KAPSAMDA analiz-bekleyen asset sayisi ("N görsel analiz edilecek" onizleme). Salt-okuma
    *  (rol yok). Secim kapsaminda `ids.length` yerine bunu kullan → skip/thumbnail suzgeci dogru yansir. */
   countPendingAnalysis: (scope: AnalysisScope): Promise<number> =>

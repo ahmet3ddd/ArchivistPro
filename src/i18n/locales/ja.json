@@ -268,6 +268,11 @@
     "rebuild_cleared": "古いチャンク {{count, number}} 件を削除しました — 再インデックス中…"
   },
   "vision_index": {
+    "attempt_marks_notice": "{{count, number}} 件の画像が「試行済み・結果なし」と記録されています。この記録は再解析を妨げません。古いバージョンの一時的なモデルエラーが原因の場合もあります。",
+    "attempt_marks_clear": "記録を消去",
+    "attempt_marks_clearing": "消去中…",
+    "attempt_marks_cleared": "{{count, number}} 件の記録を消去しました。解析結果とタグは保持されます。",
+    "attempt_marks_failed": "記録を消去できませんでした：{{message}}",
     "title": "画像解析（AI）",
     "hint": "各画像・図面の内容を AI がテキスト化します（種類・説明・要素・空間・画像内の文字）→ チャットと検索が画像をテキストで見つけます。",
     "status": "{{analyzed, number}} / {{total, number}} 解析済み",

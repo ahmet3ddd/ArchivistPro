@@ -382,19 +382,21 @@ pub async fn vision_trial(
             break;
         }
         let preview = higher_res_preview(&asset.path);
+        let used_hi_res = preview.is_some();
         let img: &[u8] = preview.as_deref().unwrap_or(&asset.thumb_bytes);
         // Cizim turu YALNIZ CAD dosyalarina sorulur (bkz `vision::asks_drawing_type`).
         let ask_type = vision::asks_drawing_type(&asset.path);
-        let prompt = vision::build_vision_prompt(ctx.as_deref(), ask_type);
 
         let start = Instant::now();
-        let mut outcome = ollama::analyze_image(&model_used, img, &prompt);
-        let mut lean_retry = false;
-        if ctx.is_some() && matches!(&outcome, Err(e) if is_ctx_overflow(e)) {
-            lean_retry = true;
-            outcome =
-                ollama::analyze_image(&model_used, img, &vision::build_vision_prompt(None, ask_type));
-        }
+        // Kosu ile AYNI kurtarma yolu — deneme "uretim yolunu birebir kosar" sozunu korur.
+        let (outcome, lean_retry, _downscaled) = analyze_with_recovery(
+            &model_used,
+            &asset.path,
+            img,
+            used_hi_res,
+            ctx.as_deref(),
+            ask_type,
+        );
         let elapsed_ms = start.elapsed().as_millis();
 
         let attempt = match outcome {
@@ -688,6 +690,20 @@ fn build_binary_context(db: &archivist_db::Db, asset_id: i64) -> Option<String> 
 /// (DWG/PDF/Office gibi buyuk dosyalari bosuna bellege okumaktan kacinir; onlarin thumb'i zaten
 /// gomulu-onizlemeden gelir → daha buyuk raster kaynagi yok).
 fn higher_res_preview(path: &str) -> Option<Vec<u8>> {
+    preview_at(path, archivist_thumbnail::VISION_PREVIEW_MAX)
+}
+
+/// Model calistiricisi cokmesinden (`stream_aborted`) sonra kullanilan KUCULTULMUS kenar tavani.
+///
+/// Olculdu 2026-08-18 (gercek arsiv fotografi, qwen2.5vl:3b): **768px → 10/10 cokme**,
+/// **384px → 0/6**, **256px → 0/6**. Ayni gorsel llava ile 768px'te de sorunsuz → cokme
+/// (icerik x boyut x model) birlesimine bagli, gorselin kendisi saglam.
+/// 384 secildi: cokmenin gozlenmedigi en BUYUK olculen deger (detay kaybi en az).
+const VISION_RETRY_MAX: u32 = 384;
+
+/// `path` icin verilen kenar tavaniyla onizleme uret. `higher_res_preview` ve kucultulmus
+/// yeniden-deneme ayni geciti (raster uzanti + 64MB kaynak tavani) paylassin diye tek yerde.
+fn preview_at(path: &str, max_edge: u32) -> Option<Vec<u8>> {
     const RASTER_EXT: &[&str] = &["jpg", "jpeg", "png", "gif", "bmp", "webp", "tif", "tiff", "ico"];
     let ext = std::path::Path::new(path).extension()?.to_str()?.to_ascii_lowercase();
     if !RASTER_EXT.contains(&ext.as_str()) {
@@ -699,11 +715,45 @@ fn higher_res_preview(path: &str) -> Option<Vec<u8>> {
         return None;
     }
     let bytes = std::fs::read(path).ok()?;
-    let preview = archivist_thumbnail::image_preview_from_bytes(
-        &bytes,
-        archivist_thumbnail::VISION_PREVIEW_MAX,
-    )?;
+    let preview = archivist_thumbnail::image_preview_from_bytes(&bytes, max_edge)?;
     Some(preview.bytes)
+}
+
+/// Model calistiricisi yaniti yarida kesti mi? (Gecici — kucultulmus gorselle yeniden denenir.)
+fn is_stream_aborted(err: &str) -> bool {
+    vision::is_stream_aborted_text(&err.to_ascii_lowercase())
+}
+
+/// Tek analiz cagrisi + **iki kademeli kurtarma**. Donus: (sonuc, lean_retry, kucultuldu_mu).
+///
+/// ① baglam tasmasi (kucuk-pencereli model) → context'siz (lean) istemle tekrar.
+/// ② model calistiricisi cokmesi (`stream_aborted`) → **kucultulmus gorselle** tekrar
+///    (yalniz yuksek-cozunurluklu onizleme gonderilmisse; depolanan 256px thumb zaten kucuk).
+fn analyze_with_recovery(
+    model: &str,
+    path: &str,
+    img: &[u8],
+    used_hi_res: bool,
+    ctx: Option<&str>,
+    ask_type: bool,
+) -> (Result<String, String>, bool, bool) {
+    let prompt = vision::build_vision_prompt(ctx, ask_type);
+    let mut outcome = ollama::analyze_image(model, img, &prompt);
+    let mut lean_retry = false;
+    let mut downscaled = false;
+
+    if ctx.is_some() && matches!(&outcome, Err(e) if is_ctx_overflow(e)) {
+        lean_retry = true;
+        outcome = ollama::analyze_image(model, img, &vision::build_vision_prompt(None, ask_type));
+    }
+    if used_hi_res && matches!(&outcome, Err(e) if is_stream_aborted(e)) {
+        if let Some(small) = preview_at(path, VISION_RETRY_MAX) {
+            downscaled = true;
+            let p = if lean_retry { vision::build_vision_prompt(None, ask_type) } else { prompt };
+            outcome = ollama::analyze_image(model, &small, &p);
+        }
+    }
+    (outcome, lean_retry, downscaled)
 }
 
 /// Ollama baglam-penceresi ASIMI hatasi mi? (moondream gibi kucuk-pencereli modeller num_ctx'i YOK
@@ -820,21 +870,26 @@ pub async fn run_image_analysis(
             // yoksa/raster degilse depolanan 256px thumb'a geri-dus (daha az detay ama en azindan
             // analiz olur). Tek kez hesapla → iki analiz cagrisi (ilk + lean-retry) paylasir.
             let preview = higher_res_preview(&p.path);
+            let used_hi_res = preview.is_some();
             let img: &[u8] = preview.as_deref().unwrap_or(&p.thumb_bytes);
 
             // UZUN Ollama vision cagrisi — KILIT YOK. Ilk deneme: zengin prompt (binary_context'li).
-            // Cizim turu YALNIZ CAD dosyalarina sorulur (bkz `vision::asks_drawing_type`).
+            // Iki kademeli kurtarma (bkz `analyze_with_recovery`): baglam tasmasi → lean istem;
+            // model calistiricisi cokmesi → kucultulmus gorsel.
             let ask_type = vision::asks_drawing_type(&p.path);
-            let prompt = vision::build_vision_prompt(ctx.as_deref(), ask_type);
-            let mut outcome = ollama::analyze_image(&model_used, img, &prompt);
-            // Baglam-penceresi TASMASI + binary_context vardi → context'SIZ (lean) prompt'la TEKRAR
-            // DENE. Kucuk-pencereli modelde (moondream 2048; num_ctx yok sayilir) base prompt + gorsel
-            // tek basina siga; tasmayi yapan binary_context → onu atinca dosya YINE analiz edilir
-            // (zengin baglam kaybi > hic analiz olmamasi). Buyuk-pencereli modelde bu dal calismaz.
-            if ctx.is_some() && matches!(&outcome, Err(e) if is_ctx_overflow(e)) {
-                eprintln!("[vision] baglam tasmasi → context'siz tekrar: {}", p.file_name);
-                let lean = vision::build_vision_prompt(None, ask_type);
-                outcome = ollama::analyze_image(&model_used, img, &lean);
+            let (outcome, _lean_retry, downscaled) = analyze_with_recovery(
+                &model_used,
+                &p.path,
+                img,
+                used_hi_res,
+                ctx.as_deref(),
+                ask_type,
+            );
+            if downscaled {
+                eprintln!(
+                    "[vision] calistirici cokmesi → {VISION_RETRY_MAX}px ile tekrar: {}",
+                    p.file_name
+                );
             }
 
             // Tek cikis: basarisizlik `(kullanici-metni, kararli-sinif)` olarak toplanir → sayac /
@@ -983,6 +1038,32 @@ pub async fn run_image_analysis(
 /// Aktif gorsel-analiz kosusunu durdur ("Durdur"). **Admin.** Kosu batch-basi + asset-basi
 /// `VISION_STOP` gorup erken cikar (kalan is bekleyen kalir → resumable). stop_auto_index deseni:
 /// yalniz bayrak set eder; kosunun kendisi araya girip sonlanir (senkron beklemez).
+/// "Denendi, sonuç alınamadı" isaretlerini TEMIZLE. **Admin.** Temizlenen varlik sayisini doner.
+/// `ids` bos → hepsi. Analiz ciktilarina ve `ai_analyzed` damgasina DOKUNMAZ.
+///
+/// Ne zaman gerekir: 2026-08-18 oncesi surumlerde GECICI bir model-calistirici cokmesi
+/// (`stream_aborted`) varliklari haksiz yere damgaliyordu. Damga yeniden analizi ENGELLEMEZ
+/// (kuyruk isarete bakmaz) ama "Denendi, sonuç alınamadı" filtresini sisirir.
+#[tauri::command(async)]
+pub fn clear_analysis_attempt_marks(
+    ids: Vec<i64>,
+    state: State<'_, AppState>,
+) -> Result<i64, String> {
+    let role = rbac::current_role(&state).map_err(|e| e.to_string())?;
+    rbac::require_admin(role).map_err(|e| e.to_string())?;
+    let db = state.db.lock().map_err(|e| e.to_string())?;
+    let n = db.clear_analysis_attempt_marks(&ids).map_err(|e| e.to_string())?;
+    crate::audit::record_on(
+        &db,
+        &crate::audit::actor(&state),
+        "ai_attempt_marks_cleared",
+        Some("ai_index"),
+        None,
+        Some(&format!("cleared={n} scoped={}", !ids.is_empty())),
+    );
+    Ok(n)
+}
+
 #[tauri::command]
 pub fn stop_image_analysis(state: State<'_, AppState>) -> Result<(), String> {
     let role = rbac::current_role(&state).map_err(|e| e.to_string())?;

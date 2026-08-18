@@ -268,6 +268,11 @@
     "rebuild_cleared": "{{count, number}} eski parça silindi — yeniden indeksleniyor…"
   },
   "vision_index": {
+    "attempt_marks_notice": "{{count, number}} görsel «denendi, sonuç alınamadı» diye işaretli. Bu işaret yeniden analizi engellemez; eski bir sürümdeki geçici model hatası da bu işareti bırakmış olabilir.",
+    "attempt_marks_clear": "İşaretleri temizle",
+    "attempt_marks_clearing": "Temizleniyor…",
+    "attempt_marks_cleared": "{{count, number}} işaret temizlendi. Analiz çıktıları ve etiketler korundu.",
+    "attempt_marks_failed": "İşaretler temizlenemedi: {{message}}",
     "title": "Görsel Analizi (AI)",
     "hint": "Her görselin/çizimin içeriği AI ile metne çevrilir (tür, açıklama, elemanlar, mekanlar, görseldeki yazı) → sohbet ve arama görseli METİNLE bulur.",
     "status": "{{analyzed, number}} / {{total, number}} analiz edildi",

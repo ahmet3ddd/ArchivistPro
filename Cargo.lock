@@ -92,7 +92,7 @@ dependencies = [
 
 [[package]]
 name = "archivist"
-version = "3.6.0"
+version = "3.6.1"
 dependencies = [
  "archivist-db",
  "archivist-embed",

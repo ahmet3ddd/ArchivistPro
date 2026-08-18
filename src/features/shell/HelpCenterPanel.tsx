@@ -66,6 +66,11 @@ function turkishDocuments(isAdmin: boolean): Record<TabId, Article> {
       ]},
     ]},
     changelog: { title: "Bu sürümde", intro: "H3 arayüzündeki güncel kullanıcı odaklı iyileştirmeler.", sections: [
+      { id: "vision-abort", title: "Görsel analizi yarıda kesilince dosya suçlanmıyor", paragraphs: [
+        "AI görsel analizinde model bazen yanıtı tamamlayamadan düşer; geriye anlamsız bir metin kalır. Uygulama bunu modelin tam cevabı sanıyor, beklediği alanları bulamayınca da dosyayı kalıcı olarak «denendi, sonuç alınamadı» diye işaretliyordu. Yani geçici bir kesinti, dosyanın ya da modelin suçu gibi görünüyordu. Artık bu durum ayrı bir geçici hata olarak tanınır ve dosya işaretlenmez.",
+        "Kesinti, görselin gönderim boyutuyla ilgilidir: aynı fotoğraf büyük boyutta düşerken küçültülmüş hâlinde sorunsuz analiz edilir. Bu yüzden kesinti olduğunda görsel bir kez daha, küçültülmüş olarak gönderilir.",
+        "Önceki sürümlerde bu yüzden haksız işaret almış dosyalarınız varsa: Pano › Görsel Analizi bölümündeki «İşaretleri temizle» ile işareti kaldırabilirsiniz. Analiz çıktılarına, etiketlere ve dosyalarınıza dokunmaz — bu dosyalar zaten yeniden analiz edilebilir durumdaydı, işaret yalnızca listeyi şişiriyordu.",
+      ]},
       { id: "search-coverage", title: "Belge metninin tamamı aramaya giriyor", paragraphs: [
         "Belge metni, aramaya hazırlanırken parçalara bölünür. Bu bölme kelime sayısına göre yapılıyordu; oysa parçanın modele sığıp sığmadığı «token» denen daha küçük birimlerle ölçülür ve Türkçede bir kelime ortalama 3'ten fazla token eder. Sonuç: her parçanın yalnızca baş tarafı indeksleniyor, gerisi hiçbir aramaya girmiyordu. Bölme artık doğrudan token bütçesiyle yapılıyor.",
         "Dosya adı, proje, etiket ve çizim bilgilerinden (katman/blok listeleri gibi) üretilen özetler de tek parçaya sığmadığında sessizce kesiliyordu; artık gerektiği kadar parçaya bölünüyor.",

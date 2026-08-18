@@ -1,6 +1,6 @@
 # ArchivistPro — Yeni Başlayanlar İçin Kurulum Rehberi
 
-> **Sürüm:** 3.6.0 · **Güncelleme:** 2026-08-18 · **Platform:** Windows 10/11 (64-bit)
+> **Sürüm:** 3.6.1 · **Güncelleme:** 2026-08-18 · **Platform:** Windows 10/11 (64-bit)
 >
 > Bu rehber bilgisayar kurulumlarına alışkın olmayanlar için adım adım yazılmıştır.
 > Daha kısa/teknik bir özet için: **[Sistem yöneticileri rehberi](KULLANICI_KURULUM_PRO.md)**
@@ -27,8 +27,8 @@ ve internete göndermez.
 1. Tarayıcınızda şu adresi açın:
    **https://github.com/ahmet3ddd/ArchivistPro/releases/latest**
 2. **Assets** başlığı altındaki dosyalardan şunu indirin:
-   - **`ArchivistPro_3.6.0_x64-setup.exe`** ← Önerilen
-   - `ArchivistPro_3.6.0_x64_en-US.msi` ← Alternatif (makine düzeyine **ayrı** kopya
+   - **`ArchivistPro_3.6.1_x64-setup.exe`** ← Önerilen
+   - `ArchivistPro_3.6.1_x64_en-US.msi` ← Alternatif (makine düzeyine **ayrı** kopya
      kurar; ne yaptığınızı biliyorsanız kullanın)
 3. Dosya genellikle **İndirilenler** klasörüne iner.
 
@@ -37,7 +37,7 @@ ve internete göndermez.
 
 ## 4. Kurulum
 
-1. İndirdiğiniz **`ArchivistPro_3.6.0_x64-setup.exe`** dosyasına çift tıklayın.
+1. İndirdiğiniz **`ArchivistPro_3.6.1_x64-setup.exe`** dosyasına çift tıklayın.
 2. Windows **SmartScreen** mavi bir uyarı gösterebilir ("Windows kişisel
    bilgisayarınızı korudu"). Bu, paketin kod imzası olmamasından kaynaklanır ve
    beklenen bir durumdur: **"Ek bilgi"** yazısına, sonra **"Yine de çalıştır"**
@@ -45,7 +45,7 @@ ve internete göndermez.
 3. Kurulum sihirbazını takip edin (varsayılan ayarlar uygundur).
 4. Kurulum saniyeler içinde biter ve programı başlatabilirsiniz.
 
-> ℹ️ Program açılınca sol üstte, başlığın yanında sürüm numarasını (**v3.6.0**)
+> ℹ️ Program açılınca sol üstte, başlığın yanında sürüm numarasını (**v3.6.1**)
 > görürsünüz — doğru sürümü kurduğunuzu buradan teyit edebilirsiniz.
 
 ## 5. İlk açılış
@@ -79,7 +79,7 @@ metni, önizleme ve teknik bilgiler çıkarılır.
 
 ## 7. Eski sürümden (3.2.2) mi geliyorsunuz?
 
-ArchivistPro 3.2.2 ve öncesi **eski nesil** bir programdır; 3.6.0 onun yerine
+ArchivistPro 3.2.2 ve öncesi **eski nesil** bir programdır; 3.6.1 onun yerine
 geçmez, **yan yana** kurulur. Verileriniz güvende — şöyle taşıyın:
 
 1. ⚠️ **Eski sürümü ve verisini KALDIRMAYIN** (aktarım bitip siz doğrulayana kadar).
@@ -154,4 +154,4 @@ kayıpsa kurtarma yolu yoktur — parolanızı güvenli bir yerde saklayın.
 
 ---
 
-*Bu rehber programla birlikte güncellenir. Son güncelleme: 2026-08-18 (v3.6.0).*
+*Bu rehber programla birlikte güncellenir. Son güncelleme: 2026-08-18 (v3.6.1).*

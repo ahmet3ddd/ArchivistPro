@@ -1,6 +1,6 @@
 # ArchivistPro — 系统管理员安装指南
 
-> **版本:** 3.6.0 · **更新日期:** 2026-08-18 · **平台:** Windows 10/11 (64 位)
+> **版本:** 3.6.1 · **更新日期:** 2026-08-18 · **平台:** Windows 10/11 (64 位)
 >
 > 分步讲解请见 **[新手指南](INSTALL_BEGINNER_ZH.md)**。
 
@@ -8,10 +8,10 @@
 
 ```powershell
 # 用户级、静默安装（推荐）:
-ArchivistPro_3.6.0_x64-setup.exe /S
+ArchivistPro_3.6.1_x64-setup.exe /S
 
 # 机器级（须明确选择 — 请先读下表）:
-msiexec /i ArchivistPro_3.6.0_x64_en-US.msi /qn
+msiexec /i ArchivistPro_3.6.1_x64_en-US.msi /qn
 ```
 
 核心功能（扫描、全文搜索、预览、查重）**单个 exe 完全离线**运行；
@@ -122,4 +122,4 @@ AI 组件为可选（§7）。
   [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - 源代码: https://github.com/ahmet3ddd/ArchivistPro
 
-*最后更新: 2026-08-18 (v3.6.0)。*
+*最后更新: 2026-08-18 (v3.6.1)。*

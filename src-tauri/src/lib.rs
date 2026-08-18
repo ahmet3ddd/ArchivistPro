@@ -638,6 +638,7 @@ pub fn run() {
             vision_commands::count_pending_analysis,
             vision_commands::count_unusable_analyses,
             vision_commands::reset_unusable_analyses,
+            vision_commands::clear_analysis_attempt_marks,
             // P1 tarama sonrasi AI oto-indeks (kalici kuyruk) — durum/ac-kapa/durdur/yeniden-dene.
             indexer::auto_index_status,
             indexer::set_auto_index_enabled,

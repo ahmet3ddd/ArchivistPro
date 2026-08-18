@@ -210,6 +210,23 @@ export function VisionAnalysisCard({ model }: { model: string }) {
 
   // Kullanilamaz eski analizleri bekleyene geri al. Yikici degil TELAFI edici: silinen sey zaten
   // aramada ise yaramayan cop metin; varlik yeniden kuyruga girer. Saglikli analizlere dokunulmaz.
+  const [clearingMarks, setClearingMarks] = useState(false);
+  /** "Denendi, sonuç alınamadı" işaretlerini temizle (yalnız işaret; analiz çıktısı korunur). */
+  const clearAttemptMarks = useCallback(async () => {
+    setClearingMarks(true);
+    try {
+      const n = await ipc.clearAnalysisAttemptMarks([]);
+      toast.success(t("vision_index.attempt_marks_cleared", { count: n }));
+      bumpData();
+      bumpFacets();
+      setTick((x) => x + 1);
+    } catch (e: unknown) {
+      toast.error(t("vision_index.attempt_marks_failed", { message: String(e) }));
+    } finally {
+      setClearingMarks(false);
+    }
+  }, [t, toast, bumpData, bumpFacets]);
+
   const resetUnusable = useCallback(async () => {
     if (resettingRef.current) return;
     resettingRef.current = true;
@@ -378,6 +395,33 @@ export function VisionAnalysisCard({ model }: { model: string }) {
             )}
             {hasVision && status.pending === 0 && status.total > 0 && (
               <p className="text-xs text-text-muted">{t("vision_index.all_done")}</p>
+            )}
+
+            {/* HAKSIZ DAMGA: 2026-08-18 oncesi surumlerde GECICI bir model-calistirici cokmesi
+                (`stream_aborted`) varliklari "denendi, sonuc alinamadi" diye isaretliyordu.
+                Isaret yeniden analizi ENGELLEMEZ (kuyruk isarete bakmaz) ama bu filtreyi sisirir.
+                Temizlik yalniz `ai_attempt_*` anahtarlarini siler; analiz ciktisina dokunmaz. */}
+            {isAdmin && status.attemptFailed > 0 && (
+              <div className="flex flex-col gap-2 rounded-md border border-border bg-bg-tertiary/40 px-3 py-2">
+                <p className="text-xs leading-relaxed text-text-secondary">
+                  {t("vision_index.attempt_marks_notice", { count: status.attemptFailed })}
+                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button type="button" className={filterBtn} onClick={failedAttempts.show}>
+                    {t("vision_index.unusable.show_action")}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={clearingMarks}
+                    onClick={() => void clearAttemptMarks()}
+                    className="rounded border border-border px-2 py-1 text-xs text-text-secondary transition hover:bg-bg-tertiary disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {clearingMarks
+                      ? t("vision_index.attempt_marks_clearing")
+                      : t("vision_index.attempt_marks_clear")}
+                  </button>
+                </div>
+              </div>
             )}
 
             {/* DEVRALINAN COP: cop-korumasi eklenmeden ONCE yazilmis, bugunku esigi gecemeyen

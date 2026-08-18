@@ -183,6 +183,11 @@ pub const MIGRATIONS: &[Migration] = &[
         name: "assets_fts_au_scoped",
         sql: include_str!("sql/0032_assets_fts_au_scoped.sql"),
     },
+    Migration {
+        version: 33,
+        name: "text_chunks_rules_version",
+        sql: include_str!("sql/0033_text_chunks_rules_version.sql"),
+    },
 ];
 
 /// Bir `run()` cagrisinin sonucu — handoff/STATUS icin dogrulama kaniti.

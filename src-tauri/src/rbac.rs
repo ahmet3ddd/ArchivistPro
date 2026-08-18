@@ -55,10 +55,10 @@ pub fn current_role(state: &AppState) -> Result<Role, Forbidden> {
     let guard = state
         .session
         .lock()
-        .map_err(|_| Forbidden("oturum durumu okunamadi"))?;
+        .map_err(|_| Forbidden("session_unreadable"))?;
     match guard.as_ref() {
         Some(s) => Ok(s.role),
-        None => Err(Forbidden("kimlik dogrulanmadi")),
+        None => Err(Forbidden("no_session")),
     }
 }
 
@@ -77,13 +77,19 @@ pub fn role_str(role: Role) -> &'static str {
     }
 }
 
-/// Yetersiz yetki hatasi.
+/// Yetersiz yetki hatasi. Yuk **kararli bir koddur** (serbest metin DEGIL):
+/// `no_session` · `session_unreadable` · `admin_required` · `founder_required` · `editor_required`.
+///
+/// ⚠️ `Display` bilerek ASCII/dil-notrdur. Bu deger `map_err(|e| e.to_string())` zinciriyle
+/// dogrudan UI'a tasinabildiginden, onceki Turkce metin ("yetki reddedildi: bu islem admin
+/// yetkisi gerektirir") EN/AR/JA/ZH oturumlarinda ekrana cikiyordu (2026-08-17 denetimi).
+/// Kullaniciya gosterilecek metin frontend'de `authError.ts` → `auth.error.*` ile uretilir.
 #[derive(Debug)]
 pub struct Forbidden(pub &'static str);
 
 impl std::fmt::Display for Forbidden {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "yetki reddedildi: {}", self.0)
+        write!(f, "forbidden: {}", self.0)
     }
 }
 
@@ -93,7 +99,7 @@ impl std::error::Error for Forbidden {}
 pub fn require_admin(role: Role) -> Result<(), Forbidden> {
     match role {
         Role::Admin => Ok(()),
-        _ => Err(Forbidden("bu islem admin yetkisi gerektirir")),
+        _ => Err(Forbidden("admin_required")),
     }
 }
 
@@ -103,7 +109,7 @@ pub fn require_founder(session: &Session) -> Result<(), Forbidden> {
     if session.is_founder && session.role == Role::Admin {
         Ok(())
     } else {
-        Err(Forbidden("bu islem ana admin yetkisi gerektirir"))
+        Err(Forbidden("founder_required"))
     }
 }
 
@@ -111,7 +117,7 @@ pub fn require_founder(session: &Session) -> Result<(), Forbidden> {
 pub fn require_editor(role: Role) -> Result<(), Forbidden> {
     match role {
         Role::Admin | Role::Editor => Ok(()),
-        Role::Viewer => Err(Forbidden("bu islem en az editor yetkisi gerektirir")),
+        Role::Viewer => Err(Forbidden("editor_required")),
     }
 }
 

@@ -65,6 +65,10 @@ const RRF_K: f64 = 60.0;
 const MAX_CHUNKS_PER_ASSET: usize = 3;
 const FTS_CANDIDATES: i64 = 300;
 const KNN_CANDIDATES: i64 = 200;
+/// kNN aday havuzunun **ust** siniri. Sagkalan aday (silinmis/`rag_excluded`/kapsam disi
+/// elendikten sonra) hedef `k`'nin altinda kalirsa havuz 4'er kat buyutulerek yeniden sorulur;
+/// bu sinira ya da tukenise kadar. Bkz `rag_search_with_diag` §2.
+const KNN_CANDIDATES_MAX: i64 = 3200;
 
 /// top-k kelepce: <=0 → 12 (H2 DEFAULT_TOP_K), ust sinir 200.
 ///
@@ -268,8 +272,10 @@ impl Db {
     /// yoksa bos (yaniltici "N dosya bulundu" onlenir; or. gorsel-icerik sorusu → metin RAG bos).
     /// `allowed`: RAG **kapsam** filtresi (`scope_asset_ids` kumesi). `None` → sinirsiz (tum arsiv;
     /// bugunku davranis). `Some` → yalniz o asset id'leri: FTS aday SQL'inde JOIN kosuluna inline
-    /// `IN (...)` (LIMIT'ten ONCE → recall dogru); kNN dalinda hidratasyon POST-filtresi (vec0 ANN
-    /// once kosar — olcekte FTS tasiyicidir). `Some(bos)` → savunmaci `1=0` (bos `IN ()` SQL hatasi yok).
+    /// `IN (...)` (LIMIT'ten ONCE → recall dogru); kNN dalinda hidratasyon POST-filtresi (vec0
+    /// MATCH once kosar — **brute-force kNN**, ANN DEGIL; bkz ROADMAP "Sirada"). Elenen aday
+    /// recall'i dusurmesin diye havuz gerektiginde buyutulur (§2).
+    /// `Some(bos)` → savunmaci `1=0` (bos `IN ()` SQL hatasi yok).
     pub fn rag_search_with_diag(
         &self,
         query: &str,
@@ -361,21 +367,40 @@ impl Db {
         }
 
         // ── 2) kNN adaylari (mesafe sirali). semantic.rs deseni: kNN AYRI, sonra hidratla. ──
+        //
+        // ⚠️ `chunk_vectors` bir vec0 sanal tablosudur: `deleted_at` / `rag_excluded` / kapsam
+        // kosullari MATCH sorgusuna alinamaz → suzgec ancak hidratasyonda kosar. SABIT bir
+        // `LIMIT`, cop ya da dislanmis chunk orani yuksek arsivde adaylarin buyuk kismini
+        // eledigi icin **sessiz** geri-cagirim kaybi uretiyordu (2026-08-17 denetimi, Y4;
+        // FTS dalinda ayni tuzak `scope_frag`'in LIMIT'ten ONCE baglanmasiyla zaten cozulmus).
+        //
+        // Cozum: sagkalan aday sayisi hedef `k`'nin altinda kaldigi surece havuzu 4'er kat
+        // buyutup yeniden sor — ya yeterli aday birikir, ya havuz tukenir, ya da
+        // `KNN_CANDIDATES_MAX` tavanina cikilir. Suzgecin hic elemedigi (temiz) arsivde ilk
+        // tur yeterli oldugundan **ek sorgu maliyeti yoktur**; maliyet yalniz kaybin gercekten
+        // yasandigi arsivde odenir.
         let qblob = vec_to_blob(query_vec);
-        let knn_ids: Vec<i64> = {
-            let mut stmt = self.conn.prepare(&format!(
-                "SELECT chunk_id FROM chunk_vectors WHERE embedding MATCH ?1
-                 ORDER BY distance LIMIT {KNN_CANDIDATES}"
-            ))?;
-            // Ara `let` (tail-expression DEGIL) → stmt collect bitene kadar yasar (semantic.rs deseni).
-            let ids = stmt
-                .query_map(params![qblob], |r| r.get::<_, i64>(0))?
-                .collect::<rusqlite::Result<Vec<_>>>()?;
-            ids
-        };
-        // kNN aday verilerini hidratla (aktif asset filtresi burada uygulanir).
         let mut knn_order: Vec<i64> = Vec::new();
-        if !knn_ids.is_empty() {
+        let mut knn_limit = KNN_CANDIDATES;
+        loop {
+            let knn_ids: Vec<i64> = {
+                let mut stmt = self.conn.prepare(&format!(
+                    "SELECT chunk_id FROM chunk_vectors WHERE embedding MATCH ?1
+                     ORDER BY distance LIMIT {knn_limit}"
+                ))?;
+                // Ara `let` (tail-expression DEGIL) → stmt collect bitene kadar yasar (semantic.rs deseni).
+                let ids = stmt
+                    .query_map(params![&qblob], |r| r.get::<_, i64>(0))?
+                    .collect::<rusqlite::Result<Vec<_>>>()?;
+                ids
+            };
+            if knn_ids.is_empty() {
+                break;
+            }
+            // Havuz istenen kadar dolmadiysa vektor tablosu tukenmistir → buyutmenin anlami yok.
+            let exhausted = (knn_ids.len() as i64) < knn_limit;
+
+            // kNN aday verilerini hidratla (aktif asset filtresi burada uygulanir).
             let id_list = knn_ids.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
             let sql = format!(
                 "SELECT tc.id, tc.asset_id, tc.chunk_index, tc.page, tc.text, a.file_name, a.path
@@ -402,10 +427,12 @@ impl Db {
                 let (cid, cd) = row?;
                 hydrated.insert(cid, cd);
             }
+            // Yeniden sorguda onceki turun sirasi tekrarlanmasin (yeni tur eskinin ust-kumesi).
+            knn_order.clear();
             // kNN sirasini koru, yalniz aktif (hidrat edilen) id'ler.
             for cid in &knn_ids {
                 if let Some(cd) = hydrated.remove(cid) {
-                    // Kapsam (scope) POST-filtresi: vec0 ANN once kosar → kapsam disi asset'i burada ele.
+                    // Kapsam (scope) POST-filtresi: vec0 MATCH once kosar → kapsam disi asset'i burada ele.
                     if allowed.is_some_and(|s| !s.contains(&cd.asset_id)) {
                         continue;
                     }
@@ -413,6 +440,11 @@ impl Db {
                     data.entry(*cid).or_insert(cd);
                 }
             }
+
+            if exhausted || knn_order.len() >= k || knn_limit >= KNN_CANDIDATES_MAX {
+                break;
+            }
+            knn_limit = (knn_limit * 4).min(KNN_CANDIDATES_MAX);
         }
 
         diag.fts_candidates = fts_order.len() as i64;

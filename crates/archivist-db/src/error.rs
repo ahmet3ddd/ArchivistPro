@@ -26,8 +26,12 @@ impl fmt::Display for DbError {
             DbError::Sqlite(e) => write!(f, "sqlite: {e}"),
             DbError::Migration(m) => write!(f, "migration: {m}"),
             DbError::Io(e) => write!(f, "io: {e}"),
-            DbError::Invalid(m) => write!(f, "gecersiz: {m}"),
-            DbError::Cancelled => write!(f, "iptal edildi"),
+            // ⚠️ Bu iki on-ek KARARLI SOZLESMEDIR (frontend `authError.ts` esler) ve bilerek
+            // ASCII/dil-notrdur: `map_err(|e| e.to_string())` ile UI'a tasindiklarinda
+            // EN/AR/JA/ZH oturumunda Turkce metin gorunmesin (2026-08-17 denetimi).
+            // `Invalid` yuku zaten kararli koddur (bad_credentials, locked, username_taken ...).
+            DbError::Invalid(m) => write!(f, "invalid: {m}"),
+            DbError::Cancelled => write!(f, "cancelled"),
         }
     }
 }

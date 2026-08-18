@@ -14,12 +14,20 @@ export function useOpenInOs() {
   const { t } = useTranslation();
   const toast = useToast();
 
-  // Ortak hata → toast. "not_found" ozel yerellestirme (dosya yok / bu makinede olmayabilir).
+  // Ortak hata → toast. Kararli kodlar ozel yerellestirilir:
+  //   not_found   → dosya yok / bu makinede olmayabilir (cok-lokasyon)
+  //   not_allowed → arsivde kayitli OLMAYAN calistirilabilir/betik dosya (backend reddi; §Y1)
   const fail = (e: unknown, failKey: string): void => {
     const code = String(e);
-    toast.error(
-      code === "not_found" ? t("context.file_missing") : t(failKey, { message: code }),
-    );
+    if (code === "not_found") {
+      toast.error(t("context.file_missing"));
+      return;
+    }
+    if (code === "not_allowed") {
+      toast.error(t("context.open_not_allowed"));
+      return;
+    }
+    toast.error(t(failKey, { message: code }));
   };
 
   /** Dosyayi OS varsayilan uygulamasinda ac; hata → toast (SESSIZ YUTMA YOK). */

@@ -1,6 +1,6 @@
 # ArchivistPro — دليل التثبيت لمديري الأنظمة
 
-> **الإصدار:** 3.5.0 · **آخر تحديث:** 2026-08-16 · **المنصة:** Windows 10/11 (64-bit)
+> **الإصدار:** 3.6.0 · **آخر تحديث:** 2026-08-18 · **المنصة:** Windows 10/11 (64-bit)
 >
 > للشرح خطوة بخطوة: **[دليل المبتدئين](INSTALL_BEGINNER_AR.md)**
 
@@ -8,10 +8,10 @@
 
 ```powershell
 # على مستوى المستخدم، صامت (موصى به):
-ArchivistPro_3.5.0_x64-setup.exe /S
+ArchivistPro_3.6.0_x64-setup.exe /S
 
 # على مستوى الجهاز (اختيار مقصود — اقرأ الجدول أدناه):
-msiexec /i ArchivistPro_3.5.0_x64_en-US.msi /qn
+msiexec /i ArchivistPro_3.6.0_x64_en-US.msi /qn
 ```
 
 الاستخدام الأساسي (الفحص، البحث النصي الكامل، المعاينات، كاشف التكرارات) يعمل
@@ -127,4 +127,4 @@ msiexec /i ArchivistPro_3.5.0_x64_en-US.msi /qn
   [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - الكود المصدري: https://github.com/ahmet3ddd/ArchivistPro
 
-*آخر تحديث: 2026-08-16 (v3.5.0).*
+*آخر تحديث: 2026-08-18 (v3.6.0).*

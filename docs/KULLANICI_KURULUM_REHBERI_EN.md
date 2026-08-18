@@ -1,6 +1,6 @@
 # ArchivistPro — Installation Guide
 
-> **Version:** 3.5.0 · **Updated:** 2026-08-16 · **Platform:** Windows 10/11 (64-bit)
+> **Version:** 3.6.0 · **Updated:** 2026-08-18 · **Platform:** Windows 10/11 (64-bit)
 >
 > Other languages: [Türkçe](KULLANICI_KURULUM_REHBERI.md) · [العربية](KULLANICI_KURULUM_REHBERI_AR.md) · [日本語](KULLANICI_KURULUM_REHBERI_JA.md) · [中文](KULLANICI_KURULUM_REHBERI_ZH.md)
 
@@ -13,7 +13,7 @@ This page is the quick summary. For step-by-step walkthroughs:
 ## Quick install (5 steps)
 
 1. **Download:** from the [Releases page](https://github.com/ahmet3ddd/ArchivistPro/releases/latest),
-   get **`ArchivistPro_3.5.0_x64-setup.exe`** (the recommended installer; the MSI
+   get **`ArchivistPro_3.6.0_x64-setup.exe`** (the recommended installer; the MSI
    installs a *separate* machine-level copy — use it only deliberately).
 2. **Install:** run the downloaded file. If Windows SmartScreen warns you, click
    **"More info → Run anyway"** (the package is unsigned; this warning is expected).
@@ -23,7 +23,7 @@ This page is the quick summary. For step-by-step walkthroughs:
    project folder and hit **Scan**. Your files are never moved — the app only
    indexes them (95+ formats recognized, including DWG, MAX, IFC, RVT, SKP, PDF).
 5. **Coming from an older version?** If ArchivistPro 3.2.2 (legacy generation) is
-   installed, 3.5.0 installs **side by side**. **Do not uninstall** the old
+   installed, 3.6.0 installs **side by side**. **Do not uninstall** the old
    version; migrate your data via the **Settings → General → "Previous version
    found"** card and its import wizard.
 

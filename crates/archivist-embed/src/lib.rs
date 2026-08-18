@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 
 use ort::session::{builder::GraphOptimizationLevel, Session};
 use ort::value::Tensor;
-use tokenizers::{TruncationDirection, TruncationParams, TruncationStrategy, Tokenizer};
+use tokenizers::Tokenizer;
 
 mod mclip;
 mod vision;
@@ -24,9 +24,24 @@ pub use vision::{ImageEmbedder, IMAGE_EMBED_DIM, IMAGE_REGION_COUNT};
 /// tablosu bununla sabitlenir (migration 0009).
 pub const TEXT_EMBED_DIM: usize = 384;
 
-/// Tek metin icin maksimum token (model max_position_embeddings=512; arsiv metni
-/// genelde kisa baslik/yol/ozet → 256 yeterli + hizli). Asan metin kirpilir.
-const MAX_TOKENS: usize = 256;
+/// Tek metin icin maksimum token. Model penceresi: `config.json max_position_embeddings=512`,
+/// ama sentence-transformers bu modeli **128** ile yapilandirir (`tokenizer.json` icindeki
+/// `truncation.max_length` = 128 → egitilmis dizi boyu). 256 = ikisinin arasinda bilincli
+/// denge. Asan metin kirpilir → **chunk uretimi bu siniri ASLA asmamali** (bkz `CHUNK_TOKENS`).
+pub const MAX_TOKENS: usize = 256;
+
+/// Chunk uretiminde hedef token penceresi. `MAX_TOKENS`'tan KUCUK secilir: `embed` sirasinda
+/// ozel token (`<s>`/`</s>`) eklenir ve hicbir chunk kirpilmamalidir.
+///
+/// ⚠️ **Neden token, neden kelime degil:** 2026-08-18'de gercek arsiv metniyle olculdu —
+/// Turkce cikarilmis metinde oran **3,29 token/kelime** (medyan 2,77 · p90 3,95 · max 13,3).
+/// Yani kelime-bazli bir sinir token butcesini GARANTI EDEMEZ. Eski ayar (500 kelime chunk +
+/// 256 token pencere) olculen kapsamayi **%33,8**'e dusuruyordu: metnin ucte ikisi hicbir
+/// vektore girmiyordu.
+pub const CHUNK_TOKENS: usize = 220;
+
+/// Komsu chunk ortusmesi (token) — baglam sinirinda kesilen cumleyi korur.
+pub const CHUNK_OVERLAP_TOKENS: usize = 40;
 
 #[derive(Debug, thiserror::Error)]
 pub enum EmbedError {
@@ -80,14 +95,12 @@ impl TextEmbedder {
 
         let mut tokenizer =
             Tokenizer::from_file(&tok_path).map_err(|e| EmbedError::Tokenizer(e.to_string()))?;
-        // Kirpma: model penceresine sigdir (uzun metin → ilk MAX_TOKENS token).
+        // ⚠️ Tokenizer'in KENDI kirpmasi KAPATILIR (tokenizer.json'da truncation.max_length=128
+        // gomulu gelir). Iki nedenle: (1) `chunk_by_tokens` bir metnin GERCEK token uzunlugunu
+        // gormek zorunda — acik kalirsa encode sessizce keser ve "sigiyor" gibi gorunur;
+        // (2) kirpma `embed` icinde ACIKCA yapilir (asagida), boylece sinir tek yerde.
         tokenizer
-            .with_truncation(Some(TruncationParams {
-                max_length: MAX_TOKENS,
-                strategy: TruncationStrategy::LongestFirst,
-                direction: TruncationDirection::Right,
-                stride: 0,
-            }))
+            .with_truncation(None)
             .map_err(|e| EmbedError::Tokenizer(e.to_string()))?;
 
         let session = Session::builder()?
@@ -110,9 +123,15 @@ impl TextEmbedder {
             .encode(text, true)
             .map_err(|e| EmbedError::Encode(e.to_string()))?;
 
-        let ids: Vec<i64> = enc.get_ids().iter().map(|&x| x as i64).collect();
-        let mask: Vec<i64> = enc.get_attention_mask().iter().map(|&x| x as i64).collect();
-        let types: Vec<i64> = enc.get_type_ids().iter().map(|&x| x as i64).collect();
+        // Kirpma burada, ACIKCA: model penceresine sigdir (uzun metin → ilk MAX_TOKENS token).
+        // Normalde devreye girmez — `chunk_by_tokens` zaten CHUNK_TOKENS (< MAX_TOKENS) ile
+        // uretir; bu bir emniyet agidir (or. cok uzun tek-parca metadata metni).
+        let take = |v: &[u32]| -> Vec<i64> {
+            v.iter().take(MAX_TOKENS).map(|&x| i64::from(x)).collect()
+        };
+        let ids: Vec<i64> = take(enc.get_ids());
+        let mask: Vec<i64> = take(enc.get_attention_mask());
+        let types: Vec<i64> = take(enc.get_type_ids());
         let seq = ids.len();
         if seq == 0 {
             return Ok(vec![0.0; TEXT_EMBED_DIM]);
@@ -164,6 +183,98 @@ impl TextEmbedder {
 
     pub fn dim(&self) -> usize {
         TEXT_EMBED_DIM
+    }
+
+    /// Metnin token uzunlugu (ozel token EKLEMEDEN) — chunk butcesi dogrulamak icin.
+    /// `MAX_TOKENS` ile kiyaslanirken ozel token payi (+2) hesaba katilmalidir.
+    pub fn token_len(&self, text: &str) -> Result<usize> {
+        Ok(self
+            .tokenizer
+            .encode(text, false)
+            .map_err(|e| EmbedError::Encode(e.to_string()))?
+            .get_ids()
+            .len())
+    }
+
+    /// Metni **token** butcesine gore parcalara boler — her parca en fazla `max_tokens`
+    /// token olur, komsu parcalar `overlap` token ortusur. Kisa metin → tek parca.
+    ///
+    /// Kelime-bazli bolmenin yerini alir: Turkce cikarilmis arsiv metninde token/kelime
+    /// orani 2,7 ile 13,3 arasinda degisir (olculdu 2026-08-18), dolayisiyla sabit bir
+    /// kelime sayisi token penceresini garanti EDEMEZ. Burada sinir dogrudan modelin
+    /// kendi tokenizer'iyla kurulur → uretilen her parca butunuyle embed'lenir.
+    ///
+    /// Parca sinirlari token ofsetlerinden gelir; kesim noktasi UTF-8 karakter sinirina
+    /// yuvarlanir (Turkce cok-baytli harfler bolunmez).
+    pub fn chunk_by_tokens(
+        &self,
+        text: &str,
+        max_tokens: usize,
+        overlap: usize,
+    ) -> Result<Vec<String>> {
+        let max_tokens = max_tokens.max(1);
+        let overlap = overlap.min(max_tokens - 1); // adim >= 1 kalsin (sonsuz dongu yok)
+        let trimmed = text.trim();
+        if trimmed.is_empty() {
+            return Ok(Vec::new());
+        }
+        // Ozel token EKLEMEDEN olc: butce govde token'lari icin.
+        let enc = self
+            .tokenizer
+            .encode(trimmed, false)
+            .map_err(|e| EmbedError::Encode(e.to_string()))?;
+        let offsets = enc.get_offsets();
+        if offsets.len() <= max_tokens {
+            return Ok(vec![trimmed.to_string()]);
+        }
+
+        // Bayt indeksini gecerli UTF-8 sinirina yuvarla (asagi/yukari).
+        let floor_b = |mut i: usize| {
+            i = i.min(trimmed.len());
+            while i > 0 && !trimmed.is_char_boundary(i) {
+                i -= 1;
+            }
+            i
+        };
+        let ceil_b = |mut i: usize| {
+            i = i.min(trimmed.len());
+            while i < trimmed.len() && !trimmed.is_char_boundary(i) {
+                i += 1;
+            }
+            i
+        };
+
+        let mut out = Vec::new();
+        let mut i = 0usize;
+        while i < offsets.len() {
+            let mut end = (i + max_tokens).min(offsets.len());
+            // Dilim TEK BASINA kodlandiginda butceyi asabilir: sentencepiece birlesmeleri
+            // baglama baglidir (parca sozcuk ortasindan/bosluk isaretinden baslayabilir), bu
+            // yuzden ofset sayisi ile yeniden-kodlama sonucu birebir tutmaz. Asarsa sonu geri
+            // cek — fonksiyonun sozu "her parca en fazla max_tokens" ve bu OLCULEREK saglanir.
+            let piece = loop {
+                let start_b = floor_b(offsets[i].0);
+                let end_b = ceil_b(offsets[end - 1].1).max(start_b);
+                let cand = trimmed[start_b..end_b].trim().to_string();
+                if cand.is_empty() || end <= i + 1 {
+                    break cand;
+                }
+                let n = self.token_len(&cand)?;
+                if n <= max_tokens {
+                    break cand;
+                }
+                end = end.saturating_sub(n - max_tokens).max(i + 1);
+            };
+            if !piece.is_empty() {
+                out.push(piece);
+            }
+            if end >= offsets.len() {
+                break;
+            }
+            // Bir sonraki parca `overlap` token geriden baslar; ilerleme garantili.
+            i = end.saturating_sub(overlap).max(i + 1);
+        }
+        Ok(out)
     }
 }
 

@@ -34,13 +34,16 @@ export interface EmbedRunReport {
   elapsedMs: number;
 }
 
-/** RAG indeks durumu (Artim 2; sunucu `RagIndexStatusDto`; camelCase). `indexed` = en az bir
- *  chunk'i olan aktif asset, `pending` = chunk'i olmayan, `chunks` = toplam parca. */
+/** RAG indeks durumu (Artim 2; sunucu `RagIndexStatusDto`; camelCase). `indexed` = **guncel
+ *  parcalama kuraliyla** en az bir chunk'i olan aktif asset, `pending` = olmayan (hic chunk'i
+ *  yok VEYA hepsi bayat), `chunks` = toplam parca, `staleChunks` = eski kuralla uretilmis parca. */
 export interface RagIndexStatus {
   indexed: number;
   pending: number;
   total: number;
   chunks: number;
+  /** >0 → parcalama kurallari degisti, bu parcalar yeniden uretilmeyi bekliyor (migration 0033). */
+  staleChunks: number;
   modelReady: boolean;
 }
 
@@ -61,7 +64,8 @@ export interface RagRunReport {
 }
 
 /** Bir asset'in tek RAG parcasi (detay "Parçalar" sekmesi; sunucu `AssetChunkDto`, camelCase).
- *  `chunkIndex === -1` → metadata chunk (dosya/proje/etiket/EAV ozeti); 0,1,2... govde parcasi. */
+ *  `chunkIndex < 0` → metadata chunk (dosya/proje/etiket/EAV ozeti). Genelde tek parcadir (-1)
+ *  ama uzun katman/blok listeleri token butcesine bolunur → -1, -2, -3... `0,1,2...` govde. */
 export interface AssetChunkRow {
   chunkId: number;
   chunkIndex: number;
@@ -333,6 +337,12 @@ export const aiIndexIpc = {
    * hemen baslar; kapaliysa ilgili kartlardaki elle "Embedle/Indeksle" eylemleri kullanilir. */
   resetLocalAiIndexes: (): Promise<AiIndexResetReport> =>
     invoke<AiIndexResetReport>("reset_local_ai_indexes"),
+
+  /** YALNIZ RAG parcalarini sil (ADMIN) — semantik ve CLIP gorsel indeksleri KORUNUR.
+   * Silinen parca sayisini doner. Parcalama kurallari degistiginde gerekir: parcalar bayatlar
+   * ama vektor indeksleri gecerli kalir, dolayisiyla tam sifirlama gereksiz pahali olur.
+   * Sonrasinda "Indeksle" ile tum arsiv yeni kurallarla yeniden parcalanir. */
+  resetRagChunks: (): Promise<number> => invoke<number>("reset_rag_chunks"),
 };
 
 // ── P1 Otomatik AI indeks OLAYLARI (Tauri `listen`) — banner/hook abonelik yardimcilari ──

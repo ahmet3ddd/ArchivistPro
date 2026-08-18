@@ -21,7 +21,11 @@ members = [
 
 [workspace.package]
 edition = "2021"
-license = "Proprietary"
+# Public repoda (github.com/ahmet3ddd/ArchivistPro) yayimlanmis MIT LICENSE ve iki dildeki
+# README beyaniyla HIZALI. Onceki "Proprietary" degeri 11 crate'e miras geciyor ve makine-okunur
+# metadata'yi yayimlanmis lisansla CELISKIYE dusuruyordu (2026-08-17 denetimi P1).
+# ⚠️ Urun sahibi Proprietary istiyorsa duzeltme yonu TERSTIR: once README/LICENSE degismelidir.
+license = "MIT"
 authors = ["Ahmet Candoken"]
 rust-version = "1.88"
 

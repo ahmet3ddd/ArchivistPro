@@ -342,6 +342,39 @@ pub fn reset_local_ai_indexes(state: State<'_, AppState>) -> Result<AiIndexReset
     })
 }
 
+/// YALNIZ RAG parcalarini temizle (semantik + CLIP gorsel indeksleri KORUNUR) ve yeniden
+/// uretim sinyali ver. Silinen parca sayisini doner.
+///
+/// Ne zaman gerekir: **parcalama kurallari degistiginde** mevcut parcalar bayatlar ama
+/// vektor indeksleri gecerli kalir. Ilk ornek 2026-08-18: parcalama kelime yerine token
+/// butcesine gecti (eski ayarda metnin ancak ~%26'si vektore giriyordu). Tam sifirlama
+/// (`reset_local_ai_indexes`) burada gereksiz olurdu — CLIP gorsel indeksini de yikar.
+///
+/// Yalniz admin. Aktif oto-indeks gecisine once durdurma istegi verilir; DB islemi atomiktir.
+#[tauri::command(async)]
+pub fn reset_rag_chunks(state: State<'_, AppState>) -> Result<i64, String> {
+    let role = rbac::current_role(&state).map_err(|e| e.to_string())?;
+    rbac::require_admin(role).map_err(|e| e.to_string())?;
+    let actor = crate::audit::actor(&state);
+
+    STOP.store(true, Ordering::SeqCst);
+    let cleared = {
+        let db = state.db.lock().map_err(|e| e.to_string())?;
+        let cleared = db.reset_rag_chunks().map_err(|e| e.to_string())?;
+        crate::audit::record_on(
+            &db,
+            &actor,
+            "rag_chunks_reset",
+            Some("ai_index"),
+            None,
+            Some(&format!("chunks={cleared}")),
+        );
+        cleared
+    };
+    signal_index();
+    Ok(cleared)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

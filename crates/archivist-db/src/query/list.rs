@@ -579,6 +579,20 @@ impl Db {
             .collect::<rusqlite::Result<Vec<_>>>()?;
         Ok(rows)
     }
+
+    /// Bu yol AKTIF arsivde kayitli (ve cope atilmamis) bir asset'e mi ait?
+    ///
+    /// `open_path_os` / `reveal_path_os` icin yetki kontrolu: renderer'dan gelen yol dis
+    /// dunyaya (ShellExecuteW) verilmeden once arsivde bilinen bir dosya oldugu dogrulanir.
+    /// Windows dosya sistemi buyuk/kucuk harf duyarsiz oldugundan karsilastirma `NOCASE`.
+    pub fn asset_exists_at_path(&self, path: &str) -> Result<bool, DbError> {
+        let n: i64 = self.conn.query_row(
+            "SELECT count(*) FROM assets WHERE path = ?1 COLLATE NOCASE AND deleted_at IS NULL",
+            rusqlite::params![path],
+            |r| r.get(0),
+        )?;
+        Ok(n > 0)
+    }
 }
 
 #[cfg(test)]

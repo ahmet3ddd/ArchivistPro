@@ -6,7 +6,7 @@ Sürüm sürüm ne değiştiği için: [`CHANGELOG.md`](../CHANGELOG.md)
 
 ---
 
-## Bugün nerede (v3.5.0)
+## Bugün nerede (v3.6.0)
 
 Uygulama günlük kullanımda çalışır durumda: tarama, önizleme, kopya bulma, tam metin + anlamsal arama, görsel arama ve arşive soru sorma özellikleri kullanılabilir. Arayüz beş dilde; test paketi (930 Rust testi + 224 arayüz testi + 21 uçtan uca test) yeşil.
 

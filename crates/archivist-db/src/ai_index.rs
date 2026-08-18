@@ -55,4 +55,26 @@ impl Db {
         tx.commit()?;
         Ok(report)
     }
+
+    /// YALNIZ RAG parcalarini sil (`text_chunks` + `chunk_vectors` + `chunk_fts` + chunk
+    /// asamasinin skip izleri). Silinen parca sayisini doner.
+    ///
+    /// `reset_local_ai_indexes`'ten farki: semantik (`asset_vectors`) ve CLIP gorsel
+    /// (`asset_image_region_vectors`) indeksleri **KORUNUR**. Parcalama kurallari degistiginde
+    /// (or. 2026-08-18 token-bazli pencere) yalniz parcalar bayatlar; gorsel indeksini
+    /// yeniden kurmak saatler suren gereksiz bir maliyet olurdu.
+    ///
+    /// Sonrasinda `assets_without_chunks` her asset'i yeniden bekleyen sayar → RAG
+    /// indeksleme kaldigi yerden butun arsivi yeniden parcalar.
+    pub fn reset_rag_chunks(&self) -> Result<i64, DbError> {
+        let tx = self.conn.unchecked_transaction()?;
+        let chunks: i64 = tx.query_row("SELECT count(*) FROM text_chunks", [], |r| r.get(0))?;
+        // vec0/FTS sanal tablolarinda FK/CASCADE yok → once bagli satirlar, sonra kaynak.
+        tx.execute("DELETE FROM chunk_vectors", [])?;
+        tx.execute("DELETE FROM chunk_fts", [])?;
+        tx.execute("DELETE FROM text_chunks", [])?;
+        tx.execute("DELETE FROM index_skips WHERE stage = 'chunk'", [])?;
+        tx.commit()?;
+        Ok(chunks)
+    }
 }

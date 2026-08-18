@@ -21,6 +21,7 @@ import { useUiStore } from "../../store/useUiStore";
 import { AssetRefileActions } from "../refile/AssetRefileActions";
 import { CollectionEditor } from "./CollectionEditor";
 import { DetailTabs } from "./detail/DetailTabs";
+import { CadQualityNotice } from "./detail/CadQualityNotice";
 import { MatchSourcesSection } from "./detail/MatchSourcesSection";
 import { FavoriteButton } from "./FavoriteButton";
 import { TagEditor } from "./TagEditor";
@@ -169,6 +170,11 @@ export function AssetDetailPanel({ assetId }: Props) {
             {/* Alan-atfi ("Neden bu sonuc") — yalniz yerel keyword aramada; eslesme yoksa
                 bilesen null doner (sessizce gizlenir). Baslik altinda → arama baglaminda ilk gorunur. */}
             <MatchSourcesSection sources={matchSources} />
+
+            {/* CAD cikarim kalitesi: DWG verisi ODA yerine ikili raw-scan'den geldiyse uyarir
+                (temiz cikarimda hicbir sey gostermez). Katman/metin listesine bakan kullanici
+                verinin YAKLASIK oldugunu dosya kartinda gormeli — tarama raporu yeterli degil. */}
+            <CadQualityNotice metadata={data.metadata} />
 
             {/* Dosya eylemleri (HER ROL; okuma): uzakta dosya indirilmez; host'tan gelen yol
                 bu makinede erisilebiliyorsa (or. ortak UNC/paylasim) OS ile acilir. Erisilemiyorsa

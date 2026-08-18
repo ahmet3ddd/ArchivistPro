@@ -11,12 +11,13 @@
 use std::time::Instant;
 
 use archivist_db::{
-    chunk_text, AssetChunk, ChunkWrite, CollectionRef, MetaEntry, ProjectMetaOut, TagRef,
-    DEFAULT_CHUNK_WORDS, DEFAULT_OVERLAP_WORDS, META_CHUNK_INDEX,
+    normalize_for_chunking, AssetChunk, ChunkWrite, CollectionRef, MetaEntry, ProjectMetaOut,
+    TagRef, META_CHUNK_INDEX,
 };
+use archivist_embed::{CHUNK_OVERLAP_TOKENS, CHUNK_TOKENS};
 use serde::Serialize;
 use tauri::ipc::Channel;
-use tauri::State;
+use tauri::{Manager, State};
 
 use crate::embed_commands::{ensure_embedder, resolve_model_dir};
 use crate::{rbac, AppState};
@@ -92,14 +93,17 @@ fn build_metadata_text(
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RagIndexStatusDto {
-    /// En az bir chunk'i olan aktif asset.
+    /// **Guncel kuralla** en az bir chunk'i olan aktif asset (bayat kuralli sayilmaz).
     pub indexed: i64,
-    /// Hic chunk'i olmayan aktif asset.
+    /// Guncel kuralli chunk'i olmayan aktif asset (hic chunk'i yok VEYA hepsi bayat).
     pub pending: i64,
     /// Toplam aktif asset.
     pub total: i64,
-    /// Toplam chunk (govde + metadata).
+    /// Toplam chunk (govde + metadata; bayat olanlar dahil — hala aranabilirler).
     pub chunks: i64,
+    /// Eski parcalama kuralıyla uretilmis chunk sayisi (migration 0033). >0 → yeniden
+    /// uretilmeyi bekliyor; UI bunu acikca soyler (sessiz "hepsi tamam" olmasin).
+    pub stale_chunks: i64,
     /// Model dosyalari cozulebiliyor mu (run_rag_indexing calisabilir mi).
     pub model_ready: bool,
 }
@@ -141,7 +145,8 @@ pub fn asset_chunks(
     asset_id: i64,
     state: State<'_, AppState>,
 ) -> Result<Vec<AssetChunkDto>, String> {
-    let db = state.db.lock().map_err(|e| e.to_string())?;
+    // Salt-okuma → `read_db` (uzun ingest'in yazma mutex'ini beklemez; bkz ARCHITECTURE §sapma 2).
+    let db = state.read_db.lock().map_err(|e| e.to_string())?;
     let rows: Vec<AssetChunk> = db.chunks_for_asset(asset_id).map_err(|e| e.to_string())?;
     Ok(rows
         .into_iter()
@@ -172,7 +177,8 @@ pub fn set_rag_excluded(
 /// RAG indeks durumu (rol gate yok — okuma). `model_ready` dosya kontrolu (model yuklemez).
 #[tauri::command(async)]
 pub fn rag_index_status(state: State<'_, AppState>) -> Result<RagIndexStatusDto, String> {
-    let db = state.db.lock().map_err(|e| e.to_string())?;
+    // Salt-okuma → `read_db`: tarama surerken RAG durum karti donmaz.
+    let db = state.read_db.lock().map_err(|e| e.to_string())?;
     let total = db.asset_count().map_err(|e| e.to_string())?;
     let pending = db.pending_chunk_count().map_err(|e| e.to_string())?;
     Ok(RagIndexStatusDto {
@@ -180,16 +186,28 @@ pub fn rag_index_status(state: State<'_, AppState>) -> Result<RagIndexStatusDto,
         pending,
         total,
         chunks: db.chunk_count().map_err(|e| e.to_string())?,
+        // Bayat kuralla uretilmis parcalar (migration 0033): >0 ise UI acikca soyler —
+        // yoksa "hepsi indekslendi" der ve duzeltmenin ulasmadigi gorulmezdi.
+        stale_chunks: db.stale_chunk_count().map_err(|e| e.to_string())?,
         model_ready: resolve_model_dir().is_ok(),
     })
 }
 
 /// Bekleyen asset'leri RAG icin indeksle (metadata + govde chunk → MiniLM embed). **Admin.**
 /// Resumable: her asset ayri TX, cursor (after_id) basarisizi atlar. İlerleme Channel (~100ms).
-// `async fn`: ana iş parcacigi DISINDA kosar → uzun chunk-indeksleme dongusu UI'yi dondurmez.
-// Govde bloklayici, `.await` yok → guard'lar await sinirini gecmez (Send-future guvenli).
+//
+// KILIT KAPSAMI (2026-08-17): kilitler ARTIK kosu boyunca tutulmaz. Arka-plan indexer
+// (`indexer::stages::run_chunk_stage`) ile AYNI granularite: sayim/batch salt-okuma `read_db`'den,
+// yazma kilidi + embedder yalniz **asset basina** alinip birakilir. Onceki hal iki kilidi de
+// bastan sona tutuyordu → buyuk arsivde manuel indeksleme suresince Gezgin disindaki her sey
+// (sohbet, RAG karti, tum yazma komutlari) bekliyordu. Kilit sirasi embedder→db (indexer ve
+// `rag_chat` ile AYNI → ters-sira deadlock yok).
+//
+// `spawn_blocking`: govde tamamen bloklayici; tokio worker'ini kosu boyunca isgal etmesin
+// (`ingest_folders` ile ayni desen).
 #[tauri::command]
 pub async fn run_rag_indexing(
+    app: tauri::AppHandle,
     on_progress: Channel<RagProgressDto>,
     state: State<'_, AppState>,
 ) -> Result<RagRunReportDto, String> {
@@ -197,53 +215,71 @@ pub async fn run_rag_indexing(
     rbac::require_admin(role).map_err(|e| e.to_string())?;
 
     let dir = resolve_model_dir()?;
-    let mut emb_guard = state.embedder.lock().map_err(|e| e.to_string())?;
-    let embedder = ensure_embedder(&mut emb_guard, &dir)?;
-    let db = state.db.lock().map_err(|e| e.to_string())?;
 
-    let total = db.pending_chunk_count().map_err(|e| e.to_string())?;
-    let start = Instant::now();
-    let (mut indexed, mut chunk_total, mut failed, mut processed, mut after_id) =
-        (0i64, 0i64, 0i64, 0i64, 0i64);
-    let mut last_emit: Option<Instant> = None;
+    tauri::async_runtime::spawn_blocking(move || {
+        let state = app.state::<AppState>();
 
-    loop {
-        let batch = db.assets_without_chunks(after_id, BATCH).map_err(|e| e.to_string())?;
-        if batch.is_empty() {
-            break;
-        }
-        for p in &batch {
-            after_id = p.id; // cursor ilerlet → basarisiz indeks tekrar getirilmez.
+        // Sayim salt-okuma → `read_db`.
+        let total = {
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
+            db.pending_chunk_count().map_err(|e| e.to_string())?
+        };
+        let start = Instant::now();
+        let (mut indexed, mut chunk_total, mut failed, mut processed, mut after_id) =
+            (0i64, 0i64, 0i64, 0i64, 0i64);
+        let mut last_emit: Option<Instant> = None;
 
-            match index_one(&db, embedder, p) {
-                Ok(n) => {
-                    indexed += 1;
-                    chunk_total += n;
+        loop {
+            // Batch cekimi salt-okuma → `read_db`; kilit blok sonunda birakilir.
+            let batch = {
+                let db = state.read_db.lock().map_err(|e| e.to_string())?;
+                db.assets_without_chunks(after_id, BATCH).map_err(|e| e.to_string())?
+            };
+            if batch.is_empty() {
+                break;
+            }
+            for p in &batch {
+                after_id = p.id; // cursor ilerlet → basarisiz indeks tekrar getirilmez.
+
+                // Asset basina: embedder→db al, `index_one` kosur, blok sonunda IKISI de birakilir.
+                let res = {
+                    let mut eg = state.embedder.lock().map_err(|e| e.to_string())?;
+                    let embedder = ensure_embedder(&mut eg, &dir)?;
+                    let db = state.db.lock().map_err(|e| e.to_string())?;
+                    index_one(&db, embedder, p)
+                };
+                match res {
+                    Ok(n) => {
+                        indexed += 1;
+                        chunk_total += n;
+                    }
+                    Err(_) => failed += 1,
                 }
-                Err(_) => failed += 1,
-            }
-            processed += 1;
+                processed += 1;
 
-            let now = Instant::now();
-            let is_last = processed >= total;
-            let due = last_emit.is_none_or(|t| now.duration_since(t).as_millis() >= 100);
-            if processed == 1 || is_last || due {
-                last_emit = Some(now);
-                let _ = on_progress.send(RagProgressDto {
-                    processed,
-                    total,
-                    current_path: p.file_name.clone(),
-                });
+                let now = Instant::now();
+                let is_last = processed >= total;
+                let due = last_emit.is_none_or(|t| now.duration_since(t).as_millis() >= 100);
+                if processed == 1 || is_last || due {
+                    last_emit = Some(now);
+                    let _ = on_progress.send(RagProgressDto {
+                        processed,
+                        total,
+                        current_path: p.file_name.clone(),
+                    });
+                }
             }
         }
-    }
 
-    Ok(RagRunReportDto {
-        indexed,
-        chunks: chunk_total,
-        failed,
-        elapsed_ms: start.elapsed().as_millis(),
+        Ok(RagRunReportDto {
+            indexed,
+            chunks: chunk_total,
+            failed,
+            elapsed_ms: start.elapsed().as_millis(),
+        })
     })
+    .await
+    .map_err(|e| format!("RAG indeksleme gorevi beklenmedik bicimde sonlandi: {e}"))?
 }
 
 /// Tek asset'i indeksle: metadata chunk (daima) + govde chunk'lari (belge turunde) → embed →
@@ -270,16 +306,29 @@ pub(crate) fn index_one(
         None => format!("DOSYA: {}", p.file_name),
     };
 
-    // (chunk_index, page, text) listesi: metadata (-1) + govde (0,1,...).
+    // (chunk_index, page, text) listesi: metadata (-1, -2, ...) + govde (0, 1, ...).
+    // Parcalama TOKEN butcesine gore (kelime degil) — bkz `chunk_by_tokens`: Turkce metinde
+    // token/kelime orani 2,7–13,3 arasi degistigi icin kelime sayisi pencereyi garanti etmez.
     let mut specs: Vec<(i64, Option<i64>, String)> = Vec::new();
     if !meta_text.trim().is_empty() {
-        specs.push((META_CHUNK_INDEX, None, meta_text));
+        // Metadata da bolunur: uzun DWG katman/blok listeleri tek parcaya sigmiyordu ve
+        // sessizce kirpiliyordu (olculdu: metadata chunk'larinin %1,3'u 256 token'i asiyor,
+        // en uzunu 3703 token). Parcalar -1, -2, -3... → ilk parca eski davranisla ayni.
+        let pieces = embedder
+            .chunk_by_tokens(&meta_text, CHUNK_TOKENS, CHUNK_OVERLAP_TOKENS)
+            .map_err(|e| e.to_string())?;
+        for (i, piece) in pieces.into_iter().enumerate() {
+            specs.push((META_CHUNK_INDEX - i as i64, None, piece));
+        }
     }
     if is_rag_indexable(p.ext.as_deref()) && !p.body.trim().is_empty() {
-        for (i, piece) in chunk_text(&p.body, DEFAULT_CHUNK_WORDS, DEFAULT_OVERLAP_WORDS)
-            .into_iter()
-            .enumerate()
-        {
+        // Once normalize (dekoratif/ayrac gurultusu), sonra token-bazli bolme — kelime-bazli
+        // `chunk_text` ile AYNI girdi temizligi.
+        let normalized = normalize_for_chunking(&p.body);
+        let pieces = embedder
+            .chunk_by_tokens(&normalized, CHUNK_TOKENS, CHUNK_OVERLAP_TOKENS)
+            .map_err(|e| e.to_string())?;
+        for (i, piece) in pieces.into_iter().enumerate() {
             specs.push((i as i64, None, piece));
         }
     }

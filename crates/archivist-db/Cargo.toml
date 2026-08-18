@@ -26,6 +26,11 @@ argon2 = "0.5"
 # argon2 ile ayni `password-hash`/`rand_core` ornegini paylasir (tek surum).
 password-hash = { version = "0.5", features = ["getrandom"] }
 
+[target.'cfg(windows)'.dependencies]
+# `GetDriveTypeW`: eslenmis ag surucusunu (`net use Z: \\sunucu\pay`) tanimak icin.
+# Yalniz metin on-ekine bakmak `Z:\...` yolunu YEREL sanip ag paylasiminda WAL acardi.
+windows = { version = "0.61", features = ["Win32_Storage_FileSystem"] }
+
 [dev-dependencies]
 # YALNIZ test: gercek-model uctan-uca semantik arama dogrulamasi (semantic_real.rs,
 # #[ignore]). Uretim katman ayrimi korunur — archivist-db ONNX'e BAGIMLI DEGIL.

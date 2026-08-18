@@ -5,7 +5,44 @@ kaynağı budur.** Format [Keep a Changelog](https://keepachangelog.com/tr/1.0.0
 tabanlıdır; sürüm numaralandırması [Semantic Versioning](https://semver.org/)
 kurallarına göre ilerler.
 
-## [3.5.0] — 2026-08-16 — Sayılar Ne Diyorsa O
+## [3.6.0] — 2026-08-18 — Metnin Tamamı Aramaya Girsin
+
+Belge içeriğinin yalnızca bir kısmının aramaya girdiği bir kusurun düzeltildiği
+sürüm. Aramanın "çalışmadığı" izlenimini veren şey buydu: metin var, indekste
+yok. Veri biçimi değişmedi ve **mevcut arşivler olduğu gibi açılır**; küçük bir
+şema eklemesi (parçaların hangi kuralla üretildiği) otomatik uygulanır.
+
+### Düzeltilen (Fixed)
+- **Belge metninin tamamı artık aramaya giriyor.** Metin, aramaya hazırlanırken
+  parçalara bölünür. Bu bölme **kelime sayısına** göre yapılıyordu, ama parçanın
+  modele sığıp sığmadığı **token** denen daha küçük birimlerle ölçülür — ve
+  Türkçede bir kelime ortalama 3'ten fazla token eder (ölçüldü: 3,29; bazı
+  belgelerde 13'e kadar). Sonuç: her parçanın yalnızca baş tarafı indeksleniyor,
+  gerisi **hiçbir aramaya girmiyordu**. Gerçek arşiv metniyle ölçülen kayıp
+  **%74**'tü. Bölme artık doğrudan token bütçesiyle yapılıyor; ölçüm
+  **%100 kapsama** gösteriyor.
+- **Uzun çizim özetleri kesilmiyor.** Dosya adı, proje, etiket ve çizim
+  bilgilerinden (katman/blok listeleri gibi) üretilen özet tek parçaya
+  sığmadığında sessizce kesiliyordu; artık gerektiği kadar parçaya bölünüyor.
+  Ölçüm: özetlerin %1,3'ü sınırı aşıyordu, en uzunu sınırın 14 katıydı.
+
+### Eklenen (Added)
+- **"Parçaları yeniden kur"** (Pano → RAG İndeksi, yönetici). Bölme kuralları
+  değiştiğinde mevcut parçaları güncel kurallarla yeniden üretir. Semantik ve
+  görsel arama indekslerine **dokunmaz** — daha önceki tek seçenek olan tam
+  sıfırlama onları da siliyordu ve saatler süren gereksiz bir işe yol açıyordu.
+- **Eski kuralla üretilmiş parçalar için uyarı.** Önceki sürümden yükselen bir
+  arşivde parçalar eski kurallarla üretilmiştir; Pano bunu artık açıkça söyler
+  ve indeksleme onları kendiliğinden yeniler. (Eskiden kart "tümü indekslendi"
+  der, düzeltmenin arşive ulaşmadığı görülmezdi.)
+
+### Değişen (Changed)
+- RAG indeks durumu "indekslendi" sayarken artık **güncel kuralla** üretilmiş
+  parçaları sayar. Bu yüzden bu sürüme geçince bekleyen sayısı bir kerelik
+  yükselir; indeksleme tamamlanınca normale döner. Bekleyen parçalar yenisi
+  yazılana kadar **aranabilir kalır** — arama hiçbir an geriye gitmez.
+
+
 
 Ekrandaki her sayının, tıklanınca gelen listeyle **aynı şeyi** söylemesine
 odaklanan sürüm. Üç yerde sayı ile gerçek ayrışıyordu: "analiz edilmemiş"

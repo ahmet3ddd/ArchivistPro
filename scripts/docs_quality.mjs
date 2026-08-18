@@ -76,8 +76,12 @@ console.log("[3/3] Goreli link/gorsel hedefleri (docs/ + README, archive haric)"
   );
   let broken = 0, checked = 0;
   const linkRe = /!?\[[^\]]*\]\(([^()\s]+)\)/g;
+  // Kod bloklari ve satir-ici kod ORNEK metindir, link degildir: bir dokuman
+  // baska bir dosyanin linkini `[MIT](LICENSE)` diye ALINTILAYABILIR — o hedef
+  // alintilayanin dizinine gore cozulmez ve cozulmemelidir.
+  const stripCode = (s) => s.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
   for (const f of scope) {
-    const text = readFileSync(f, "utf8");
+    const text = stripCode(readFileSync(f, "utf8"));
     for (const m of text.matchAll(linkRe)) {
       const raw = m[1];
       if (/^(https?:|mailto:|#|ipc:)/.test(raw) || raw.includes("://")) continue;

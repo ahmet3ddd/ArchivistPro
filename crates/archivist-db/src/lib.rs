@@ -57,8 +57,8 @@ pub use ai_index::AiIndexResetReport;
 pub use auth::{UserAuth, UserRef};
 pub use chat::{ChatMessage, ChatSession};
 pub use chunk::{
-    chunk_text, AssetChunk, ChunkWrite, PendingChunk, DEFAULT_CHUNK_WORDS, DEFAULT_OVERLAP_WORDS,
-    META_CHUNK_INDEX,
+    chunk_text, normalize_for_chunking, AssetChunk, ChunkWrite, PendingChunk, CHUNK_RULES_VERSION,
+    DEFAULT_CHUNK_WORDS, DEFAULT_OVERLAP_WORDS, META_CHUNK_INDEX,
 };
 pub use connection::{open, open_in_memory};
 pub use dashboard::{ActivityCount, ActivitySummary, DashboardStats, ExtSize, MonthCount};

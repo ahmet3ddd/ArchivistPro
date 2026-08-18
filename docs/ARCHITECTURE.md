@@ -67,22 +67,52 @@
    renderer okumalari uzun ingest'in yazma mutex'ini paylasmaz. `cancel_ingest` DB'ye dokunmadan
    kilitsiz atomik bayrakla calisir ve LAN sorgulari da kendi okuma baglantilarini acar. Boylece
    onceki "tarama boyunca butun okumalar donar" sapmasi yerel WAL kullaniminda kapatilmistir.
+   **2026-08-17:** ayrim ARTIK TAM — geride kalan RAG salt-okuma yollari (`asset_chunks`,
+   `rag_index_status`, kapsam cozumu, hassasiyet sorgusu, chunk retrieval, liste-niyeti
+   aramasi, CLIP gorsel fallback) da `read_db`'ye tasindi; onceki hal "Gezgin akiyor ama
+   sohbet donuk" tutarsizligini uretiyordu. Manuel `run_rag_indexing` de arka-plan indexer
+   ile ayni **asset-basina** kilit granularitesine gecti (once iki kilidi kosu boyunca
+   tutuyordu).
    Kalan sinir: ingest/embed gibi isler hala uzun omurlu Tauri komutlaridir; uygulama kapaninca
    durur ve sonraki oturumda otomatik baslamaz. Ayrica UNC/ag paylasimindaki DELETE journal modu
    icin eszamanli okuma-yazma davranisi ayri olculmelidir.
-3. **Ilke #5 (≤~500 satir) — 14 uretim + 4 test dosyasi asiyor** (yeniden olculdu **2026-07-25**;
-   488 kaynak dosya. Onceki kayit "6 uretim" diyordu — bayatlamisti). En buyuk uretim:
-   `FacetSidebar.tsx` 726 · `src-tauri/src/lib.rs` 698 · `lan_commands.rs` 692 · `query/mod.rs` 641 ·
-   `ChatView.tsx` 638 · `query/list.rs` 622 · `useUiStore.ts` 604 · `image.rs` 582 ·
-   `remote_archive.rs` 579 · `oda.rs` 572 · `scanned_roots.rs` 546 · `image_commands.rs` 536 ·
-   `merge.rs` 527 · `archivist-server/src/lib.rs` 507. H2'ye kiyasla (1000+ satir dosyalar) kucuk
-   sapma; kaynak dosyalarin **%2.9'u** — ama oran BUYUYOR. Firsat buldukca saf-refactor ile bolunur
-   (ayri commit). ⚠️ Bu satir her olcumde tazelenir; tahminle yazilmaz.
+3. **Ilke #5 (≤~500 satir) — 33 uretim + 9 test dosyasi asiyor** (yeniden olculdu
+   **2026-08-17**; 555 kaynak dosya → **%7.6**). Onceki kayit "14 uretim + 4 test / %2.9"
+   diyordu ve 2026-07-25 tarihliydi — bayatlamisti. En buyuk uretim dosyalari:
+   `vision_commands.rs` **1618** · `FacetSidebar.tsx` 918 · `image.rs` 885 · `vision.rs` 831 ·
+   `ChatView.tsx` 822 · `ollama.rs` 817 · `rag.rs` 794 · `lib.rs` 758 · `lan_commands.rs` 750 ·
+   `commands/ingest.rs` 750 · `query/mod.rs` 742 · `useUiStore.ts` 734 (kalan 21 dosya 500–719).
+   Oran **iki katindan fazla buyudu**; H2'ye kiyasla hala kucuk sapma ama trend yanlis yonde.
+   Firsat buldukca saf-refactor ile bolunur (ayri commit).
+   ⚠️ Bu satir her olcumde tazelenir; tahminle yazilmaz.
+
+   **Not — rlib/metadata riski YOK (2026-08-17'de olculdu).** `src-tauri` 22.194 satirla
+   workspace'in en buyuk crate'i (`archivist-db` 15.400) ve bu, H2'nin 6,23 GB rlib cokusunu
+   cagristiriyor. Olcum bunu **curutuyor**: workspace'in kendi crate'lerinin `.rmeta` dosyalari
+   1–2 MB (H2'yi cokerten ~4 GB metadata tavaninin bindebiri); en buyuk `.rmeta` 87 MB ve o da
+   harici `windows` crate'ine ait. `libarchivist_lib.rlib` 423 MB'dir ama bu debug kod objesidir,
+   metadata degil. ⇒ Cok-crate karari H2'nin YAPISAL hatasini gercekten cozmus. Dosya bolme
+   gerekcesi yalniz okunabilirliktir, build sinir riski DEGIL.
 
 ## Eklenecekler (H2'de retrofit, burada 1. gunden)
-- Kalici/ resumable is kuyrugu · "Doctor"/onarim+butunluk paneli · ingest-ani
-  fixity+dedup · plugin extractor (riskli DWG → out-of-process sidecar) ·
-  hibrit aramayi tek fusion pipeline + "neden bu sonuc" aciklamasi.
+> Durum **2026-08-17'de kodla dogrulandi** (bkz `docs/reviews/2026-08-17-karsi-denetim-*`).
+> Bu bolum uzun sure tamamlanmis yetenekleri "gelecek is" gibi listeledi — sapma kapatildi.
+
+- ✅ **"Doctor"/onarim+butunluk paneli** — `src-tauri/src/commands/health.rs`
+  (`db_health`, `repair_db`) + `src/features/settings/HealthDoctorCard.tsx`.
+- ✅ **Ingest-ani fixity+dedup** — `archivist-ingest/src/hash.rs`, `staleness.rs` ·
+  `archivist-db/src/dedup.rs` · `src-tauri/src/dedup_commands.rs` · `FixitySection.tsx`.
+- ✅ **Hibrit aramayi tek fusion pipeline** — `archivist-db/src/rag.rs` (RRF, `RRF_K = 60`)
+  + keyword-gate.
+- ✅ **"Neden bu sonuc" aciklamasi** — `archivist-db/src/query/list.rs` `match_sources`
+  (alan-atfi, testli) + `src/features/assets/detail/MatchSourcesSection.tsx`.
+- ⬜ **Kalici/resumable is kuyrugu** — GERCEKTEN acik, ama bilincli: `jobs` tablosu
+  kurulmadi; yerine "turetilmis-durum" deseni var (bkz §Bilinen sapmalar 1). ROADMAP'te
+  "Sirada" olarak duruyor.
+- ⬜ **Plugin extractor (riskli DWG → out-of-process sidecar)** — GERCEKTEN acik.
+  ⚠️ ODA File Converter harici bir surectir ama o bir **donusturucudur**, sidecar degil:
+  ODA yokken kosan Rust raw-scan parser'i hala SUREC ICINDEDIR (`catch_unwind` + timeout
+  siniriyla izole). Sidecar yeniden acilacaksa yeni olcum/tehdit modeli gerekir.
 
 ## Korunanlar (H2 dogru yapmisti)
 Tauri v2 · offline-first · yerel embedding · opsiyonel Ollama · cift-arsiv

@@ -1,6 +1,6 @@
 [package]
 name = "archivist"
-version = "3.5.0"
+version = "3.6.0"
 description = "Arsiv-H3 — offline mimari arsiv yonetim uygulamasi (Tauri kabugu)"
 edition.workspace = true
 license.workspace = true

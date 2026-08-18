@@ -33,6 +33,22 @@ const MAX_DWG_SIZE: u64 = 200 * 1024 * 1024;
 /// Birlestirilmis liste alanlari icin karakter tavani.
 const JOIN_CAP: usize = 4000;
 
+/// **Cikarim kaynagi** EAV anahtari — bu DWG'nin verisi TEMIZ mi (ODA→DXF) yoksa
+/// YAKLASIK mi (ikili raw-scan)?
+///
+/// Neden kalici bir alan (2026-08-17 denetimi): raw-scan'e dususte `Extracted::warn`
+/// zaten bir uyari uretiyordu, ama o uyari yalniz **tarama raporunda** yasiyor, kayit
+/// basina tavana (`REPORT_MAX_ENTRIES`) tabi ve dosya kartiyla hicbir bagi yok. ODA
+/// kurulu olmayan bir makinede HER DWG uyari urettigi icin rapor tavana carpiyor →
+/// "hangi dosyalar yaklasik" bilgisi pratikte kayboluyordu. Anahtar EAV'de durursa:
+/// sorgulanabilir, dosya detayinda gosterilebilir ve RAG metadata chunk'ina girer
+/// (sohbet atfinda da gorunur).
+pub const CAD_EXTRACTION_KEY: &str = "cad_extraction";
+/// ODA File Converter → DXF ile TEMIZ cikarim.
+pub const CAD_EXTRACTION_ODA: &str = "oda";
+/// Ikili raw-scan; layer/metin adlari YAKLASIK.
+pub const CAD_EXTRACTION_RAW: &str = "raw_scan";
+
 /// ODA exe yolunu surec basina BIR kez tespit et (registry/PATH taramasi tekrarlanmaz).
 fn oda_available() -> bool {
     static ODA: OnceLock<Option<PathBuf>> = OnceLock::new();
@@ -94,6 +110,8 @@ impl Extractor for DwgExtractor {
                 if out.thumbnail.is_none() {
                     out.thumbnail = thumb::dwg_preview_thumbnail(&data);
                 }
+                // Cikarim KAYNAGI kalici olarak isaretlenir (bkz `CAD_EXTRACTION_KEY`).
+                out.set(CAD_EXTRACTION_KEY, CAD_EXTRACTION_ODA);
                 return Ok(out);
             }
         }
@@ -110,6 +128,8 @@ impl Extractor for DwgExtractor {
         let creation_date = fields::get_dwg_creation_date(&data);
 
         let mut out = Extracted::new();
+        // Cikarim KAYNAGI: bu dal yalniz ODA yok/basarisizken calisir → veriler yaklasik.
+        out.set(CAD_EXTRACTION_KEY, CAD_EXTRACTION_RAW);
         if let Some(v) = &version {
             out.set("version", v.clone());
         }

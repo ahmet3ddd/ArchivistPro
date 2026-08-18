@@ -2,6 +2,14 @@
 // app_settings KV yok). ChatView (ragChat) + Ayarlar paneli paylasir. rerank/query-rewrite Ollama
 // gerektirir (yoksa backend sessizce atlar). Hassasiyet: oto-tespit (kategori+kelime) sohbette
 // hassas dosyalari gizler; manuel disla AYRI (asset-bazli, "Parçalar" sekmesi). Varsayilanlar KAPALI.
+//
+// ⚠️ KAPSAM (2026-08-17 denetimi): buradaki hassasiyet ayari bir **kolaylik filtresidir, guvenlik
+// siniri DEGILDIR.** (a) localStorage'da durur → uygulama hesabina degil Windows/WebView profiline
+// baglidir; ayni makinedeki farkli kullanicilar ayni tercihi paylasir. (b) LAN'da her istekle
+// `options` icinde host'a GONDERILIR; host'ta saklanan bir politika yoktur → uzak istemci filtreyi
+// kendi tarafinda kapatabilir. Gercek, kosulsuz uygulanan tek dislama `rag_excluded` DB kolonudur.
+// Hesap-bazli/host-zorlamali politika istenirse ayri bir sema + sunucu-tarafi filtre gerekir
+// (acik urun karari; bkz docs/LAN_ACCESS_MODEL.md ve docs/STATUS.md).
 
 import type { RagChatOptions } from "../../ipc/client";
 

@@ -1,7 +1,9 @@
 //! RAG chunk veri katmani entegrasyon testleri (migration 0011): set_asset_chunks (govde +
 //! metadata), bekleyen/sayim takibi, re-index degistirme, FTS aranabilirlik, purge temizligi.
 
-use archivist_db::{AssetInput, ChunkWrite, Db, IngestData, MetaVal, META_CHUNK_INDEX};
+use archivist_db::{
+    AssetInput, ChunkWrite, Db, IngestData, MetaVal, CHUNK_RULES_VERSION, META_CHUNK_INDEX,
+};
 
 fn ingest_one(db: &mut Db, path: &str, name: &str, body: &str) -> i64 {
     db.ingest(
@@ -190,4 +192,75 @@ fn purge_cleans_chunks_vectors_and_fts() {
     assert_eq!(count(&db, "SELECT count(*) FROM chunk_vectors"), 0);
     assert_eq!(count(&db, "SELECT count(*) FROM chunk_fts"), 0);
     assert!(db.integrity_ok().unwrap());
+}
+
+// ── Migration 0033: parcalama kurallari degisince yeniden uretim KENDILIGINDEN tetiklenir ──
+//
+// Kilitledigi kusur (2026-08-18): parcalama kurali degistiginde (kelime → token butcesi) mevcut
+// parcalar eski kaliyordu ve Pano "Tum asset'ler indekslendi" diyordu → duzeltmenin kullaniciya
+// ULASMADIGI gorulmuyordu. Artik her parca kendi `rules_version`'ini tasir ve bayat olanlar
+// "bekliyor" sayilir.
+#[test]
+fn stale_rules_version_chunks_count_as_pending_and_not_indexed() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = ingest_one(&mut db, "/p/a.pdf", "a.pdf", "villa cephe raporu");
+    let b = ingest_one(&mut db, "/p/b.pdf", "b.pdf", "mutfak plani");
+
+    db.set_asset_chunks(a, &[cw(0, "a govde", 0), cw(META_CHUNK_INDEX, "a meta", 1)]).unwrap();
+    db.set_asset_chunks(b, &[cw(0, "b govde", 2)]).unwrap();
+
+    // Yeni yazilan parcalar GUNCEL kurali tasir → ikisi de indekslenmis, bekleyen yok, bayat yok.
+    assert_eq!(
+        count(&db, &format!("SELECT count(*) FROM text_chunks WHERE rules_version = {CHUNK_RULES_VERSION}")),
+        3,
+        "set_asset_chunks guncel rules_version yazmali"
+    );
+    assert_eq!(db.chunked_asset_count().unwrap(), 2);
+    assert_eq!(db.pending_chunk_count().unwrap(), 0);
+    assert_eq!(db.stale_chunk_count().unwrap(), 0);
+    assert!(db.assets_without_chunks(0, 10).unwrap().is_empty());
+
+    // a'nin parcalarini BAYAT yap (kural degisimini taklit eder; 3.5.0'dan yukselen arsiv boyledir).
+    db.connection()
+        .execute("UPDATE text_chunks SET rules_version = 1 WHERE asset_id = ?1", [a])
+        .unwrap();
+
+    // ① Bayat parcali asset "indekslenmis" SAYILMAZ, ② "bekliyor" sayilir → normal indeksleme
+    // akisi (oto-indeks / "Indeksle" dugmesi) onu kendiliginden yeniden uretir.
+    assert_eq!(db.chunked_asset_count().unwrap(), 1, "bayat kuralli asset indekslenmis sayilmamali");
+    assert_eq!(db.pending_chunk_count().unwrap(), 1, "bayat kuralli asset bekliyor sayilmali");
+    assert_eq!(db.stale_chunk_count().unwrap(), 2, "a'nin iki parcasi bayat");
+    let pending = db.assets_without_chunks(0, 10).unwrap();
+    assert_eq!(pending.len(), 1);
+    assert_eq!(pending[0].id, a, "yeniden uretilecek olan bayat kuralli asset");
+
+    // ③ Parcalar SILINMEDI — yenisi yazilana dek aranabilir kalir (gerileme yok, kademeli iyilesme).
+    assert_eq!(db.chunk_count().unwrap(), 3, "bayat parcalar silinmemeli");
+
+    // ④ Yeniden yazinca guncel surume doner ve bekleyen biter.
+    db.set_asset_chunks(a, &[cw(0, "a govde yeni", 0), cw(META_CHUNK_INDEX, "a meta yeni", 1)]).unwrap();
+    assert_eq!(db.pending_chunk_count().unwrap(), 0);
+    assert_eq!(db.stale_chunk_count().unwrap(), 0);
+    assert_eq!(db.chunked_asset_count().unwrap(), 2);
+}
+
+// `reset_rag_chunks` yalniz parcalari siler; semantik/CLIP vektorlerine DOKUNMAZ.
+#[test]
+fn reset_rag_chunks_clears_only_chunks() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = ingest_one(&mut db, "/p/a.pdf", "a.pdf", "villa cephe raporu");
+    db.set_asset_chunks(a, &[cw(0, "a govde", 0), cw(META_CHUNK_INDEX, "a meta", 1)]).unwrap();
+    db.set_vector(a, &unit(3)).expect("semantik vektor");
+
+    let cleared = db.reset_rag_chunks().unwrap();
+    assert_eq!(cleared, 2, "silinen parca sayisi donmeli");
+    assert_eq!(db.chunk_count().unwrap(), 0);
+    assert_eq!(count(&db, "SELECT count(*) FROM chunk_vectors"), 0, "chunk vektorleri de gitmeli");
+    assert_eq!(count(&db, "SELECT count(*) FROM chunk_fts"), 0, "chunk FTS de gitmeli");
+    assert_eq!(
+        count(&db, "SELECT count(*) FROM asset_vectors"),
+        1,
+        "SEMANTIK vektor KORUNMALI — kural degisimi yalniz parcalari bayatlatir"
+    );
+    assert_eq!(db.pending_chunk_count().unwrap(), 1, "asset yeniden parcalanmayi bekler");
 }

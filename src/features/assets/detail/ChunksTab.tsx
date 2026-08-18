@@ -91,7 +91,10 @@ function RagExcludeToggle({ assetId, initial }: { assetId: number; initial: bool
 
 function ChunkCard({ chunk }: { chunk: AssetChunkRow }) {
   const { t } = useTranslation();
-  const isMeta = chunk.chunkIndex === META_CHUNK_INDEX;
+  // Metadata birden cok parca olabilir (-1, -2, -3...): uzun katman/blok listeleri token
+  // butcesine bolunur. Bu yuzden "=== -1" degil "< 0" — aksi halde -2 govde sanilir ve
+  // "Govde parcasi -1" gibi anlamsiz bir etiket cikardi.
+  const isMeta = chunk.chunkIndex <= META_CHUNK_INDEX;
   const label = isMeta
     ? t("detail.chunk_meta")
     : t("detail.chunk_body", { n: chunk.chunkIndex + 1 });

@@ -644,6 +644,7 @@ pub fn run() {
             indexer::stop_auto_index,
             indexer::retry_skipped_index,
             indexer::reset_local_ai_indexes,
+            indexer::reset_rag_chunks,
             // P2.5 klasor watcher (canli izleme) — tespit → folder_changed olayi (admin).
             folder_watcher::start_watching_root,
             folder_watcher::stop_watching_root,

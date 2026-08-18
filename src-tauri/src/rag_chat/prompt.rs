@@ -400,7 +400,8 @@ pub(super) fn image_fallback(
     let page_size = if allowed.is_some() { IMAGE_FALLBACK_SCOPED_POOL } else { IMAGE_FALLBACK_K };
     let opts = ListOpts { page_size, ..Default::default() };
     let scored: Vec<(AssetRow, f32)> = {
-        let db = state.db.lock().ok()?;
+        // Salt-okuma → `read_db` (gorsel fallback ingest'in yazma kilidini beklemez).
+        let db = state.read_db.lock().ok()?;
         db.image_search_scored(&qvec, &opts).ok()?
     }
     .into_iter()

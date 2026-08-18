@@ -411,3 +411,53 @@ fn list_intent_search_ext_hint_filters_by_type() {
     assert_eq!(only_word.total, 1, "docx dosya doc/docx ipucuyla gelir");
     assert_eq!(only_word.items[0].ext.as_deref(), Some("docx"));
 }
+
+/// Iki-bilesenli birim vektor: `a` buyudukce sorgu vektorune (unit(0)) YAKINLASIR.
+/// kNN aday havuzu testlerinde mesafe siralamasini kontrollu kurmak icin.
+fn near(a: f32) -> Vec<f32> {
+    let mut v = vec![0f32; 384];
+    v[0] = a;
+    v[1] = (1.0 - a * a).max(0.0).sqrt();
+    v
+}
+
+/// **Regresyon (2026-08-17 denetimi, Y4):** kNN aday havuzu `LIMIT`'i suzgecten ONCE kosar
+/// (vec0 sanal tablosunda `deleted_at`/`rag_excluded` kosulu SQL'e alinamaz). Sabit 200'luk
+/// havuzun tamami cope atilmis chunk'larla dolarsa, GERCEKTEN alakali ama biraz daha uzak olan
+/// chunk sessizce kaybolurdu. Havuz artik sagkalan aday yeterli olana dek buyutulur.
+#[test]
+fn knn_pool_widens_when_candidates_are_filtered_out() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+
+    // 250 "gurultu" asset (sabit 200'luk havuzdan fazla), hepsi sorguya COK yakin — ve hepsi copte.
+    let mut noise_ids = Vec::new();
+    for i in 0..250 {
+        let path = format!("/p/n{i}.pdf");
+        let id = ingest(&mut db, &path, &format!("n{i}.pdf"));
+        let a = 1.0 - (i as f32) * 1e-4; // i buyudukce hafifce uzaklasir; hepsi hedeften yakin
+        db.set_asset_chunks(
+            id,
+            &[ChunkWrite { chunk_index: 0, page: None, text: "deniz manzarasi".into(), embedding: near(a) }],
+        )
+        .unwrap();
+        noise_ids.push(id);
+    }
+    db.soft_delete(&noise_ids).unwrap();
+
+    // Hedef: aktif, ama vektor olarak gurultunun TAMAMINDAN daha uzak.
+    let target = ingest(&mut db, "/p/hedef.pdf", "hedef.pdf");
+    db.set_asset_chunks(
+        target,
+        &[ChunkWrite { chunk_index: 0, page: None, text: "avlu kesiti".into(), embedding: near(0.5) }],
+    )
+    .unwrap();
+
+    // "bulut" hicbir chunk metninde YOK → FTS dali bos; isabet YALNIZ kNN dalindan gelebilir.
+    let (hits, diag) = db.rag_search_with_diag("bulut", &near(1.0), 10, &[], false, None).unwrap();
+    assert_eq!(diag.fts_candidates, 0, "FTS eslesmesi olmamali — kNN dali izole edilir");
+    assert!(
+        hits.iter().any(|h| h.asset_id == target),
+        "cop adaylar havuzu doldurdugunda bile aktif chunk bulunmali (havuz buyutulur)"
+    );
+    assert!(hits.iter().all(|h| h.asset_id != 0), "cop asset chunk'i sizmamali");
+}

@@ -61,6 +61,36 @@ export function RagIndexCard() {
     }
   }, [t, toast]);
 
+  const [rebuilding, setRebuilding] = useState(false);
+  const rebuildingRef = useRef(false);
+
+  /** Parcalari sil + hemen yeniden kur. Vektor/CLIP indeksleri KORUNUR (bkz `resetRagChunks`). */
+  const rebuild = useCallback(async () => {
+    if (rebuildingRef.current || runningRef.current) return;
+    rebuildingRef.current = true;
+    setRebuilding(true);
+    try {
+      const cleared = await ipc.resetRagChunks();
+      toast.success(t("rag_index.rebuild_cleared", { count: cleared }));
+      setTick((x) => x + 1);
+      const report = await ipc.runRagIndexing((p) => setProgress(p));
+      toast.success(
+        t("rag_index.done_toast", {
+          indexed: report.indexed,
+          chunks: report.chunks,
+          failed: report.failed,
+        }),
+      );
+    } catch (e: unknown) {
+      toast.error(t("rag_index.failed", { message: String(e) }));
+    } finally {
+      rebuildingRef.current = false;
+      setRebuilding(false);
+      setProgress(null);
+      setTick((x) => x + 1);
+    }
+  }, [t, toast]);
+
   const pct =
     progress && progress.total > 0
       ? Math.min(100, Math.round((progress.processed / progress.total) * 100))
@@ -118,11 +148,19 @@ export function RagIndexCard() {
               </p>
             )}
 
-            {data.modelReady && data.pending === 0 && data.total > 0 && (
+            {/* Parcalama kurallari degisti → mevcut parcalar bayat. Bunu SOYLEMEZSEK kart
+                "hepsi indekslendi" derdi ve duzeltmenin ulasmadigi gorulmezdi. */}
+            {data.staleChunks > 0 && (
+              <p className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning">
+                {t("rag_index.stale_notice", { count: data.staleChunks })}
+              </p>
+            )}
+
+            {data.modelReady && data.pending === 0 && data.staleChunks === 0 && data.total > 0 && (
               <p className="text-xs text-text-muted">{t("rag_index.all_done")}</p>
             )}
 
-            {running && (
+            {(running || rebuilding) && (
               <div className="flex flex-col gap-2">
                 <div className="h-2 w-full overflow-hidden rounded-full bg-bg-tertiary">
                   <div
@@ -150,16 +188,32 @@ export function RagIndexCard() {
               </div>
             )}
 
-            {isAdmin && data.pending > 0 && (
-              <button
-                type="button"
-                onClick={() => void run()}
-                disabled={!data.modelReady || running}
-                className="self-start rounded-md bg-accent px-4 py-1.5 text-sm font-medium text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
-              >
-                {running ? t("rag_index.running") : t("rag_index.run", { count: data.pending })}
-              </button>
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {isAdmin && data.pending > 0 && (
+                <button
+                  type="button"
+                  onClick={() => void run()}
+                  disabled={!data.modelReady || running || rebuilding}
+                  className="rounded-md bg-accent px-4 py-1.5 text-sm font-medium text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+                >
+                  {running ? t("rag_index.running") : t("rag_index.run", { count: data.pending })}
+                </button>
+              )}
+
+              {/* Parcalama kurallari degistiginde mevcut parcalar bayatlar ama vektor
+                  indeksleri gecerli kalir → tam sifirlama yerine yalniz parcalari kur. */}
+              {isAdmin && data.chunks > 0 && (
+                <button
+                  type="button"
+                  onClick={() => void rebuild()}
+                  disabled={!data.modelReady || running || rebuilding}
+                  title={t("rag_index.rebuild_hint")}
+                  className="rounded-md border border-border px-3 py-1.5 text-sm text-text-secondary transition hover:bg-bg-tertiary disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+                >
+                  {rebuilding ? t("rag_index.rebuilding") : t("rag_index.rebuild")}
+                </button>
+              )}
+            </div>
           </>
         )}
       </div>

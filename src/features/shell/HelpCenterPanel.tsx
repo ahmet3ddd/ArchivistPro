@@ -66,6 +66,11 @@ function turkishDocuments(isAdmin: boolean): Record<TabId, Article> {
       ]},
     ]},
     changelog: { title: "Bu sürümde", intro: "H3 arayüzündeki güncel kullanıcı odaklı iyileştirmeler.", sections: [
+      { id: "search-coverage", title: "Belge metninin tamamı aramaya giriyor", paragraphs: [
+        "Belge metni, aramaya hazırlanırken parçalara bölünür. Bu bölme kelime sayısına göre yapılıyordu; oysa parçanın modele sığıp sığmadığı «token» denen daha küçük birimlerle ölçülür ve Türkçede bir kelime ortalama 3'ten fazla token eder. Sonuç: her parçanın yalnızca baş tarafı indeksleniyor, gerisi hiçbir aramaya girmiyordu. Bölme artık doğrudan token bütçesiyle yapılıyor.",
+        "Dosya adı, proje, etiket ve çizim bilgilerinden (katman/blok listeleri gibi) üretilen özetler de tek parçaya sığmadığında sessizce kesiliyordu; artık gerektiği kadar parçaya bölünüyor.",
+        "Önceki sürümlerde indekslenmiş arşivlerde parçalar eski kurallarla üretilmiştir. Pano › RAG İndeksi bunu açıkça söyler ve indeksleme onları kendiliğinden yeniler; hemen yapmak için aynı karttaki «Parçaları yeniden kur» kullanılır. Bu işlem semantik ve görsel arama indekslerine dokunmaz, dosyalarınıza da dokunmaz. Eski parçalar yenisi yazılana kadar aranabilir kalır.",
+      ]},
       { id: "archive-management", title: "Arşiv yönetimi", paragraphs: ["İndeksle, Kaynak Klasörler, Projeler ve Kural ile düzenle eylemleri üst çubuk yerine sol seritteki Arşiv panelinde toplandı. Böylece arama ve sonuç bağlamı daha sade kaldı."]},
       { id: "indexing-progress", title: "İndeksleme akışı", paragraphs: ["Bir indeksleme işine birden fazla klasör eklenebilir. İş sürerken etkin ve yakın zamanda işlenen dosyalar, ilerleme ve tahmini süre ile birlikte görünür; iptal isteğinin tamamlanması da açıkça bildirilir."]},
       { id: "asset-views", title: "Dosyaları inceleme", paragraphs: ["Yerel video dosyaları detay panelinden oynatılabilir. Haritadaki konum noktaları ve kümeler, temsil ettikleri dosyaları doğrudan Gezgin'de açar."]},

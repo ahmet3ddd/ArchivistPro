@@ -294,8 +294,9 @@ pub async fn rag_chat(
                 .map_err(|e| e.to_string())?
                 .into();
         let dir = resolve_model_dir()?;
+        // Kapsam cozumu salt-okuma → `read_db` (ingest'in yazma kilidini beklemez).
         let allowed = {
-            let db = state.db.lock().map_err(|e| e.to_string())?;
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
             resolve_scope(&db, &scope)?
         };
         if allowed.as_ref().is_some_and(|s| s.is_empty()) {
@@ -309,8 +310,9 @@ pub async fn rag_chat(
                 diagnostics: RetrieveDiag::default(),
             });
         }
+        // Hassasiyet sorgusu salt-okuma → `read_db`.
         let sens = {
-            let db = state.db.lock().map_err(|e| e.to_string())?;
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
             sensitivity_excluded(&db, &options)?
         };
         // A3 LLM query-rewrite (opt, yalniz RAG yolu): EK FTS aday token'lari (Ollama; graceful).
@@ -320,10 +322,11 @@ pub async fn rag_chat(
             Vec::new()
         };
         // Kilit sirasi embedder→db (`run_embedding` ile AYNI → ters-sira deadlock riski yok).
+        // Chunk retrieval salt-okuma → `read_db`: ingest yazarken sohbet beklemez.
         let hd = {
             let mut eg = state.embedder.lock().map_err(|e| e.to_string())?;
             let emb = ensure_embedder(&mut eg, &dir)?;
-            let db = state.db.lock().map_err(|e| e.to_string())?;
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
             retrieve_chunks(&db, emb, &q, &options, &extra_terms, allowed.as_ref(), &sens)?
         };
         fb_allowed = allowed;
@@ -349,7 +352,8 @@ pub async fn rag_chat(
             .is_some_and(|e| !e.iter().any(|x| matches!(x.as_str(), "jpg" | "jpeg" | "png")));
         if !remote {
             let found = {
-                let db = state.db.lock().map_err(|e| e.to_string())?;
+                // Liste-niyeti aramasi salt-okuma → `read_db`.
+                let db = state.read_db.lock().map_err(|e| e.to_string())?;
                 db.list_intent_search(&q, hint.as_deref(), fb_allowed.as_ref(), &fb_sens, LIST_MAX_FILES as i64)
                     .map_err(|e| e.to_string())?
             };

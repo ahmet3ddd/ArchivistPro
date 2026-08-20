@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 import type { AssetDetail } from "../../../ipc/client";
 import { extIcon, formatBytes, formatDate } from "../../../lib/format";
 import { isVideoExt } from "../../../lib/media";
-import { DominantColorPalette } from "../DominantColorPalette";
 import { AiVisionSection } from "./AiVisionSection";
+import { ColorPaletteSection } from "./ColorPaletteSection";
 import { Field } from "./Field";
 import { ProjectSection } from "./ProjectSection";
 import { VideoPreview } from "./VideoPreview";
@@ -53,7 +53,8 @@ export function PreviewTab({ detail, thumb, onRefetch, readOnly }: Props) {
         </div>
       )}
 
-      <DominantColorPalette colors={asset.dominant_colors} className="self-center" />
+      {/* Renk kartelasi — HEX/RGB/HSL/≈RAL + tikla-kopyala (bkz ColorPaletteSection). */}
+      <ColorPaletteSection colors={asset.dominant_colors} />
 
       {/* Cekirdek dosya bilgisi (eski "Bilgi" sekmesi) — yol mantiken-LTR + kirpilir (title = tam yol) */}
       <div className="p-1 text-xs">

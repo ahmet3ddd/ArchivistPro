@@ -34,6 +34,9 @@ export interface MockAsset {
    *  varliklar analiz edilmemis sayilir; birim-yukseklik testi bunlari acikca kurar. */
   ai_analyzed?: boolean;
   ai_gorsel_turu?: string | null;
+  /** Baskin renkler (detay panelindeki renk kartelasi). Opsiyonel: kanned varliklarda YOK —
+   *  kartela yalniz onu acikca kuran test icin cizilsin (kart yuksekligi testleri etkilenmesin). */
+  dominant_colors?: { r: number; g: number; b: number; percentage: number }[];
 }
 
 export interface MockSession {
@@ -55,6 +58,21 @@ export interface TauriMockOptions {
   remoteConfigured?: boolean;
   /** Arsiv varliklari (grid/arama/detay). Varsayilan CANNED_ASSETS. */
   assets?: MockAsset[];
+  /** `vision_run_state` donusu — "su an bir AI gorsel analizi kosuyor mu" (bakim kapisi).
+   *  Varsayilan: kosu YOK. Test kosu sirasinda `setVisionRun(page, ...)` ile degistirebilir. */
+  visionRun?: MockVisionRun;
+  /** `count_missing_dominant_colors` donusu — 0 (varsayilan) → geri-doldurma karti cizilmez. */
+  missingColors?: number;
+  /** `ollama_vision_models` donusu. Varsayilan [] → "vision modeli yok" (mevcut testler icin
+   *  degismedi); analiz butonunun KILIT halini sinamak icin dolu verilir. */
+  visionModels?: string[];
+}
+
+/** Aktif gorsel-analiz kosusu (backend `vision_run_state` DTO'su ile ayni sekil). */
+export interface MockVisionRun {
+  active: boolean;
+  processed?: number;
+  total?: number;
 }
 
 /** Uc kanonik varlik (dwg/pdf/docx) — altin-akis grid + arama + detayini besler. */
@@ -110,6 +128,9 @@ interface MockData {
   loginMustChange: boolean;
   remoteConfigured: boolean;
   assets: MockAsset[];
+  visionRun: MockVisionRun;
+  visionModels: string[];
+  missingColors: number;
 }
 
 /**
@@ -125,6 +146,9 @@ export async function installTauriMock(page: Page, opts: TauriMockOptions = {}):
     loginMustChange: opts.loginMustChange ?? false,
     remoteConfigured: opts.remoteConfigured ?? false,
     assets: opts.assets ?? CANNED_ASSETS,
+    visionRun: opts.visionRun ?? { active: false },
+    visionModels: opts.visionModels ?? [],
+    missingColors: opts.missingColors ?? 0,
   };
 
   await page.addInitScript((d: MockData) => {
@@ -132,6 +156,10 @@ export async function installTauriMock(page: Page, opts: TauriMockOptions = {}):
     // rehberi onların tıklamalarını örtmesin. Onboarding'e özel test bu anahtarı
     // sonraki init-script'te kaldırarak gerçek ilk giriş davranışını sınar.
     localStorage.setItem("arsiv.onboarding.v1.user.1", "done");
+
+    // Aktif analiz kosusu — MUTABLE: test `__E2E_VISION__`i degistirerek kilidi acip kapatabilir.
+    const visionRun: MockVisionRun = { ...d.visionRun };
+    (window as unknown as Record<string, unknown>).__E2E_VISION__ = visionRun;
 
     // ── invoke komut yonlendirici ───────────────────────────────────────────────
     // Golden-path komutlari anlamli kanned veri doner. Bilinmeyen komut → sekle-uygun
@@ -365,6 +393,44 @@ export async function installTauriMock(page: Page, opts: TauriMockOptions = {}):
           embedReady: true,
         };
       },
+      // Bakim kapisi (MaintenanceGate + secim arac cubugu + detay paneli) TEK kaynaktan okur:
+      // `vision_run_state`. Mutable → test kosu ortasinda `__E2E_VISION__`i degistirip kilidin
+      // ACILDIGINI da dogrulayabilir (gercekte yoklama ≤2,5sn'de yakalar).
+      vision_run_state: () => ({
+        active: visionRun.active,
+        progress: visionRun.active
+          ? {
+              processed: visionRun.processed ?? 0,
+              total: visionRun.total ?? 0,
+              currentPath: "kat-plani.jpg",
+            }
+          : null,
+      }),
+      ollama_vision_models: () => d.visionModels,
+      // Sohbet gorunumu: acilista oturum/cop/mesaj listelerini ceker. Bunlar sekle-uygun bos
+      // default'a DUSMUYORDU (`chat_list_sessions` fallback desenine uymuyor → null) ve gorunum
+      // "e is not iterable" ile ErrorBoundary'ye dusuyordu — sag-tik menusu testi bunu ortaya
+      // cikardi (2026-08-20). Bos liste = "henuz sohbet yok" (gecerli bir urun durumu).
+      // Renk-yakinligi aramasi: gercek CIELAB siralamasi BACKEND testlerinde (color_search.rs).
+      // Mock yalnizca UI sozlesmesini besler: renk verisi olan asset'ler donebilsin.
+      assets_near_color: () => {
+        const items = d.assets.filter(
+          (a) => !trashed.has(a.id) && (a.dominant_colors?.length ?? 0) > 0,
+        );
+        return { total: items.length, items };
+      },
+      // Renk verisi geri-doldurma karti: sayim 0 → kart CIZILMEZ (varsayilan; mevcut testler
+      // etkilenmesin). `missingColors` secenegi verilirse kart gorunur ve buton calisir.
+      count_missing_dominant_colors: () => d.missingColors,
+      backfill_dominant_colors: () => {
+        const n = d.missingColors;
+        d.missingColors = 0;
+        return n;
+      },
+      chat_list_sessions: () => [],
+      chat_list_trashed_sessions: () => [],
+      chat_list_messages: () => [],
+      chat_trash_count: () => 0,
       list_collections: () => [],
       approval_facets: () => [],
       client_facets: () => [],
@@ -424,4 +490,18 @@ export async function installTauriMock(page: Page, opts: TauriMockOptions = {}):
     // isTauri() kimi surumlerde globalThis.isTauri, kimi surumlerde __TAURI_INTERNALS__ bakar.
     w.isTauri = true;
   }, data);
+}
+
+/** Kosan test sirasinda analiz durumunu degistir (kilit ACILIYOR mu / KAPANIYOR mu). Yoklama
+ *  `useVisionLock`te bosta 2,5sn/kosarken 1sn → Playwright'in retry'li `expect`i bekler. */
+export async function setVisionRun(page: Page, run: MockVisionRun): Promise<void> {
+  await page.evaluate((next) => {
+    const slot = (window as unknown as Record<string, unknown>).__E2E_VISION__ as Record<
+      string,
+      unknown
+    >;
+    slot.active = next.active;
+    slot.processed = next.processed;
+    slot.total = next.total;
+  }, run);
 }

@@ -16,6 +16,7 @@ export type AssetQueryRoute =
   | "remote-semantic" // uzak arsiv + anlamli mod + sorgu → remote_semantic_search (top-k, % rozet)
   | "remote-list" // uzak arsiv (klasik) → remote_list_assets (sayfali)
   | "similar" // yerel + benzer-gorsel (gorsel→gorsel; sag-tik) → similar_images (top-k)
+  | "color" // yerel + renk-yakinligi (detay panelindeki kartela) → assets_near_color (top-k)
   | "semantic" // yerel + anlamli mod + sorgu → semantic_search (top-k, % rozet)
   | "fts" // yerel + sorgu → list_assets (FTS; 0 sonucta fuzzy son-care)
   | "browse"; // yerel + sorgu yok → list_assets (filtreli sayfali gozat)
@@ -30,12 +31,15 @@ export interface AssetRouteInput {
   /** Benzer-gorsel (gorsel→gorsel) aktif mi (`similarTo` set'li). Yerelde anlamlidir; uzakta
    *  kaynak degisiminde temizlenir → uzak yol bunu YOK SAYAR. */
   hasSimilar: boolean;
+  /** Renk-yakinligi aramasi aktif mi (`colorSearch` set'li). `hasSimilar` ile AYNI aile: yerel,
+   *  tek-sayfa, sorgudan bagimsiz. Uzak arsivde YOK SAYILIR (renk verisi yerel DB'de). */
+  hasColor: boolean;
 }
 
 /**
  * Girdilere gore TEK bir backend yolu sec. Oncelik:
  *  UZAK: anlamli mod + sorgu → `remote-semantic`; aksi halde `remote-list` (benzer-gorsel uzakta yok).
- *  YEREL: benzer-gorsel > anlamli(mod+sorgu) > FTS(sorgu) > gozat.
+ *  YEREL: benzer-gorsel > renk-yakinligi > anlamli(mod+sorgu) > FTS(sorgu) > gozat.
  *
  * Anlamli mod YALNIZ sorgu doluyken devreye girer — bos sorguda vektor aramasinin anlami yok
  * (gozata duser). Boylece "mod acik ama kutu bos" durumu sessizce klasik gozat gosterir.
@@ -45,13 +49,19 @@ export function resolveAssetQueryRoute(i: AssetRouteInput): AssetQueryRoute {
     return i.semanticMode && i.hasQuery ? "remote-semantic" : "remote-list";
   }
   if (i.hasSimilar) return "similar";
+  if (i.hasColor) return "color";
   if (i.semanticMode && i.hasQuery) return "semantic";
   if (i.hasQuery) return "fts";
   return "browse";
 }
 
-/** Bu route TEK-SAYFA (top-k) mi — benzer-gorsel ve semantik yollari sayfalama YAPMAZ; total =
+/** Bu route TEK-SAYFA (top-k) mi — benzer-gorsel, renk ve semantik yollari sayfalama YAPMAZ; total =
  *  donen oge sayisi, loadMore no-op. `useInfiniteAssets` sayaci + kaydirmayi buna gore sabitler. */
 export function isSinglePageRoute(route: AssetQueryRoute): boolean {
-  return route === "similar" || route === "semantic" || route === "remote-semantic";
+  return (
+    route === "similar" ||
+    route === "color" ||
+    route === "semantic" ||
+    route === "remote-semantic"
+  );
 }

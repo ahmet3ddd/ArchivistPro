@@ -2,6 +2,10 @@
 // ozet kartlari + basit grafikler. Bir uzanti cubuguna tiklayinca o uzantiyi
 // filtreler (`setExt`) ve baglam-once gezinme explorer'a gecer (sonuc grid'de).
 //
+// SAG-TIK: Pano'nun kendi baglam menusu (`DashboardContextMenu`). Oncesinde burada HIC handler
+// yoktu → WebView2'nin tarayici menusu aciliyordu ("Yeniden yukle / Farkli kaydet / Kaynagi
+// goruntule"; kullanici bulgusu 2026-08-20). Menu UZAK arsiv ozetinde de calisir (ayni sarmalayici).
+//
 // Veri: `dashboardStats()` — toplam sayi/boyut + uzanti dagilimi + son-12-ay serisi.
 // Renderer DB tutmaz; sorgu-hook (useIpcQuery) ile komut cagrilir; `dataVersion`
 // artinca (ingest) tazelenir. Grafikler saf CSS/div (recharts YOK; yeni npm dep YOK).
@@ -26,6 +30,8 @@ import {
   SizeByFormat,
   StatCard,
 } from "./DashboardCharts";
+import { ViewContextMenu, type ViewMenuItem } from "../shell/ViewContextMenu";
+import { useViewContextMenu } from "../shell/useViewContextMenu";
 import { RemoteArchiveSummary } from "./RemoteArchiveSummary";
 
 export function DashboardView() {
@@ -39,6 +45,7 @@ export function DashboardView() {
     anyFilterActive({ ...s, pathPrefix: null }),
   );
   const dataVersion = useUiStore((s) => s.dataVersion);
+  const bumpData = useUiStore((s) => s.bumpData);
   // Klasor kapsami (Klasorler → sag-tik → "Pano'da ac" pathPrefix ayarlar). null → tum arsiv.
   const pathPrefix = useUiStore((s) => s.pathPrefix);
   // LAN Faz 5: uzak (ana) arsivdeyken Pano SALT-OKUMA "Ana arsiv ozeti" cizer (remote_stats).
@@ -67,6 +74,9 @@ export function DashboardView() {
     if (scope != null) setPathPrefix(scope);
   };
 
+  // Sag-tik menusu (konum + secim) — dort gorunumun paylastigi kanca.
+  const { menu, open: openMenu, close: closeMenu } = useViewContextMenu();
+
   const selectExt = (value: string) => {
     clearNonScopeFilters();
     setExt([value]); // dashboard drill-down: filtreyi tek uzantiya AYARLA (cok-degerli → tek)
@@ -79,12 +89,58 @@ export function DashboardView() {
     setViewMode("explorer");
   };
 
+  // Menu her iki dalda da ayni: Pano'nun yapabildikleri (gorunum degistir · yenile · kapsam/filtre
+  // temizle) uzak ozet gorunumunde de gecerlidir. "Yenile" `bumpData` ile TUM Pano sorgularini
+  // (yerel istatistik + aktivite + uzak ozet) tazeler.
+  // Pano SALT-GOSTERIM: menude "sil/tasi/etiketle" gibi yazma ogesi YOK. Ucu de yalniz ANLAMLI
+  // olduklarinda cizilir (kapsam yoksa "kapsami kaldir" yok — sahte oge yasak).
+  const menuItems: ViewMenuItem[] = [
+    { label: t("context.refresh"), testId: "dashboard-context-refresh", onClick: bumpData },
+  ];
+  if (pathPrefix) {
+    menuItems.push({
+      label: t("dashboard.ctx.clear_scope", { name: basename(pathPrefix) }),
+      testId: "dashboard-context-clear-scope",
+      onClick: () => setPathPrefix(null),
+    });
+  }
+  if (ignoredFilterActive) {
+    menuItems.push({
+      label: t("dashboard.clear_other_filters"),
+      testId: "dashboard-context-clear-filters",
+      onClick: clearNonScopeFilters,
+    });
+  }
+  const contextMenu = menu && (
+    <ViewContextMenu
+      x={menu.x}
+      y={menu.y}
+      selectedText={menu.text}
+      onClose={closeMenu}
+      sectionTitle={t("dashboard.title")}
+      items={menuItems}
+      testId="dashboard-context-menu"
+      ariaLabel={t("dashboard.ctx.aria_label")}
+    />
+  );
+
   // Uzak arsivdeyken salt-okuma "Ana arsiv ozeti" (yukaridaki yerel `dashboardStats` sorgusu
   // remote'ta cizilmez — hook'lar kosulsuz cagrilir; yalniz RENDER dallanir → hook kurali korunur).
-  if (remoteSource) return <RemoteArchiveSummary />;
+  if (remoteSource) {
+    return (
+      <div
+        data-testid="dashboard-view"
+        className="flex h-full flex-col"
+        onContextMenu={openMenu}
+      >
+        <RemoteArchiveSummary />
+        {contextMenu}
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-full flex-col">
+    <div data-testid="dashboard-view" className="flex h-full flex-col" onContextMenu={openMenu}>
       {/* Baslik cubugu — FoldersView/AssetGrid arac cubugu ile gorsel tutarli */}
       <div className="flex items-center gap-3 border-b border-border px-4 py-2">
         <h2 className="font-display text-sm font-semibold text-text-primary">{t("dashboard.title")}</h2>
@@ -237,6 +293,7 @@ export function DashboardView() {
           </div>
         )}
       </div>
+      {contextMenu}
     </div>
   );
 }

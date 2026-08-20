@@ -60,9 +60,12 @@ export function RemoteArchiveSummary() {
   const { t } = useTranslation();
   // Eslesme degisince (baglan/kes) yeniden yokla — bayat sayac kalmasin.
   const remotePairingVersion = useUiStore((s) => s.remotePairingVersion);
+  // `dataVersion`: Pano sag-tik menusundeki "Yenile" TUM Pano sorgularini tek yerden tazeler
+  // (yerel istatistik + aktivite + bu ozet). Aksi halde menu ogesi burada SAHTE olurdu.
+  const dataVersion = useUiStore((s) => s.dataVersion);
   const { data, loading, error, refetch } = useIpcQuery<RemoteStatsDto>(
     () => ipc.remoteStats(),
-    [remotePairingVersion],
+    [remotePairingVersion, dataVersion],
   );
 
   // Hata TIPLI token ise yonlendirici mesaj; degilse ham metin (sessiz yutma yok — proje dersi).

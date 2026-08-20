@@ -268,6 +268,9 @@
     "rebuild_cleared": "已删除 {{count, number}} 个旧片段 — 正在重新索引…"
   },
   "vision_index": {
+    "busy": "当前有 AI 图像分析正在运行。请先停止再启动新的分析。",
+    "maintenance_locked": "AI 图像分析运行期间不可用：这些操作会更改正在分析的文件的路径或预览。可以先停止分析，稍后继续（剩余工作仍在队列中）。",
+    "blocked_by_task": "重新索引或移动进行期间无法启动 AI 分析。",
     "attempt_marks_notice": "{{count, number}} 张图像被标记为“已尝试，无结果”。该标记不会阻止重新分析；旧版本中的临时模型错误也可能留下它。",
     "attempt_marks_clear": "清除标记",
     "attempt_marks_clearing": "正在清除…",
@@ -633,6 +636,8 @@
     "page": "第 {{page}} / {{pages}} 页"
   },
   "sort": {
+    "relevance": "最佳匹配优先",
+    "relevance_hint": "这些结果的顺序由搜索决定（最接近/最相似的在前）。列表排序在此不适用——清除范围后即可恢复。",
     "label": "排序",
     "modified_desc": "修改时间（新）",
     "modified_asc": "修改时间（旧）",
@@ -641,6 +646,7 @@
     "created_desc": "创建时间（新）"
   },
   "blank_menu": {
+    "aria_label": "浏览器上下文菜单",
     "section_view": "视图",
     "section_card_size": "卡片大小",
     "section_selection": "选择",
@@ -653,6 +659,8 @@
     "all_ext": "所有类型"
   },
   "view": {
+    "map_open_all": "在浏览器中打开全部",
+    "map_ctx_aria_label": "地图上下文菜单",
     "folders": "文件夹",
     "explorer": "浏览器",
     "dashboard": "仪表板",
@@ -689,6 +697,10 @@
     "organization": "组织",
     "close": "关闭档案面板"
   },  "chat": {
+    "ctx": {
+      "aria_label": "聊天上下文菜单",
+      "busy_hint": "生成回复期间不可用。"
+    },
     "export": {
       "labels": {
         "date": "日期", "model": "模型", "scope": "范围",
@@ -798,6 +810,7 @@
     "path_nav": "文件夹路径",
     "back_to_folders": "返回文件夹视图",
     "ctx": {
+      "aria_label": "文件夹上下文菜单",
       "section_view": "视图",
       "section_sort": "排序",
       "section_tree": "树状结构",
@@ -826,6 +839,10 @@
     }
   },
   "dashboard": {
+    "ctx": {
+      "aria_label": "仪表板上下文菜单",
+      "clear_scope": "清除文件夹范围（{{name}}）"
+    },
     "filters_ignored": "当前搜索和其他筛选不会应用于仪表板汇总；进入图表明细前会将其清除。",
     "clear_other_filters": "清除其他筛选",
     "title": "仪表板",
@@ -855,6 +872,9 @@
     "scope_global": "整个档案"
   },
   "technical": {
+    "ctx": {
+      "aria_label": "技术视图上下文菜单"
+    },
     "title": "技术视图",
     "sort_hint": "点击排序",
     "name": "名称",
@@ -1032,7 +1052,36 @@
     "drop_to_add": "将文件拖放到此处以添加到“{{name}}”",
     "delete_confirm": "删除合集“{{name}}”？（不会删除文件。）"
   },
+  "color_backfill": {
+    "running_progress": "正在回填… {{processed, number}}/{{total, number}}",
+    "title": "颜色数据",
+    "hint": "主色提取是在本档案建立之后加入的；此前索引的 {{count, number}} 张图像没有颜色数据。它们在卡片上显示空色板，也无法通过颜色搜索找到。回填不会触碰源文件（颜色由已存缩略图计算）——无需重新扫描，且不会覆盖现有值。",
+    "run": "回填 {{count, number}} 个文件",
+    "running": "正在回填…",
+    "done_toast": "已为 {{count, number}} 个文件写入颜色数据。",
+    "none_toast": "没有需要写入的新颜色数据。",
+    "failed": "颜色数据回填失败：{{message}}"
+  },
+  "colors": {
+    "search_action": "查找接近此颜色的图像",
+    "search_title": "接近 {{hex}} 的图像",
+    "title": "颜色",
+    "share": "占比 {{percent}}%",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "hsl": "HSL",
+    "ral": "RAL",
+    "copy_hint": "点击复制",
+    "ral_hint": "≈ {{name}} · 感知差异 ΔE {{delta}}（近似匹配；复制的是色号）",
+    "ral_far_hint": "匹配较远 — 感知差异 ΔE {{delta}}",
+    "ral_far_notice": "没有接近此颜色的 RAL 色；显示的色号只是最接近的一个。油漆决策请使用实体 RAL 色卡。"
+  },
   "context": {
+    "app_aria_label": "应用上下文菜单",
+    "clear_filters": "清除筛选",
+    "refresh": "刷新",
+    "copy_selection": "复制所选内容",
+    "aria_label": "文件上下文菜单",
     "copy_path": "复制路径",
     "favorite": "添加到收藏",
     "unfavorite": "从收藏中移除",
@@ -1234,6 +1283,8 @@
     "create": "创建“{{name}}”"
   },
   "toast": {
+    "copy_failed": "无法复制（剪贴板访问被拒绝）。",
+    "copied": "已复制到剪贴板。",
     "favorite_added": "已加入收藏",
     "favorite_removed": "已从收藏中移除",
     "favorite_failed": "收藏更新失败",
@@ -1613,6 +1664,7 @@
     "dismiss": "关闭"
   },
   "bgTask": {
+    "colors": "正在回填颜色数据",
     "rescan": "正在重新扫描",
     "reindex": "正在重新索引",
     "analyze": "AI 图像分析",

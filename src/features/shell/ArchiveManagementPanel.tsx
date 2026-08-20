@@ -6,6 +6,7 @@ import { IngestButton } from "../ingest/IngestButton";
 import { ProjectsButton } from "../projects/ProjectsButton";
 import { OrganizeButton } from "../refile/OrganizeButton";
 import { RootsButton } from "../roots/RootsButton";
+import { MaintenanceGate } from "./MaintenanceGate";
 import { RemoteWriteGate } from "./RemoteWriteGate";
 
 const PANEL_ACTION =
@@ -61,9 +62,11 @@ export function ArchiveManagementPanel() {
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-3">
         <RemoteWriteGate className="flex flex-col gap-2">
-          <div className="[&>span]:block [&>span]:w-full">
+          {/* Klasor tarama: `ingest_folders` yazma kilidini TUM kosu boyunca tutar (STATUS B2) →
+              AI analizi surerken baslatilirsa analiz donar. Bu yuzden ANALIZ KOSARKEN kilitli. */}
+          <MaintenanceGate className="[&>span]:block [&>span]:w-full">
             <IngestButton className={PANEL_PRIMARY} />
-          </div>
+          </MaintenanceGate>
 
           <p className="px-1 pt-3 text-[10px] font-semibold uppercase tracking-wide text-text-muted">
             {t("archive_panel.sources")}
@@ -74,9 +77,10 @@ export function ArchiveManagementPanel() {
             {t("archive_panel.organization")}
           </p>
           <ProjectsButton className={PANEL_ACTION} />
-          <div className="[&>span]:block [&>span]:w-full">
+          {/* Kural ile duzenle: dosyalari TASIR/KOPYALAR → analiz kosarken kilitli (yol degisir). */}
+          <MaintenanceGate className="[&>span]:block [&>span]:w-full">
             <OrganizeButton className={PANEL_ACTION} />
-          </div>
+          </MaintenanceGate>
         </RemoteWriteGate>
       </div>
     </aside>

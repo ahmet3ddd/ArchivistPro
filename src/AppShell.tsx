@@ -12,7 +12,8 @@
 // kimlik-dogrulanmis + (varsa) parola-degistirme tamamlanmis oturumda render edilir
 // (gate App.tsx'te). Rol gorunurluk kararlari sunucu oturumundan (useSession).
 
-import { useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AssetDetailPanel } from "./features/assets/AssetDetailPanel";
 import { useBackupScheduler } from "./features/backup/useBackupScheduler";
@@ -35,6 +36,8 @@ import { IngestHost } from "./features/ingest/IngestHost";
 import { MainViewContainer } from "./features/shell/MainViewContainer";
 import { HelpCenterPanel } from "./features/shell/HelpCenterPanel";
 import { StatusBar } from "./features/shell/StatusBar";
+import { ViewContextMenu } from "./features/shell/ViewContextMenu";
+import { isTextEntry, useViewContextMenu } from "./features/shell/useViewContextMenu";
 import { TopBar } from "./features/shell/TopBar";
 import { useFolderWatcher } from "./features/watch/useFolderWatcher";
 import { useGlobalShortcuts } from "./hooks/useGlobalShortcuts";
@@ -90,9 +93,41 @@ export function AppShell() {
   useGlobalShortcuts();
   // Faz A: OS klasor surukle-birak (yalniz admin) → IngestModal; suruklerken drop overlay gorunur.
   const dragActive = useOsFolderDrop();
+  const { t } = useTranslation();
+
+  // KABUK SAĞ-TIK KAPISI (2026-08-20). Görünümlerin kendi menüleri var; geriye uygulama
+  // ÇERÇEVESİ kalıyordu: sol şerit · üst çubuk · facet kenar çubuğu · detay paneli · durum
+  // çubuğu · Arşiv paneli. Oralarda sağ-tık hâlâ WebView2'nin tarayıcı menüsünü açıyordu
+  // ("Yeniden yükle · Farklı kaydet · Kaynağı görüntüle"). Tek kök handler üçünü de çözer:
+  //   · içteki bir menü olayı sahiplendiyse (`defaultPrevented`) KARIŞMAZ → çift menü yok;
+  //   · metin girişlerinde varsayılan menü KALIR (kes/kopyala/yapıştır);
+  //   · MODAL içinde yalnız BASTIRILIR, menü açılmaz — modal açıkken arkadaki görünümü
+  //     değiştirmeyi önermek yanıltıcı olurdu (modalin kendi düğmeleri var).
+  const shellMenu = useViewContextMenu();
+  const onShellContextMenu = (event: MouseEvent<HTMLDivElement>) => {
+    const el = event.target;
+    if (el instanceof HTMLElement && el.closest("[role=dialog]")) {
+      if (!event.defaultPrevented && !isTextEntry(el)) event.preventDefault();
+      return;
+    }
+    shellMenu.open(event);
+  };
 
   return (
-    <div className="flex h-screen bg-bg-primary text-text-primary">
+    <div
+      className="flex h-screen bg-bg-primary text-text-primary"
+      onContextMenu={onShellContextMenu}
+    >
+      {shellMenu.menu && (
+        <ViewContextMenu
+          x={shellMenu.menu.x}
+          y={shellMenu.menu.y}
+          selectedText={shellMenu.menu.text}
+          onClose={shellMenu.close}
+          testId="shell-context-menu"
+          ariaLabel={t("context.app_aria_label")}
+        />
+      )}
       {/* Sol dikey gezinme seridi — tam yukseklik, en solda (H2 pariti): gorunumler + araclar + Ayarlar. */}
       <ActivityBar />
       <ArchiveManagementPanel />

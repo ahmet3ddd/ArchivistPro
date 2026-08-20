@@ -22,7 +22,8 @@ use crate::{audit, rbac, AppState};
 // Kardes modullerin (organize_commands, undo_commands) `crate::refile_commands::X` yoluyla
 // ulastigi fs cekirdegi → re-export (bolme oncesi sozlesme korunur).
 pub(crate) use fsops::{
-    copy_file, emit_progress, join_path, refile_one, separator_of, RefileOutcome,
+    copy_file, emit_progress, join_path, map_refile_err, refile_one, refile_one_with,
+    separator_of, RefileOpError, RefileOutcome,
 };
 use fsops::{file_name_of, is_valid_new_name, parent_dir};
 
@@ -164,15 +165,20 @@ pub async fn refile_assets(
     // Basarili tasinanlar → tek undo kaydi (dongu sonunda; best-effort).
     let mut undo_items: Vec<crate::undo_commands::MoveItem> = Vec::new();
 
+    // ⚠️ KILIT DOSYA-BASI (2026-08-20 kullanici bulgusu): eskiden `state.db` kilidi TUM batch
+    // boyunca tutuluyordu — dosyalar diskte tasinirken bile. Ayni anda kosan AI gorsel-analizi
+    // ilk kilit talebinde donuyor, "İptal" cevapsiz kaliyordu. Artik: okumalar `read_db`'den,
+    // disk tasimasi kilitsiz, yazma kilidi yalniz DB yol-senkronunda (bkz `refile_one_with`).
     {
-        let db = state.db.lock().map_err(|e| e.to_string())?;
-
         for (i, &id) in ids.iter().enumerate() {
             let processed = i + 1;
 
             // Bu asset'in aktif yolu (id↔yol eslemesi refile_asset icin gerekli → id-basi
-            // paths_for_ids; cop/eksik id → bos → skip).
-            let old_path = db.paths_for_ids(&[id]).ok().and_then(|v| v.into_iter().next());
+            // paths_for_ids; cop/eksik id → bos → skip). Salt-okuma → `read_db`.
+            let old_path = {
+                let db = state.read_db.lock().map_err(|e| e.to_string())?;
+                db.paths_for_ids(&[id]).ok().and_then(|v| v.into_iter().next())
+            };
             let Some(old_path) = old_path else {
                 report.skipped.push(RefileSkip { path: format!("#{id}"), reason: "not_found".into() });
                 emit_progress(&on_progress, processed, total, format!("#{id}"), &mut last_emit);
@@ -184,7 +190,10 @@ pub async fn refile_assets(
             let new_path = join_path(&dest_dir, sep, name);
             let display = name.to_string();
 
-            match refile_one(&db, id, &old_path, &new_path) {
+            match refile_one_with(id, &old_path, &new_path, |id, path| {
+                let db = state.db.lock().map_err(|e| RefileOpError::Db(e.to_string()))?;
+                db.refile_asset(id, path).map(|_| ()).map_err(map_refile_err)
+            }) {
                 Ok(RefileOutcome::Moved) => {
                     report.moved += 1;
                     undo_items.push(crate::undo_commands::MoveItem {
@@ -207,7 +216,8 @@ pub async fn refile_assets(
             emit_progress(&on_progress, processed, total, display, &mut last_emit);
         }
 
-        // Tek ozet audit.
+        // Tek ozet audit + undo — batch bitti, TEK kisa kilit.
+        let db = state.db.lock().map_err(|e| e.to_string())?;
         audit::record_on(
             &db,
             &actor,
@@ -229,7 +239,7 @@ pub async fn refile_assets(
             &dest_dir,
             undo_items,
         );
-    } // db kilidi birak
+    } // ozet kilidi birak
 
     Ok(report)
 }

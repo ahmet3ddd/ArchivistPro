@@ -268,6 +268,9 @@
     "rebuild_cleared": "古いチャンク {{count, number}} 件を削除しました — 再インデックス中…"
   },
   "vision_index": {
+    "busy": "現在、AI画像解析が実行中です。新しく開始する前に停止してください。",
+    "maintenance_locked": "AI画像解析の実行中は使用できません。これらの操作は解析中のファイルのパスやプレビューを変更します。解析を停止して後で続行できます（残りの作業は保留されます）。",
+    "blocked_by_task": "再インデックスまたは移動の実行中はAI解析を開始できません。",
     "attempt_marks_notice": "{{count, number}} 件の画像が「試行済み・結果なし」と記録されています。この記録は再解析を妨げません。古いバージョンの一時的なモデルエラーが原因の場合もあります。",
     "attempt_marks_clear": "記録を消去",
     "attempt_marks_clearing": "消去中…",
@@ -633,6 +636,8 @@
     "page": "ページ {{page}} / {{pages}}"
   },
   "sort": {
+    "relevance": "最も一致するものから",
+    "relevance_hint": "これらの結果の並び順は検索が決めます（最も近い/似ているものが先）。一覧の並べ替えはここでは適用されません — 範囲を解除すると戻ります。",
     "label": "並び替え",
     "modified_desc": "更新日時（新しい順）",
     "modified_asc": "更新日時（古い順）",
@@ -641,6 +646,7 @@
     "created_desc": "作成日時（新しい順）"
   },
   "blank_menu": {
+    "aria_label": "エクスプローラーのコンテキストメニュー",
     "section_view": "表示",
     "section_card_size": "カードサイズ",
     "section_selection": "選択",
@@ -653,6 +659,8 @@
     "all_ext": "すべての種類"
   },
   "view": {
+    "map_open_all": "すべてエクスプローラーで開く",
+    "map_ctx_aria_label": "地図のコンテキストメニュー",
     "folders": "フォルダー",
     "explorer": "エクスプローラー",
     "dashboard": "ダッシュボード",
@@ -689,6 +697,10 @@
     "organization": "整理",
     "close": "アーカイブパネルを閉じる"
   },  "chat": {
+    "ctx": {
+      "aria_label": "チャットのコンテキストメニュー",
+      "busy_hint": "応答の生成中は使用できません。"
+    },
     "export": {
       "labels": {
         "date": "日付", "model": "モデル", "scope": "範囲",
@@ -798,6 +810,7 @@
     "path_nav": "フォルダーパス",
     "back_to_folders": "フォルダービューに戻る",
     "ctx": {
+      "aria_label": "フォルダーのコンテキストメニュー",
       "section_view": "表示",
       "section_sort": "並べ替え",
       "section_tree": "ツリー",
@@ -826,6 +839,10 @@
     }
   },
   "dashboard": {
+    "ctx": {
+      "aria_label": "ダッシュボードのコンテキストメニュー",
+      "clear_scope": "フォルダー範囲を解除（{{name}}）"
+    },
     "filters_ignored": "現在の検索とその他のフィルターはダッシュボード集計に適用されません。グラフから詳細へ移動する前に解除されます。",
     "clear_other_filters": "その他のフィルターを解除",
     "title": "ダッシュボード",
@@ -855,6 +872,9 @@
     "scope_global": "アーカイブ全体"
   },
   "technical": {
+    "ctx": {
+      "aria_label": "テクニカルビューのコンテキストメニュー"
+    },
     "title": "技術ビュー",
     "sort_hint": "クリックして並べ替え",
     "name": "名前",
@@ -1032,7 +1052,36 @@
     "drop_to_add": "ここにファイルをドロップして「{{name}}」に追加",
     "delete_confirm": "コレクション「{{name}}」を削除しますか？（ファイルは削除されません。）"
   },
+  "color_backfill": {
+    "running_progress": "バックフィル中… {{processed, number}}/{{total, number}}",
+    "title": "色データ",
+    "hint": "主要色の抽出はこのアーカイブの構築後に追加されました。それ以前にインデックスされた {{count, number}} 件の画像には色データがありません。カードのパレットが空になり、色検索で見つかりません。バックフィルはソースファイルに触れません（色は保存済みプレビューから計算）— 再スキャン不要、既存の値は上書きされません。",
+    "run": "{{count, number}} 件をバックフィル",
+    "running": "バックフィル中…",
+    "done_toast": "{{count, number}} 件に色データを書き込みました。",
+    "none_toast": "書き込む新しい色データはありません。",
+    "failed": "色データのバックフィルに失敗しました: {{message}}"
+  },
+  "colors": {
+    "search_action": "この色に近い画像を探す",
+    "search_title": "{{hex}} に近い画像",
+    "title": "色",
+    "share": "占有率 {{percent}}%",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "hsl": "HSL",
+    "ral": "RAL",
+    "copy_hint": "クリックでコピー",
+    "ral_hint": "≈ {{name}}・知覚差 ΔE {{delta}}（近似一致。コードをコピーします）",
+    "ral_far_hint": "遠い一致 — 知覚差 ΔE {{delta}}",
+    "ral_far_notice": "この色に近いRAL色はありません。表示のコードは最も近いものにすぎません。塗装の判断は実物のRALカラーファンで行ってください。"
+  },
   "context": {
+    "app_aria_label": "アプリのコンテキストメニュー",
+    "clear_filters": "フィルターをクリア",
+    "refresh": "更新",
+    "copy_selection": "選択範囲をコピー",
+    "aria_label": "ファイルのコンテキストメニュー",
     "copy_path": "パスをコピー",
     "favorite": "お気に入りに追加",
     "unfavorite": "お気に入りから削除",
@@ -1234,6 +1283,8 @@
     "create": "「{{name}}」を作成"
   },
   "toast": {
+    "copy_failed": "コピーできませんでした（クリップボードへのアクセスが拒否されました）。",
+    "copied": "クリップボードにコピーしました。",
     "favorite_added": "お気に入りに追加しました",
     "favorite_removed": "お気に入りから削除しました",
     "favorite_failed": "お気に入りを更新できませんでした",
@@ -1613,6 +1664,7 @@
     "dismiss": "閉じる"
   },
   "bgTask": {
+    "colors": "色データをバックフィル中",
     "rescan": "再スキャン中",
     "reindex": "再インデックス中",
     "analyze": "AI 画像解析",

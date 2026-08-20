@@ -7,6 +7,10 @@
 // baslik + pencereli satirlar + endReached→loadMore. Bellek sinirli (pencere; tum satirlar
 // render EDILMEZ). Yukleme/hata(retry)/bos durumlari AssetGrid ile tutarli.
 //
+// SAG-TIK: gorunum-duzeyi menu (`ViewContextMenu`) — oncesinde burada handler YOKTU, WebView2'nin
+// tarayici menusu aciliyordu (2026-08-20). Satir-duzeyi eylemler (etiket/favori/cop) bilincli olarak
+// menude YOK: onlar Gezgin'in asset menusune ait ve burada yarim bir kopyasi yanilticidir.
+//
 // Güncellik rozeti bu turda yalnız Grid kartlarındadır. Teknik tablo için ayrı sütun gerekirse
 // aynı son-Doctor sonucunu kullanır; satır başına dosya sistemi sorgusu yapılmaz.
 
@@ -17,7 +21,9 @@ import type { AssetRow, AssetSort } from "../../ipc/client";
 import { EmptyState } from "../../components/EmptyState";
 import { Spinner } from "../../components/Spinner";
 import { useInfiniteAssets } from "../../hooks/useAssets";
-import { useUiStore } from "../../store/useUiStore";
+import { anyFilterActive, useUiStore } from "../../store/useUiStore";
+import { ViewContextMenu, type ViewMenuItem } from "../shell/ViewContextMenu";
+import { useViewContextMenu } from "../shell/useViewContextMenu";
 import { TechnicalCells, TechnicalRow } from "./TechnicalRow";
 
 // TableVirtuoso bilesenleri MODUL seviyesinde (sabit referans) — secim/yeniden-render'da
@@ -81,6 +87,24 @@ export function TechnicalView() {
   const { items, total, loading, loadingMore, error, loadMore, retry } = useInfiniteAssets();
   const sort = useUiStore((s) => s.sort);
   const setSort = useUiStore((s) => s.setSort);
+  const bumpData = useUiStore((s) => s.bumpData);
+  const clearFilters = useUiStore((s) => s.clearFilters);
+  const filterActive = useUiStore(anyFilterActive);
+  // Sag-tik menusu — Pano/Harita/Sohbet ile ayni kanca (metin girisleri haric; bkz kanca notu).
+  const { menu, open: openMenu, close: closeMenu } = useViewContextMenu();
+  // Teknik tablo, Gezgin grid'i ile AYNI veri kaynagini (useInfiniteAssets) kullanir → menude de
+  // ayni iki sey anlamli: listeyi tazele + filtreleri temizle. Siralama zaten sutun basliklarinda
+  // (menuye kopyalanmasi ikinci bir dogruluk kaynagi olurdu).
+  const menuItems: ViewMenuItem[] = [
+    { label: t("context.refresh"), testId: "technical-context-refresh", onClick: bumpData },
+  ];
+  if (filterActive) {
+    menuItems.push({
+      label: t("context.clear_filters"),
+      testId: "technical-context-clear-filters",
+      onClick: clearFilters,
+    });
+  }
 
   const th = "px-3 py-2 text-start font-semibold";
   const active = activeSort(sort);
@@ -124,7 +148,23 @@ export function TechnicalView() {
   };
 
   return (
-    <div className="flex h-full flex-col">
+    <div
+      data-testid="technical-view"
+      className="flex h-full flex-col"
+      onContextMenu={openMenu}
+    >
+      {menu && (
+        <ViewContextMenu
+          x={menu.x}
+          y={menu.y}
+          selectedText={menu.text}
+          onClose={closeMenu}
+          sectionTitle={t("technical.title")}
+          items={menuItems}
+          testId="technical-context-menu"
+          ariaLabel={t("technical.ctx.aria_label")}
+        />
+      )}
       {/* Arac cubugu — AssetGrid/FoldersView ile gorsel tutarli (baslik + yuklenen/toplam) */}
       <div className="flex items-center gap-3 border-b border-border px-4 py-2">
         <h2 className="font-display text-sm font-semibold text-text-primary">{t("technical.title")}</h2>

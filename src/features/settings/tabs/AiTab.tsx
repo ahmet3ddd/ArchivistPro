@@ -10,6 +10,7 @@ import type { AiStatus, VisionRecommendation } from "../../../ipc/client";
 import { ipc } from "../../../ipc/client";
 import { useSession } from "../../../hooks/useSession";
 import { ImageIndexCard } from "../../dashboard/ImageIndexCard";
+import { ColorBackfillCard } from "../../dashboard/ColorBackfillCard";
 import { ImageKindCard } from "../../dashboard/ImageKindCard";
 import { RagIndexCard } from "../../dashboard/RagIndexCard";
 import { SemanticIndexCard } from "../../dashboard/SemanticIndexCard";
@@ -196,6 +197,7 @@ export function AiTab() {
       <RagIndexCard />
       <VisionAnalysisCard model={effectiveVisionModel} />
       <ImageKindCard />
+      <ColorBackfillCard />
 
       {/* AI (Ollama) — durum + varsayilan sohbet/vision model seciciler (her rol; uretim admin). */}
       <section className="flex flex-col gap-2 rounded-md border border-border bg-bg-secondary p-3">

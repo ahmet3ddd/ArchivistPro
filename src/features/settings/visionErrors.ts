@@ -32,6 +32,13 @@ export function visionErrorKey(kind?: string | null): string {
   return KEYS.other;
 }
 
+/** Kosu BASLATMA reddi → i18n anahtari (`null` → bilinmeyen; cagiran ham metni gosterir).
+ *  Backend kararli TOKEN doner (`vision_busy`), prose degil → cumle degisse de eslesme bozulmaz.
+ *  `setup_check.trial_busy` ile ayni desen. */
+export function visionStartErrorKey(e: unknown): string | null {
+  return String(e).includes("vision_busy") ? "vision_index.busy" : null;
+}
+
 /** Bir kosu-sonu bildiriminin ekranda alacagi bicim: hangi metin, hangi degiskenler, hangi ton. */
 export interface VisionOutcomeNotice {
   /** Ana cumleden ONCE gelecek cumle (`null` → yok). Su an tek kullanim: **devre kesici** kosuyu

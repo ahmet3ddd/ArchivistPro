@@ -268,6 +268,9 @@
     "rebuild_cleared": "{{count, number}} eski parça silindi — yeniden indeksleniyor…"
   },
   "vision_index": {
+    "busy": "Şu anda bir AI görsel analizi çalışıyor. Yenisini başlatmak için önce onu durdurun.",
+    "maintenance_locked": "AI görsel analizi sürerken kullanılamaz: bu işlemler analiz edilmekte olan dosyaların yolunu veya önizlemesini değiştirir. Analizi durdurup sonra devam edebilirsiniz (kalan iş bekler).",
+    "blocked_by_task": "Yeniden indeksleme veya taşıma sürerken AI analizi başlatılamaz.",
     "attempt_marks_notice": "{{count, number}} görsel «denendi, sonuç alınamadı» diye işaretli. Bu işaret yeniden analizi engellemez; eski bir sürümdeki geçici model hatası da bu işareti bırakmış olabilir.",
     "attempt_marks_clear": "İşaretleri temizle",
     "attempt_marks_clearing": "Temizleniyor…",
@@ -633,6 +636,8 @@
     "page": "Sayfa {{page}} / {{pages}}"
   },
   "sort": {
+    "relevance": "En iyi eşleşme önce",
+    "relevance_hint": "Bu sonuçların sırasını arama belirler (en yakın/en benzer önce). Listeleme sıralaması burada geçerli değildir — kapsamı temizleyince geri gelir.",
     "label": "Sırala",
     "modified_desc": "Değişiklik (yeni)",
     "modified_asc": "Değişiklik (eski)",
@@ -641,6 +646,7 @@
     "created_desc": "Oluşturma (yeni)"
   },
   "blank_menu": {
+    "aria_label": "Gezgin bağlam menüsü",
     "section_view": "Görünüm",
     "section_card_size": "Kart boyutu",
     "section_selection": "Seçim",
@@ -653,6 +659,8 @@
     "all_ext": "Tüm türler"
   },
   "view": {
+    "map_open_all": "Tümünü Gezgin'de aç",
+    "map_ctx_aria_label": "Harita bağlam menüsü",
     "folders": "Klasörler",
     "explorer": "Gezgin",
     "dashboard": "Pano",
@@ -689,6 +697,10 @@
     "organization": "Organizasyon",
     "close": "Arşiv panelini kapat"
   },  "chat": {
+    "ctx": {
+      "aria_label": "Sohbet bağlam menüsü",
+      "busy_hint": "Yanıt üretilirken kullanılamaz."
+    },
     "export": {
       "labels": {
         "date": "Tarih", "model": "Model", "scope": "Kapsam",
@@ -798,6 +810,7 @@
     "path_nav": "Klasör yolu",
     "back_to_folders": "Klasörler görünümüne dön",
     "ctx": {
+      "aria_label": "Klasör bağlam menüsü",
       "section_view": "Görünüm",
       "section_sort": "Sıralama",
       "section_tree": "Ağaç",
@@ -826,6 +839,10 @@
     }
   },
   "dashboard": {
+    "ctx": {
+      "aria_label": "Pano bağlam menüsü",
+      "clear_scope": "Klasör kapsamını kaldır ({{name}})"
+    },
     "filters_ignored": "Aktif arama ve diğer filtreler Pano özetine uygulanmaz. Grafikten sonuca giderken temizlenir.",
     "clear_other_filters": "Diğer filtreleri temizle",
     "title": "Pano",
@@ -855,6 +872,9 @@
     "scope_global": "Tüm arşiv"
   },
   "technical": {
+    "ctx": {
+      "aria_label": "Teknik görünüm bağlam menüsü"
+    },
     "title": "Teknik",
     "sort_hint": "Sıralamak için tıklayın",
     "name": "Ad",
@@ -1032,7 +1052,36 @@
     "drop_to_add": "Dosyaları koleksiyona eklemek için buraya bırakın",
     "delete_confirm": "\"{{name}}\" koleksiyonu silinsin mi? (Dosyalar silinmez.)"
   },
+  "color_backfill": {
+    "running_progress": "Geri dolduruluyor… {{processed, number}}/{{total, number}}",
+    "title": "Renk Verisi",
+    "hint": "Baskın renk çıkarımı arşiv kurulduktan sonra eklendi; daha önce indekslenen {{count, number}} görselde renk verisi yok. Bu dosyalar kart kartelasında boş görünür ve renk aramasında bulunamaz. Geri doldurma kaynak dosyalara DOKUNMAZ (renk, kayıtlı önizlemeden hesaplanır) — yeniden tarama gerekmez, mevcut değerler ezilmez.",
+    "run": "{{count, number}} dosyayı geri doldur",
+    "running": "Geri dolduruluyor…",
+    "done_toast": "{{count, number}} dosyaya renk verisi yazıldı.",
+    "none_toast": "Yazılacak yeni renk verisi yok.",
+    "failed": "Renk verisi geri doldurulamadı: {{message}}"
+  },
+  "colors": {
+    "search_action": "Bu renge yakın görselleri bul",
+    "search_title": "{{hex}} rengine yakın görseller",
+    "title": "Renkler",
+    "share": "%{{percent}} pay",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "hsl": "HSL",
+    "ral": "RAL",
+    "copy_hint": "Kopyalamak için tıklayın",
+    "ral_hint": "≈ {{name}} · algısal fark ΔE {{delta}} (yaklaşık eşleşme; kopyalanır)",
+    "ral_far_hint": "Uzak eşleşme — algısal fark ΔE {{delta}}",
+    "ral_far_notice": "Bu renge yakın bir RAL yok; gösterilen kod yalnızca en yakını. Boya kararı için fiziksel RAL kartelasına bakın."
+  },
   "context": {
+    "app_aria_label": "Uygulama bağlam menüsü",
+    "clear_filters": "Filtreleri temizle",
+    "refresh": "Yenile",
+    "copy_selection": "Seçimi kopyala",
+    "aria_label": "Dosya bağlam menüsü",
     "copy_path": "Yolu kopyala",
     "favorite": "Favorilere ekle",
     "unfavorite": "Favorilerden çıkar",
@@ -1234,6 +1283,8 @@
     "create": "\"{{name}}\" oluştur"
   },
   "toast": {
+    "copy_failed": "Kopyalanamadı (pano erişimi reddedildi).",
+    "copied": "Panoya kopyalandı.",
     "favorite_added": "Favorilere eklendi",
     "favorite_removed": "Favorilerden çıkarıldı",
     "favorite_failed": "Favori güncellenemedi",
@@ -1613,6 +1664,7 @@
     "dismiss": "Kapat"
   },
   "bgTask": {
+    "colors": "Renk verisi dolduruluyor",
     "rescan": "Yeniden taranıyor",
     "reindex": "Yeniden indeksleniyor",
     "analyze": "AI görsel analizi",

@@ -30,7 +30,7 @@ import { useBgTaskStore } from "./bgTaskStore";
 function cancelFor(kind: BgTaskKind): (() => Promise<void>) | null {
   if (kind === "rescan") return ipc.cancelIngest;
   if (kind === "analyze") return ipc.stopImageAnalysis;
-  return null; // reindex: backend'de iptal komutu yok
+  return null; // reindex + colors: backend'de iptal komutu yok
 }
 
 /** Yoldan dosya adi (son `/` veya `\` parcasi); Windows + POSIX (AutoIndexBanner pariti). */

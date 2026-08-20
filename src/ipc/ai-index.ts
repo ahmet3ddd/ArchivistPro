@@ -203,6 +203,12 @@ export interface IndexDoneEvent {
 }
 
 /** AI indeks (embed/CLIP/hibrit/RAG-indeks/model/oto-indeks) komut sarmalayicilari — facade `ipc`'ye yayilir. */
+/** Renk geri-doldurma ilerlemesi (`backfillDominantColors` Channel'i). */
+export interface ColorBackfillProgress {
+  processed: number;
+  total: number;
+}
+
 export const aiIndexIpc = {
   // ── Semantik arama / embedding (Faz 5.1): anlam-bazli arama + vektor uretimi ──
   /** Semantik indeks durumu: kac asset embedlendi / kac kaldi + model hazir mi.
@@ -274,6 +280,39 @@ export const aiIndexIpc = {
    *  sirali. Tum filtreler `opts` ile uygulanir. Tek sayfa (top-k); sayfalama yok. */
   similarImages: (assetId: number, opts: ListOpts): Promise<AssetPage> =>
     invoke<AssetPage>("similar_images", { assetId, opts }),
+
+  /** Renk verisi EKSIK asset sayisi (thumbnail'i olan ama `dominant_colors`u olmayan). */
+  countMissingDominantColors: (): Promise<number> =>
+    invoke<number>("count_missing_dominant_colors"),
+
+  /** Eksik baskin renkleri THUMBNAIL'lardan geri doldur (admin; yeniden tarama YOK, idempotent).
+   *  Canli ilerleme Channel ile (reindex deseni) — is dosya basina ~25ms, binlerce dosyada
+   *  dakikaya yaklasir; sessiz bekleme birakilmaz. Doner: gercekten yazilan asset sayisi. */
+  backfillDominantColors: (
+    onProgress?: (p: ColorBackfillProgress) => void,
+  ): Promise<number> => {
+    const channel = new Channel<ColorBackfillProgress>();
+    if (onProgress) channel.onmessage = onProgress;
+    return invoke<number>("backfill_dominant_colors", { onProgress: channel });
+  },
+
+  /** "Bu renge yakin gorselleri bul" — cikarimda yazilan `dominant_colors` uzerinden CIELAB
+   *  yakinlik aramasi (model/vektor GEREKMEZ). Aktif filtreler korunur; sonuc en yakindan uzaga.
+   *  `maxDelta` ΔE76 esigi · `minShare` yuzde-alti renkleri eler (bkz `assets_near_color`). */
+  assetsNearColor: (
+    rgb: { r: number; g: number; b: number },
+    opts: ListOpts,
+    maxDelta = 25,
+    minShare = 5,
+  ): Promise<AssetPage> =>
+    invoke<AssetPage>("assets_near_color", {
+      r: rgb.r,
+      g: rgb.g,
+      b: rgb.b,
+      maxDelta,
+      minShare,
+      opts,
+    }),
 
   /** Eksik gorsel (CLIP) embedding'lerini uret (admin). Canli ilerleme Channel ile akar
    *  (`runEmbedding` ile BIREBIR ayni desen). onProgress yoksa kanal yine gecer (backend

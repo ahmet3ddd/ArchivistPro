@@ -22,6 +22,8 @@ import type { ChatMsg, ChatSession, Citation, RetrieveDiag } from "../../ipc/cli
 import { ipc, remoteErrorMessage } from "../../ipc/client";
 import { useUiStore } from "../../store/useUiStore";
 import { getDefaultChatModel } from "../settings/aiSettings";
+import { ViewContextMenu, type ViewMenuItem } from "../shell/ViewContextMenu";
+import { useViewContextMenu } from "../shell/useViewContextMenu";
 import { useToast } from "../toast/useToast";
 import { ChatSessionSidebar } from "./ChatSessionSidebar";
 import { citationGate, openOtherSession, partitionSessions } from "./chatSessionSource";
@@ -377,6 +379,10 @@ export function ChatView() {
     setScopeKind("all"); // yeni sohbet → kapsam varsayilana (Tümü)
   }, [streaming, setScopeKind]);
 
+  // Sag-tik menusu — Pano/Teknik/Harita ile ayni kanca. ⚠️ Yazi alani (`textarea`) HARIC: orada
+  // WebView2'nin duzenleme menusu kalir (kes/kopyala/yapistir bizde yok) — bkz `useViewContextMenu`.
+  const { menu, open: openMenu, close: closeMenu } = useViewContextMenu();
+
   // ── Kaynak ayrimi (v26) ──
   // Liste aktif kaynaga gore bolunur; digerleri gorunur bir bolumde durur (gizlenmez).
   const { current: visibleSessions, other: otherSessions } = partitionSessions(
@@ -521,8 +527,40 @@ export function ChatView() {
     [trashed, t, toast, refreshTrashed],
   );
 
+  // Sohbete ozel menu ogeleri: ikisi de mevcut dugmelerin ikizi (yeni dogruluk kaynagi degil).
+  // "Yeni sohbet" yanit uretilirken KILITLI (handleNewSession zaten erken doner; menu de sebebi
+  // soylesin). "Disa aktar" yalniz KAYITLI oturumda anlamli → aksi halde cizilmez.
+  const menuItems: ViewMenuItem[] = [
+    {
+      label: t("chat.new_session"),
+      testId: "chat-context-new",
+      onClick: handleNewSession,
+      disabled: streaming,
+      disabledHint: t("chat.ctx.busy_hint"),
+    },
+  ];
+  if (currentSessionId != null) {
+    menuItems.push({
+      label: t("chat.export.button"),
+      testId: "chat-context-export",
+      onClick: () => void handleExport(),
+    });
+  }
+
   return (
-    <div className="flex h-full">
+    <div className="flex h-full" data-testid="chat-view" onContextMenu={openMenu}>
+      {menu && (
+        <ViewContextMenu
+          x={menu.x}
+          y={menu.y}
+          selectedText={menu.text}
+          onClose={closeMenu}
+          sectionTitle={t("chat.title")}
+          items={menuItems}
+          testId="chat-context-menu"
+          ariaLabel={t("chat.ctx.aria_label")}
+        />
+      )}
       <ChatSessionSidebar
         sessions={visibleSessions}
         currentSessionId={currentSessionId}

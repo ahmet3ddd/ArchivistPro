@@ -66,6 +66,9 @@ export function UserAdminPanel({ currentUserId, onClose }: Props) {
         onClick={onClose}
       >
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("users.title")}
           className="w-full max-w-md rounded-lg border border-border bg-bg-primary p-5 shadow-xl"
           onClick={(e) => e.stopPropagation()}
         >
@@ -95,6 +98,9 @@ export function UserAdminPanel({ currentUserId, onClose }: Props) {
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t("users.title")}
         className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-border bg-bg-primary shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >

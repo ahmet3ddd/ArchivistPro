@@ -50,6 +50,13 @@ export interface ImageAnalysisProgress {
   currentPath: string;
 }
 
+/** Aktif gorsel-analiz kosusunun DURUMU (`visionRunState`) — DB'siz, ucuz. `progress` yalniz
+ *  `active` iken anlamlidir (kosu bitince son deger takili kalabilir). */
+export interface VisionRunState {
+  active: boolean;
+  progress: ImageAnalysisProgress | null;
+}
+
 /** Gorsel-analiz raporu (`runImageAnalysis` sonucu). */
 export interface ImageAnalysisReport {
   analyzed: number;
@@ -336,6 +343,10 @@ export const aiChatIpc = {
   /** Aktif gorsel-analiz kosusunu durdur ("Durdur"; admin). Kosu batch/asset-arasi gorup erken cikar
    *  → kalan is bekleyen kalir (resumable). Yalniz bayrak set eder (senkron beklemez). */
   stopImageAnalysis: (): Promise<void> => invoke<void>("stop_image_analysis"),
+
+  /** "Su an bir gorsel-analiz kosuyor mu" (+ son ilerleme). `imageAnalysisStatus`in DB'ye
+   *  dokunmayan kucuk kardesi → saniyede bir yoklanabilir (bkz `useVisionLock`). */
+  visionRunState: (): Promise<VisionRunState> => invoke<VisionRunState>("vision_run_state"),
 
   /** ONIZLEME (salt-okuma): kac ESKI analiz bugunku cop-korumasi esigini gecemiyor. Hicbir seyi
    *  degistirmez — kullanici once gorur, sonra sifirlamaya karar verir. */

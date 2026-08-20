@@ -8,9 +8,10 @@
 // asset'in YOLU uzerinden (tek dosya; hata → toast, SESSIZ YUTMA YOK). Sil → cop kutusu (§O soft-delete; GERI-ALINABILIR
 // → sert onay YOK; editor+ ile gorunur-aktif). Geri-yukle/kalici-sil TrashPanel'de.
 
-import { useEffect, useRef } from "react";
+
 import { useTranslation } from "react-i18next";
 
+import { ContextMenu, MenuDivider, MenuItem } from "../../components/ContextMenu";
 import { useOpenInOs } from "../../hooks/useOpenInOs";
 import { useUiStore } from "../../store/useUiStore";
 import { useToast } from "../toast/useToast";
@@ -57,31 +58,10 @@ export function AssetContextMenu({
 }: Props) {
   const { t } = useTranslation();
   const toast = useToast();
-  const ref = useRef<HTMLDivElement>(null);
   const { setFavoriteMany, trashMany } = useBulkActions();
   const setOverride = useUiStore((s) => s.setFavoriteOverride);
   const overrides = useUiStore((s) => s.favoriteOverrides);
   const { openFile: osOpenFile, showInFolder: osShowInFolder } = useOpenInOs();
-
-  // Disari-tik + Esc → kapat. capture: VirtuosoGrid scroll'una karismadan yakalar.
-  useEffect(() => {
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    // Kaydirma baslayinca menuyu kapat (acik menu kaydirilan icerikten ayrilmasin).
-    const onScroll = () => onClose();
-    document.addEventListener("mousedown", onDown, true);
-    document.addEventListener("keydown", onKey, true);
-    window.addEventListener("scroll", onScroll, true);
-    return () => {
-      document.removeEventListener("mousedown", onDown, true);
-      document.removeEventListener("keydown", onKey, true);
-      window.removeEventListener("scroll", onScroll, true);
-    };
-  }, [onClose]);
 
   const { ids, path, clickedId } = target;
   const count = ids.length;
@@ -155,17 +135,14 @@ export function AssetContextMenu({
     onClose();
   };
 
-  // Kenardan tasmayi onle: imlec sag/alt kenara yakinsa menuyu ice kaydir.
-  const left = Math.min(target.x, window.innerWidth - MENU_W - 8);
-  const top = Math.min(target.y, window.innerHeight - 320);
-
   return (
-    <div
-      ref={ref}
-      role="menu"
-      style={{ position: "fixed", left, top, width: MENU_W }}
-      className="z-50 overflow-hidden rounded-md border border-border bg-bg-secondary/95 py-1 text-sm text-text-primary shadow-xl backdrop-blur-lg"
-      onContextMenu={(e) => e.preventDefault()}
+    <ContextMenu
+      x={target.x}
+      y={target.y}
+      width={MENU_W}
+      onClose={onClose}
+      testId="asset-context-menu"
+      ariaLabel={t("context.aria_label")}
     >
       {count > 1 && (
         <p className="px-3 py-1 text-[11px] text-text-muted">
@@ -175,7 +152,7 @@ export function AssetContextMenu({
 
       <MenuItem label={t("context.copy_path")} onClick={copyPath} />
 
-      <div className="my-1 border-t border-border" />
+      <MenuDivider />
 
       <MenuItem
         label={t(fav ? "context.unfavorite" : "context.favorite")}
@@ -196,7 +173,7 @@ export function AssetContextMenu({
         disabledHint={t("context.viewer_hint")}
       />
 
-      <div className="my-1 border-t border-border" />
+      <MenuDivider />
 
       {/* §R: opener eklentisi ile aktif. §O: Sil → cop kutusu (soft-delete; editor+). */}
       <MenuItem label={t("context.open_file")} onClick={openFile} />
@@ -216,40 +193,6 @@ export function AssetContextMenu({
         testId="context-delete"
         danger
       />
-    </div>
-  );
-}
-
-interface ItemProps {
-  label: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  disabledHint?: string;
-  /** E2E tutamagi — menu metni yerelden yerele degisir; testler bunu kullanir. */
-  testId?: string;
-  danger?: boolean;
-}
-
-function MenuItem({ label, onClick, disabled, disabledHint, testId, danger }: ItemProps) {
-  return (
-    <button
-      type="button"
-      role="menuitem"
-      data-testid={testId}
-      disabled={disabled}
-      onClick={onClick}
-      title={disabled ? disabledHint : undefined}
-      aria-disabled={disabled}
-      className={`flex w-full items-center px-3 py-1.5 text-start transition-colors
-        ${
-          disabled
-            ? "cursor-not-allowed text-text-muted"
-            : danger
-              ? "text-danger hover:bg-danger/15"
-              : "text-text-primary hover:bg-bg-tertiary"
-        }`}
-    >
-      {label}
-    </button>
+    </ContextMenu>
   );
 }

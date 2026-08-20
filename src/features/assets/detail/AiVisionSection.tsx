@@ -16,8 +16,10 @@ import { useSession } from "../../../hooks/useSession";
 import type { AssetRow, MetaEntry } from "../../../ipc/client";
 import { ipc } from "../../../ipc/client";
 import { useUiStore } from "../../../store/useUiStore";
+import { refreshVisionRunState, useVisionRunState } from "../../../hooks/useVisionLock";
 import { getDefaultVisionModel } from "../../settings/aiSettings";
 import { useVisionOutcomeToast } from "../../settings/useVisionOutcomeToast";
+import { visionStartErrorKey } from "../../settings/visionErrors";
 import { useToast } from "../../toast/useToast";
 
 interface Props {
@@ -130,6 +132,10 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
 
   const [running, setRunning] = useState(false);
   const runningRef = useRef(false);
+  // BASKA bir yerden (Pano karti / secim arac cubugu) baslatilmis kosu: backend ayni anda IKI
+  // kosuya izin vermez → buton aktif gorunup `vision_busy` ile reddedilmesin (kullanici bulgusu
+  // 2026-08-20). Kendi kosumuz `running` ile zaten biliniyor.
+  const foreignRun = useVisionRunState().active && !running;
 
   const run = useCallback(async () => {
     if (runningRef.current) return;
@@ -160,10 +166,13 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
       bumpData();
       bumpFacets();
     } catch (e: unknown) {
-      toast.error(t("ai_vision.failed", { message: String(e) }));
+      // Bilinen reddetme (`vision_busy`) → anlasilir cumle; digerleri ham metinle (kaybolmasin).
+      const key = visionStartErrorKey(e);
+      toast.error(key ? t(key) : t("ai_vision.failed", { message: String(e) }));
     } finally {
       runningRef.current = false;
       setRunning(false);
+      refreshVisionRunState(); // baska yuzeylerdeki kilit hemen acilsin
     }
   }, [asset.id, t, toast, onRefetch, bumpData, bumpFacets, notifyVisionOutcome]);
 
@@ -219,11 +228,12 @@ export function AiVisionSection({ asset, metadata, onRefetch }: Props) {
         </button>
       </div>
     ) : (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1" title={foreignRun ? t("vision_index.busy") : undefined}>
         <button
           type="button"
+          data-testid="detail-analyze"
           onClick={() => void run()}
-          disabled={!hasVision}
+          disabled={!hasVision || foreignRun}
           className={
             analyzed
               ? "self-start rounded-md border border-border px-2 py-1 text-[11px] font-medium text-text-secondary transition hover:border-border-hover hover:bg-bg-tertiary disabled:cursor-not-allowed disabled:opacity-50"

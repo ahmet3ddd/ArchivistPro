@@ -62,17 +62,32 @@ pub async fn reindex_assets(
     rbac::require_admin(role).map_err(|e| e.to_string())?;
     let actor = audit::actor(&state);
 
-    let report = {
-        let mut db = state.db.lock().map_err(|e| e.to_string())?;
-        let paths = db.paths_for_ids(&ids).map_err(|e| e.to_string())?;
-        let report = archivist_ingest::reindex_paths(
-            &mut db,
-            &state.registry,
-            &paths,
-            |processed, total| {
-                let _ = on_progress.send(ReindexProgress { processed, total });
-            },
-        );
+    // Yollari OKU — salt-okuma baglantisi (yazma kilidine hic dokunmaz).
+    let paths = {
+        let db = state.read_db.lock().map_err(|e| e.to_string())?;
+        db.paths_for_ids(&ids).map_err(|e| e.to_string())?
+    };
+
+    // ⚠️ KILIT DOSYA-BASI (2026-08-20 kullanici bulgusu): eskiden `state.db` kilidi TUM batch
+    // boyunca tutuluyordu → ayni anda kosan AI gorsel-analizi ilk kilit talebinde donuyor, "İptal"
+    // de cevapsiz kaliyordu (bayrak set edilir ama dongu kilidi geri alamaz; DWG'de dosya basina
+    // 300sn'e kadar). Artik YAVAS kisim (hash+extract) kilitsiz kosar, kilit yalniz KISA yazim
+    // adiminda alinir → analiz/gezinme aradan gecebilir.
+    let report = archivist_ingest::reindex_paths_with(
+        &state.registry,
+        &paths,
+        |prep| {
+            let mut db = state.db.lock().map_err(|e| e.to_string())?;
+            archivist_ingest::reindex_write(&mut db, prep)
+        },
+        |processed, total| {
+            let _ = on_progress.send(ReindexProgress { processed, total });
+        },
+    );
+
+    // Ozet audit — TEK kisa kilit (batch bitti).
+    {
+        let db = state.db.lock().map_err(|e| e.to_string())?;
         audit::record_on(
             &db,
             &actor,
@@ -87,8 +102,7 @@ pub async fn reindex_assets(
                 ids.len()
             )),
         );
-        report
-    }; // db kilidi burada birakilir → signal_index kendi kilidini alabilir
+    }
 
     // Yeni thumbnail'li gorsel → gorsel-embed bekleyeni olusabilir → oto-indeks surucusune tik.
     indexer::signal_index();

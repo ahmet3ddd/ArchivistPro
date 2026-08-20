@@ -138,6 +138,10 @@ interface UiState {
   // `similarToName` yalniz banner basligi icin (gorsel adi); preset'e GIRMEZ (geciici).
   similarTo: number | null;
   similarToName: string | null;
+  /** Renk-yakinligi aramasi hedefi (detay panelindeki kartelanin "bu renge yakinlari bul"u).
+   *  `similarTo` ile AYNI aile: gecici bir SONUC KAPSAMI — preset'e girmez, kaynak degisiminde
+   *  ve filtre sifirlamada temizlenir. */
+  colorSearch: { r: number; g: number; b: number } | null;
   geoListIds: number[] | null;
   // En son AKILLI ARAMA / benzer-gorsel sonucunun toplam sayisi (top-k tek sayfa). Grid
   // (useInfiniteAssets) yazar; TopBar sayaci (useAssetTotal) arama aktifken BUNU okur — aksi
@@ -281,6 +285,8 @@ interface UiState {
   setSimilarTo: (id: number, name: string) => void;
   clearSimilarTo: () => void;
   setGeoListIds: (ids: number[] | null) => void;
+  /** Renk-yakinligi aramasini baslat/temizle (`null` → kapsam kalkar). */
+  setColorSearch: (color: { r: number; g: number; b: number } | null) => void;
   // Cok-degerli facet setter'lari: setX diziyi DEGISTIRIR (or. dashboard drill-down →
   // [value]; "Tum turler" → []); toggleX bir degeri ekler/cikarir (facet satiri + cip).
   setExt: (ext: string[]) => void;
@@ -386,6 +392,7 @@ export const useUiStore = create<UiState>((set) => ({
   sort: initialSort(),
   similarTo: null,
   similarToName: null,
+  colorSearch: null,
   geoListIds: null,
   searchResultTotal: null,
   semanticMode: false,
@@ -443,6 +450,7 @@ export const useUiStore = create<UiState>((set) => ({
       query,
       similarTo: null,
       similarToName: null,
+      colorSearch: null,
   geoListIds: null,
       searchResultTotal: null,
       ...selectionReset(),
@@ -459,6 +467,11 @@ export const useUiStore = create<UiState>((set) => ({
     set({ similarTo: id, similarToName: name, ...selectionReset() }),
   clearSimilarTo: () => set({ similarTo: null, similarToName: null, ...selectionReset() }),
   setGeoListIds: (geoListIds) => set({ geoListIds, ...selectionReset() }),
+  // Renk aramasi ACILIRKEN benzer-gorsel kapatilir: ikisi de "sonuc kapsami" ve ayni anda
+  // ikisinin acik olmasi kullaniciya HANGI listeyi gordugunu belirsiz kilardi (yol secici
+  // zaten tek yol secer; durum da tek olsun).
+  setColorSearch: (colorSearch) =>
+    set({ colorSearch, similarTo: null, similarToName: null, ...selectionReset() }),
   setExt: (ext) => set({ ext, ...selectionReset() }),
   setTag: (tag) => set({ tag, ...selectionReset() }),
   setCollection: (collection) => set({ collection, ...selectionReset() }),
@@ -634,6 +647,7 @@ export const useUiStore = create<UiState>((set) => ({
       metadata: f.metadata ?? {},
       similarTo: null,
       similarToName: null,
+      colorSearch: null,
   geoListIds: null,
       searchResultTotal: null,
       ...selectionReset(),

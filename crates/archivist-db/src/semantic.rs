@@ -9,16 +9,13 @@
 //! once aday id+mesafe cekilir, sonra ayni `FILTER_FRAG` ile hidratlanir (cop'e atilmis
 //! veya filtreye uymayan asset elenir), mesafe sirasinda ilk k doner.
 
-use std::collections::HashMap;
-
 use rusqlite::params;
 
 use crate::error::DbError;
 use crate::index_skips::IndexStage;
-use crate::query::{
-    map_asset_row, AssetPage, AssetRow, FilterBinds, ListOpts,
-    AI_A, AI_GORSEL_TURU_EXPR, COLS_A, DOMINANT_COLORS_EXPR, FAV_A, FILTER_FRAG,
-};
+// Hidratlama (COLS_A/FILTER_FRAG/FilterBinds/map_asset_row) artik `query::hydrate_ordered`
+// icinde — bu modul yalniz kNN adayi uretir.
+use crate::query::{AssetPage, ListOpts};
 use crate::Db;
 
 /// Metin embedding boyutu — `asset_vectors FLOAT[384]` (migration 0009) ile AYNI olmali.
@@ -224,44 +221,13 @@ impl Db {
             });
         }
 
-        // 2) Filtreyle hidratla. id IN (<inline>): id'ler kendi kNN sorgumuzdan gelen i64
-        //    → SQL-injection yok; FILTER_FRAG adli parametreleri list_filtered ile birebir.
-        let id_list = candidates
-            .iter()
-            .map(|(id, _cos)| id.to_string())
-            .collect::<Vec<_>>()
-            .join(",");
-        let binds = FilterBinds::new(opts);
-        let common = binds.params();
-
-        let sql = format!(
-            "SELECT {COLS_A}, {FAV_A}, NULL, {AI_A}, {AI_GORSEL_TURU_EXPR}, {DOMINANT_COLORS_EXPR} FROM assets a
-             WHERE a.id IN ({id_list}) AND {FILTER_FRAG}"
-        );
-        let mut stmt = self.conn.prepare(&sql)?;
-        let mut by_id: HashMap<i64, AssetRow> = HashMap::new();
-        let rows = stmt.query_map(common.as_slice(), map_asset_row)?;
-        for row in rows {
-            let row = row?;
-            by_id.insert(row.id, row);
-        }
-
-        // 3) Mesafe sirasinda hayatta kalanlari ilk k al (kNN sirasi korunur). Her satira o asset'in
-        //    GERCEK cosine skoru islenir (yalniz bu yolda; diger okuma yollari `score=None` birakir).
-        let mut items = Vec::with_capacity(k as usize);
-        for (id, cos) in &candidates {
-            if let Some(mut row) = by_id.remove(id) {
-                row.score = Some(*cos);
-                items.push(row);
-                if items.len() >= k as usize {
-                    break;
-                }
-            }
-        }
-        let total = items.len() as i64;
-        Ok(AssetPage { total, items })
+        // 2+3) Filtreyle hidratla + kNN sirasini koruyarak ilk k (PAYLASIK yardimci; gorsel-kNN
+        // ve renk yollari da AYNI kodu kullanir → bkz `query::hydrate_ordered`). Bu yol satira
+        // GERCEK cosine skorunu isler (% rozet); diger okuma yollari skoru None birakir.
+        let scored: Vec<(i64, Option<f32>)> =
+            candidates.iter().map(|(id, cos)| (*id, Some(*cos))).collect();
+        crate::query::hydrate_ordered(&self.conn, &scored, opts, k)
     }
-
 }
 
 #[cfg(test)]

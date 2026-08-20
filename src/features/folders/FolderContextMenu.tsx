@@ -10,11 +10,18 @@
 //   [klasor] — Ac / Kural ile duzenle / Yeniden indeksle / Cop'e Tasi (danger). Bakim eylemleri
 //              admin-gate: admin degilse GORUNUR-ama-pasif + tooltip (kesfedilebilirlik). Gercek
 //              yetki Rust'ta (UI yalniz gorunum).
+//
+// AI ANALIZ KAPISI (2026-08-20): Yeniden Tara · Kural ile duzenle · Yeniden indeksle bir analiz
+// kosarken de pasiflesir (`MaintenanceGate` ile ayni sebep ve ayni cumle) — ucu de analiz
+// edilmekte olan dosyanin yolunu/onizlemesini degistirir; tarama ayrica yazma kilidini tum kosu
+// boyunca tutar. "Cop'e Tasi" KAPSAM DISI: soft-delete yol/onizleme degistirmez.
 
-import { useEffect, useRef, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
+import { ContextMenu, MenuDivider, MenuItem, MenuSectionLabel } from "../../components/ContextMenu";
+
 import { useSession } from "../../hooks/useSession";
+import { useVisionRunState } from "../../hooks/useVisionLock";
 import type { ViewMode } from "../../store/useUiStore";
 
 /** Klasor kartlarinin siralama olcutu (FoldersView yerel durumu; ✓ referansi). */
@@ -62,8 +69,7 @@ interface Props {
   onClose: () => void;
 }
 
-const MENU_W = 248; // tahmini menu genisligi (kenardan tasmayi onlemek icin)
-const MENU_H = 560; // tahmini menu yuksekligi (4 bolum; alt kenar sikismasi engelleme)
+const MENU_W = 248; // menu genisligi (yukseklik ARTIK tahmin edilmiyor — iskelet olcuyor)
 
 export function FolderContextMenu({
   path,
@@ -85,49 +91,28 @@ export function FolderContextMenu({
 }: Props) {
   const { t } = useTranslation();
   const { isAdmin } = useSession();
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Disari-tik + Esc → kapat. capture: VirtuosoGrid scroll'una karismadan yakalar (AssetContextMenu ile ayni).
-  useEffect(() => {
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    // Kaydirma baslayinca menuyu kapat (acik menu kaydirilan icerikten ayrilmasin).
-    const onScroll = () => onClose();
-    document.addEventListener("mousedown", onDown, true);
-    document.addEventListener("keydown", onKey, true);
-    window.addEventListener("scroll", onScroll, true);
-    return () => {
-      document.removeEventListener("mousedown", onDown, true);
-      document.removeEventListener("keydown", onKey, true);
-      window.removeEventListener("scroll", onScroll, true);
-    };
-  }, [onClose]);
-
-  // Kenardan tasmayi onle: imlec sag/alt kenara yakinsa menuyu ice kaydir (kucuk pencerede >=8).
-  const left = Math.max(8, Math.min(x, window.innerWidth - MENU_W - 8));
-  // Bos agac menusu cok daha kisa; kart/dugum menusu yuksekligiyle hesaplanirsa imlecten gereksiz
-  // uzaklasir. Her varyanti kendi yaklasik boyuyla kenara sigdir.
-  const menuH = treeBlankTarget ? 96 : treeTarget ? 420 : MENU_H;
-  const top = Math.max(8, Math.min(y, window.innerHeight - menuH - 8));
-
   const viewerHint = t("context.viewer_hint");
+  // AI gorsel analizi kosarken dosya YOLUNU/onizlemesini degistiren (ya da yazma kilidini uzun
+  // tutan) klasor eylemleri kilitli — `MaintenanceGate` ile AYNI sebep, menude ayni gorsel dil
+  // (disabled + ipucu) zaten var. Yetki kapisi ONCE gelir: rol yetmiyorsa once o soylenir.
+  const analysisRunning = useVisionRunState().active;
+  const maintenanceHint = t("vision_index.maintenance_locked");
+  const gateHint = (base: string | undefined) =>
+    !isAdmin ? base : analysisRunning ? maintenanceHint : base;
 
   return (
-    <div
-      ref={ref}
-      role="menu"
-      style={{ position: "fixed", left, top, width: MENU_W }}
-      className="z-50 overflow-hidden rounded-md border border-border bg-bg-secondary/95 py-1 text-sm text-text-primary shadow-xl backdrop-blur-lg"
-      onContextMenu={(e) => e.preventDefault()}
+    <ContextMenu
+      x={x}
+      y={y}
+      width={MENU_W}
+      onClose={onClose}
+      testId="folder-context-menu"
+      ariaLabel={t("folders.ctx.aria_label")}
     >
       {/* ── GORUNUM: o klasoru secili gorunumde ac (checkmark YOK — aksiyon) ── */}
       {!treeBlankTarget && (
         <>
-          <SectionLabel>{t("folders.ctx.section_view")}</SectionLabel>
+          <MenuSectionLabel>{t("folders.ctx.section_view")}</MenuSectionLabel>
           <MenuItem label={t("folders.ctx.view_explorer")} onClick={() => onView("explorer")} />
           <MenuItem label={t("folders.ctx.view_technical")} onClick={() => onView("technical")} />
           <MenuItem label={t("folders.ctx.view_dashboard")} onClick={() => onView("dashboard")} />
@@ -136,7 +121,7 @@ export function FolderContextMenu({
 
       {treeBlankTarget && (
         <>
-          <SectionLabel>{t("folders.ctx.section_tree")}</SectionLabel>
+          <MenuSectionLabel>{t("folders.ctx.section_tree")}</MenuSectionLabel>
           <MenuItem
             label={t("folders.ctx.tree_expand_all")}
             onClick={() => {
@@ -161,8 +146,8 @@ export function FolderContextMenu({
 
       {treeTarget && (
         <>
-          <Divider />
-          <SectionLabel>{t("folders.ctx.section_tree")}</SectionLabel>
+          <MenuDivider />
+          <MenuSectionLabel>{t("folders.ctx.section_tree")}</MenuSectionLabel>
           <MenuItem
             label={t(treeTarget.expanded ? "folders.ctx.tree_collapse" : "folders.ctx.tree_expand")}
             onClick={() => {
@@ -175,10 +160,10 @@ export function FolderContextMenu({
       )}
       {!treeTarget && !treeBlankTarget && (
         <>
-      <Divider />
+      <MenuDivider />
 
       {/* ── SIRALAMA: kart siralamasi (secili ✓; tiklama menuyu kapatmaz) ── */}
-      <SectionLabel>{t("folders.ctx.section_sort")}</SectionLabel>
+      <MenuSectionLabel>{t("folders.ctx.section_sort")}</MenuSectionLabel>
       <MenuItem
         label={t("folders.ctx.sort_name")}
         checked={sortBy === "name"}
@@ -194,7 +179,7 @@ export function FolderContextMenu({
         checked={sortBy === "lastScan"}
         onClick={() => onSortBy("lastScan")}
       />
-      <Divider subtle />
+      <MenuDivider subtle />
       <MenuItem
         label={t("folders.ctx.order_asc")}
         checked={sortOrder === "asc"}
@@ -208,7 +193,7 @@ export function FolderContextMenu({
         </>
       )}
 
-      {!treeBlankTarget && <Divider />}
+      {!treeBlankTarget && <MenuDivider />}
 
       {/* ── Yeniden Tara (artimsal ingest; admin) ── */}
       {!treeBlankTarget && (
@@ -216,11 +201,11 @@ export function FolderContextMenu({
       <MenuItem
         label={t("folders.ctx.rescan")}
         onClick={onRescan}
-        disabled={!isAdmin}
-        disabledHint={viewerHint}
+        disabled={!isAdmin || analysisRunning}
+        disabledHint={gateHint(viewerHint)}
       />
 
-      <Divider />
+      <MenuDivider />
 
       {/* ── Klasor eylemleri (baslik = yol) ── */}
       {/* Yol her zaman LTR okunur (Windows/POSIX), RTL dilde de bozulmasin */}
@@ -231,14 +216,14 @@ export function FolderContextMenu({
       <MenuItem
         label={t("organize.action")}
         onClick={onOrganize}
-        disabled={!isAdmin}
-        disabledHint={viewerHint}
+        disabled={!isAdmin || analysisRunning}
+        disabledHint={gateHint(viewerHint)}
       />
       <MenuItem
         label={t("reindex.action")}
         onClick={onReindex}
-        disabled={!isAdmin}
-        disabledHint={viewerHint}
+        disabled={!isAdmin || analysisRunning}
+        disabledHint={gateHint(viewerHint)}
       />
       <MenuItem
         label={t("folders.ctx.trash")}
@@ -249,62 +234,6 @@ export function FolderContextMenu({
       />
         </>
       )}
-    </div>
-  );
-}
-
-/** Bolum basligi (GORUNUM / SIRALAMA) — kucuk, buyuk-harf, pasif. */
-function SectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <p className="px-3 pb-0.5 pt-1.5 text-[10px] font-semibold uppercase tracking-wide text-text-muted">
-      {children}
-    </p>
-  );
-}
-
-/** Ayirici — `subtle` (olcut↔yon arasi) daha ince/ic-girintili. */
-function Divider({ subtle }: { subtle?: boolean }) {
-  return subtle ? (
-    <div className="mx-3 my-1 border-t border-border/60" />
-  ) : (
-    <div className="my-1 border-t border-border" />
-  );
-}
-
-interface ItemProps {
-  label: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  disabledHint?: string;
-  danger?: boolean;
-  /** Tanimliysa siralama ogesi → sol tarafta ✓ yuvasi ayrilir (true ise isaret gorunur). */
-  checked?: boolean;
-}
-
-function MenuItem({ label, onClick, disabled, disabledHint, danger, checked }: ItemProps) {
-  const showCheckSlot = checked !== undefined;
-  return (
-    <button
-      type="button"
-      role="menuitem"
-      disabled={disabled}
-      onClick={onClick}
-      title={disabled ? disabledHint : undefined}
-      aria-disabled={disabled}
-      className={`flex w-full items-center px-3 py-1.5 text-start transition-colors ${
-        disabled
-          ? "cursor-not-allowed text-text-muted"
-          : danger
-            ? "text-danger hover:bg-danger/15"
-            : "text-text-primary hover:bg-bg-tertiary"
-      }`}
-    >
-      {showCheckSlot && (
-        <span aria-hidden className="me-2 w-3.5 flex-none text-accent">
-          {checked ? "✓" : ""}
-        </span>
-      )}
-      <span className="truncate">{label}</span>
-    </button>
+    </ContextMenu>
   );
 }

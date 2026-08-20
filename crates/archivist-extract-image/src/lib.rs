@@ -10,7 +10,10 @@ pub mod shape;
 pub mod video;
 
 pub use eps::EpsExtractor;
-pub use image_meta::{compute_phash_bits, dominant_colors, hamming_distance, ImageExtractor};
+pub use image_meta::{
+    compute_phash_bits, dominant_colors, dominant_colors_from_bytes, hamming_distance, lab_dist_sq,
+    srgb_to_lab, ImageExtractor,
+};
 pub use shape::{extract_shape, extract_shape_from_bytes, extract_shape_from_path, ImageShapeResult};
 pub use video::VideoExtractor;
 

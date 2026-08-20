@@ -30,6 +30,7 @@ export function useInfiniteAssets(): InfiniteAssets {
   const sort = useUiStore((s) => s.sort);
   const similarTo = useUiStore((s) => s.similarTo);
   const geoListIds = useUiStore((s) => s.geoListIds);
+  const colorSearch = useUiStore((s) => s.colorSearch);
   const ext = useUiStore((s) => s.ext);
   const tag = useUiStore((s) => s.tag);
   const collection = useUiStore((s) => s.collection);
@@ -53,7 +54,7 @@ export function useInfiniteAssets(): InfiniteAssets {
   const q = query.trim();
   const modifiedAfter = dateToEpoch(dateFrom, false);
   const modifiedBefore = dateToEpoch(dateTo, true);
-  const identity = `${q} ${similarTo ?? ""} ${geoListIds?.join(",") ?? ""} ${sort} ${ext.join(",")} ${tag.join(",")} ${collection.join(",")} ${project.join(",")} ${dateFrom} ${dateTo} ${favoritesOnly ? 1 : 0} ${pathPrefix ?? ""} ${approvalStatus.join(",")} ${clientName.join(",")} ${versionLabel.join(",")} ${deadlineYear.join(",")} ${aiAnalyzed == null ? "" : aiAnalyzed ? 1 : 0} ${gorselTuru ?? ""} ${metaIdentity(metadata)} ${dataVersion} ${assetSource} ${semanticMode ? 1 : 0}`;
+  const identity = `${q} ${similarTo ?? ""} ${colorSearch ? `${colorSearch.r},${colorSearch.g},${colorSearch.b}` : ""} ${geoListIds?.join(",") ?? ""} ${sort} ${ext.join(",")} ${tag.join(",")} ${collection.join(",")} ${project.join(",")} ${dateFrom} ${dateTo} ${favoritesOnly ? 1 : 0} ${pathPrefix ?? ""} ${approvalStatus.join(",")} ${clientName.join(",")} ${versionLabel.join(",")} ${deadlineYear.join(",")} ${aiAnalyzed == null ? "" : aiAnalyzed ? 1 : 0} ${gorselTuru ?? ""} ${metaIdentity(metadata)} ${dataVersion} ${assetSource} ${semanticMode ? 1 : 0}`;
 
   const [items, setItems] = useState<AssetRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -106,6 +107,7 @@ export function useInfiniteAssets(): InfiniteAssets {
           semanticMode,
           hasQuery: q.length > 0,
           hasSimilar: similarTo != null,
+          hasColor: colorSearch != null,
         });
         const singlePage = isSinglePageRoute(route);
         let res: AssetPage;
@@ -121,6 +123,10 @@ export function useInfiniteAssets(): InfiniteAssets {
           res = await ipc.remoteListAssets(opts);
         } else if (!geoListIds && route === "similar" && similarTo != null) {
           res = await ipc.similarImages(similarTo, opts);
+        } else if (!geoListIds && route === "color" && colorSearch != null) {
+          // Renk-yakinligi: `similar` ile ayni sekil (AssetPage, tek-sayfa). Aktif filtreler
+          // `opts` icinde backend'e gider → arama filtreyi EZMEZ.
+          res = await ipc.assetsNearColor(colorSearch, opts);
         } else if (!geoListIds && route === "semantic") {
           // Yerel anlamli arama: `query` AYRI parametre (backend semantic_search(query, opts));
           // items `score` tasir → kartta % benzerlik rozeti. Model yoksa komut Err → ham mesaj.
@@ -175,6 +181,11 @@ export function useInfiniteAssets(): InfiniteAssets {
     [
       q,
       similarTo,
+      // ⚠️ `colorSearch` BU LISTEDE OLMAK ZORUNDA (kullanici bulgusu 2026-08-20: "renge yakinlari
+      // bul deyince liste degismiyordu"). `identity` degisince efekt tetikleniyordu ama `fetchPage`
+      // BAYAT KAPANIS oluyordu → icerideki `colorSearch` hala `null` → yol "color" yerine
+      // "browse" secilip ayni liste doniyordu. Bir yol-girdisi eklenince deps'e de eklenmeli.
+      colorSearch,
       geoListIds,
       sort,
       ext,

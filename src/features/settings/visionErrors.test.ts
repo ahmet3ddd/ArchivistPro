@@ -5,8 +5,11 @@ import { describe, expect, it } from "vitest";
 
 import tr from "../../i18n/locales/tr.json";
 import en from "../../i18n/locales/en.json";
+import ar from "../../i18n/locales/ar.json";
+import ja from "../../i18n/locales/ja.json";
+import zh from "../../i18n/locales/zh.json";
 import type { ImageAnalysisReport } from "../../ipc/client";
-import { visionErrorKey, visionOutcomeNotice } from "./visionErrors";
+import { visionErrorKey, visionOutcomeNotice, visionStartErrorKey } from "./visionErrors";
 
 // `src-tauri/src/vision.rs::classify_vision_error` + cagiranin urettigi siniflar (BIREBIR).
 const SERVER_KINDS = [
@@ -248,6 +251,57 @@ describe("visionOutcomeNotice", () => {
     ]) {
       expect(typeof lookup(tr, key), `tr: ${key}`).toBe("string");
       expect(typeof lookup(en, key), `en: ${key}`).toBe("string");
+    }
+  });
+});
+
+describe("visionStartErrorKey", () => {
+  // Sunucu kararli TOKEN doner (`vision_commands.rs`: `Err("vision_busy")`) — prose DEGIL. Tauri
+  // hatayi renderer'a string olarak gecirir, bu yuzden `includes` ile eslenir.
+  it("kosu zaten aktifken anlasilir anahtar dondurur", () => {
+    expect(visionStartErrorKey("vision_busy")).toBe("vision_index.busy");
+    expect(visionStartErrorKey(new Error("vision_busy"))).toBe("vision_index.busy");
+  });
+
+  it("bilinmeyen hatada null doner (cagiran ham metni gosterir → hata kaybolmaz)", () => {
+    expect(visionStartErrorKey("status 500: llama-server terminated")).toBeNull();
+    expect(visionStartErrorKey(null)).toBeNull();
+  });
+
+  it("uretilen anahtar BES dilde de karsiligi olan bir metne cozulur", () => {
+    for (const [name, dict] of [
+      ["tr", tr],
+      ["en", en],
+      ["ar", ar],
+      ["ja", ja],
+      ["zh", zh],
+    ] as const) {
+      expect(typeof lookup(dict, "vision_index.busy"), name).toBe("string");
+    }
+  });
+});
+
+/** Analiz kosarken KILITLENEN eylemlerin ipuclari — bes dilde de var olmali (sebebi soylemeyen
+ *  kilit, "bozuk buton" gibi okunur). Anahtarlar `vision_index` altinda: kilidi DORT yuzey
+ *  paylasir (secim arac cubugu · klasor baglam menusu · bos-alan menusu · detay paneli +
+ *  sol Arsiv paneli) → `batch` isim alani yanlis ev olurdu. */
+describe("analiz kilidi ipuclari", () => {
+  const KEYS = [
+    "vision_index.maintenance_locked",
+    "vision_index.blocked_by_task",
+    "vision_index.busy",
+  ];
+  it("bes dilde de tanimli", () => {
+    for (const [name, dict] of [
+      ["tr", tr],
+      ["en", en],
+      ["ar", ar],
+      ["ja", ja],
+      ["zh", zh],
+    ] as const) {
+      for (const key of KEYS) {
+        expect(typeof lookup(dict, key), `${name}:${key}`).toBe("string");
+      }
     }
   });
 });

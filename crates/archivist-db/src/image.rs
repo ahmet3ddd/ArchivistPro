@@ -18,9 +18,11 @@ use rusqlite::{params, OptionalExtension};
 
 use crate::error::DbError;
 use crate::index_skips::IndexStage;
+// Hidratlama sutunlari/filtresi artik `query::hydrate_ordered` icinde (uc arama yolu paylasir);
+// bu modulde yalniz aday uretimi + kapsam filtreleri kalir.
 use crate::query::{
-    map_asset_row, AssetPage, AssetRow, FilterBinds, ListOpts, AI_A, AI_GORSEL_TURU_EXPR, COLS_A,
-    DOMINANT_COLORS_EXPR, FAV_A, FILTER_FRAG,
+    AssetPage, AssetRow, DominantColor, FilterBinds, ListOpts, DOMINANT_COLORS_METADATA_KEY,
+    FILTER_FRAG,
 };
 use crate::semantic::{clamp_k, vec_to_blob, FETCH_CAP, FETCH_MULT};
 use crate::Db;
@@ -462,7 +464,24 @@ impl Db {
     /// olurdu → erken don). `Filter` FTS `query`'yi yok sayar (facet-tabanli kapsam). `count ==
     /// `assets_without_analysis_scoped` batch enumerasyonu` (ayni WHERE → tutarli).
     pub fn pending_analysis_count_scoped(&self, scope: &AnalysisScope) -> Result<i64, DbError> {
-        self.pending_count_with(scope, None, false)
+        self.pending_count_with(scope, None, false, 0)
+    }
+
+    /// [`Db::pending_analysis_count_scoped`]'un **KURSORLU** hali: yalniz `after_id`'den BUYUK
+    /// id'li bekleyenler. Kosan bir analiz dongusunun *"daha kac is kaldi"* sorusunun dogru
+    /// cevabi budur — dongu kursoru (`assets_without_analysis_scoped`) geriye donmez, dolayisiyla
+    /// bu kosuda denenip basarisiz olmus (hala "bekleyen" gorunen) dosyalar TEKRAR sayilmamalidir.
+    ///
+    /// **Neden var (kullanici bulgusu 2026-08-20):** ilerleme `total`i kosu basinda bir kez
+    /// olculuyordu. Kullanici kosu sirasinda secimden dosya cope atinca kuyruk kisaliyor ama
+    /// `total` sabit kaldigi icin cubuk %100'e VARMADAN bitiyordu ("45/60 … tamamlandi").
+    /// Dongu bunu her batch'te yeniden olcer: `total = islenen + kalan`.
+    pub fn pending_analysis_count_after(
+        &self,
+        scope: &AnalysisScope,
+        after_id: i64,
+    ) -> Result<i64, DbError> {
+        self.pending_count_with(scope, None, false, after_id)
     }
 
     /// **Secilip de analiz edilemeyecek** asset sayisi: kullanicinin ACIKCA sectigi id'lerden
@@ -509,7 +528,7 @@ impl Db {
     /// dolayisiyla aradaki fark negatife kayabilir ve sayi kendi filtresiyle tutmazdi. Bu sayac,
     /// `FILTER_FRAG`'in `:ai_analyzed = 0` dalinin dondurdugu kumeyle BIREBIR ayni kosullari kurar.
     pub fn pending_never_attempted_count(&self) -> Result<i64, DbError> {
-        self.pending_count_with(&AnalysisScope::All, None, true)
+        self.pending_count_with(&AnalysisScope::All, None, true, 0)
     }
 
     /// Bekleyen kumenin **kucuk-dosya** kismi: `size_bytes < max_bytes`.
@@ -529,7 +548,7 @@ impl Db {
         scope: &AnalysisScope,
         max_bytes: i64,
     ) -> Result<i64, DbError> {
-        self.pending_count_with(scope, Some(max_bytes), false)
+        self.pending_count_with(scope, Some(max_bytes), false, 0)
     }
 
     /// Uc sayacin ORTAK govdesi. Tek yerde durur cunku "bekleyen" tanimi (thumbnail var ·
@@ -543,12 +562,15 @@ impl Db {
         scope: &AnalysisScope,
         max_bytes: Option<i64>,
         never_attempted: bool,
+        after_id: i64,
     ) -> Result<i64, DbError> {
         if scope.is_empty_ids() {
             return Ok(0);
         }
         let stage = IndexStage::Vision.as_str();
         let frag = scope.where_frag();
+        // Kursor suzgeci yalniz istendiginde eklenir (0 → hic yokmus gibi; sorgu plani degismesin).
+        let after_frag = if after_id > 0 { "AND a.id > :after" } else { "" };
         // Boyut suzgeci opsiyonel; NULL boyut "kucuk" SAYILMAZ (bilinmeyeni kucuk varsaymak
         // kirilimi oldugundan iyimser gosterirdi).
         let size_frag = if max_bytes.is_some() {
@@ -572,6 +594,7 @@ impl Db {
                AND NOT EXISTS (SELECT 1 FROM index_skips s
                                WHERE s.asset_id = a.id AND s.stage = :stage)
                {size_frag}
+               {after_frag}
                {frag}"
         );
         // Filter kapsaminda FILTER_FRAG adli param'lari; binds sorgu boyu yasamali (local).
@@ -579,6 +602,9 @@ impl Db {
         let mut named: Vec<(&str, &dyn rusqlite::ToSql)> = vec![(":stage", &stage)];
         if let Some(m) = &max_bytes {
             named.push((":max_bytes", m));
+        }
+        if after_id > 0 {
+            named.push((":after", &after_id));
         }
         if let Some(b) = &binds {
             named.extend(b.params());
@@ -800,31 +826,151 @@ impl Db {
         let mut scored: Vec<(i64, f32)> = max_cos.into_iter().collect();
         scored.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
 
-        // 3) Filtreyle (FILTER_FRAG: cop/facet) hidratla + cosine sirasinda ilk k (skoruyla).
-        let surv_ids = scored.iter().map(|(id, _)| id.to_string()).collect::<Vec<_>>().join(",");
-        let binds = FilterBinds::new(opts);
-        let common = binds.params();
-        let sql = format!(
-            "SELECT {COLS_A}, {FAV_A}, NULL, {AI_A}, {AI_GORSEL_TURU_EXPR}, {DOMINANT_COLORS_EXPR} FROM assets a
-             WHERE a.id IN ({surv_ids}) AND {FILTER_FRAG}"
-        );
-        let mut stmt = self.conn.prepare(&sql)?;
-        let mut by_id: HashMap<i64, AssetRow> = HashMap::new();
-        let rows = stmt.query_map(common.as_slice(), map_asset_row)?;
-        for row in rows {
-            let row = row?;
-            by_id.insert(row.id, row);
+        // 3) Filtreyle (FILTER_FRAG: cop/facet) hidratla + cosine sirasinda ilk k (skoruyla) —
+        // PAYLASIK yardimci. Bu yol skoru satira da isler; cagirana (asset, skor) cifti gerektigi
+        // icin satirdan geri okunur (yardimci `Some(..)` verildiginde `row.score`'u doldurur).
+        let ordered: Vec<(i64, Option<f32>)> =
+            scored.iter().map(|(id, cos)| (*id, Some(*cos))).collect();
+        let page = crate::query::hydrate_ordered(&self.conn, &ordered, opts, k)?;
+        Ok(page.items.into_iter().map(|row| { let cos = row.score.unwrap_or(0.0); (row, cos) }).collect())
+    }
+
+    /// **Renk verisi EKSIK** (thumbnail'i OLAN ama `dominant_colors` EAV'si olmayan) aktif asset
+    /// sayisi — geri-doldurma kartinin gosterdigi sayi.
+    ///
+    /// Neden var (olculdu 2026-08-20, gercek arsiv): baskin-renk cikarimi arsiv KURULDUKTAN sonra
+    /// eklendi; ondan once indekslenen raster gorsellerde EAV hic olusmadi (dev arsivinde saf
+    /// raster dosyalarin %68'i). O dosyalar renk kartelasinda ve renk aramasinda GORUNMEZ.
+    pub fn count_missing_dominant_colors(&self) -> Result<i64, DbError> {
+        Ok(self.conn.query_row(
+            &format!(
+                "SELECT count(*) FROM assets a
+                 JOIN asset_thumbnails th ON th.asset_id = a.id
+                 WHERE a.deleted_at IS NULL
+                   AND NOT EXISTS (SELECT 1 FROM asset_metadata m
+                                   WHERE m.asset_id = a.id AND m.key = '{DOMINANT_COLORS_METADATA_KEY}')"
+            ),
+            [],
+            |r| r.get(0),
+        )?)
+    }
+
+    /// Renk verisi eksik asset'lerin bir PARTISI: `(id, thumbnail baytlari)`, `after_id`den buyuk
+    /// ilk `limit` kayit (resumable kursor; analiz kuyrugu deseni).
+    ///
+    /// ⚠️ Baytlar THUMBNAIL'dir, kaynak dosya DEGIL — bilincli: (a) kaynak baska makinede olabilir
+    /// (cok-lokasyon), (b) cikarim zaten goruntuyu 100x100'e kucultup k-means uyguluyor, 256px
+    /// thumbnail bunun icin fazlasiyla yeterli, (c) yeniden tarama gerekmez.
+    pub fn assets_missing_dominant_colors(
+        &self,
+        after_id: i64,
+        limit: i64,
+    ) -> Result<Vec<(i64, Vec<u8>)>, DbError> {
+        let mut stmt = self.conn.prepare(&format!(
+            "SELECT a.id, th.bytes FROM assets a
+             JOIN asset_thumbnails th ON th.asset_id = a.id
+             WHERE a.deleted_at IS NULL
+               AND a.id > ?1
+               AND NOT EXISTS (SELECT 1 FROM asset_metadata m
+                               WHERE m.asset_id = a.id AND m.key = '{DOMINANT_COLORS_METADATA_KEY}')
+             ORDER BY a.id
+             LIMIT ?2"
+        ))?;
+        let rows = stmt.query_map(params![after_id, limit], |r| Ok((r.get(0)?, r.get(1)?)))?;
+        Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
+    }
+
+    /// Baskin renkleri EAV'ye **yalniz YOKSA** yaz (idempotent; `write_image_kind` deseni).
+    /// Mevcut deger EZILMEZ — cikarimdan gelen (kaynak dosyadan hesaplanmis) deger her zaman
+    /// onceliklidir. Bos liste yazilmaz (bos EAV "hesaplandi ama renk yok" yalanini soylerdi).
+    /// Doner: gercekten yazildi mi.
+    pub fn write_dominant_colors(
+        &self,
+        asset_id: i64,
+        colors: &[DominantColor],
+    ) -> Result<bool, DbError> {
+        if colors.is_empty() {
+            return Ok(false);
         }
-        let mut out: Vec<(AssetRow, f32)> = Vec::with_capacity(k as usize);
-        for (id, cos) in &scored {
-            if let Some(row) = by_id.remove(id) {
-                out.push((row, *cos));
-                if out.len() >= k as usize {
-                    break;
+        let json = serde_json::to_string(colors).map_err(|e| DbError::Invalid(e.to_string()))?;
+        let n = self.conn.execute(
+            &format!(
+                "INSERT INTO asset_metadata(asset_id, key, value_text, value_num)
+                 VALUES (?1, '{DOMINANT_COLORS_METADATA_KEY}', ?2, NULL)
+                 ON CONFLICT(asset_id, key) DO NOTHING"
+            ),
+            params![asset_id, json],
+        )?;
+        Ok(n == 1)
+    }
+
+    /// **RENK-YAKINLIGI ARAMASI** ("bu renge yakin gorselleri bul").
+    ///
+    /// `dominant_colors` EAV'si olan AKTIF asset'ler taranir; her asset icin EN IYI (en kucuk)
+    /// skor `score` ile hesaplanir. `max_score`u gecmeyenler skora gore ARTAN siralanir, aday
+    /// tavani uygulanir ve ortak yardimciyla (aktif filtreler korunarak) hidratlanir.
+    ///
+    /// ⚠️ **Renk matematigi CAGIRANDA** (`score` kapanisi): bu katman kolorimetri BILMEZ. sRGB→Lab
+    /// donusumu `archivist-extract-image` icinde ZATEN var (baskin renkler oradan cikiyor) — ikinci
+    /// bir kopyasini buraya yazmak yerine kapanis enjekte edilir. Ayrica `DominantColor` kapanisa
+    /// **yuzdesiyle** gelir → cagiran cok kucuk paylari (tek tuk piksel kumesi) eleyebilir.
+    /// Ayni desen: `archivist_ingest::reindex_paths_with(write)`.
+    ///
+    /// Skor satira YAZILMAZ (mesafe, benzerlik yuzdesi degildir → `% rozet` yaniltici olurdu).
+    pub fn assets_near_color<F>(
+        &self,
+        opts: &ListOpts,
+        score: F,
+        max_score: f64,
+    ) -> Result<AssetPage, DbError>
+    where
+        F: Fn(&DominantColor) -> f64,
+    {
+        let k = clamp_k(opts.page_size);
+        // Filtre elemesi sonrasi k sonuc kalabilsin diye fazladan aday tutulur (semantik/gorsel
+        // yollariyla AYNI tavan sabitleri).
+        let cap = ((k * FETCH_MULT).min(FETCH_CAP)) as usize;
+
+        let mut stmt = self.conn.prepare(&format!(
+            "SELECT m.asset_id, m.value_text FROM asset_metadata m
+             JOIN assets a ON a.id = m.asset_id
+             WHERE m.key = '{DOMINANT_COLORS_METADATA_KEY}'
+               AND m.value_text IS NOT NULL
+               AND a.deleted_at IS NULL"
+        ))?;
+        let rows = stmt.query_map([], |r| {
+            Ok((r.get::<_, i64>(0)?, r.get::<_, Option<String>>(1)?))
+        })?;
+
+        let mut best: Vec<(i64, f64)> = Vec::new();
+        for row in rows {
+            let (asset_id, json) = row?;
+            // Bozuk/eski JSON → o asset atlanir (map_asset_row ile ayni tolerans).
+            let Some(colors) = json
+                .as_deref()
+                .and_then(|j| serde_json::from_str::<Vec<DominantColor>>(j).ok())
+            else {
+                continue;
+            };
+            let mut asset_best = f64::INFINITY;
+            for color in &colors {
+                let s = score(color);
+                if s < asset_best {
+                    asset_best = s;
                 }
             }
+            if asset_best <= max_score {
+                best.push((asset_id, asset_best));
+            }
         }
-        Ok(out)
+        if best.is_empty() {
+            return Ok(AssetPage { total: 0, items: Vec::new() });
+        }
+        best.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
+        best.truncate(cap);
+
+        let ordered: Vec<(i64, Option<f32>)> = best.iter().map(|(id, _)| (*id, None)).collect();
+        crate::query::hydrate_ordered(&self.conn, &ordered, opts, k)
     }
 
     /// **Gorsel→gorsel** ("benzer gorseller"): `asset_id`'nin GLOBAL (region 0; id=asset_id*STRIDE)
@@ -893,33 +1039,10 @@ impl Db {
             return Ok(AssetPage { total: 0, items: Vec::new() });
         }
 
-        // 3) Filtreyle hidratla (semantic_search ile birebir: id IN inline + adli filtre).
-        let id_list = order.iter().map(i64::to_string).collect::<Vec<_>>().join(",");
-        let binds = FilterBinds::new(opts);
-        let common = binds.params();
-        let sql = format!(
-            "SELECT {COLS_A}, {FAV_A}, NULL, {AI_A}, {AI_GORSEL_TURU_EXPR}, {DOMINANT_COLORS_EXPR} FROM assets a
-             WHERE a.id IN ({id_list}) AND {FILTER_FRAG}"
-        );
-        let mut stmt = self.conn.prepare(&sql)?;
-        let mut by_id: HashMap<i64, AssetRow> = HashMap::new();
-        let rows = stmt.query_map(common.as_slice(), map_asset_row)?;
-        for row in rows {
-            let row = row?;
-            by_id.insert(row.id, row);
-        }
-
-        // 4) En-yakin-bolge sirasinda hayatta kalanlari ilk k al.
-        let mut items = Vec::with_capacity(k as usize);
-        for asset in &order {
-            if let Some(row) = by_id.remove(asset) {
-                items.push(row);
-                if items.len() >= k as usize {
-                    break;
-                }
-            }
-        }
-        let total = items.len() as i64;
-        Ok(AssetPage { total, items })
+        // 3+4) Filtreyle hidratla + en-yakin-bolge sirasini koruyarak ilk k (PAYLASIK yardimci;
+        // semantik ve renk yollari da AYNI kodu kullanir → bkz `query::hydrate_ordered`).
+        // Skor `None`: gorsel-kNN mesafesi % rozet olarak sunulmaz (yalniz semantik yol skor yazar).
+        let scored: Vec<(i64, Option<f32>)> = order.into_iter().map(|id| (id, None)).collect();
+        crate::query::hydrate_ordered(&self.conn, &scored, opts, k)
     }
 }

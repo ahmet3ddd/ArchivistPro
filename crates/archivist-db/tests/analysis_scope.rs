@@ -63,7 +63,7 @@ fn ids_scope_limits_to_selection() {
     let mut db = Db::open_in_memory_migrated().unwrap();
     let a = seed(&mut db, r"C:\p\a.jpg", "a.jpg", "jpg");
     let b = seed(&mut db, r"C:\p\b.jpg", "b.jpg", "jpg");
-    let c = seed(&mut db, r"C:\p\c.jpg", "c.jpg", "jpg");
+    let c = seed(&mut db, r"C:\kursor\c.jpg", "c.jpg", "jpg");
 
     // Blanket → 3.
     assert_eq!(db.pending_analysis_count().unwrap(), 3);
@@ -216,4 +216,36 @@ fn scoped_count_matches_enumeration() {
     }
     assert_eq!(count, enumerated, "count == batch enumerasyon (tutarlilik)");
     assert_eq!(count, 4, "5 - 1 analizli = 4");
+}
+
+/// **KURSORLU kalan sayimi** (`pending_analysis_count_after`) — kosan dongunun "daha kac is kaldi"
+/// olcusu. Sozlesme: kursorun GERISINDE kalanlar sayilmaz (bu kosuda islenmis/denenmis olanlar
+/// tekrar sayilirsa ilerleme `total`i sisip cubuk %100'e varmaz) ve kosu sirasinda COPE ATILAN
+/// dosyalar kalan'dan DUSER (kullanici bulgusu 2026-08-20: cubuk "45/60 … tamamlandi" diye
+/// bitiyordu).
+#[test]
+fn pending_count_after_cursor_shrinks_with_progress_and_trash() {
+    let mut db = Db::open_in_memory_migrated().unwrap();
+    let a = seed(&mut db, r"C:\kursor\a.jpg", "a.jpg", "jpg");
+    let b = seed(&mut db, r"C:\kursor\b.jpg", "b.jpg", "jpg");
+    let c = seed(&mut db, r"C:\kursor\c.jpg", "c.jpg", "jpg");
+    let scope = AnalysisScope::Ids(vec![a, b, c]);
+
+    // Kursor yokken (0) kapsamin tamami: scoped sayimla BIREBIR ayni.
+    assert_eq!(db.pending_analysis_count_after(&scope, 0).unwrap(), 3);
+    assert_eq!(
+        db.pending_analysis_count_after(&scope, 0).unwrap(),
+        db.pending_analysis_count_scoped(&scope).unwrap(),
+        "after_id=0 → eski sayimla ayni (davranis degismedi)"
+    );
+
+    // Kursor a'yi gecti → kalan 2 (a ANALIZ EDILMEMIS olsa bile: dongu ona geri donmez).
+    assert_eq!(db.pending_analysis_count_after(&scope, a).unwrap(), 2);
+
+    // Kalanlardan biri kosu SIRASINDA cope atildi → kalan 1 (cubugun toplami boylece kisalir).
+    db.soft_delete(&[b]).unwrap();
+    assert_eq!(db.pending_analysis_count_after(&scope, a).unwrap(), 1);
+
+    // Kursor sondan sonra → kalan yok.
+    assert_eq!(db.pending_analysis_count_after(&scope, c).unwrap(), 0);
 }

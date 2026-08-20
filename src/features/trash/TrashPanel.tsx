@@ -98,6 +98,9 @@ export function TrashPanel({ onClose }: Props) {
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t("trash.title")}
         className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-border bg-bg-primary shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >

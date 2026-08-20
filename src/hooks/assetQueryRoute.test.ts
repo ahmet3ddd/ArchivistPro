@@ -19,7 +19,14 @@ import {
 
 /** Varsayilan girdi: yerel, klasik mod, sorgusuz. Testler yalniz ilgilendikleri alani ezer. */
 function input(over: Partial<AssetRouteInput> = {}): AssetRouteInput {
-  return { assetSource: "local", semanticMode: false, hasQuery: false, hasSimilar: false, ...over };
+  return {
+    assetSource: "local",
+    semanticMode: false,
+    hasQuery: false,
+    hasSimilar: false,
+    hasColor: false,
+    ...over,
+  };
 }
 
 describe("resolveAssetQueryRoute — uzak arsiv", () => {
@@ -67,6 +74,26 @@ describe("resolveAssetQueryRoute — yerel arsiv (oncelik sirasi)", () => {
     expect(resolveAssetQueryRoute(input({ hasQuery: true }))).toBe("fts");
     expect(resolveAssetQueryRoute(input())).toBe("browse");
   });
+
+  it("renk-yakinligi → color; sorgu/anlamli mod bunu EZMEZ", () => {
+    expect(resolveAssetQueryRoute(input({ hasColor: true }))).toBe("color");
+    // Kullanici renk aramasindayken arama kutusuna yazmasi yolu degistirmemeli (aksi halde
+    // sonuc listesi sessizce baska bir aramaya doner).
+    expect(resolveAssetQueryRoute(input({ hasColor: true, hasQuery: true }))).toBe("color");
+    expect(
+      resolveAssetQueryRoute(input({ hasColor: true, semanticMode: true, hasQuery: true })),
+    ).toBe("color");
+  });
+
+  it("benzer-gorsel renk aramasindan ONCELIKLI (ikisi birden acik kalirsa tek yol secilir)", () => {
+    expect(resolveAssetQueryRoute(input({ hasSimilar: true, hasColor: true }))).toBe("similar");
+  });
+
+  it("UZAK arsivde renk aramasi YOK SAYILIR (renk verisi yerel DB'de)", () => {
+    expect(resolveAssetQueryRoute(input({ assetSource: "remote", hasColor: true }))).toBe(
+      "remote-list",
+    );
+  });
 });
 
 describe("isSinglePageRoute (top-k yollar sayfalanmaz)", () => {
@@ -76,12 +103,13 @@ describe("isSinglePageRoute (top-k yollar sayfalanmaz)", () => {
     "remote-semantic": true,
     semantic: true,
     similar: true,
+    color: true,
     "remote-list": false,
     fts: false,
     browse: false,
   };
 
-  it("yalniz top-k (semantik/benzer) yollari tek-sayfadir", () => {
+  it("yalniz top-k (semantik/benzer/renk) yollari tek-sayfadir", () => {
     for (const [route, single] of Object.entries(expected)) {
       expect(isSinglePageRoute(route as AssetQueryRoute)).toBe(single);
     }

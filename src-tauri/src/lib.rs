@@ -591,6 +591,9 @@ pub fn run() {
             image_commands::image_search,
             image_commands::visual_search,
             image_commands::similar_images,
+            image_commands::assets_near_color,
+            image_commands::count_missing_dominant_colors,
+            image_commands::backfill_dominant_colors,
             image_commands::backfill_image_kind,
             // Yedekleme (§O DB snapshot + restore) — yonetilen yedek paneli (admin).
             backup_commands::list_snapshots,
@@ -635,6 +638,7 @@ pub fn run() {
             vision_commands::image_analysis_status,
             vision_commands::run_image_analysis,
             vision_commands::stop_image_analysis,
+            vision_commands::vision_run_state,
             vision_commands::count_pending_analysis,
             vision_commands::count_unusable_analyses,
             vision_commands::reset_unusable_analyses,

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ProtectedAction } from "../../permissions";
+import { MaintenanceGate } from "../shell/MaintenanceGate";
 import { RenameModal } from "./RenameModal";
 import { useRefileMove } from "./useRefileMove";
 
@@ -28,14 +29,29 @@ export function AssetRefileActions({ assetId, fileName, onChanged }: Props) {
 
   return (
     <ProtectedAction require="admin">
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={() => setRenaming(true)} disabled={moving} className={btn}>
+      {/* AI gorsel analizi kosarken KILITLI: ikisi de dosyanin YOLUNU degistirir → o an analiz
+          kuyrugundaki dosyanin ~768px kaynak onizlemesi okunamaz olur ve analiz sessizce 256px
+          thumbnail'e duser (bkz `MaintenanceGate`). */}
+      <MaintenanceGate className="flex items-center gap-2">
+        <button
+          type="button"
+          data-testid="detail-rename"
+          onClick={() => setRenaming(true)}
+          disabled={moving}
+          className={btn}
+        >
           {t("refile.rename")}
         </button>
-        <button type="button" onClick={() => void move([assetId])} disabled={moving} className={btn}>
+        <button
+          type="button"
+          data-testid="detail-move"
+          onClick={() => void move([assetId])}
+          disabled={moving}
+          className={btn}
+        >
           {moving ? t("refile.moving", progress) : t("refile.move")}
         </button>
-      </div>
+      </MaintenanceGate>
       {renaming && (
         <RenameModal
           assetId={assetId}

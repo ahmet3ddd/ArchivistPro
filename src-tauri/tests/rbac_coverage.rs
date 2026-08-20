@@ -140,6 +140,8 @@ const UNGATED_BY_DESIGN: &[(&str, &str)] = &[
     ("check_staleness", READ_ONLY),
     ("db_health", READ_ONLY),
     // image_commands.rs
+    ("assets_near_color", READ_ONLY),
+    ("count_missing_dominant_colors", READ_ONLY),
     ("image_embed_status", READ_ONLY),
     ("image_search", READ_ONLY),
     ("similar_images", READ_ONLY),
@@ -213,6 +215,7 @@ const UNGATED_BY_DESIGN: &[(&str, &str)] = &[
     ("image_analysis_status", READ_ONLY),
     ("ollama_vision_models", READ_ONLY),
     ("recommend_vision_model", READ_ONLY),
+    ("vision_run_state", READ_ONLY),
 ];
 
 /// Kapi sayilan cagrilar. `current_role` tek basina yeter: rolu OKUMAK icin gecerli bir oturum

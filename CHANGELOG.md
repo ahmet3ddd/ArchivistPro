@@ -5,6 +5,59 @@ kaynağı budur.** Format [Keep a Changelog](https://keepachangelog.com/tr/1.0.0
 tabanlıdır; sürüm numaralandırması [Semantic Versioning](https://semver.org/)
 kurallarına göre ilerler.
 
+## [3.7.0] — 2026-08-20 — Renkler Aranabilir, Sağ Tık Uygulamaya Ait
+
+Görsellerin renkleri artık okunabilir, kopyalanabilir ve **aranabilir**; sağ tık
+her ekranda uygulamanın kendi menüsünü açıyor; AI görsel analizi sürerken yapılan
+toplu işlemler analizi artık durdurmuyor. Veri biçimi değişmedi; yeni veritabanı
+güncellemesi yoktur.
+
+### Eklenen (Added)
+- **Renk kartelası artık işlevsel (dosya detayı).** Çubuktaki bir renge tıklayınca
+  o rengin **HEX · RGB · HSL** değerleri ve **en yakın RAL Classic** karşılığı
+  görünür; her değere tıklayınca panoya kopyalanır. RAL eşleşmesi daima "≈" ile ve
+  algısal fark (ΔE) ile sunulur — uzak eşleşmede açıkça uyarılır. RAL fiziksel bir
+  boya standardı, elinizdeki renk ise fotoğraftan/render'dan gelen bir ekran rengi
+  olduğu için boya kararını fiziksel kartelayla vermelisiniz.
+- **"Bu renge yakın görselleri bul".** Arşivin tamamında renk yakınlığına göre
+  arama; sonuçlar en yakından uzağa sıralanır ve **aktif filtreleriniz korunur**
+  (klasör, proje, etiket…). Model gerektirmez, tamamen çevrimdışı çalışır.
+- **Renk verisi geri doldurma** (Ayarlar → AI, yönetici). Baskın renk çıkarımı
+  arşiv kurulduktan sonra eklendiği için daha önce indekslenen görsellerde renk
+  verisi yoktu; bu dosyalar kartelada boş görünüyor ve renk aramasında
+  bulunamıyordu. Geri doldurma **kaynak dosyalara dokunmaz** (renk, kayıtlı
+  önizlemeden hesaplanır) — yeniden tarama gerekmez, kaynağı başka makinede olan
+  dosyalar da kapsanır. İlerleme hem düğmede hem üst şeritte görünür.
+- **Pano · Teknik · Harita · Sohbet görünümlerine sağ tık menüsü.** Bu ekranlarda
+  sağ tık tarayıcının menüsünü ("Yeniden yükle", "Kaynağı görüntüle") açıyordu.
+  Artık her görünüm kendi menüsünü açar: kopyala, görünüm değiştir ve o ekrana
+  özel eylemler (Pano'da yenile/kapsam temizle, Haritada görünümü sıfırla,
+  Sohbette yeni sohbet/dışa aktar). Uygulama çerçevesinde de (sol şerit, üst
+  çubuk, kenar çubuğu) tarayıcı menüsü artık çıkmaz. **Yazı alanlarında** ise
+  varsayılan menü korunur — kes/kopyala/yapıştır kaybolmasın.
+
+### Düzeltilen (Fixed)
+- **AI görsel analizi sürerken yapılan toplu işlemler analizi artık durdurmuyor.**
+  "Yeniden indeksle", "Taşı" ve "Kural ile düzenle" işlemleri, tüm iş boyunca
+  veritabanı yazma kilidini tutuyordu; bu sırada koşan analiz ilk kilit isteğinde
+  donuyor ve "İptal" düğmesi cevapsız kalıyordu (büyük çizim dosyalarında
+  dakikalarca). Bu üç işlem artık kilidi dosya başına alıp bırakıyor.
+- **Analiz sürerken riskli eylemler kilitleniyor.** Analiz edilmekte olan bir
+  dosyanın yolunu ya da önizlemesini değiştiren işlemler (yeniden indeksle, taşı,
+  kural ile düzenle, klasör tarama) koşu boyunca pasifleşir ve sebebini söyler;
+  koşuyu durdurup devam edebilirsiniz. Sessiz kalite kaybı önlenir.
+- **"AI ile analiz et" düğmesi artık gerçeği söylüyor.** Başka bir yerden
+  başlatılmış bir analiz varken düğme aktif görünüyor, basınca teknik bir hata
+  metni çıkıyordu. Artık koşan analizin ilerlemesini gösterir ve durdurma sunar.
+- **Analiz ilerlemesi %100'e ulaşıyor.** Koşu sırasında seçimden dosya çöpe
+  atılınca çubuk eski toplamda kalıyor, iş bittiği hâlde yarım görünüyordu.
+- **Benzerlik/renk sonuçlarında sıralama seçicisi yanıltmıyor.** Bu sonuçların
+  sırasını arama belirler (en iyi eşleşme önce); üstteki sıralama seçicisi hiçbir
+  şey yapmadığı hâlde açık duruyordu. Artık yerini "En iyi eşleşme önce" bilgisine
+  bırakır.
+- Haritadaki "Tümünü Gezgin'de aç" düğmesinin metni koda gömülüydü; artık diğer
+  diller gibi çevriliyor ve ürünün geri kalanıyla aynı terimi kullanıyor.
+
 ## [3.6.1] — 2026-08-18 — Görsel Analizi Yarıda Kesilince Dosya Suçlanmıyor
 
 Görsel analizinin bir kısım dosyada sessizce başarısız olmasını ve o dosyaların

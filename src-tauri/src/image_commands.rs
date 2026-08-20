@@ -481,6 +481,190 @@ pub fn similar_images(
     db.similar_images(asset_id, &opts).map_err(|e| e.to_string())
 }
 
+/// **"Bu renge yakin gorselleri bul"** — hedef sRGB rengine algisal olarak yakin asset'ler.
+///
+/// Model/vektor GEREKMEZ: cikarim sirasinda zaten yazilan `dominant_colors` EAV'si taranir.
+/// Siralama en yakindan uzaga; aktif filtreler (klasor/etiket/proje/cop…) KORUNUR.
+///
+/// **Kopya kod yok (2026-08-20 kullanici direktifi):** renk uzayi donusumu ve uzaklik
+/// `archivist_extract_image`ten gelir (baskin renkleri URETEN kodun ta kendisi) — arama ile
+/// cikarim boylece AYNI uzayda olcer. DB katmani kolorimetri bilmez; kapanis buradan enjekte
+/// edilir (`assets_near_color`). Sayfa hidratlamasi da uc arama yolunun paylastigi
+/// `query::hydrate_ordered` ile yapilir.
+///
+/// ⚠️ ΔE76 (Lab Oklid) kullanilir — CIEDE2000 DEGIL. Gerekce: burada is SIRALAMA + geniş bir
+/// esik; ΔE76 bunun icin yeterli ve cikarimin k-means'iyle AYNI olcut. (Detay panelindeki RAL
+/// eslesmesi kucuk farklarla ugrastigi icin orada CIEDE2000 kullanilir.)
+///
+/// `max_delta`: kabul esigi (ΔE76; ~10 cok yakin · ~25 ayni renk ailesi · 40+ gevsek).
+/// `min_share`: bu yuzdenin altinda kalan baskin renkler SAYILMAZ (bir kac piksellik kume
+/// yuzunden gorsel "kirmizi" sayilmasin). Salt-okuma → rol gate yok (`similar_images` deseni).
+#[tauri::command(async)]
+pub fn assets_near_color(
+    r: u8,
+    g: u8,
+    b: u8,
+    max_delta: f64,
+    min_share: f64,
+    opts: ListOpts,
+    state: State<'_, AppState>,
+) -> Result<AssetPage, String> {
+    let target = archivist_extract_image::srgb_to_lab(r, g, b);
+    // Esik KARE uzayda karsilastirilir (`lab_dist_sq` karekok almaz).
+    let max_sq = max_delta * max_delta;
+    let db = state.read_db.lock().map_err(|e| e.to_string())?;
+    db.assets_near_color(
+        &opts,
+        |color| {
+            if f64::from(color.percentage) < min_share {
+                return f64::INFINITY; // paysiz renk eslesme sayilmaz
+            }
+            let lab = archivist_extract_image::srgb_to_lab(color.r, color.g, color.b);
+            archivist_extract_image::lab_dist_sq(&target, &lab)
+        },
+        max_sq,
+    )
+    .map_err(|e| e.to_string())
+}
+
+/// Geri-doldurma ilerlemesi (Channel → kart + global banner). `reindex`/`analiz` ile ayni sekil.
+#[derive(Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ColorBackfillProgress {
+    processed: usize,
+    total: usize,
+}
+
+/// **Renk verisi eksik asset sayisi** (thumbnail'i olan ama `dominant_colors` EAV'si olmayan).
+/// Geri-doldurma kartinin gosterdigi sayi. Salt-okuma → rol gate yok.
+#[tauri::command(async)]
+pub fn count_missing_dominant_colors(state: State<'_, AppState>) -> Result<i64, String> {
+    let db = state.read_db.lock().map_err(|e| e.to_string())?;
+    db.count_missing_dominant_colors().map_err(|e| e.to_string())
+}
+
+/// **Baskin renk geri-doldurma (mevcut asset'ler; YENIDEN TARAMA YOK).** **Admin.**
+///
+/// Neden gerekli (olculdu 2026-08-20, gercek arsiv): renk cikarimi arsiv kurulduktan SONRA
+/// eklendi → daha once indekslenen raster gorsellerde `dominant_colors` EAV'si hic olusmadi
+/// (dev arsivinde saf raster dosyalarin %68'i). O dosyalar renk kartelasinda ve renk aramasinda
+/// GORUNMUYORDU.
+///
+/// **Kaynak dosyaya DOKUNMAZ**: renk, DB'de duran THUMBNAIL baytlarindan hesaplanir
+/// (`dominant_colors_from_bytes`). Uc kazanci var: (a) kaynagi baska makinede olan dosyalar da
+/// kapsanir (cok-lokasyon), (b) yeniden tarama/IO yok → saniyeler, (c) cikarim zaten goruntuyu
+/// 100x100'e kuculttugu icin 256px thumbnail yeterli.
+///
+/// **Idempotent**: yalniz EKSIK olanlara yazar, mevcut degeri EZMEZ (cikarimdan gelen — kaynak
+/// dosyadan hesaplanmis — deger her zaman onceliklidir). Ikinci kosu 0 doner.
+/// Kilit PARTI BASI alinir (tarama/analiz donmasin; 2026-08-20 dersi).
+///
+/// **Hiz:** decode + k-means dosya basina ~25ms ve dosyalar birbirinden BAGIMSIZ → parti icinde
+/// cekirdeklere dagitilir (ingest worker deseni). Olcum 2026-08-20: 1.231 dosya tek is parcaciginda
+/// ~30sn suruyordu. Ilerleme ana thread'de toplanir → sayac monoton, yaris yok.
+#[tauri::command(async)]
+pub fn backfill_dominant_colors(
+    on_progress: Channel<ColorBackfillProgress>,
+    state: State<'_, AppState>,
+) -> Result<usize, String> {
+    let role = rbac::current_role(&state).map_err(|e| e.to_string())?;
+    rbac::require_admin(role).map_err(|e| e.to_string())?;
+
+    // Toplam ONCE olculur: ilerleme "N/M" olarak gosterilebilsin. (Olculdu 2026-08-20: dosya
+    // basina ~25ms — 1.231 dosya ≈ 30sn. Sessiz bekleme kabul edilemez; kullanici bulgusu.)
+    let total = {
+        let db = state.read_db.lock().map_err(|e| e.to_string())?;
+        db.count_missing_dominant_colors().map_err(|e| e.to_string())? as usize
+    };
+    let _ = on_progress.send(ColorBackfillProgress { processed: 0, total });
+
+    const BATCH: i64 = 200;
+    let mut after_id = 0i64;
+    let mut written = 0usize;
+    let mut processed = 0usize;
+    let mut last_emit: Option<Instant> = None;
+    loop {
+        // Parti CEK (kisa kilit).
+        let batch = {
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
+            db.assets_missing_dominant_colors(after_id, BATCH).map_err(|e| e.to_string())?
+        };
+        if batch.is_empty() {
+            break;
+        }
+        // Kursor: sorgu `ORDER BY a.id` → partinin SON id'si bir sonraki partinin baslangici.
+        // (Paralel isleme sirayi bozdugu icin id'yi dongude ilerletemeyiz.)
+        after_id = batch.last().map(|(id, _)| *id).unwrap_or(after_id);
+
+        // Decode + k-means: KILITSIZ ve **PARALEL** (ingest'in worker deseni: `thread::scope` +
+        // paylasik `AtomicUsize` indeksi → is-calma; sonuclar mpsc ile ANA THREAD'e). Is tamamen
+        // CPU-bagimli: baytlar zaten bellekte (thumbnail), disk okumasi YOK.
+        //
+        // ⚠️ Neden `effective_concurrency` (ingest) DEGIL: o fonksiyon otomatik modda 1 worker
+        // secer, cunku ingest paralel BUYUK DOSYA OKUR ve bilinmeyen bir HDD/USB'yi doyurabilir.
+        // Burada disk hic okunmuyor → cekirdek sayisi dogru varsayilan.
+        //
+        // Ilerleme ANA THREAD'de, sonuc geldikce yayilir (~100ms kisma) → worker'lar arasi
+        // yaris/kilitlenme yok, sayac monoton artar.
+        let workers = std::thread::available_parallelism().map_or(1, |n| n.get()).clamp(1, 8);
+        let next = std::sync::atomic::AtomicUsize::new(0);
+        let (tx, rx) = std::sync::mpsc::channel::<(i64, Vec<archivist_db::DominantColor>)>();
+        let mut computed: Vec<(i64, Vec<archivist_db::DominantColor>)> =
+            Vec::with_capacity(batch.len());
+        std::thread::scope(|scope| {
+            for _ in 0..workers {
+                let tx = tx.clone();
+                let next = &next;
+                let batch = &batch;
+                scope.spawn(move || {
+                    loop {
+                        let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                        let Some((id, bytes)) = batch.get(i) else {
+                            break;
+                        };
+                        let colors = archivist_extract_image::dominant_colors_from_bytes(bytes, 5)
+                            .into_iter()
+                            .map(|c| archivist_db::DominantColor {
+                                r: c.r,
+                                g: c.g,
+                                b: c.b,
+                                percentage: c.percentage,
+                            })
+                            .collect();
+                        if tx.send((*id, colors)).is_err() {
+                            break; // alici gitti (olmamali) → sessizce bit
+                        }
+                    }
+                });
+            }
+            drop(tx); // ana thread'in kopyasi kapanmali ki `rx` dongusu bitebilsin
+            for item in rx {
+                computed.push(item);
+                processed += 1;
+                let now = Instant::now();
+                let due = last_emit.is_none_or(|t| now.duration_since(t).as_millis() >= 100);
+                if due || processed == total {
+                    last_emit = Some(now);
+                    let _ = on_progress.send(ColorBackfillProgress { processed, total });
+                }
+            }
+        });
+        // Yaz (kisa kilit).
+        {
+            let db = state.db.lock().map_err(|e| e.to_string())?;
+            for (id, colors) in &computed {
+                // Cozulemeyen thumbnail → bos liste → yazilmaz (yalan EAV uretme).
+                if db.write_dominant_colors(*id, colors).map_err(|e| e.to_string())? {
+                    written += 1;
+                }
+            }
+        }
+    }
+    // Bitis: cubuk %100'e otursun (son parti kisildiysa yakalanmamis olabilir).
+    let _ = on_progress.send(ColorBackfillProgress { processed, total });
+    Ok(written)
+}
+
 /// **Katman 1 backfill (Doctor/bakim):** `ai_gorsel_turu` OLMAYAN raster gorsel asset'leri, mevcut
 /// EXIF/boyut EAV'sinden deterministik olarak render/foto/doku siniflandirir → dolu ise yazar.
 /// **Admin-gated** (yazma). **Idempotent** (yalniz eksikler; ikinci kosu 0). YENIDEN TARAMA YOK

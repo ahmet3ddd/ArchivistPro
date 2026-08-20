@@ -66,6 +66,21 @@ function turkishDocuments(isAdmin: boolean): Record<TabId, Article> {
       ]},
     ]},
     changelog: { title: "Bu sürümde", intro: "H3 arayüzündeki güncel kullanıcı odaklı iyileştirmeler.", sections: [
+      { id: "colors", title: "Renkler artık okunabilir, kopyalanabilir ve aranabilir", paragraphs: [
+        "Dosya detayındaki renk çubuğu bir göstergeden ibaretti. Artık çubuktaki bir renge tıklayınca o rengin HEX, RGB ve HSL değerleri ile en yakın RAL Classic karşılığı görünür; her değere tıklayınca panoya kopyalanır (şartnameye ya da müşteriye renk verirken doğrudan kullanılır).",
+        "RAL karşılığı daima «≈» ile ve algısal fark değeriyle gösterilir; yakın bir karşılık yoksa bunu açıkça söyler. Sebebi şu: RAL fiziksel bir boya standardıdır, elinizdeki renk ise fotoğraftan ya da render'dan gelen bir ekran rengidir (aydınlatma, beyaz dengesi ve sıkıştırma rengi kaydırır). Boya kararını fiziksel RAL kartelasıyla verin; buradaki değer yönlendiricidir.",
+        "«Bu renge yakın görselleri bul» ile arşivin tamamında renk araması yapabilirsiniz. Sonuçlar en yakından uzağa sıralanır ve aktif filtreleriniz (klasör, proje, etiket) korunur. Model gerektirmez, çevrimdışı çalışır.",
+        "Renk çıkarımı bu özellikten önce indekslenmiş dosyalarda yoktu; onlar kartelada boş görünüyor ve aramada bulunamıyordu. Ayarlar › AI altındaki «Renk Verisi» kartı bunları tek seferde tamamlar — kaynak dosyalarınıza dokunmadan, kayıtlı önizlemeden hesaplayarak.",
+      ]},
+      { id: "context-menus", title: "Sağ tık artık uygulamanın kendi menüsünü açıyor", paragraphs: [
+        "Pano, Teknik, Harita ve Sohbet ekranlarında sağ tık, uygulamanın değil tarayıcı motorunun menüsünü açıyordu: «Yeniden yükle», «Farklı kaydet», «Kaynağı görüntüle». Bir arşiv uygulamasında bunların karşılığı yok. Artık her görünüm kendi menüsünü açar: kopyala, görünüm değiştir ve o ekrana özel eylemler.",
+        "Uygulama çerçevesinde de (sol şerit, üst çubuk, kenar çubukları) tarayıcı menüsü artık çıkmaz. Yazı alanlarında ise varsayılan menü bilerek korunur — kes/kopyala/yapıştır oradan gelir.",
+      ]},
+      { id: "analysis-locks", title: "AI analizi sürerken toplu işlemler analizi durdurmuyor", paragraphs: [
+        "«Yeniden indeksle», «Taşı» ve «Kural ile düzenle» işlemleri tüm iş boyunca veritabanı yazma kilidini tutuyordu. Bu sırada koşan AI görsel analizi ilk kilit isteğinde donuyor, «İptal» düğmesi de cevapsız kalıyordu — büyük çizim dosyalarında bu dakikalarca sürebiliyordu. Bu üç işlem artık kilidi dosya başına alıp bırakıyor.",
+        "Ayrıca analiz sürerken, analiz edilmekte olan dosyanın yolunu ya da önizlemesini değiştiren işlemler pasifleşir ve sebebini söyler. Koşuyu durdurup işinizi yapabilir, sonra kaldığı yerden devam ettirebilirsiniz.",
+        "«AI ile analiz et» düğmesi de artık gerçeği söylüyor: başka bir yerden başlatılmış bir analiz varken onun ilerlemesini gösterir ve durdurma sunar; eskiden aktif görünüp teknik bir hata veriyordu.",
+      ]},
       { id: "vision-abort", title: "Görsel analizi yarıda kesilince dosya suçlanmıyor", paragraphs: [
         "AI görsel analizinde model bazen yanıtı tamamlayamadan düşer; geriye anlamsız bir metin kalır. Uygulama bunu modelin tam cevabı sanıyor, beklediği alanları bulamayınca da dosyayı kalıcı olarak «denendi, sonuç alınamadı» diye işaretliyordu. Yani geçici bir kesinti, dosyanın ya da modelin suçu gibi görünüyordu. Artık bu durum ayrı bir geçici hata olarak tanınır ve dosya işaretlenmez.",
         "Kesinti, görselin gönderim boyutuyla ilgilidir: aynı fotoğraf büyük boyutta düşerken küçültülmüş hâlinde sorunsuz analiz edilir. Bu yüzden kesinti olduğunda görsel bir kez daha, küçültülmüş olarak gönderilir.",

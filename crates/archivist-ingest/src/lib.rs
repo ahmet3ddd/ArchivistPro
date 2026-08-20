@@ -16,7 +16,8 @@ pub mod staleness;
 
 pub use pipeline::{
     ingest_folder, ingest_folder_with_progress, ingest_folders_with_progress, reindex_paths,
-    IngestMode, IngestOpts, IngestProgress, IngestReport, ReindexReport, REPORT_MAX_ENTRIES,
+    reindex_paths_with, reindex_write, IngestMode, IngestOpts, IngestProgress, IngestReport,
+    ReindexPrep, ReindexReport, REPORT_MAX_ENTRIES,
 };
 pub use registry::build_registry;
 pub use staleness::{

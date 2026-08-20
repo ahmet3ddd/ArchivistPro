@@ -4,7 +4,7 @@
 //! 1. [`plan_organize`] → salt-okuma ONIZLEME: her asset → sirali hedef klasor segmentleri.
 //!    Disk/DB'ye DOKUNULMAZ (kullanici onaylamadan tasima yok).
 //! 2. [`organize_assets`] → CALISTIR: `dest_root + segments.. + file_name` → hedef alt-dizini
-//!    olustur → moduna gore **tasi** (`refile_one`: disk + DB senkron + rollback + ezme-yok) ya da
+//!    olustur → moduna gore **tasi** (`refile_one_with`: disk + DB senkron + rollback + ezme-yok) ya da
 //!    **kopyala** (`copy_file`: fsync'li kopya; DB'ye dokunulmaz, arsiv yerinde kalir). Batch ABORT
 //!    ETMEZ (sorunlu oge skipped/failed'e yazilir, kalan devam eder).
 //!
@@ -23,8 +23,8 @@ use tauri::ipc::Channel;
 use tauri::State;
 
 use crate::refile_commands::{
-    copy_file, emit_progress, join_path, refile_one, separator_of, RefileBatchReport, RefileFail,
-    RefileOutcome, RefileProgress, RefileSkip,
+    copy_file, emit_progress, join_path, map_refile_err, refile_one_with, separator_of,
+    RefileBatchReport, RefileFail, RefileOpError, RefileOutcome, RefileProgress, RefileSkip,
 };
 use crate::{audit, rbac, AppState};
 
@@ -164,9 +164,16 @@ pub async fn organize_assets(
     // Basarili TASINANLAR → tek undo kaydi (yalniz Move; Copy additive → kayit yok).
     let mut undo_items: Vec<crate::undo_commands::MoveItem> = Vec::new();
 
+    // ⚠️ KILIT DOSYA-BASI (2026-08-20 kullanici bulgusu; `refile_assets` ile ayni gerekce):
+    // eskiden `state.db` kilidi TUM batch boyunca — dosya kopyalanirken/tasinirken bile — elde
+    // tutuluyordu ve ayni anda kosan AI gorsel-analizi donuyordu. Artik okumalar `read_db`'den,
+    // disk isi kilitsiz, yazma kilidi yalniz DB yol-senkronunda (bkz `refile_one_with`).
     {
-        let db = state.db.lock().map_err(|e| e.to_string())?;
-        let mut by_id = class_map(db.classification_for(&ids).map_err(|e| e.to_string())?);
+        // Siniflandirma tek seferde okunur (salt-okuma → `read_db`).
+        let mut by_id = {
+            let db = state.read_db.lock().map_err(|e| e.to_string())?;
+            class_map(db.classification_for(&ids).map_err(|e| e.to_string())?)
+        };
 
         for (i, &id) in ids.iter().enumerate() {
             let processed = i + 1;
@@ -179,7 +186,10 @@ pub async fn organize_assets(
             };
 
             // Kaynak yolu id-basi oku (aktif filtre classification ile ayni; cop/eksik → skip).
-            let old_path = db.paths_for_ids(&[id]).ok().and_then(|v| v.into_iter().next());
+            let old_path = {
+                let db = state.read_db.lock().map_err(|e| e.to_string())?;
+                db.paths_for_ids(&[id]).ok().and_then(|v| v.into_iter().next())
+            };
             let Some(old_path) = old_path else {
                 report.skipped.push(RefileSkip { path: format!("#{id}"), reason: "not_found".into() });
                 emit_progress(&on_progress, processed, total, format!("#{id}"), &mut last_emit);
@@ -207,7 +217,10 @@ pub async fn organize_assets(
 
             match mode {
                 // TASI — mevcut cekirdek: disk + DB senkron + rollback + ezme-yok.
-                OrganizeMode::Move => match refile_one(&db, id, &old_path, &new_path) {
+                OrganizeMode::Move => match refile_one_with(id, &old_path, &new_path, |id, path| {
+                    let db = state.db.lock().map_err(|e| RefileOpError::Db(e.to_string()))?;
+                    db.refile_asset(id, path).map(|_| ()).map_err(map_refile_err)
+                }) {
                     Ok(RefileOutcome::Moved) => {
                         report.moved += 1;
                         undo_items.push(crate::undo_commands::MoveItem {
@@ -249,12 +262,13 @@ pub async fn organize_assets(
             emit_progress(&on_progress, processed, total, display, &mut last_emit);
         }
 
-        // Tek ozet audit (mode + structures + dest_root + N).
+        // Tek ozet audit (mode + structures + dest_root + N) — batch bitti, TEK kisa kilit.
         let structure_keys = structures
             .iter()
             .map(|&s| structure_key(s))
             .collect::<Vec<_>>()
             .join(",");
+        let db = state.db.lock().map_err(|e| e.to_string())?;
         audit::record_on(
             &db,
             &actor,
@@ -277,7 +291,7 @@ pub async fn organize_assets(
             &dest_root,
             undo_items,
         );
-    } // db kilidi birak
+    } // ozet kilidi birak
 
     Ok(report)
 }

@@ -17,6 +17,7 @@ export function IngestButton({ className }: { className?: string } = {}) {
     <ProtectedAction require="admin" mode="disabled">
       <button
         type="button"
+        data-testid="ingest-button"
         onClick={() => openIngest(null)}
         className={
           className ??

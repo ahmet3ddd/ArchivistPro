@@ -10,6 +10,8 @@
 //! - `facets` — facet sayimlari (ext/metadata/tag/onay/musteri/versiyon/termin/favori).
 //! - `fts`    — FTS5 MATCH ifadesi uretimi (boolean/tumce parser) + fuzzy terim ayiklama.
 
+use std::collections::HashMap;
+
 use rusqlite::Row;
 use serde::{Deserialize, Serialize};
 
@@ -490,6 +492,60 @@ pub(crate) const FILTER_FRAG: &str = "a.deleted_at IS NULL
                       AND am.key = json_extract(mf.value, '$.key')
                       AND am.value_text IN (
                             SELECT value FROM json_each(json_extract(mf.value, '$.values'))))))";
+
+/// **Sirali id listesini AKTIF FILTRELERLE hidratla** — siralamayi KORU, ilk `k` sonucu dondur.
+///
+/// UC arama yolu (semantik · gorsel-kNN · renk-yakinligi) tam olarak ayni uc adimi yapiyordu:
+/// `id IN (<inline>) AND FILTER_FRAG` ile satirlari cek → id→satir haritasi → sirayi koruyarak
+/// ilk k. Iki kopyasi zaten vardi (`semantic.rs` + `image.rs`) ve ucuncusunu yazmak yerine tek
+/// yere alindi (2026-08-20): kopyalar ayrisirsa biri FILTER_FRAG'a eklenen yeni dali alir, oteki
+/// eskir — yani AYNI arsivde yola gore FARKLI filtre davranisi olusurdu.
+///
+/// `scored`: `(asset_id, satira islenecek skor)`. Skor `None` ise satirin `score` alanina
+/// DOKUNULMAZ — yalniz semantik yol gercek cosine skorunu (% rozet) gosterir; mesafe/uzaklik
+/// degerleri skor gibi sunulmaz.
+///
+/// ⚠️ `id IN (<inline>)`: id'ler DB'nin kendi sorgusundan gelen `i64` → SQL-injection yok
+/// (kullanici girdisi degil). Filtre parametreleri `FilterBinds` ile adli baglanir.
+pub(crate) fn hydrate_ordered(
+    conn: &rusqlite::Connection,
+    scored: &[(i64, Option<f32>)],
+    opts: &ListOpts,
+    k: i64,
+) -> Result<AssetPage, crate::DbError> {
+    if scored.is_empty() {
+        return Ok(AssetPage { total: 0, items: Vec::new() });
+    }
+    let id_list = scored.iter().map(|(id, _)| id.to_string()).collect::<Vec<_>>().join(",");
+    let binds = FilterBinds::new(opts);
+    let common = binds.params();
+    let sql = format!(
+        "SELECT {COLS_A}, {FAV_A}, NULL, {AI_A}, {AI_GORSEL_TURU_EXPR}, {DOMINANT_COLORS_EXPR} FROM assets a
+         WHERE a.id IN ({id_list}) AND {FILTER_FRAG}"
+    );
+    let mut stmt = conn.prepare(&sql)?;
+    let mut by_id: HashMap<i64, AssetRow> = HashMap::new();
+    let rows = stmt.query_map(common.as_slice(), map_asset_row)?;
+    for row in rows {
+        let row = row?;
+        by_id.insert(row.id, row);
+    }
+
+    let mut items = Vec::with_capacity(k.max(0) as usize);
+    for (id, score) in scored {
+        if let Some(mut row) = by_id.remove(id) {
+            if score.is_some() {
+                row.score = *score;
+            }
+            items.push(row);
+            if items.len() >= k as usize {
+                break;
+            }
+        }
+    }
+    let total = items.len() as i64;
+    Ok(AssetPage { total, items })
+}
 
 /// `map_asset_row`: 0..9 COLS sirasinda, 10 favorite (0/1), 11 snippet (NULL olabilir),
 /// 12 ai_analyzed (0/1), 13 ai_gorsel_turu (value_text, NULL olabilir), 14 dominant_colors

@@ -23,11 +23,13 @@ import { Spinner } from "../../components/Spinner";
 import { ipc } from "../../ipc/client";
 import { buildListOpts, dateToEpoch } from "../../hooks/listOpts";
 import { useIpcQuery } from "../../hooks/useIpcQuery";
+import { refreshVisionRunState } from "../../hooks/useVisionLock";
 import { useSession } from "../../hooks/useSession";
 import { useUiStore } from "../../store/useUiStore";
+import { useBgTaskStore } from "../bgtask/bgTaskStore";
 import { useFailedAttemptFilter } from "../facets/aiAttempt";
 import type { VisionOutcomeNotice } from "../settings/visionErrors";
-import { visionOutcomeNotice } from "../settings/visionErrors";
+import { visionOutcomeNotice, visionStartErrorKey } from "../settings/visionErrors";
 import { useVisionOutcomeToast } from "../settings/useVisionOutcomeToast";
 import { useToast } from "../toast/useToast";
 
@@ -164,6 +166,11 @@ export function VisionAnalysisCard({ model }: { model: string }) {
   // `model === ""` → yuklu vision modeli yok / Ollama kapali → uyari + run pasif.
   const hasVision = model !== "";
 
+  // Global arka-plan banner'i (her gorunumden gorunur) — kosuyu buradan da kaydediyoruz.
+  const bgStart = useBgTaskStore((s) => s.start);
+  const bgUpdate = useBgTaskStore((s) => s.update);
+  const bgEnd = useBgTaskStore((s) => s.end);
+
   const [localRunning, setLocalRunning] = useState(false);
   const [progress, setProgress] = useState<ImageAnalysisProgress | null>(null);
   const [liveStatus, setLiveStatus] = useState<ImageAnalysisStatus | null>(null);
@@ -258,8 +265,15 @@ export function VisionAnalysisCard({ model }: { model: string }) {
       setLocalRunning(true);
       setProgress(null);
       setFailure(null);
+      // Global banner kaydi: kosu Pano'dan baslatilsa da HER gorunumden gorunsun (+"Durdur").
+      // Oncesinde kullanici Pano'dan ayrilinca kosunun izi TAMAMEN kayboluyordu (BgTaskBanner
+      // yalniz `bgTaskStore`'u okur; bu kart kaydolmuyordu) — 2026-08-20 denetimi.
+      const taskId = bgStart("analyze", 0);
       try {
-        const report = await ipc.runImageAnalysis(model, scope, (p) => setProgress(p));
+        const report = await ipc.runImageAnalysis(model, scope, (p) => {
+          setProgress(p);
+          bgUpdate(taskId, { processed: p.processed, total: p.total, currentPath: p.currentPath });
+        });
         const abortedAfter = report.abortedAfterConsecutiveFailures ?? null;
         if (abortedAfter) {
           // Devre kesici: "basarili" gostermek yaniltici olurdu — kosu yarida kesildi. Durdurma
@@ -284,15 +298,19 @@ export function VisionAnalysisCard({ model }: { model: string }) {
         bumpData(); // analiz edilenler artik metin aramasinda bulunur → liste tazelensin
         bumpFacets(); // vision-etiketleri facet'lere yansisin
       } catch (e: unknown) {
-        toast.error(t("vision_index.failed", { message: String(e) }));
+        // Bilinen reddetme (`vision_busy`) → anlasilir cumle; digerleri ham metinle (kaybolmasin).
+        const key = visionStartErrorKey(e);
+        toast.error(key ? t(key) : t("vision_index.failed", { message: String(e) }));
       } finally {
         runningRef.current = false;
         setLocalRunning(false);
         setProgress(null);
         setTick((x) => x + 1);
+        bgEnd(taskId);
+        refreshVisionRunState(); // gezgindeki kilit hemen acilsin
       }
     },
-    [model, t, toast, bumpData, bumpFacets, notifyVisionOutcome],
+    [model, t, toast, bumpData, bumpFacets, notifyVisionOutcome, bgStart, bgUpdate, bgEnd],
   );
 
   // Aktif kosuyu durdur ("İptal") — backend bayrak set eder, kosu araya girip biter (rapor stopped=true).

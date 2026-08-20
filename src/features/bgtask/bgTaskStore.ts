@@ -15,7 +15,7 @@
 import { create } from "zustand";
 
 /** Arka-plan islem turu (banner etiketi: `bgTask.<kind>`). */
-export type BgTaskKind = "rescan" | "reindex" | "analyze";
+export type BgTaskKind = "rescan" | "reindex" | "analyze" | "colors";
 
 /** Tek aktif arka-plan islemi. `total === 0` → belirsiz (henuz tariyor / toplam bilinmiyor). */
 export interface BgTask {

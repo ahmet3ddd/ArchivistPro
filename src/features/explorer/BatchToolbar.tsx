@@ -1,6 +1,12 @@
 // Toplu islem arac cubugu (Faz 7.5; kontrol-paritesi genisletmesi) — `selectedIds.length > 0`
 // iken AssetGrid'de mevcut arac cubugunun ALTINDA gosterilir.
 //
+// AI GORSEL-ANALIZ KAPISI (2026-08-20): "kosu var mi" bilgisi artik YEREL state degil, backend
+// bayragi (`useVisionRunState`) — kosu baska bir yuzeyden (Pano karti) baslatilmis ya da bu bilesen
+// unmount olmus olsa bile dogru. Kosarken: analiz butonu kilitli + ilerleme burada da gorunur, ve
+// UZUN-KILITLI bakim eylemleri (yeniden indeksle · tasi · kural ile duzenle) kapatilir — analiz
+// edilmekte olan dosyalarin yolu/onizlemesi is ortasinda degismesin.
+//
 // Secili sayi + "Tumunu sec" (su an YUKLU items id'leri) + "Temizle". Yazma eylemleri (editor+,
 // viewer'da gizli): favori EKLE/CIKAR · etiket EKLE/KALDIR · koleksiyona EKLE/CIKAR · cope at.
 // Etiket/koleksiyon eylemleri ebeveyn (AssetGrid) PickerModal'ini ACAR (ekle=find-or-create,
@@ -19,6 +25,9 @@ import { ProjectAssignModal } from "../projects/ProjectAssignModal";
 import { useBgTaskStore } from "../bgtask/bgTaskStore";
 import { getDefaultVisionModel } from "../settings/aiSettings";
 import { useVisionOutcomeToast } from "../settings/useVisionOutcomeToast";
+import { MaintenanceGate } from "../shell/MaintenanceGate";
+import { visionStartErrorKey } from "../settings/visionErrors";
+import { refreshVisionRunState, useVisionRunState } from "../../hooks/useVisionLock";
 import { OrganizeModal } from "../refile/OrganizeModal";
 import { useRefileMove } from "../refile/useRefileMove";
 import { useToast } from "../toast/useToast";
@@ -91,6 +100,15 @@ export function BatchToolbar({
   // Toplu "Projeye Ata" (editor+) — ProjectAssignModal acar (secili asset'leri bir projeye ata /
   // atamayi kaldir). Basari sonrasi bumpData (liste + proje asset-sayimlari tazelensin).
   const [assignOpen, setAssignOpen] = useState(false);
+
+  // Backend'in aktif-kosu bayragi (DB'siz yoklama; bkz `useVisionLock`). BU bilesenin kendi kosusu
+  // `analyzing` ile zaten bilinir — `foreignRun` yalniz BASKA bir yerden baslatilmis kosuyu isaret
+  // eder (Pano blanket kosusu ya da bu bilesen unmount'tayken baslatilmis kosu).
+  const visionRun = useVisionRunState();
+  const foreignRun = visionRun.active && !analyzing;
+  // Bakim eylemlerinin kilidi `MaintenanceGate`'te (kosu bayragi + `alsoLocked={analyzing}`).
+  /** Uzun bakim isi suruyor → yeni analiz baslatilamaz (ayni kaynagi cekistirmesinler). */
+  const maintenanceBusy = reindexing || moving;
 
   const count = selectedIds.length;
   if (count === 0) return null;
@@ -201,10 +219,13 @@ export function BatchToolbar({
       bumpData(); // analiz edilenler artik aranabilir → liste tazelensin
       bumpFacets(); // vision-etiketleri facet'lere yansisin
     } catch (e: unknown) {
-      toast.error(t("vision_index.failed", { message: String(e) }));
+      // Bilinen reddetme (`vision_busy`) → anlasilir cumle; digerleri ham metinle (kaybolmasin).
+      const key = visionStartErrorKey(e);
+      toast.error(key ? t(key) : t("vision_index.failed", { message: String(e) }));
     } finally {
       setAnalyzing(false);
       bgEnd(taskId);
+      refreshVisionRunState(); // kilidi hemen ac (sonraki zamanlanmis yoklamayi bekleme)
     }
   };
 
@@ -213,6 +234,25 @@ export function BatchToolbar({
   const cancelAnalyze = () => {
     void ipc.stopImageAnalysis().catch(() => undefined);
   };
+
+  // Analiz butonunun uc durumu: KENDI kosumuz (analyzing) → ilerleme + iptal · BASKA yerden
+  // baslatilmis kosu (foreignRun) → kilitli + o kosunun ilerlemesi (kullanici neden kilitli
+  // oldugunu GORUR) · uzun bakim isi surerken → kilitli.
+  const analyzeBlockedTitle = foreignRun
+    ? t("vision_index.busy")
+    : maintenanceBusy
+      ? t("vision_index.blocked_by_task")
+      : undefined;
+  const analyzeLabel = analyzing
+    ? t("batch.analyze_ai_running", analyzeProgress)
+    : foreignRun
+      ? visionRun.progress
+        ? t("batch.analyze_ai_running", {
+            processed: visionRun.progress.processed,
+            total: visionRun.progress.total,
+          })
+        : t("vision_index.running")
+      : t("batch.analyze_ai", { count });
 
   const btn =
     "rounded-md border border-border bg-bg-tertiary px-2 py-1 text-xs text-text-primary transition hover:border-border-hover hover:bg-bg-tertiary disabled:cursor-not-allowed disabled:opacity-50";
@@ -283,28 +323,46 @@ export function BatchToolbar({
       {isAdmin && (
         <>
           {sep}
+          {/* ⚠️ ANALIZ SURERKEN KILITLI (yeniden indeksle · tasi · kural ile duzenle): ucu de
+              analiz edilmekte olan dosyalarin YOLUNU ya da THUMBNAIL'ini degistirir. Tasima yolu
+              koddan izlendi (2026-08-20 denetimi, `vision_commands.rs` kosu dongusu): kuyruktaki
+              parti ESKI yolu tasir → dosya tasininca ~768px kaynak onizleme okunamaz ve kod
+              sessizce DB'deki 256px thumbnail'e duser (uyarisiz, daha dusuk kaliteli analiz).
+              Gizlemek yerine KILITLEME + sebebi soyleyen ipucu (RemoteWriteGate deseni); kosu
+              resumable oldugu icin kullanici "İptal" deyip devam edebilir. */}
+          <MaintenanceGate alsoLocked={analyzing} className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              data-testid="batch-reindex"
+              onClick={() => void bulkReindex()}
+              disabled={reindexing}
+              className={btn}
+            >
+              {reindexing ? t("reindex.running", reindexProgress) : t("reindex.action")}
+            </button>
+            <button
+              type="button"
+              data-testid="batch-move"
+              onClick={() => void move(selectedIds)}
+              disabled={moving}
+              className={btn}
+            >
+              {moving ? t("refile.moving", moveProgress) : t("refile.move")}
+            </button>
+            <button
+              type="button"
+              data-testid="batch-organize"
+              onClick={() => setOrganizeOpen(true)}
+              className={btn}
+            >
+              {t("organize.action")}
+            </button>
+          </MaintenanceGate>
+          {/* XMP sidecar dis-aktar — kurate metadata'yi .xmp'e (Adobe Bridge/Lightroom okur).
+              SALT-OKUMA disa-aktarim (kaynak dosyaya dokunmaz) → analizden etkilenmez, kilitlenmez. */}
           <button
             type="button"
-            onClick={() => void bulkReindex()}
-            disabled={reindexing}
-            className={btn}
-          >
-            {reindexing ? t("reindex.running", reindexProgress) : t("reindex.action")}
-          </button>
-          <button
-            type="button"
-            onClick={() => void move(selectedIds)}
-            disabled={moving}
-            className={btn}
-          >
-            {moving ? t("refile.moving", moveProgress) : t("refile.move")}
-          </button>
-          <button type="button" onClick={() => setOrganizeOpen(true)} className={btn}>
-            {t("organize.action")}
-          </button>
-          {/* XMP sidecar dis-aktar — kurate metadata'yi .xmp'e (Adobe Bridge/Lightroom okur). */}
-          <button
-            type="button"
+            data-testid="batch-xmp"
             onClick={() => void exportXmp()}
             disabled={xmpBusy}
             className={btn}
@@ -313,22 +371,31 @@ export function BatchToolbar({
           </button>
           {sep}
           {/* AI ile analiz et (SECIM kapsami) — Ollama vision → metin betim → aranabilir. Uzun is
-              (saniyeler/gorsel); iptal edilebilir. Backend Ollama/vision yoksa Err → toast gosterir. */}
-          <button
-            type="button"
-            onClick={() => void bulkAnalyze()}
-            disabled={analyzing}
-            className={btn}
-          >
-            {analyzing
-              ? t("batch.analyze_ai_running", analyzeProgress)
-              : t("batch.analyze_ai", { count })}
-          </button>
-          {analyzing && (
-            <button type="button" onClick={cancelAnalyze} className={dangerBtn}>
-              {t("vision_index.cancel")}
+              (saniyeler/gorsel); iptal edilebilir. Backend Ollama/vision yoksa Err → toast gosterir.
+              Ipucu `div`de: disabled buton Chromium'da tooltip gostermez (RemoteWriteGate ile ayni
+              gerekce). "İptal" BASKA yerden baslatilmis kosuda da cizilir — `stopImageAnalysis`
+              kosuyu kim baslatmis olursa olsun durdurur (sahte buton degil). */}
+          <div title={analyzeBlockedTitle} className="flex items-center gap-2">
+            <button
+              type="button"
+              data-testid="batch-analyze"
+              onClick={() => void bulkAnalyze()}
+              disabled={analyzing || foreignRun || maintenanceBusy}
+              className={btn}
+            >
+              {analyzeLabel}
             </button>
-          )}
+            {(analyzing || foreignRun) && (
+              <button
+                type="button"
+                data-testid="batch-analyze-cancel"
+                onClick={cancelAnalyze}
+                className={dangerBtn}
+              >
+                {t("vision_index.cancel")}
+              </button>
+            )}
+          </div>
         </>
       )}
 

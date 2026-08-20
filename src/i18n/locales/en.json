@@ -270,6 +270,9 @@
     "rebuild_cleared": "{{count, number}} old chunks deleted — re-indexing…"
   },
   "vision_index": {
+    "busy": "An AI image analysis is currently running. Stop it before starting a new one.",
+    "maintenance_locked": "Unavailable while AI image analysis is running: these actions change the path or preview of files being analyzed. You can stop the analysis and continue later (remaining work stays queued).",
+    "blocked_by_task": "Cannot start AI analysis while a reindex or move is running.",
     "attempt_marks_notice": "{{count, number}} images are marked “tried, no result”. This mark does not block re-analysis; a transient model error in an older version may also have left it.",
     "attempt_marks_clear": "Clear marks",
     "attempt_marks_clearing": "Clearing…",
@@ -635,6 +638,8 @@
     "page": "Page {{page}} / {{pages}}"
   },
   "sort": {
+    "relevance": "Best match first",
+    "relevance_hint": "The search determines the order of these results (closest/most similar first). List sorting does not apply here — it returns when you clear the scope.",
     "label": "Sort",
     "modified_desc": "Modified (new)",
     "modified_asc": "Modified (old)",
@@ -643,6 +648,7 @@
     "created_desc": "Created (new)"
   },
   "blank_menu": {
+    "aria_label": "Explorer context menu",
     "section_view": "View",
     "section_card_size": "Card size",
     "section_selection": "Selection",
@@ -655,6 +661,8 @@
     "all_ext": "All types"
   },
   "view": {
+    "map_open_all": "Open all in Explorer",
+    "map_ctx_aria_label": "Map context menu",
     "folders": "Folders",
     "explorer": "Explorer",
     "dashboard": "Dashboard",
@@ -691,6 +699,10 @@
     "organization": "Organization",
     "close": "Close archive panel"
   },  "chat": {
+    "ctx": {
+      "aria_label": "Chat context menu",
+      "busy_hint": "Unavailable while a reply is being generated."
+    },
     "export": {
       "labels": {
         "date": "Date", "model": "Model", "scope": "Scope",
@@ -800,6 +812,7 @@
     "path_nav": "Folder path",
     "back_to_folders": "Back to Folders view",
     "ctx": {
+      "aria_label": "Folder context menu",
       "section_view": "View",
       "section_sort": "Sort",
       "section_tree": "Tree",
@@ -828,6 +841,10 @@
     }
   },
   "dashboard": {
+    "ctx": {
+      "aria_label": "Dashboard context menu",
+      "clear_scope": "Clear folder scope ({{name}})"
+    },
     "filters_ignored": "Active search and other filters are not applied to Dashboard totals. They are cleared before a chart drill-down.",
     "clear_other_filters": "Clear other filters",
     "title": "Dashboard",
@@ -857,6 +874,9 @@
     "scope_global": "Entire archive"
   },
   "technical": {
+    "ctx": {
+      "aria_label": "Technical view context menu"
+    },
     "title": "Technical",
     "sort_hint": "Click to sort",
     "name": "Name",
@@ -1034,7 +1054,36 @@
     "drop_to_add": "Drop files here to add them to this collection",
     "delete_confirm": "Delete collection \"{{name}}\"? (Files are not deleted.)"
   },
+  "color_backfill": {
+    "running_progress": "Backfilling… {{processed, number}}/{{total, number}}",
+    "title": "Color Data",
+    "hint": "Dominant color extraction was added after this archive was set up; {{count, number}} images indexed before that have no color data. They show an empty palette on cards and cannot be found by color search. Backfill does NOT touch source files (colors are computed from the stored preview) — no rescan, and existing values are never overwritten.",
+    "run": "Backfill {{count, number}} files",
+    "running": "Backfilling…",
+    "done_toast": "Color data written for {{count, number}} files.",
+    "none_toast": "No new color data to write.",
+    "failed": "Color backfill failed: {{message}}"
+  },
+  "colors": {
+    "search_action": "Find images near this color",
+    "search_title": "Images near {{hex}}",
+    "title": "Colors",
+    "share": "{{percent}}% share",
+    "hex": "HEX",
+    "rgb": "RGB",
+    "hsl": "HSL",
+    "ral": "RAL",
+    "copy_hint": "Click to copy",
+    "ral_hint": "≈ {{name}} · perceptual difference ΔE {{delta}} (approximate match; copies the code)",
+    "ral_far_hint": "Distant match — perceptual difference ΔE {{delta}}",
+    "ral_far_notice": "No RAL color is close to this one; the code shown is merely the nearest. Use a physical RAL fan deck for paint decisions."
+  },
   "context": {
+    "app_aria_label": "Application context menu",
+    "clear_filters": "Clear filters",
+    "refresh": "Refresh",
+    "copy_selection": "Copy selection",
+    "aria_label": "File context menu",
     "copy_path": "Copy path",
     "favorite": "Add to favorites",
     "unfavorite": "Remove from favorites",
@@ -1238,6 +1287,8 @@
     "create": "Create \"{{name}}\""
   },
   "toast": {
+    "copy_failed": "Could not copy (clipboard access denied).",
+    "copied": "Copied to clipboard.",
     "favorite_added": "Added to favorites",
     "favorite_removed": "Removed from favorites",
     "favorite_failed": "Couldn't update favorite",
@@ -1617,6 +1668,7 @@
     "dismiss": "Dismiss"
   },
   "bgTask": {
+    "colors": "Backfilling color data",
     "rescan": "Rescanning",
     "reindex": "Reindexing",
     "analyze": "AI image analysis",

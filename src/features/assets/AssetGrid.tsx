@@ -25,6 +25,7 @@ import type { AssetSort } from "../../ipc/client";
 import { EmptyState } from "../../components/EmptyState";
 import { Spinner } from "../../components/Spinner";
 import { useInfiniteAssets } from "../../hooks/useAssets";
+import { isSinglePageRoute, resolveAssetQueryRoute } from "../../hooks/assetQueryRoute";
 import { useCollections, useTagFacets } from "../../hooks/useFacets";
 import { SELECT_ALL_EVENT } from "../../hooks/useGlobalShortcuts";
 import { useIngestWriteLock } from "../../hooks/useIngestLock";
@@ -130,6 +131,8 @@ export function AssetGrid() {
   const clearSimilarTo = useUiStore((s) => s.clearSimilarTo);
   const geoListIds = useUiStore((s) => s.geoListIds);
   const setGeoListIds = useUiStore((s) => s.setGeoListIds);
+  const colorSearch = useUiStore((s) => s.colorSearch);
+  const setColorSearch = useUiStore((s) => s.setColorSearch);
   const query = useUiStore((s) => s.query);
   const viewMode = useUiStore((s) => s.viewMode);
   const selectedId = useUiStore((s) => s.selectedId);
@@ -142,6 +145,7 @@ export function AssetGrid() {
   const setSelectedMany = useUiStore((s) => s.setSelectedMany);
   // LAN Faz 2: uzak arsiv listeleniyor mu (yerel-id'ye dayanan eylemler kapanir).
   const remoteMode = useUiStore((s) => s.assetSource === "remote");
+  const semanticMode = useUiStore((s) => s.semanticMode);
   // YAZMA KILIDI = uzak arsiv **veya** kosan tarama. Tarama arka plana alinabildigi icin
   // kullanici artik kosu sirasinda gride ULASIYOR; buradaki eylemlerin hepsi (favori/etiket/
   // cop/toplu islem) yazma kilidini bekler ve senkron olduklari icin UI is parcacigini
@@ -348,17 +352,47 @@ export function AssetGrid() {
   // kullandigi icin bu yalniz klasik metin sorgusuna uygulanir.
   const shortTextQuery = activeTextQuery && Array.from(query.trim()).length <= 3;
 
+  // ALAKA-SIRALI yollar (benzer-gorsel · renk-yakinligi · anlamli arama): sonuc sirasini BACKEND
+  // belirler (en iyi eslesme once) → ust cubuktaki siralama secicisi o yollarda HICBIR SEY YAPMAZ.
+  // Secici yine de acik dururdu ve "Degisiklik (yeni)" yazardi: calismayan bir kontrol + YANLIS
+  // bir siralama iddiasi (kullanici sorusu 2026-08-20: "neye gore siraliyor?"). Yol karari yine
+  // TEK kaynaktan (`resolveAssetQueryRoute`) — burada kopya kural yok; tek-sayfa yollar zaten
+  // tam olarak alaka-sirali olanlardir.
+  const route = resolveAssetQueryRoute({
+    assetSource: remoteMode ? "remote" : "local",
+    semanticMode,
+    hasQuery: query.trim().length > 0,
+    hasSimilar: similarTo != null,
+    hasColor: colorSearch != null,
+  });
+  const relevanceOrdered = isSinglePageRoute(route);
+
   return (
     <div className="flex h-full flex-col">
       {/* Arac cubugu */}
       <div className="flex items-center gap-3 border-b border-border px-4 py-2">
-        <select className={ctrl} value={sort} onChange={(e) => setSort(e.target.value as AssetSort)}>
-          {SORTS.map((s) => (
-            <option key={s} value={s}>
-              {t(`sort.${s}`)}
-            </option>
-          ))}
-        </select>
+        {relevanceOrdered ? (
+          <span
+            data-testid="sort-relevance"
+            title={t("sort.relevance_hint")}
+            className={`${ctrl} cursor-default text-text-muted`}
+          >
+            {t("sort.relevance")}
+          </span>
+        ) : (
+          <select
+            data-testid="sort-select"
+            className={ctrl}
+            value={sort}
+            onChange={(e) => setSort(e.target.value as AssetSort)}
+          >
+            {SORTS.map((s) => (
+              <option key={s} value={s}>
+                {t(`sort.${s}`)}
+              </option>
+            ))}
+          </select>
+        )}
         <span className="ms-auto text-xs text-text-muted">
           {items.length < total
             ? `${items.length} / ${t("list.total", { count: total })}`
@@ -370,37 +404,40 @@ export function AssetGrid() {
           cikis (segment tik). Filtre yoksa render edilmez. */}
       <PathBreadcrumb />
 
-      {/* "Benzer gorseller" modu banneri (gorsel→gorsel aktifken) — kaynak gorsel adi + temizle. */}
+      {/* SONUC KAPSAMI banner'lari — ucu de ayni sozlesme: "su an OZEL bir liste goruyorsun +
+          tek tikla cik". Ucu de ayni JSX'i kopyalayacagina tek `ScopeBanner`i kullanir. */}
       {similarTo != null && (
-        <div className="flex items-center justify-between gap-3 border-b border-border bg-bg-tertiary px-4 py-2 text-xs">
-          <span className="truncate text-text-secondary">
-            {t("visual.similar_title", { name: similarToName ?? "" })}
-          </span>
-          <button
-            type="button"
-            onClick={clearSimilarTo}
-            title={t("visual.similar_clear")}
-            className="shrink-0 rounded-md border border-border px-2 py-0.5 text-text-secondary transition hover:bg-bg-secondary hover:border-border-hover motion-reduce:transition-none"
-          >
-            {t("visual.similar_clear")}
-          </button>
-        </div>
+        <ScopeBanner
+          label={t("visual.similar_title", { name: similarToName ?? "" })}
+          onClear={clearSimilarTo}
+          clearLabel={t("visual.similar_clear")}
+        />
+      )}
+
+      {colorSearch != null && (
+        <ScopeBanner
+          testId="color-search-banner"
+          swatch={`#${[colorSearch.r, colorSearch.g, colorSearch.b]
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`}
+          label={t("colors.search_title", {
+            hex: `#${[colorSearch.r, colorSearch.g, colorSearch.b]
+              .map((v) => v.toString(16).padStart(2, "0"))
+              .join("")}`,
+          })}
+          onClear={() => setColorSearch(null)}
+          clearLabel={t("visual.similar_clear")}
+        />
       )}
 
       {geoListIds != null && (
-        <div className="flex items-center justify-between gap-3 border-b border-border bg-bg-tertiary px-4 py-2 text-xs">
-          <span className="truncate text-text-secondary">
-            {t("view.map_cluster", { count: geoListIds.length })}
-          </span>
-          <button
-            type="button"
-            onClick={() => setGeoListIds(null)}
-            className="shrink-0 rounded-md border border-border px-2 py-0.5 text-text-secondary transition hover:border-border-hover hover:bg-bg-secondary motion-reduce:transition-none"
-          >
-            {t("visual.similar_clear")}
-          </button>
-        </div>
+        <ScopeBanner
+          label={t("view.map_cluster", { count: geoListIds.length })}
+          onClear={() => setGeoListIds(null)}
+          clearLabel={t("visual.similar_clear")}
+        />
       )}
+
       {/* Toplu islem arac cubugu (yalniz secim varken). UZAK arsivde RENDER EDILMEZ:
           etiket/koleksiyon/cop eylemlerinin hepsi yerel id ile yerel DB'ye gider. */}
       {!writeLocked && (
@@ -526,6 +563,49 @@ export function AssetGrid() {
           onClose={() => setPicker(null)}
         />
       )}
+    </div>
+  );
+}
+
+/** SONUC KAPSAMI seridi — "su an ozel bir liste goruyorsun" + tek tikla cikis.
+ *  Uc kapsam (benzer-gorsel · renk-yakinligi · harita kumesi) ayni serit JSX'ini kopyaliyordu;
+ *  ucuncusu eklenirken tek yere alindi (2026-08-20). `swatch`: yalniz renk kapsaminda dolu. */
+function ScopeBanner({
+  label,
+  onClear,
+  clearLabel,
+  swatch,
+  testId,
+}: {
+  label: string;
+  onClear: () => void;
+  clearLabel: string;
+  swatch?: string;
+  testId?: string;
+}) {
+  return (
+    <div
+      data-testid={testId}
+      className="flex items-center justify-between gap-3 border-b border-border bg-bg-tertiary px-4 py-2 text-xs"
+    >
+      <span className="flex min-w-0 items-center gap-2 text-text-secondary">
+        {swatch && (
+          <span
+            aria-hidden
+            style={{ backgroundColor: swatch }}
+            className="h-3.5 w-3.5 shrink-0 rounded-sm border border-border"
+          />
+        )}
+        <span className="truncate">{label}</span>
+      </span>
+      <button
+        type="button"
+        onClick={onClear}
+        title={clearLabel}
+        className="shrink-0 rounded-md border border-border px-2 py-0.5 text-text-secondary transition hover:border-border-hover hover:bg-bg-secondary motion-reduce:transition-none"
+      >
+        {clearLabel}
+      </button>
     </div>
   );
 }

@@ -129,6 +129,16 @@ pub struct ImageAnalysisProgressDto {
     pub current_path: String,
 }
 
+/// Aktif gorsel-analiz kosusunun DURUMU (DB'siz; bkz [`vision_run_state`]). `IngestStatusDto`
+/// ikizi: `active` + son ilerleme. Kosu yoksa `active=false` ve `progress` son kosudan kalmis
+/// olabilir → okuyan taraf ilerlemeyi YALNIZ `active` iken gostermeli.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VisionRunStateDto {
+    pub active: bool,
+    pub progress: Option<ImageAnalysisProgressDto>,
+}
+
 static VISION_LIVE_PROGRESS: OnceLock<Mutex<Option<ImageAnalysisProgressDto>>> = OnceLock::new();
 
 fn live_progress_slot() -> &'static Mutex<Option<ImageAnalysisProgressDto>> {
@@ -787,7 +797,10 @@ pub async fn run_image_analysis(
     // swap ile devral; zaten aktifse hata don. Basarili devirdan SONRA Drop guard kur → sonraki her
     // donus yolunda (`?` erken-donus / panik / future iptali) ACTIVE mutlaka sifirlanir.
     if VISION_ACTIVE.swap(true, Ordering::SeqCst) {
-        return Err("gorsel analiz zaten calisiyor".into());
+        // KARARLI TOKEN (prose DEGIL): renderer bunu i18n'ler (`vision_index.busy`). Eskiden ham
+        // Turkce cumle donuyordu ve "hata: gorsel analiz zaten calisiyor" diye ekrana basiliyordu
+        // (`trial_busy` deseniyle ayni cozum).
+        return Err("vision_busy".into());
     }
     let _active = ActiveGuard;
     VISION_STOP.store(false, Ordering::SeqCst);
@@ -799,7 +812,7 @@ pub async fn run_image_analysis(
     // Kapsamin BEKLEYEN kismi (kuyrugun gercekten isleyecegi is) ve — acik secimde — kuyrugun
     // hic ALAMAYACAGI kismi birlikte olculur. Ikincisi olmadan "0 analiz edildi, 0 basarisiz"
     // basari gibi okunuyordu (bkz `not_analyzable_selection_count`).
-    let (total, skipped_no_preview) = {
+    let (mut total, skipped_no_preview) = {
         let db = state.db.lock().map_err(|e| e.to_string())?;
         let pending = db.pending_analysis_count_scoped(&scope).map_err(|e| e.to_string())?;
         let skipped = match &scope {
@@ -838,13 +851,23 @@ pub async fn run_image_analysis(
             stopped = true;
             break;
         }
-        let batch = {
+        // Batch + KALAN is birlikte olculur (tek kilit). `total` sabit kalsaydi kosu sirasinda
+        // kuyruktan DUSEN dosyalar (kullanici secimden cope atarsa; bulgu 2026-08-20) cubugu
+        // %100'e vardirmazdi: "45/60 … tamamlandi". `kalan` kursordan SONRAKI bekleyenleri sayar
+        // → bu kosuda denenip basarisiz olanlar (hala bekleyen ama kursorun gerisinde) sayilmaz.
+        let (batch, remaining) = {
             let db = state.db.lock().map_err(|e| e.to_string())?;
-            db.assets_without_analysis_scoped(&scope, after_id, BATCH).map_err(|e| e.to_string())?
+            let batch = db
+                .assets_without_analysis_scoped(&scope, after_id, BATCH)
+                .map_err(|e| e.to_string())?;
+            let remaining =
+                db.pending_analysis_count_after(&scope, after_id).map_err(|e| e.to_string())?;
+            (batch, remaining)
         };
         if batch.is_empty() {
             break;
         }
+        total = processed + remaining;
         for p in &batch {
             // Asset-basi durdur kontrolu (UZUN vision cagrisina GIRMEDEN once) → hizli iptal.
             if VISION_STOP.load(Ordering::SeqCst) {
@@ -1020,6 +1043,19 @@ pub async fn run_image_analysis(
         }
     }
 
+    // DOGAL BITIS → cubuk %100'e OTURUR. `total` her batch cekiminde tazelenir; ama SON partinin
+    // ICINDE kuyruktan dusen dosyalar (kullanici o sirada cope atarsa) o tazelemeye yetismez —
+    // kuyruk tumuyle bosalirsa dongu ikinci bir cekim yapmadan cikar ve cubuk eski toplamda
+    // takili kalirdi ("16/60 … tamamlandi"). Burasi kapsamda YAPILABILECEK is bitti demektir.
+    // ⚠️ Iptal/devre-kesici bu yola GIRMEZ: orada is gercekten yarim kaldi, %100 yalan olurdu.
+    if !stopped && aborted_after.is_none() && processed < total {
+        total = processed;
+        let final_progress =
+            ImageAnalysisProgressDto { processed, total, current_path: String::new() };
+        store_live_progress(final_progress.clone());
+        let _ = on_progress.send(final_progress);
+    }
+
     Ok(ImageAnalysisReportDto {
         analyzed,
         failed,
@@ -1062,6 +1098,25 @@ pub fn clear_analysis_attempt_marks(
         Some(&format!("cleared={n} scoped={}", !ids.is_empty())),
     );
     Ok(n)
+}
+
+/// **Aktif kosu durumu — SQLite'a DOKUNMAZ** (yalniz bellek-ici bayrak + canli ilerleme).
+///
+/// Neden ayri komut (2026-08-20): `image_analysis_status` ayni iki alani tasir ama yaninda bes
+/// DB sayimi yapar. Secim arac cubugu "su an bir analiz kosuyor mu" sorusunu SANIYEDE BIR sormak
+/// zorunda (buton kilidi) — bunun icin o sayimlar hem gereksiz hem de yanlis yonde pahali.
+/// `ingest_status` ile ayni desen: kilidi olcen sey kilide takilmaz.
+///
+/// Rol gate YOK — salt-okuma (bayrak).
+#[tauri::command]
+pub fn vision_run_state() -> VisionRunStateDto {
+    VisionRunStateDto {
+        active: VISION_ACTIVE.load(Ordering::SeqCst),
+        progress: live_progress_slot()
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner())
+            .clone(),
+    }
 }
 
 #[tauri::command]

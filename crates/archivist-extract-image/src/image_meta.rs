@@ -262,6 +262,19 @@ pub fn hamming_distance(a: u64, b: u64) -> u32 {
 
 // ── Baskin renk (CIELAB k-means) ──────────────────────────────────────────────
 
+/// Kodlanmis gorsel BAYTLARINDAN baskin renkler (JPEG/PNG/WebP…). Cozulemezse bos liste.
+///
+/// Neden var: DB'de duran THUMBNAIL baytlarindan renk hesaplamak icin (geri-doldurma). Kaynak
+/// dosyaya gitmeye gerek kalmaz → baska makinedeki dosyalar da kapsanir, yeniden tarama olmaz.
+/// Kalite kaygisi yok: `dominant_colors` zaten goruntuyu 100×100'e kuculterek calisiyor.
+/// `image` crate'i BU crate'te kalir (cagiran kabuk katmani decode bilmek zorunda degil).
+pub fn dominant_colors_from_bytes(bytes: &[u8], num_colors: usize) -> Vec<Color> {
+    match image::load_from_memory(bytes) {
+        Ok(img) => dominant_colors(&img, num_colors),
+        Err(_) => Vec::new(),
+    }
+}
+
 /// 100×100'e kuculterek deterministik k-means++ ile baskin renkleri cikar.
 pub fn dominant_colors(img: &DynamicImage, num_colors: usize) -> Vec<Color> {
     let n = num_colors.clamp(1, 16);
@@ -355,7 +368,10 @@ pub fn dominant_colors(img: &DynamicImage, num_colors: usize) -> Vec<Color> {
 }
 
 /// sRGB u8 → CIELAB [L*, a*, b*] (D65).
-fn srgb_to_lab(r: u8, g: u8, b: u8) -> [f64; 3] {
+/// sRGB (0-255) → CIELAB (D65). **`pub`**: baskin renk cikarimi ZATEN bu donusumu kullaniyor;
+/// "bu renge yakin gorselleri bul" aramasi da ayni uzayda olcmeli — ikinci bir kopya yazmak
+/// yerine burasi paylasilir (kopya olsaydi cikarimla arama zamanla ayrisirdi).
+pub fn srgb_to_lab(r: u8, g: u8, b: u8) -> [f64; 3] {
     let lin = |c: f64| if c <= 0.04045 { c / 12.92 } else { ((c + 0.055) / 1.055).powf(2.4) };
     let rl = lin(f64::from(r) / 255.0);
     let gl = lin(f64::from(g) / 255.0);
@@ -400,7 +416,10 @@ fn lab_to_srgb(lab: &[f64; 3]) -> (u8, u8, u8) {
 
 /// Karesel CIELAB mesafesi (karekoksuz — yalniz karsilastirma icin).
 #[inline]
-fn lab_dist_sq(a: &[f64; 3], b: &[f64; 3]) -> f64 {
+/// Iki Lab rengi arasindaki KARE Oklid uzakligi (ΔE76²). **`pub`**: k-means ve renk aramasi
+/// paylasir. Karekok alinmaz — siralama icin gereksiz; cagiran esik karsilastirmasini kare
+/// uzayda yapar (`ΔE 25` → `625`).
+pub fn lab_dist_sq(a: &[f64; 3], b: &[f64; 3]) -> f64 {
     let dl = a[0] - b[0];
     let da = a[1] - b[1];
     let db = a[2] - b[2];

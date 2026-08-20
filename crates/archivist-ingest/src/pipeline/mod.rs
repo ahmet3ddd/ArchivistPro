@@ -19,7 +19,9 @@ mod reindex;
 use prepare::{prepare_one, prune_missing, write_prepared, PrepResult, PruneOutcome};
 use priority::BackgroundWorkGuard;
 
-pub use reindex::{reindex_paths, ReindexReport};
+pub use reindex::{
+    reindex_paths, reindex_paths_with, reindex_write, ReindexPrep, ReindexReport,
+};
 
 /// İngest modu — **yikici** davranisi belirler. Varsayilan `Merge` (guvenli; silmez).
 /// Yikici modlar (Replace/Reset) komut katmaninda **ADMIN**'e kisitlidir + UI onay ister.

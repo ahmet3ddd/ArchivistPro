@@ -1,6 +1,6 @@
 # ArchivistPro — Sistem Yöneticileri İçin Kurulum Rehberi
 
-> **Sürüm:** 3.6.1 · **Güncelleme:** 2026-08-18 · **Platform:** Windows 10/11 (64-bit)
+> **Sürüm:** 3.7.0 · **Güncelleme:** 2026-08-20 · **Platform:** Windows 10/11 (64-bit)
 >
 > Adım adım anlatım için: **[Yeni başlayanlar rehberi](KULLANICI_KURULUM_ACEMI.md)**
 
@@ -8,10 +8,10 @@
 
 ```powershell
 # Kullanıcı düzeyi, etkileşimsiz (önerilen):
-ArchivistPro_3.6.1_x64-setup.exe /S
+ArchivistPro_3.7.0_x64-setup.exe /S
 
 # Makine düzeyi (bilinçli tercih — aşağıdaki tabloyu okuyun):
-msiexec /i ArchivistPro_3.6.1_x64_en-US.msi /qn
+msiexec /i ArchivistPro_3.7.0_x64_en-US.msi /qn
 ```
 
 Çekirdek kullanım (tarama, FTS arama, önizleme, kopya bulucu) **tek exe ile
@@ -136,4 +136,4 @@ kayıt ister).
   [GitHub Issues](https://github.com/ahmet3ddd/ArchivistPro/issues)
 - Kaynak kod: https://github.com/ahmet3ddd/ArchivistPro
 
-*Son güncelleme: 2026-08-18 (v3.6.1).*
+*Son güncelleme: 2026-08-20 (v3.7.0).*

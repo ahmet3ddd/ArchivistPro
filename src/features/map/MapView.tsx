@@ -11,6 +11,8 @@ import type { FeatureCollection, Geometry } from "geojson";
 import { ipc, type GeoAsset } from "../../ipc/client";
 import { useIpcQuery } from "../../hooks/useIpcQuery";
 import { useUiStore } from "../../store/useUiStore";
+import { ViewContextMenu, type ViewMenuItem } from "../shell/ViewContextMenu";
+import { useViewContextMenu } from "../shell/useViewContextMenu";
 import { reverseGeocodeBatch, type PlaceLabel } from "./reverseGeocode";
 
 const WORLD_URL = `${import.meta.env.BASE_URL}geo/countries-50m.json`;
@@ -192,17 +194,42 @@ export function MapView() {
     openAssetsInExplorer(cluster.assets);
   }, [openAssetsInExplorer]);
 
+  // Sag-tik menusu — Pano/Teknik/Sohbet ile ayni kanca. Haritanin kendi dugmeleri (yakinlas/
+  // uzaklas/sifirla) sag ustte kalir; menu onlarin KLAVYE/FARE erisilebilir ikizi degil, gorunum
+  // degistirme + haritaya ozel iki eylemdir. d3-zoom yalniz birincil dugmeyi dinler → sag-tik
+  // pan/zoom'a karismaz.
+  const { menu, open: openMenu, close: closeMenu } = useViewContextMenu();
+
   if (loading) return <p className="p-5 text-sm text-text-muted">{t("list.loading")}</p>;
   if (error || worldError) return <p className="p-5 text-sm text-danger">{t("view.map_error")}</p>;
 
   const isZoomed = transform.k !== 1 || transform.x !== 0 || transform.y !== 0;
-  return <section ref={containerRef} className="relative h-full min-h-0 w-full overflow-hidden bg-[#d6e6f2]">
+  // Ogeler KOSULLU: yakinlastirma yokken "sifirla", nokta yokken "tumunu ac" cizilmez (sahte oge yok).
+  const menuItems: ViewMenuItem[] = [];
+  if (isZoomed) {
+    menuItems.push({
+      label: t("view.map_reset"),
+      testId: "map-context-reset",
+      onClick: () => applyTransform(zoomIdentity),
+    });
+  }
+  if (points.length > 0) {
+    menuItems.push({
+      label: t("view.map_open_all"),
+      testId: "map-context-open-all",
+      onClick: openAllInExplorer,
+    });
+  }
+  return <section ref={containerRef} data-testid="map-view" onContextMenu={openMenu} className="relative h-full min-h-0 w-full overflow-hidden bg-[#d6e6f2]">
+    {menu && <ViewContextMenu x={menu.x} y={menu.y} selectedText={menu.text} onClose={closeMenu} sectionTitle={t("view.map")} items={menuItems} testId="map-context-menu" ariaLabel={t("view.map_ctx_aria_label")} />}
     <div className="pointer-events-none absolute start-4 top-4 z-10 flex items-center gap-2 rounded-lg border border-white/70 bg-white/80 px-3 py-2 text-xs font-medium text-slate-700 shadow-sm backdrop-blur">
       <span className="grid h-5 w-5 place-items-center rounded-full bg-accent text-xs text-white">●</span>
       {t("view.map_count", { count: points.length })}
     </div>
     <div className="pointer-events-none absolute bottom-3 start-4 z-10 rounded bg-white/65 px-2 py-1 text-[10px] text-slate-600 backdrop-blur">Natural Earth · public domain</div>
-    {points.length > 0 && <button type="button" onClick={openAllInExplorer} className="absolute bottom-3 end-4 z-10 rounded border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:bg-white">Tümünü Kaşifte aç</button>}
+    {/* ⚠️ Bu dugmenin metni SABIT TURKCE yazilmisti ("Tümünü Kaşifte aç") — hem i18n kuralini
+        deliyordu hem de urunun geri kalani gezgine "Gezgin" diyor. Menu ogesiyle AYNI anahtar. */}
+    {points.length > 0 && <button type="button" onClick={openAllInExplorer} className="absolute bottom-3 end-4 z-10 rounded border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:bg-white">{t("view.map_open_all")}</button>}
     <div className="absolute end-4 top-4 z-10 flex gap-1">
       <button type="button" onClick={() => applyTransform(transform.scale(1.35))} title={t("view.map_zoom_in")} aria-label={t("view.map_zoom_in")} className="grid h-8 w-8 place-items-center rounded border border-white/80 bg-white/90 text-lg text-slate-700 shadow-sm hover:bg-white">+</button>
       <button type="button" onClick={() => applyTransform(transform.scale(0.74))} title={t("view.map_zoom_out")} aria-label={t("view.map_zoom_out")} className="grid h-8 w-8 place-items-center rounded border border-white/80 bg-white/90 text-lg text-slate-700 shadow-sm hover:bg-white">−</button>

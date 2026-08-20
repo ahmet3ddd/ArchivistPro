@@ -135,14 +135,33 @@ pub(crate) fn copy_file(src: &Path, dst: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
-/// Bir asset'i `old_path`'ten `new_path`'e tasi (disk + DB). On-kontrol → disk tasi → DB senkron
-/// → DB hata olursa disk ROLLBACK. Tauri'siz (yalniz `&Db` + yollar) → birim test edilebilir.
-pub(crate) fn refile_one(
-    db: &Db,
+/// DB katmani hatasi → komut katmani hatasi. `NotFound`: yol okunduktan sonra asset silinmis
+/// (savunma amacli; cagiran rollback yapar).
+pub(crate) fn map_refile_err(e: RefileError) -> RefileOpError {
+    match e {
+        RefileError::Conflict => RefileOpError::Conflict,
+        RefileError::NotFound => RefileOpError::Db("not_found".into()),
+        RefileError::Db(e) => RefileOpError::Db(e.to_string()),
+    }
+}
+
+/// Bir asset'i `old_path`'ten `new_path`'e tasi — **DB senkronu `sync` geri-cagrisinda**.
+/// On-kontrol → disk tasi (YAVAS; kilitsiz) → `sync` (KISA; cagiran kilidi yalniz burada tutar)
+/// → `sync` hata verirse disk ROLLBACK.
+///
+/// **Neden ayrik (2026-08-20 kullanici bulgusu):** batch komutlari eskiden `AppState.db` kilidini
+/// TUM batch boyunca tutuyordu; dosyalar diskte tasinirken (surucu-arasi kopyada saniyeler) ayni
+/// anda kosan AI gorsel-analizi kilit talebinde donuyordu. Kilit artik dosya-basi ve yalniz DB
+/// adiminda alinir.
+pub(crate) fn refile_one_with<F>(
     id: i64,
     old_path: &str,
     new_path: &str,
-) -> Result<RefileOutcome, RefileOpError> {
+    sync: F,
+) -> Result<RefileOutcome, RefileOpError>
+where
+    F: FnOnce(i64, &str) -> Result<(), RefileOpError>,
+{
     // Zaten hedefte → disk/db'ye dokunma.
     if new_path == old_path {
         return Ok(RefileOutcome::AlreadyInPlace);
@@ -163,22 +182,26 @@ pub(crate) fn refile_one(
     move_file(src, dst).map_err(|e| RefileOpError::Disk(e.to_string()))?;
 
     // DB yol senkronu. Hata → disk ROLLBACK (best-effort geri-tasi) → tipli hata.
-    match db.refile_asset(id, new_path) {
-        Ok(_) => Ok(RefileOutcome::Moved),
-        Err(RefileError::Conflict) => {
+    match sync(id, new_path) {
+        Ok(()) => Ok(RefileOutcome::Moved),
+        Err(e) => {
             let _ = move_file(dst, src);
-            Err(RefileOpError::Conflict)
-        }
-        Err(RefileError::NotFound) => {
-            // Kilit altinda arada silinemez; savunma amacli rollback + db hata.
-            let _ = move_file(dst, src);
-            Err(RefileOpError::Db("not_found".into()))
-        }
-        Err(RefileError::Db(e)) => {
-            let _ = move_file(dst, src);
-            Err(RefileOpError::Db(e.to_string()))
+            Err(e)
         }
     }
+}
+
+/// [`refile_one_with`]'in elinde ZATEN `&Db` olan cagiran icin kolaylik hali (tekil yeniden
+/// adlandirma + birim testler). Batch komutlari `refile_one_with` kullanir (kilit dosya-basi).
+pub(crate) fn refile_one(
+    db: &Db,
+    id: i64,
+    old_path: &str,
+    new_path: &str,
+) -> Result<RefileOutcome, RefileOpError> {
+    refile_one_with(id, old_path, new_path, |id, path| {
+        db.refile_asset(id, path).map(|_| ()).map_err(map_refile_err)
+    })
 }
 
 /// İlerleme yayini (throttle: ilk + son + ~100ms arayla; reindex/rag deseni).

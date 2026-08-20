@@ -135,9 +135,12 @@ const VIEWS: { mode: ViewMode; Icon: IconComponent; labelKey: string }[] = [
   { mode: "explorer", Icon: ExplorerIcon, labelKey: "view.explorer" },
   { mode: "folders", Icon: FoldersIcon, labelKey: "view.folders" },
   { mode: "dashboard", Icon: DashboardIcon, labelKey: "view.dashboard" },
-  { mode: "map", Icon: MapIcon, labelKey: "view.map" },
-  { mode: "chat", Icon: ChatIcon, labelKey: "view.chat" },
+  // ⚠️ SIRA KULLANICI KARARIDIR (2026-08-20: Teknik ↔ Harita yer degistirdi) — "mantikli" bir
+  // siralamaya gore yeniden duzenlenmemeli. Serit sirasi kas hafizasidir; degistirmek kullaniciyi
+  // yavaslatir.
   { mode: "technical", Icon: TechnicalIcon, labelKey: "view.technical" },
+  { mode: "chat", Icon: ChatIcon, labelKey: "view.chat" },
+  { mode: "map", Icon: MapIcon, labelKey: "view.map" },
 ];
 
 /** Arac ogeleri (modal acan; overlay istegi birakir → TopBar acar). */
